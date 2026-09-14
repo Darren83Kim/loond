@@ -1,0 +1,10 @@
+{
+  "scraped": 650,
+  "in_window": 608,
+  "cutoff": "2026-06-16",
+  "today": "2026-09-14",
+  "stop_reason": "majority_outside_page_13",
+  "transport": "http",
+  "list_url": "http://www.suwon.go.kr/web/saeallOfr/BD_ofrList.do",
+  "collected_at": "2026-09-14T17:42:42"
+}

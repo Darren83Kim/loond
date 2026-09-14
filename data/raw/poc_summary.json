@@ -1,0 +1,38 @@
+{
+  "window_count": 608,
+  "candidate_count": 72,
+  "rejected_count": 536,
+  "detail_fetched": 10,
+  "detail_attempted": 10,
+  "body_applicationEnd_count": 7,
+  "pending_review_count": 72,
+  "pending_with_detail": 10,
+  "published_count": 3,
+  "paths": {
+    "raw_window": "E:\\DsDevelop_Loond\\data\\raw\\notices_window.json",
+    "pending_json": "E:\\DsDevelop_Loond\\data\\pending_review\\pending_review.json",
+    "pending_csv": "E:\\DsDevelop_Loond\\data\\pending_review\\pending_review.csv",
+    "published": "E:\\DsDevelop_Loond\\data\\published\\opportunities.json",
+    "detail_sample": "E:\\DsDevelop_Loond\\data\\raw\\detail_sample.json"
+  },
+  "scrape_meta": {
+    "scraped": 650,
+    "in_window": 608,
+    "cutoff": "2026-06-16",
+    "today": "2026-09-14",
+    "stop_reason": "majority_outside_page_13",
+    "transport": "http",
+    "list_url": "http://www.suwon.go.kr/web/saeallOfr/BD_ofrList.do",
+    "collected_at": "2026-09-14T17:42:42"
+  },
+  "published_ids": [
+    "suwon-ofr-156580",
+    "suwon-ofr-156622",
+    "suwon-ofr-156538"
+  ],
+  "published_titles": [
+    "2026년 조원2동 주민자치센터 「가을 힐링원예」 프로그램 수강생 모집 공고",
+    "2026년 4분기 평동 주민자치센터 프로그램 수강생 모집",
+    "2026년 10월 파장동 주민자치센터 프로그램 수강생 모집 공고"
+  ]
+}

@@ -1,0 +1,39 @@
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.iml
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Flutter / Dart
+**/build/
+**/.dart_tool/
+**/.packages
+**/.pub-cache/
+**/.pub/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/local.properties
+**/ephemeral/
+**/*.apk
+**/*.exe
+**/*.dll
+**/*.pdb
+
+# Android
+**/.gradle/
+**/.kotlin/
+
+# Secrets / local
+.env
+.env.*
+*.pem
+loond-upload.zip
+loond-utf8.zip
