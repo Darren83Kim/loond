@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import '../util/open_url.dart';
 
 /// Privacy policy — raw GitHub until a hosted URL is set for store release.
 const kPrivacyPolicyUrl =
@@ -10,7 +10,7 @@ class SettingsScreen extends StatelessWidget {
 
   Future<void> _openPrivacy(BuildContext context) async {
     final uri = Uri.parse(kPrivacyPolicyUrl);
-    final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    final ok = await openOutboundUrl(uri);
     if (!ok && context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('브라우저를 열 수 없어요')),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import '../analytics/analytics_stub.dart';
+import '../util/open_url.dart';
 import '../models/opportunity.dart';
 import '../theme/app_theme.dart';
 
@@ -32,7 +31,7 @@ class DetailScreen extends StatelessWidget {
       return;
     }
     AnalyticsStub.outboundClick(item.id, url);
-    final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    final ok = await openOutboundUrl(uri);
     if (!ok && context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('브라우저를 열 수 없어요')),

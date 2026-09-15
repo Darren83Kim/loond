@@ -34,3 +34,7 @@
 - 원문 CTA E2E (computerUse) 대기
 - AdMob 프로덕션 ID 교체 — 출시 직전 (문서에 운영 ID 기재 금지)
 - §11 전항 판정
+## CTA E2E (웹)
+- 2026-09-15: `LaunchMode.externalApplication` → about:blank 이슈
+- 수정: `lib/util/open_url.dart` — 웹은 `platformDefault` + `_blank`
+
