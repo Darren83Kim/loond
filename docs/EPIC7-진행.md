@@ -65,3 +65,12 @@
 
 ## 스토어 스크린샷
 - 웹 프리뷰 4장 → `docs/store/screenshots/` (2026-09-15)
+
+## 내부 테스트 AAB (2026-09-15)
+
+- Windows PC에서 `flutter build appbundle` **성공** → `app-release.aab` (~49MB)
+- 경로(로컬): `C:\Users\round1studio_34\loond\app\build\app\outputs\bundle\release\app-release.aab`
+- `google_mobile_ads` **9.1.0** (AGP 9 호환; 5.3.1은 bundleRelease 실패)
+- release signing은 아직 **debug** — Play 업로드 전 upload keystore 권장
+- 체크리스트: `docs/store/internal-test.md` §9
+
