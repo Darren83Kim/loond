@@ -39,4 +39,5 @@
 - 수정: `lib/util/open_url.dart` — 웹은 `platformDefault` + `_blank`
 - 재시도: `url_launcher` `Link` 위젯(웹 DOM `<a target=_blank>`)으로 CTA 교체 — window.open 팝업차단/about:blank 회피
 - 웹 CTA: `LinkTarget.self` / `webOnlyWindowName: _self` (같은 탭) — `_blank`는 스모크·일부 환경에서 about:blank
+- 웹 CTA 최종: `web.window.location.assign(sourceUrl)` (같은 탭). `_blank`/Link 시그널 레이스는 about:blank. 스모크 시 Chrome에 남은 AdMob 탭은 오탐 주의.
 

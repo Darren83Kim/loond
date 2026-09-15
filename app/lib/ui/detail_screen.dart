@@ -1,8 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:url_launcher/link.dart';
 import '../analytics/analytics_stub.dart';
+import '../util/open_url.dart';
 import '../models/opportunity.dart';
 import '../theme/app_theme.dart';
 
@@ -16,6 +15,29 @@ class DetailScreen extends StatelessWidget {
     return DateFormat('yyyy.MM.dd').format(d);
   }
 
+  Future<void> _openSource(BuildContext context) async {
+    final url = item.sourceUrl.trim();
+    if (url.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('원문 링크가 없어요')),
+      );
+      return;
+    }
+    final uri = Uri.tryParse(url);
+    if (uri == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('유효하지 않은 링크예요')),
+      );
+      return;
+    }
+    AnalyticsStub.outboundClick(item.id, url);
+    final ok = await openOutboundUrl(uri);
+    if (!ok && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('브라우저를 열 수 없어요')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,44 +134,10 @@ class DetailScreen extends StatelessWidget {
                 : '-',
           ),
           const SizedBox(height: 20),
-          Builder(
-            builder: (context) {
-              final url = item.sourceUrl.trim();
-              final uri = Uri.tryParse(url);
-              final ok = uri != null &&
-                  (uri.scheme == 'http' || uri.scheme == 'https');
-              if (!ok) {
-                return FilledButton.icon(
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          url.isEmpty ? '원문 링크가 없어요' : '유효하지 않은 링크예요',
-                        ),
-                      ),
-                    );
-                  },
-                  icon: const Icon(Icons.open_in_new),
-                  label: const Text('원문에서 확인하기'),
-                );
-              }
-              return Link(
-                uri: uri,
-                target: kIsWeb ? LinkTarget.self : LinkTarget.blank,
-                builder: (context, followLink) {
-                  return FilledButton.icon(
-                    onPressed: followLink == null
-                        ? null
-                        : () {
-                            AnalyticsStub.outboundClick(item.id, url);
-                            followLink();
-                          },
-                    icon: const Icon(Icons.open_in_new),
-                    label: const Text('원문에서 확인하기'),
-                  );
-                },
-              );
-            },
+          FilledButton.icon(
+            onPressed: () => _openSource(context),
+            icon: const Icon(Icons.open_in_new),
+            label: const Text('원문에서 확인하기'),
           ),
         ],
       ),
