@@ -35,6 +35,7 @@ jobs:
       - name: Run TourAPI collect (KorService2)
         env:
           TOUR_API_SERVICE_KEY: ${{ secrets.TOUR_API_SERVICE_KEY }}
+          PYTHONUNBUFFERED: "1"
         run: |
           set -euo pipefail
           if [ -z "${TOUR_API_SERVICE_KEY:-}" ]; then

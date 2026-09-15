@@ -15,12 +15,12 @@ import json
 import re
 import sys
 import time
+import urllib.error
+import urllib.request
 from collections import Counter
 from datetime import datetime, timedelta, timezone
 from typing import Any
 from urllib.parse import quote
-
-import requests
 
 from . import config
 from . import region_codes as rc
@@ -100,20 +100,40 @@ def _safe_url_for_log(url: str) -> str:
 
 
 def fetch_json(url: str) -> dict[str, Any]:
+    """GET JSON via urllib (EPIC4-proven). Avoids requests requoting quirks."""
+    req = urllib.request.Request(
+        url,
+        headers={"User-Agent": "LoondCollector/1.0", "Accept": "application/json"},
+    )
     try:
-        resp = requests.get(url, timeout=config.REQUEST_TIMEOUT)
+        with urllib.request.urlopen(req, timeout=config.REQUEST_TIMEOUT) as resp:
+            body = resp.read().decode("utf-8", errors="replace")
+    except urllib.error.HTTPError as exc:
+        body = exc.read().decode("utf-8", errors="replace")
         try:
-            return resp.json()
+            data = json.loads(body)
+            # Preserve HTTP status for diagnostics without raising
+            if isinstance(data, dict):
+                data = {**data, "_http_status": exc.code}
+            return data
         except Exception:
             return {
-                "_http_error": resp.status_code,
-                "_body": resp.text[:500],
+                "_http_error": exc.code,
+                "_body": body[:500],
                 "_url": _safe_url_for_log(url),
             }
-    except requests.RequestException as exc:
+    except Exception as exc:  # noqa: BLE001
         return {
             "_error": type(exc).__name__,
             "_msg": str(exc)[:200],
+            "_url": _safe_url_for_log(url),
+        }
+    try:
+        return json.loads(body)
+    except Exception:
+        return {
+            "_parse_error": True,
+            "_body": body[:500],
             "_url": _safe_url_for_log(url),
         }
 
@@ -170,12 +190,17 @@ def matches_suwon(item: dict[str, Any]) -> bool:
     return kw in blob
 
 
+def _log(msg: str) -> None:
+    print(msg, flush=True)
+
+
 def paginate(
     endpoint: str,
     service_key: str,
     extra: dict[str, str],
     *,
     max_pages: int = 40,
+    label: str = "",
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     all_items: list[dict[str, Any]] = []
     metas: list[dict[str, Any]] = []
@@ -187,7 +212,20 @@ def paginate(
         ok, msg = header_ok(payload)
         items = normalize_items(payload) if ok else []
         tc = total_count(payload) if ok else 0
-        metas.append({"page": page, "ok": ok, "msg": msg, "got": len(items), "totalCount": tc})
+        meta = {"page": page, "ok": ok, "msg": msg, "got": len(items), "totalCount": tc}
+        if not ok and payload.get("_http_error"):
+            meta["http"] = payload.get("_http_error")
+        if not ok and payload.get("_error"):
+            meta["err"] = payload.get("_error")
+        metas.append(meta)
+        if page == 1:
+            tag = label or endpoint
+            _log(f"  [{tag}] page1 ok={ok} msg={msg} got={len(items)} total={tc}")
+            if not ok:
+                # Redacted diagnostic snippet for CI logs
+                snippet = str(payload.get("_body") or payload.get("resultMsg") or "")[:160]
+                if snippet:
+                    _log(f"  [{tag}] diag={snippet!r}")
         if not ok:
             break
         all_items.extend(items)
@@ -224,6 +262,7 @@ def collect_festivals(service_key: str) -> dict[str, Any]:
         service_key,
         {"eventStartDate": esd, "areaCode": rc.TOUR_API_AREA_CODE, "arrange": "A"},
         max_pages=20,
+        label="festival_area31",
     )
     runs.append({"mode": "area31", "eventStartDate": esd, "metas": metas, "count": len(items)})
     for it in items:
@@ -240,6 +279,7 @@ def collect_festivals(service_key: str) -> dict[str, Any]:
             service_key,
             {"eventStartDate": esd, "arrange": "A"},
             max_pages=80,
+            label="festival_nationwide",
         )
         runs.append(
             {
@@ -285,6 +325,7 @@ def collect_discover(service_key: str) -> dict[str, Any]:
                 "arrange": "A",
             },
             max_pages=max_pages,
+            label=f"discover_{ctid}",
         )
         filtered = [it for it in items if matches_suwon(it)]
         by_type[str(ctid)] = {
@@ -572,7 +613,7 @@ def main() -> int:
 
     service_key = _prepare_service_key(raw_key)
     # Never print the key; only length / encoding hint
-    print(
+    _log(
         f"TourAPI daily collect STRATEGY={rc.STRATEGY} "
         f"areaCode={rc.TOUR_API_AREA_CODE} key_len={len(service_key)} "
         f"key_pct_encoded={('%' in service_key)}"
@@ -581,15 +622,20 @@ def main() -> int:
     config.RAW_DIR.mkdir(parents=True, exist_ok=True)
     collected_at = _now_iso()
 
-    print("=== ENJOY searchFestival2 ===")
+    _log("=== ENJOY searchFestival2 ===")
     fest = collect_festivals(service_key)
-    print(f"festivals suwon={fest['suwon_count']} sample={fest['sample_titles'][:5]}")
+    _log(f"festivals suwon={fest['suwon_count']} sample={fest['sample_titles'][:5]}")
+    for run in fest.get("runs", []):
+        _log(f"  run mode={run.get('mode')} count={run.get('count')} metas0={ (run.get('metas') or [None])[0] }")
 
-    print("=== DISCOVER areaBasedList2 ===")
+    _log("=== DISCOVER areaBasedList2 ===")
     disc = collect_discover(service_key)
-    print(f"discover suwon={disc['suwon_count']}")
+    _log(f"discover suwon={disc['suwon_count']}")
     for ctid, info in disc["by_type"].items():
-        print(f"  type {ctid} ({info['category']}): suwon={info['suwon_count']}")
+        _log(
+            f"  type {ctid} ({info['category']}): suwon={info['suwon_count']} "
+            f"unique={info['unique_total']} meta0={(info.get('metas') or [None])[0]}"
+        )
 
     if fest["suwon_count"] == 0 and disc["suwon_count"] == 0:
         print(
@@ -599,9 +645,9 @@ def main() -> int:
         return 1
 
     to_enrich = fest["items"] + disc["items"]
-    print(f"=== detailCommon2 homepage enrich n={min(40, len(to_enrich))} ===")
+    _log(f"=== detailCommon2 homepage enrich n={min(40, len(to_enrich))} ===")
     homepages = enrich_homepages(service_key, to_enrich, limit=40)
-    print(f"homepages found: {len(homepages)}")
+    _log(f"homepages found: {len(homepages)}")
 
     fest_doc = {
         "collectedAt": collected_at,
@@ -653,13 +699,13 @@ def main() -> int:
         "\n".join(summary_lines) + "\n", encoding="utf-8"
     )
 
-    print("=== merge → published ===")
+    _log("=== merge → published ===")
     stats = merge_and_publish(fest["items"], disc["items"], homepages)
-    print(
+    _log(
         f"published updatedAt={stats['updatedAt']} counts={stats['counts']} "
         f"total={stats['total']} missing={stats['missing_required']}"
     )
-    print(
+    _log(
         f"Wrote {config.PUBLISHED_JSON.relative_to(config.PROJECT_ROOT)} "
         f"+ raw festivals/discover/summary"
     )
