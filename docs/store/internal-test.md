@@ -78,3 +78,20 @@ Flutter SDK 예: `/home/box/flutter` (그록컴) 또는 로컬 설치 PATH.
 
 - [`EPIC7-진행.md`](../EPIC7-진행.md)
 - [`구현계획서.md`](../구현계획서.md) §11 (R7·R8·R18)
+
+## 9. Windows PC 빌드 메모 (DESKTOP-SRFAJQ8)
+
+```powershell
+$env:JAVA_HOME = "C:\Program Files\Android\Android Studio\jbr"
+$env:ANDROID_HOME = "$env:USERPROFILE\AppData\Local\Android\Sdk"
+$env:PATH = "$env:JAVA_HOME\bin;C:\flutter\bin;" + $env:PATH
+cd $env:USERPROFILE\loond\app   # git bundle로 동기화한 작업본
+flutter pub get
+flutter build appbundle
+```
+
+- 산출: `app\build\app\outputs\bundle\release\app-release.aab`
+- 현재 `android/app/build.gradle.kts` release는 **debug signing**을 씀 → 내부 스모크용 가능하나, Play 업로드 전 **upload keystore + key.properties**(gitignore)로 교체 권장.
+- Android 라이선스: `sdkmanager --licenses` (JAVA_HOME을 Android Studio JBR로).
+- 로컬 경로: `C:\Users\round1studio_34\loond` (GitHub private clone 대신 box `git bundle`로 동기화 가능).
+
