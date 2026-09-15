@@ -1,12 +1,13 @@
 """TourAPI KorService2 collector stub — EPIC 4-0 / 4-1.
 
 Without TOUR_API_SERVICE_KEY: exit 0 with a clear message (CI-safe).
-With key: probe areaCode2 for areaCode=31, and optionally searchFestival2 /
-areaBasedList2 with STRATEGY=area_filter (addr/title contains 수원).
+With key: probe areaCode2 for areaCode=31.
 
-NOTE: Box TLS to apis.data.go.kr often fails; prefer running live collection
-on a Windows/desktop host. This module remains the in-repo contract.
+When STRATEGY=area_filter, areaCode2 failures (HTTP 403 / resultCode 30) are
+non-fatal warnings (exit 0) — list APIs still work; prefer
+`python -m loond_worker.run_tour_daily` for real ENJOY/DISCOVER collect.
 
+NOTE: Box TLS to apis.data.go.kr often fails; Actions runners are fine.
 Does NOT invent festival / ENJOY data without a successful API call.
 """
 
@@ -95,6 +96,13 @@ def main() -> int:
             "use searchFestival2/areaBasedList2 + FILTER_ADDR_KEYWORD instead.",
             file=sys.stderr,
         )
+        if rc.STRATEGY == "area_filter":
+            print(
+                "STRATEGY=area_filter — treating areaCode2 transport failure as "
+                "non-fatal (prefer run_tour_daily).",
+                file=sys.stderr,
+            )
+            return 0
         return 1
 
     out_all.write_text(
@@ -144,6 +152,27 @@ def main() -> int:
             encoding="utf-8",
         )
         print(f"Wrote {out_verified.relative_to(config.PROJECT_ROOT)}")
+        # areaCode2 often returns resultCode 30 / HTTP 403 for keys that still
+        # work on searchFestival2/areaBasedList2. With STRATEGY=area_filter this
+        # stub must not fail CI — prefer run_tour_daily as the primary collect.
+        if rc.STRATEGY == "area_filter" and result_code in ("30", "403"):
+            print(
+                f"STRATEGY=area_filter — areaCode2 resultCode={result_code} "
+                "treated as non-fatal warning (exit 0).",
+                file=sys.stderr,
+            )
+            return 0
+        # Also treat HTTP-ish msgs gently under area_filter
+        msg = str(header.get("resultMsg") or "")
+        if rc.STRATEGY == "area_filter" and (
+            "403" in msg or "등록되지 않은" in msg or result_code == "30"
+        ):
+            print(
+                "STRATEGY=area_filter — areaCode2 auth/scope failure non-fatal "
+                "(exit 0).",
+                file=sys.stderr,
+            )
+            return 0
         return 1
 
     items = _normalize_items(body)

@@ -25,12 +25,13 @@ REGION_NAME: Final = "수원"
 TOUR_API_BASE_URL: Final = "https://apis.data.go.kr/B551011/KorService2"
 TOUR_API_AREA_CODE: Final = "31"  # 경기도 (legacy areaCode; still accepted on list APIs)
 
-# Endpoints (KorService2):
+# Endpoints — KorService2 path names only (legacy *1 paths retired / NO_OPENAPI_SERVICE).
 #   areaCode2        — region / sigungu lookup (may fail with key scope errors)
 #   searchFestival2  — ENJOY festivals/events
 #   areaBasedList2   — DISCOVER (contentTypeId 12/14/25/28/38/39 …)
 #   searchKeyword2   — keyword fallback
 #   detailCommon2    — homepage / overview (no legacy *YN flags)
+#   ldongCode2       — legal-dong lookup
 TOUR_API_ENDPOINTS: Final = {
     "areaCode2": "areaCode2",
     "searchFestival2": "searchFestival2",  # ENJOY
@@ -74,6 +75,11 @@ FILTER_ADDR_KEYWORD: Final = "수원"
 
 
 def tour_api_service_key() -> str | None:
-    """Read TourAPI service key from env only — never commit secrets."""
+    """Read TourAPI service key from env only — never commit secrets.
+
+    Callers should splice the key into the query without double-encoding
+    (portal Encoding keys already contain '%'; Decoding keys need one encode).
+    See run_tour_daily._prepare_service_key / tour_collect._build_url.
+    """
     key = os.environ.get("TOUR_API_SERVICE_KEY", "").strip()
     return key or None

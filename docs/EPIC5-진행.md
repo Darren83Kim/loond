@@ -1,6 +1,6 @@
 # EPIC 5 진행 — 운영 자동화
 
-> 시작: 2026-09-15
+> 시작: 2026-09-15 · 갱신: 2026-09-15 (KST)
 
 ## 목표
 - GitHub Actions **일 1회** Worker (TourAPI KorService2)
@@ -9,9 +9,24 @@
 
 ## 현재
 - [x] `.github/workflows/daily_worker.yml` 초안
-- [ ] repo secret `TOUR_API_SERVICE_KEY` 등록 (GitHub → Settings → Secrets)
-- [ ] `run_tour_daily.py` 본문 (PC에서 검증된 수집 로직 이식; 증분은 R12)
-- [ ] workflow_dispatch 1회 성공 로그 (DoD)
+- [x] repo secret `TOUR_API_SERVICE_KEY` 등록
+- [x] `worker/loond_worker/run_tour_daily.py` — ENJOY(`searchFestival2`) + DISCOVER(`areaBasedList2`) → merge APPLY → published + raw
+- [x] `tour_collect.py` — `STRATEGY=area_filter` 시 areaCode2 403/30 non-fatal (CI stub)
+- [ ] workflow_dispatch 1회 성공 로그 (DoD) — Actions에서 확인
+
+## 일일 수집 요약
+- Base: `https://apis.data.go.kr/B551011/KorService2`
+- STRATEGY=`area_filter` (areaCode=31 + addr/title 「수원」)
+- ENJOY: `searchFestival2` (eventStartDate ≈ year-start / today-30d)
+- DISCOVER: `areaBasedList2` contentTypeId 12/14/25/28/38/39 · food/shopping cap ~30
+- APPLY rows preserved; `suwon-tour-*` refreshed
+- sourceName=`한국관광공사 TourAPI`; sourceUrl=detailCommon2 homepage 또는 visitkorea detail
+
+```bash
+cd worker
+export TOUR_API_SERVICE_KEY=...   # never commit / never print
+python -m loond_worker.run_tour_daily
+```
 
 ## 비용/한도 메모
 - Actions Free ~2,000분/월 → 일 1회 5–10분이면 충분

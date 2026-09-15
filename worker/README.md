@@ -59,11 +59,11 @@ python -m loond_worker.run_poc --proxy-samples
 - Service key: env **`TOUR_API_SERVICE_KEY`** only (never commit). Prefer Windows host if box TLS fails.
 
 ```bash
-# no key → exit 0 with message (CI-safe)
-python -m loond_worker.tour_collect
+# Daily ENJOY/DISCOVER collect → published (EPIC 5; preferred)
+export TOUR_API_SERVICE_KEY=your_key   # never commit
+python -m loond_worker.run_tour_daily
 
-# with key → areaCode2 probe (may fail); live collect used searchFestival2/areaBasedList2
-export TOUR_API_SERVICE_KEY=your_key
+# areaCode2 verify stub only (CI-safe; area_filter → exit 0 on 403/30)
 python -m loond_worker.tour_collect
 ```
 
