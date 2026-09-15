@@ -12,7 +12,7 @@
 - [x] repo secret `TOUR_API_SERVICE_KEY` 등록
 - [x] `worker/loond_worker/run_tour_daily.py` — ENJOY(`searchFestival2`) + DISCOVER(`areaBasedList2`) → merge APPLY → published + raw
 - [x] `tour_collect.py` — `STRATEGY=area_filter` 시 areaCode2 403/30 non-fatal (CI stub)
-- [ ] workflow_dispatch 1회 성공 로그 (DoD) — Actions에서 확인
+- [x] workflow_dispatch 성공 — https://github.com/Darren83Kim/loond/actions/runs/34944506091 (APPLY 3 / ENJOY 15 / DISCOVER 101)
 
 ## 일일 수집 요약
 - Base: `https://apis.data.go.kr/B551011/KorService2`
@@ -27,6 +27,10 @@ cd worker
 export TOUR_API_SERVICE_KEY=...   # never commit / never print
 python -m loond_worker.run_tour_daily
 ```
+
+## 메모
+- Actions에서 `requests`는 TourAPI list 호출이 타임아웃/0건이 될 수 있음 → `urllib.request` + User-Agent 사용 (EPIC4 Windows와 동일).
+- `areaCode2`는 HTTP 403/resultCode 30 가능; stub는 non-fatal, 일일 수집은 `run_tour_daily`.
 
 ## 비용/한도 메모
 - Actions Free ~2,000분/월 → 일 1회 5–10분이면 충분
