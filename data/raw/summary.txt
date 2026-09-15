@@ -1,10 +1,8 @@
-collectedAt=2026-09-15T14:33:27.270912+09:00
+collectedAt=2026-09-15T16:59:20+09:00
 base=https://apis.data.go.kr/B551011/KorService2
-areaCode2_ok={'page': 1, 'ok': False, 'msg': '30:등록되지 않은 서비스키', 'got': 0, 'totalCount': 0}
-areaCode2_suwon_like=0
+strategy=area_filter
 festivals_suwon=15
-festivals_nationwide_suwon=15
-discover_suwon=264
+discover_suwon=263
 homepages=18
 festival_titles:
   - 경기도 문화사계 "봄" 경기 상상해 봄 페스타
@@ -22,39 +20,10 @@ festival_titles:
   - 2026 경기인형극제 in 수원
   - 2026 서가콘서트 : 셜록홈즈
   - 2026 화성행궁 야간개장
-discover_titles:
-  - 고색뉴지엄
-  - 광교 프라이부르크전망대
-  - 광교중앙공원
-  - 나혜석거리
-  - 노송지대
-  - 당수체육공원
-  - 대유평공원
-  - 동북공심돈
-  - 만석거공원
-  - 만석공원
-  - 매탄공원
-  - 물봉선어린이공원
-  - 반달공원
-  - 방죽공원
-  - 보현선원
-  - 봉돈
-  - 서수원체육공원
-  - 수원 지동벽화마을
-  - 수원사(수원)
-  - 수원어린이교통공원
 discover_by_type:
   - 12: 40 (tour_spot)
   - 14: 19 (culture_facility)
-  - 25: 1 (travel_course)
+  - 25: 0 (travel_course)
   - 28: 7 (leports)
   - 38: 5 (shopping)
   - 39: 192 (food)
-festival_run_modes:
-  - area31: count=2 metas0={'page': 1, 'ok': True, 'msg': 'OK', 'got': 2, 'totalCount': 2}
-  - sigungu_1: count=0 metas0={'page': 1, 'ok': True, 'msg': 'OK', 'got': 0, 'totalCount': 0}
-  - sigungu_2: count=0 metas0={'page': 1, 'ok': True, 'msg': 'OK', 'got': 0, 'totalCount': 0}
-  - sigungu_3: count=0 metas0={'page': 1, 'ok': True, 'msg': 'OK', 'got': 0, 'totalCount': 0}
-  - sigungu_4: count=0 metas0={'page': 1, 'ok': True, 'msg': 'OK', 'got': 0, 'totalCount': 0}
-  - ldong_41: count=100 metas0={'page': 1, 'ok': True, 'msg': 'OK', 'got': 100, 'totalCount': 100}
-  - nationwide: count=724 metas0={'page': 1, 'ok': True, 'msg': 'OK', 'got': 100, 'totalCount': 724}

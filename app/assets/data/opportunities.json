@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "region": "suwon",
   "regionLabel": "수원",
-  "updatedAt": "2026-09-15T14:34:30+09:00",
+  "updatedAt": "2026-09-15T17:01:34+09:00",
   "opportunities": [
     {
       "id": "suwon-ofr-156580",
@@ -128,8 +128,8 @@
       "sourcePublishedAt": "2026-03-13",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "3512510",
@@ -140,7 +140,7 @@
         "lDongSignguCd": "113",
         "tel": "031-956-8318",
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -165,8 +165,8 @@
       "sourcePublishedAt": "2026-06-01",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "3486730",
@@ -177,7 +177,7 @@
         "lDongSignguCd": "117",
         "tel": "031-774-3312",
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -202,8 +202,8 @@
       "sourcePublishedAt": "2026-08-31",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "3368470",
@@ -214,7 +214,7 @@
         "lDongSignguCd": "113",
         "tel": "031-774-3312",
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -239,8 +239,8 @@
       "sourcePublishedAt": "2026-04-24",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "3114685",
@@ -251,7 +251,7 @@
         "lDongSignguCd": "113",
         "tel": "031-324-9114~5",
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -276,8 +276,8 @@
       "sourcePublishedAt": "2026-05-20",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "3492561",
@@ -288,7 +288,7 @@
         "lDongSignguCd": "111",
         "tel": "031-5191-3084",
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -313,8 +313,8 @@
       "sourcePublishedAt": "2026-08-19",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "1916616",
@@ -325,7 +325,7 @@
         "lDongSignguCd": "115",
         "tel": "031-290-3562~5",
         "sourceUrlSource": "detailCommon2.homepage",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
       }
     },
     {
@@ -350,8 +350,8 @@
       "sourcePublishedAt": "2026-09-07",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "4099101",
@@ -362,7 +362,7 @@
         "lDongSignguCd": "115",
         "tel": "070-7575-2352",
         "sourceUrlSource": "detailCommon2.homepage",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
       }
     },
     {
@@ -387,8 +387,8 @@
       "sourcePublishedAt": "2026-05-19",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "577335",
@@ -399,7 +399,7 @@
         "lDongSignguCd": "113",
         "tel": "031-5191-2768",
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -424,8 +424,8 @@
       "sourcePublishedAt": "2026-09-11",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2616316",
@@ -436,7 +436,7 @@
         "lDongSignguCd": "117",
         "tel": "070-4945-9580",
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -461,8 +461,8 @@
       "sourcePublishedAt": "2026-09-03",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2751090",
@@ -473,7 +473,7 @@
         "lDongSignguCd": "115",
         "tel": "031-290-3622031-5191-3084",
         "sourceUrlSource": "detailCommon2.homepage",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
       }
     },
     {
@@ -498,8 +498,8 @@
       "sourcePublishedAt": "2026-06-15",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "914138",
@@ -510,7 +510,7 @@
         "lDongSignguCd": "115",
         "tel": "031-5191-3647",
         "sourceUrlSource": "detailCommon2.homepage",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
       }
     },
     {
@@ -535,8 +535,8 @@
       "sourcePublishedAt": "2026-04-17",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "4058556",
@@ -547,7 +547,7 @@
         "lDongSignguCd": "117",
         "tel": "031-259-4724",
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -572,8 +572,8 @@
       "sourcePublishedAt": "2026-06-17",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "1825520",
@@ -584,7 +584,7 @@
         "lDongSignguCd": "113",
         "tel": "070-4681-0675",
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -609,8 +609,8 @@
       "sourcePublishedAt": "2026-08-03",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "4095402",
@@ -621,7 +621,7 @@
         "lDongSignguCd": "115",
         "tel": "031-230-3268",
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -646,8 +646,8 @@
       "sourcePublishedAt": "2026-07-03",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2657619",
@@ -658,7 +658,7 @@
         "lDongSignguCd": "115",
         "tel": "031-290-3600",
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -683,8 +683,8 @@
       "sourcePublishedAt": "2025-05-23",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2747134",
@@ -695,7 +695,7 @@
         "lDongSignguCd": "113",
         "tel": null,
         "sourceUrlSource": "detailCommon2.homepage",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
       }
     },
     {
@@ -720,8 +720,8 @@
       "sourcePublishedAt": "2025-06-11",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2633915",
@@ -732,7 +732,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "detailCommon2.homepage",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
       }
     },
     {
@@ -757,8 +757,8 @@
       "sourcePublishedAt": "2025-09-19",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2739469",
@@ -769,7 +769,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -794,8 +794,8 @@
       "sourcePublishedAt": "2025-10-27",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "129191",
@@ -806,7 +806,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -831,8 +831,8 @@
       "sourcePublishedAt": "2025-10-23",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "125577",
@@ -843,7 +843,7 @@
         "lDongSignguCd": "111",
         "tel": null,
         "sourceUrlSource": "detailCommon2.homepage",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
       }
     },
     {
@@ -868,8 +868,8 @@
       "sourcePublishedAt": "2025-05-23",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2739465",
@@ -880,7 +880,7 @@
         "lDongSignguCd": "113",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -905,8 +905,8 @@
       "sourcePublishedAt": "2025-07-21",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "3428384",
@@ -917,7 +917,7 @@
         "lDongSignguCd": "111",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -942,8 +942,8 @@
       "sourcePublishedAt": "2025-05-23",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2613657",
@@ -954,7 +954,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "detailCommon2.homepage",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
       }
     },
     {
@@ -979,8 +979,8 @@
       "sourcePublishedAt": "2025-06-24",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2613660",
@@ -991,7 +991,7 @@
         "lDongSignguCd": "111",
         "tel": null,
         "sourceUrlSource": "detailCommon2.homepage",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
       }
     },
     {
@@ -1016,8 +1016,8 @@
       "sourcePublishedAt": "2025-07-30",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "3351831",
@@ -1028,7 +1028,7 @@
         "lDongSignguCd": "111",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -1053,8 +1053,8 @@
       "sourcePublishedAt": "2025-09-19",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2739476",
@@ -1065,7 +1065,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -1090,8 +1090,8 @@
       "sourcePublishedAt": "2025-09-19",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2781860",
@@ -1102,7 +1102,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -1127,8 +1127,8 @@
       "sourcePublishedAt": "2025-09-19",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2781864",
@@ -1139,7 +1139,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -1164,8 +1164,8 @@
       "sourcePublishedAt": "2025-09-19",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2781847",
@@ -1176,7 +1176,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -1201,8 +1201,8 @@
       "sourcePublishedAt": "2025-05-29",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2745742",
@@ -1213,7 +1213,7 @@
         "lDongSignguCd": "111",
         "tel": null,
         "sourceUrlSource": "detailCommon2.homepage",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
       }
     },
     {
@@ -1238,8 +1238,8 @@
       "sourcePublishedAt": "2025-09-19",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2613659",
@@ -1250,7 +1250,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "detailCommon2.homepage",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
       }
     },
     {
@@ -1275,8 +1275,8 @@
       "sourcePublishedAt": "2025-09-12",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "3075475",
@@ -1287,7 +1287,7 @@
         "lDongSignguCd": "113",
         "tel": null,
         "sourceUrlSource": "detailCommon2.homepage",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
       }
     },
     {
@@ -1312,8 +1312,8 @@
       "sourcePublishedAt": "2025-12-11",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2946407",
@@ -1324,7 +1324,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "detailCommon2.homepage",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
       }
     },
     {
@@ -1349,8 +1349,8 @@
       "sourcePublishedAt": "2025-09-19",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "486986",
@@ -1361,7 +1361,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "detailCommon2.homepage",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
       }
     },
     {
@@ -1386,8 +1386,8 @@
       "sourcePublishedAt": "2025-09-19",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2742316",
@@ -1398,7 +1398,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -1423,8 +1423,8 @@
       "sourcePublishedAt": "2025-12-24",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2613664",
@@ -1435,7 +1435,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "detailCommon2.homepage",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
       }
     },
     {
@@ -1460,8 +1460,8 @@
       "sourcePublishedAt": "2025-11-26",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "264400",
@@ -1472,7 +1472,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "detailCommon2.homepage",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
       }
     },
     {
@@ -1497,8 +1497,8 @@
       "sourcePublishedAt": "2025-04-22",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "736630",
@@ -1509,7 +1509,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "detailCommon2.homepage",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
       }
     },
     {
@@ -1534,8 +1534,8 @@
       "sourcePublishedAt": "2025-07-11",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "1064469",
@@ -1546,7 +1546,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "detailCommon2.homepage",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via detailCommon2.homepage."
       }
     },
     {
@@ -1571,8 +1571,8 @@
       "sourcePublishedAt": "2024-12-26",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "3426388",
@@ -1583,7 +1583,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -1608,8 +1608,8 @@
       "sourcePublishedAt": "2025-09-19",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2746031",
@@ -1620,7 +1620,7 @@
         "lDongSignguCd": "113",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -1645,8 +1645,8 @@
       "sourcePublishedAt": "2025-12-24",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "126618",
@@ -1657,7 +1657,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -1682,8 +1682,8 @@
       "sourcePublishedAt": "2025-09-12",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2741599",
@@ -1694,7 +1694,7 @@
         "lDongSignguCd": "111",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -1719,8 +1719,8 @@
       "sourcePublishedAt": "2025-06-11",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "264392",
@@ -1731,7 +1731,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -1756,8 +1756,8 @@
       "sourcePublishedAt": "2025-11-06",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "482135",
@@ -1768,7 +1768,7 @@
         "lDongSignguCd": "111",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -1793,8 +1793,8 @@
       "sourcePublishedAt": "2025-10-23",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "3427162",
@@ -1805,7 +1805,7 @@
         "lDongSignguCd": "113",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -1830,8 +1830,8 @@
       "sourcePublishedAt": "2025-07-28",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "125512",
@@ -1842,7 +1842,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -1867,8 +1867,8 @@
       "sourcePublishedAt": "2025-07-08",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "264386",
@@ -1879,7 +1879,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -1904,8 +1904,8 @@
       "sourcePublishedAt": "2025-05-23",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "482258",
@@ -1916,7 +1916,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -1941,8 +1941,8 @@
       "sourcePublishedAt": "2025-06-11",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2714556",
@@ -1953,7 +1953,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -1978,8 +1978,8 @@
       "sourcePublishedAt": "2025-08-05",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "3011177",
@@ -1990,7 +1990,7 @@
         "lDongSignguCd": "650",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2015,8 +2015,8 @@
       "sourcePublishedAt": "2025-11-17",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2745995",
@@ -2027,7 +2027,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2052,8 +2052,8 @@
       "sourcePublishedAt": "2025-06-25",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "264402",
@@ -2064,7 +2064,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2089,8 +2089,8 @@
       "sourcePublishedAt": "2025-06-24",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "128985",
@@ -2101,7 +2101,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2126,8 +2126,8 @@
       "sourcePublishedAt": "2025-07-24",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "264408",
@@ -2138,7 +2138,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2163,8 +2163,8 @@
       "sourcePublishedAt": "2025-05-22",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "130919",
@@ -2175,7 +2175,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2200,8 +2200,8 @@
       "sourcePublishedAt": "2025-05-23",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "130831",
@@ -2212,7 +2212,7 @@
         "lDongSignguCd": "111",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2237,8 +2237,8 @@
       "sourcePublishedAt": "2025-07-31",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "3427294",
@@ -2249,7 +2249,7 @@
         "lDongSignguCd": "111",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2274,8 +2274,8 @@
       "sourcePublishedAt": "2025-05-23",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "130489",
@@ -2286,7 +2286,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2311,8 +2311,8 @@
       "sourcePublishedAt": "2025-09-23",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "130744",
@@ -2323,7 +2323,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2348,8 +2348,8 @@
       "sourcePublishedAt": "2025-06-24",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2630998",
@@ -2360,7 +2360,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2385,8 +2385,8 @@
       "sourcePublishedAt": "2025-05-22",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "130827",
@@ -2397,7 +2397,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2422,8 +2422,8 @@
       "sourcePublishedAt": "2025-05-22",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "130816",
@@ -2434,7 +2434,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2459,8 +2459,8 @@
       "sourcePublishedAt": "2025-07-14",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2379222",
@@ -2471,7 +2471,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2496,8 +2496,8 @@
       "sourcePublishedAt": "2025-05-23",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "129718",
@@ -2508,7 +2508,7 @@
         "lDongSignguCd": "113",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2533,8 +2533,8 @@
       "sourcePublishedAt": "2025-05-22",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "130829",
@@ -2545,7 +2545,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2570,8 +2570,8 @@
       "sourcePublishedAt": "2025-12-22",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "130711",
@@ -2582,7 +2582,7 @@
         "lDongSignguCd": "111",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2607,8 +2607,8 @@
       "sourcePublishedAt": "2025-05-23",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "130095",
@@ -2619,7 +2619,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2644,8 +2644,8 @@
       "sourcePublishedAt": "2025-05-23",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "130094",
@@ -2656,7 +2656,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2681,8 +2681,8 @@
       "sourcePublishedAt": "2025-12-22",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2703375",
@@ -2693,7 +2693,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2718,8 +2718,8 @@
       "sourcePublishedAt": "2025-05-23",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "130826",
@@ -2730,7 +2730,7 @@
         "lDongSignguCd": "111",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2755,8 +2755,8 @@
       "sourcePublishedAt": "2025-05-23",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "130943",
@@ -2767,7 +2767,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2792,8 +2792,8 @@
       "sourcePublishedAt": "2025-12-22",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "130825",
@@ -2804,7 +2804,7 @@
         "lDongSignguCd": "113",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2829,8 +2829,8 @@
       "sourcePublishedAt": "2025-11-11",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2553414",
@@ -2841,44 +2841,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
-      }
-    },
-    {
-      "id": "suwon-tour-1887407",
-      "region": "suwon",
-      "title": "수원화성의 도시, 수원에서 즐기는 특별한 여행",
-      "type": "DISCOVER",
-      "category": "travel_course",
-      "summary": "수원화성의 도시, 수원에서 즐기는 특별한 여행 — 수원 관광·문화 정보.",
-      "description": null,
-      "startDate": null,
-      "endDate": null,
-      "applicationStart": null,
-      "applicationEnd": null,
-      "target": null,
-      "benefit": null,
-      "location": null,
-      "organization": "한국관광공사",
-      "thumbnail": null,
-      "sourceName": "한국관광공사 TourAPI",
-      "sourceUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=1887407",
-      "sourcePublishedAt": "2026-08-20",
-      "status": "published",
-      "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
-      "meta": {
-        "regionLabel": "수원",
-        "contentId": "1887407",
-        "contentTypeId": "25",
-        "areaCode": "",
-        "sigunguCode": "",
-        "lDongRegnCd": "",
-        "lDongSignguCd": "",
-        "tel": null,
-        "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2903,8 +2866,8 @@
       "sourcePublishedAt": "2025-05-28",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2745948",
@@ -2915,7 +2878,7 @@
         "lDongSignguCd": "113",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2940,8 +2903,8 @@
       "sourcePublishedAt": "2025-08-06",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2728930",
@@ -2952,7 +2915,7 @@
         "lDongSignguCd": "650",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -2977,8 +2940,8 @@
       "sourcePublishedAt": "2025-03-27",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "131719",
@@ -2989,7 +2952,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3014,8 +2977,8 @@
       "sourcePublishedAt": "2025-05-22",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "131767",
@@ -3026,7 +2989,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3051,8 +3014,8 @@
       "sourcePublishedAt": "2025-03-21",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "131662",
@@ -3063,7 +3026,7 @@
         "lDongSignguCd": "463",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3088,8 +3051,8 @@
       "sourcePublishedAt": "2025-12-19",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "3081940",
@@ -3100,7 +3063,7 @@
         "lDongSignguCd": "111",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3125,8 +3088,8 @@
       "sourcePublishedAt": "2025-10-27",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "1835388",
@@ -3137,192 +3100,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
-      }
-    },
-    {
-      "id": "suwon-tour-2753395",
-      "region": "suwon",
-      "title": "매산시장",
-      "type": "DISCOVER",
-      "category": "shopping",
-      "summary": "매산시장 — 수원 관광·문화 정보. 위치: 경기도 수원시 팔달구 권선로 477 (매산로2가, 대한대우아파트).",
-      "description": null,
-      "startDate": null,
-      "endDate": null,
-      "applicationStart": null,
-      "applicationEnd": null,
-      "target": null,
-      "benefit": null,
-      "location": "경기도 수원시 팔달구 권선로 477 (매산로2가, 대한대우아파트)",
-      "organization": "한국관광공사",
-      "thumbnail": "https://tong.visitkorea.or.kr/cms/resource/74/3560774_image2_1.jpg",
-      "sourceName": "한국관광공사 TourAPI",
-      "sourceUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=2753395",
-      "sourcePublishedAt": "2025-11-04",
-      "status": "published",
-      "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
-      "meta": {
-        "regionLabel": "수원",
-        "contentId": "2753395",
-        "contentTypeId": "38",
-        "areaCode": "31",
-        "sigunguCode": "13",
-        "lDongRegnCd": "41",
-        "lDongSignguCd": "115",
-        "tel": null,
-        "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
-      }
-    },
-    {
-      "id": "suwon-tour-1177952",
-      "region": "suwon",
-      "title": "못골종합시장 (못골시장)",
-      "type": "DISCOVER",
-      "category": "shopping",
-      "summary": "못골종합시장 (못골시장) — 수원 관광·문화 정보. 위치: 경기도 수원시 팔달구 수원천로258번길 10-12 (지동).",
-      "description": null,
-      "startDate": null,
-      "endDate": null,
-      "applicationStart": null,
-      "applicationEnd": null,
-      "target": null,
-      "benefit": null,
-      "location": "경기도 수원시 팔달구 수원천로258번길 10-12 (지동)",
-      "organization": "한국관광공사",
-      "thumbnail": "https://tong.visitkorea.or.kr/cms/resource/61/3407961_image2_1.png",
-      "sourceName": "한국관광공사 TourAPI",
-      "sourceUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=1177952",
-      "sourcePublishedAt": "2025-10-23",
-      "status": "published",
-      "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
-      "meta": {
-        "regionLabel": "수원",
-        "contentId": "1177952",
-        "contentTypeId": "38",
-        "areaCode": "31",
-        "sigunguCode": "13",
-        "lDongRegnCd": "41",
-        "lDongSignguCd": "115",
-        "tel": null,
-        "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
-      }
-    },
-    {
-      "id": "suwon-tour-132105",
-      "region": "suwon",
-      "title": "반딧불이 연무시장",
-      "type": "DISCOVER",
-      "category": "shopping",
-      "summary": "반딧불이 연무시장 — 수원 관광·문화 정보. 위치: 경기도 수원시 장안구 월드컵로428번길 10 (연무동).",
-      "description": null,
-      "startDate": null,
-      "endDate": null,
-      "applicationStart": null,
-      "applicationEnd": null,
-      "target": null,
-      "benefit": null,
-      "location": "경기도 수원시 장안구 월드컵로428번길 10 (연무동)",
-      "organization": "한국관광공사",
-      "thumbnail": "https://tong.visitkorea.or.kr/cms/resource/64/3400864_image2_1.JPG",
-      "sourceName": "한국관광공사 TourAPI",
-      "sourceUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=132105",
-      "sourcePublishedAt": "2025-07-29",
-      "status": "published",
-      "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
-      "meta": {
-        "regionLabel": "수원",
-        "contentId": "132105",
-        "contentTypeId": "38",
-        "areaCode": "31",
-        "sigunguCode": "13",
-        "lDongRegnCd": "41",
-        "lDongSignguCd": "111",
-        "tel": null,
-        "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
-      }
-    },
-    {
-      "id": "suwon-tour-2589025",
-      "region": "suwon",
-      "title": "수원 남문시장",
-      "type": "DISCOVER",
-      "category": "shopping",
-      "summary": "수원 남문시장 — 수원 관광·문화 정보. 위치: 경기도 수원시 팔달구 팔달문로 9 (팔달로2가).",
-      "description": null,
-      "startDate": null,
-      "endDate": null,
-      "applicationStart": null,
-      "applicationEnd": null,
-      "target": null,
-      "benefit": null,
-      "location": "경기도 수원시 팔달구 팔달문로 9 (팔달로2가)",
-      "organization": "한국관광공사",
-      "thumbnail": "https://tong.visitkorea.or.kr/cms/resource/33/2589033_image2_1.jpg",
-      "sourceName": "한국관광공사 TourAPI",
-      "sourceUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=2589025",
-      "sourcePublishedAt": "2025-05-23",
-      "status": "published",
-      "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
-      "meta": {
-        "regionLabel": "수원",
-        "contentId": "2589025",
-        "contentTypeId": "38",
-        "areaCode": "31",
-        "sigunguCode": "13",
-        "lDongRegnCd": "41",
-        "lDongSignguCd": "115",
-        "tel": null,
-        "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
-      }
-    },
-    {
-      "id": "suwon-tour-3351843",
-      "region": "suwon",
-      "title": "화서시장",
-      "type": "DISCOVER",
-      "category": "shopping",
-      "summary": "화서시장 — 수원 관광·문화 정보. 위치: 경기도 수원시 팔달구 동말로 72 (화서동).",
-      "description": null,
-      "startDate": null,
-      "endDate": null,
-      "applicationStart": null,
-      "applicationEnd": null,
-      "target": null,
-      "benefit": null,
-      "location": "경기도 수원시 팔달구 동말로 72 (화서동)",
-      "organization": "한국관광공사",
-      "thumbnail": "https://tong.visitkorea.or.kr/cms/resource/08/3408808_image2_1.jpg",
-      "sourceName": "한국관광공사 TourAPI",
-      "sourceUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=3351843",
-      "sourcePublishedAt": "2024-11-08",
-      "status": "published",
-      "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
-      "meta": {
-        "regionLabel": "수원",
-        "contentId": "3351843",
-        "contentTypeId": "38",
-        "areaCode": "31",
-        "sigunguCode": "13",
-        "lDongRegnCd": "41",
-        "lDongSignguCd": "115",
-        "tel": null,
-        "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3347,8 +3125,8 @@
       "sourcePublishedAt": "2025-01-16",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2747099",
@@ -3359,7 +3137,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3384,8 +3162,8 @@
       "sourcePublishedAt": "2025-05-27",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2876387",
@@ -3396,7 +3174,7 @@
         "lDongSignguCd": "113",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3421,8 +3199,8 @@
       "sourcePublishedAt": "2025-03-17",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2747216",
@@ -3433,7 +3211,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3458,8 +3236,8 @@
       "sourcePublishedAt": "2025-05-27",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2892852",
@@ -3470,7 +3248,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3495,8 +3273,8 @@
       "sourcePublishedAt": "2025-01-15",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2892876",
@@ -3507,7 +3285,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3532,8 +3310,8 @@
       "sourcePublishedAt": "2025-05-26",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2607118",
@@ -3544,7 +3322,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3569,8 +3347,8 @@
       "sourcePublishedAt": "2025-05-29",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2629006",
@@ -3581,7 +3359,7 @@
         "lDongSignguCd": "113",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3606,8 +3384,8 @@
       "sourcePublishedAt": "2025-07-31",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "602895",
@@ -3618,7 +3396,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3643,8 +3421,8 @@
       "sourcePublishedAt": "2025-05-26",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2844697",
@@ -3655,7 +3433,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3680,8 +3458,8 @@
       "sourcePublishedAt": "2025-05-26",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2848359",
@@ -3692,7 +3470,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3717,8 +3495,8 @@
       "sourcePublishedAt": "2025-05-23",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2831373",
@@ -3729,7 +3507,7 @@
         "lDongSignguCd": "113",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3754,8 +3532,8 @@
       "sourcePublishedAt": "2025-05-27",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2892936",
@@ -3766,7 +3544,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3791,8 +3569,8 @@
       "sourcePublishedAt": "2025-05-26",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2747096",
@@ -3803,7 +3581,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3828,8 +3606,8 @@
       "sourcePublishedAt": "2025-05-26",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2848347",
@@ -3840,7 +3618,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3865,8 +3643,8 @@
       "sourcePublishedAt": "2025-05-28",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2747116",
@@ -3877,7 +3655,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3902,8 +3680,8 @@
       "sourcePublishedAt": "2025-07-31",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "3355253",
@@ -3914,7 +3692,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3939,8 +3717,8 @@
       "sourcePublishedAt": "2025-06-26",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2835351",
@@ -3951,7 +3729,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -3976,8 +3754,8 @@
       "sourcePublishedAt": "2025-05-26",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2855712",
@@ -3988,7 +3766,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -4013,8 +3791,8 @@
       "sourcePublishedAt": "2025-05-26",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2844721",
@@ -4025,7 +3803,7 @@
         "lDongSignguCd": "111",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -4050,8 +3828,8 @@
       "sourcePublishedAt": "2025-05-26",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2848323",
@@ -4062,7 +3840,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -4087,8 +3865,8 @@
       "sourcePublishedAt": "2025-05-26",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2846949",
@@ -4099,7 +3877,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -4124,8 +3902,8 @@
       "sourcePublishedAt": "2025-05-26",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2846354",
@@ -4136,7 +3914,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -4161,8 +3939,8 @@
       "sourcePublishedAt": "2025-05-26",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2846370",
@@ -4173,7 +3951,7 @@
         "lDongSignguCd": "111",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -4198,8 +3976,8 @@
       "sourcePublishedAt": "2025-05-26",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2844733",
@@ -4210,7 +3988,7 @@
         "lDongSignguCd": "111",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -4235,8 +4013,8 @@
       "sourcePublishedAt": "2025-10-27",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2844739",
@@ -4247,7 +4025,7 @@
         "lDongSignguCd": "113",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -4272,8 +4050,8 @@
       "sourcePublishedAt": "2025-05-28",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2754744",
@@ -4284,7 +4062,7 @@
         "lDongSignguCd": "117",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -4309,8 +4087,8 @@
       "sourcePublishedAt": "2025-05-23",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2747109",
@@ -4321,7 +4099,7 @@
         "lDongSignguCd": "113",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -4346,8 +4124,8 @@
       "sourcePublishedAt": "2025-07-31",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "3356102",
@@ -4358,7 +4136,7 @@
         "lDongSignguCd": "115",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -4383,8 +4161,8 @@
       "sourcePublishedAt": "2025-05-26",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2831004",
@@ -4395,7 +4173,7 @@
         "lDongSignguCd": "113",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     },
     {
@@ -4420,8 +4198,8 @@
       "sourcePublishedAt": "2025-01-07",
       "status": "published",
       "opportunityScore": 0,
-      "createdAt": "2026-09-15T14:34:30+09:00",
-      "updatedAt": "2026-09-15T14:34:30+09:00",
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
       "meta": {
         "regionLabel": "수원",
         "contentId": "2745722",
@@ -4432,7 +4210,192 @@
         "lDongSignguCd": "113",
         "tel": null,
         "sourceUrlSource": "visitkorea_detail_cotid",
-        "pipelineNotes": "EPIC4 TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+      }
+    },
+    {
+      "id": "suwon-tour-2753395",
+      "region": "suwon",
+      "title": "매산시장",
+      "type": "DISCOVER",
+      "category": "shopping",
+      "summary": "매산시장 — 수원 관광·문화 정보. 위치: 경기도 수원시 팔달구 권선로 477 (매산로2가, 대한대우아파트).",
+      "description": null,
+      "startDate": null,
+      "endDate": null,
+      "applicationStart": null,
+      "applicationEnd": null,
+      "target": null,
+      "benefit": null,
+      "location": "경기도 수원시 팔달구 권선로 477 (매산로2가, 대한대우아파트)",
+      "organization": "한국관광공사",
+      "thumbnail": "https://tong.visitkorea.or.kr/cms/resource/74/3560774_image2_1.jpg",
+      "sourceName": "한국관광공사 TourAPI",
+      "sourceUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=2753395",
+      "sourcePublishedAt": "2025-11-04",
+      "status": "published",
+      "opportunityScore": 0,
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
+      "meta": {
+        "regionLabel": "수원",
+        "contentId": "2753395",
+        "contentTypeId": "38",
+        "areaCode": "31",
+        "sigunguCode": "13",
+        "lDongRegnCd": "41",
+        "lDongSignguCd": "115",
+        "tel": null,
+        "sourceUrlSource": "visitkorea_detail_cotid",
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+      }
+    },
+    {
+      "id": "suwon-tour-1177952",
+      "region": "suwon",
+      "title": "못골종합시장 (못골시장)",
+      "type": "DISCOVER",
+      "category": "shopping",
+      "summary": "못골종합시장 (못골시장) — 수원 관광·문화 정보. 위치: 경기도 수원시 팔달구 수원천로258번길 10-12 (지동).",
+      "description": null,
+      "startDate": null,
+      "endDate": null,
+      "applicationStart": null,
+      "applicationEnd": null,
+      "target": null,
+      "benefit": null,
+      "location": "경기도 수원시 팔달구 수원천로258번길 10-12 (지동)",
+      "organization": "한국관광공사",
+      "thumbnail": "https://tong.visitkorea.or.kr/cms/resource/61/3407961_image2_1.png",
+      "sourceName": "한국관광공사 TourAPI",
+      "sourceUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=1177952",
+      "sourcePublishedAt": "2025-10-23",
+      "status": "published",
+      "opportunityScore": 0,
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
+      "meta": {
+        "regionLabel": "수원",
+        "contentId": "1177952",
+        "contentTypeId": "38",
+        "areaCode": "31",
+        "sigunguCode": "13",
+        "lDongRegnCd": "41",
+        "lDongSignguCd": "115",
+        "tel": null,
+        "sourceUrlSource": "visitkorea_detail_cotid",
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+      }
+    },
+    {
+      "id": "suwon-tour-132105",
+      "region": "suwon",
+      "title": "반딧불이 연무시장",
+      "type": "DISCOVER",
+      "category": "shopping",
+      "summary": "반딧불이 연무시장 — 수원 관광·문화 정보. 위치: 경기도 수원시 장안구 월드컵로428번길 10 (연무동).",
+      "description": null,
+      "startDate": null,
+      "endDate": null,
+      "applicationStart": null,
+      "applicationEnd": null,
+      "target": null,
+      "benefit": null,
+      "location": "경기도 수원시 장안구 월드컵로428번길 10 (연무동)",
+      "organization": "한국관광공사",
+      "thumbnail": "https://tong.visitkorea.or.kr/cms/resource/64/3400864_image2_1.JPG",
+      "sourceName": "한국관광공사 TourAPI",
+      "sourceUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=132105",
+      "sourcePublishedAt": "2025-07-29",
+      "status": "published",
+      "opportunityScore": 0,
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
+      "meta": {
+        "regionLabel": "수원",
+        "contentId": "132105",
+        "contentTypeId": "38",
+        "areaCode": "31",
+        "sigunguCode": "13",
+        "lDongRegnCd": "41",
+        "lDongSignguCd": "111",
+        "tel": null,
+        "sourceUrlSource": "visitkorea_detail_cotid",
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+      }
+    },
+    {
+      "id": "suwon-tour-2589025",
+      "region": "suwon",
+      "title": "수원 남문시장",
+      "type": "DISCOVER",
+      "category": "shopping",
+      "summary": "수원 남문시장 — 수원 관광·문화 정보. 위치: 경기도 수원시 팔달구 팔달문로 9 (팔달로2가).",
+      "description": null,
+      "startDate": null,
+      "endDate": null,
+      "applicationStart": null,
+      "applicationEnd": null,
+      "target": null,
+      "benefit": null,
+      "location": "경기도 수원시 팔달구 팔달문로 9 (팔달로2가)",
+      "organization": "한국관광공사",
+      "thumbnail": "https://tong.visitkorea.or.kr/cms/resource/33/2589033_image2_1.jpg",
+      "sourceName": "한국관광공사 TourAPI",
+      "sourceUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=2589025",
+      "sourcePublishedAt": "2025-05-23",
+      "status": "published",
+      "opportunityScore": 0,
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
+      "meta": {
+        "regionLabel": "수원",
+        "contentId": "2589025",
+        "contentTypeId": "38",
+        "areaCode": "31",
+        "sigunguCode": "13",
+        "lDongRegnCd": "41",
+        "lDongSignguCd": "115",
+        "tel": null,
+        "sourceUrlSource": "visitkorea_detail_cotid",
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
+      }
+    },
+    {
+      "id": "suwon-tour-3351843",
+      "region": "suwon",
+      "title": "화서시장",
+      "type": "DISCOVER",
+      "category": "shopping",
+      "summary": "화서시장 — 수원 관광·문화 정보. 위치: 경기도 수원시 팔달구 동말로 72 (화서동).",
+      "description": null,
+      "startDate": null,
+      "endDate": null,
+      "applicationStart": null,
+      "applicationEnd": null,
+      "target": null,
+      "benefit": null,
+      "location": "경기도 수원시 팔달구 동말로 72 (화서동)",
+      "organization": "한국관광공사",
+      "thumbnail": "https://tong.visitkorea.or.kr/cms/resource/08/3408808_image2_1.jpg",
+      "sourceName": "한국관광공사 TourAPI",
+      "sourceUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=3351843",
+      "sourcePublishedAt": "2024-11-08",
+      "status": "published",
+      "opportunityScore": 0,
+      "createdAt": "2026-09-15T17:01:34+09:00",
+      "updatedAt": "2026-09-15T17:01:34+09:00",
+      "meta": {
+        "regionLabel": "수원",
+        "contentId": "3351843",
+        "contentTypeId": "38",
+        "areaCode": "31",
+        "sigunguCode": "13",
+        "lDongRegnCd": "41",
+        "lDongSignguCd": "115",
+        "tel": null,
+        "sourceUrlSource": "visitkorea_detail_cotid",
+        "pipelineNotes": "EPIC5 daily TourAPI KorService2; filtered addr/title contains 수원; sourceUrl via visitkorea_detail_cotid."
       }
     }
   ]

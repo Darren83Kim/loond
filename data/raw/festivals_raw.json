@@ -1,19 +1,8 @@
 {
-  "collectedAt": "2026-09-15T14:33:27.270912+09:00",
+  "collectedAt": "2026-09-15T16:59:20+09:00",
   "base": "https://apis.data.go.kr/B551011/KorService2",
-  "areaCode2_probe": {
-    "metas": [
-      {
-        "page": 1,
-        "ok": false,
-        "msg": "30:등록되지 않은 서비스키",
-        "got": 0,
-        "totalCount": 0
-      }
-    ],
-    "suwon_like": [],
-    "all_sample": []
-  },
+  "strategy": "area_filter",
+  "eventStartDate": "20260101",
   "runs": [
     {
       "mode": "area31",
@@ -30,72 +19,8 @@
       "count": 2
     },
     {
-      "mode": "sigungu_1",
-      "metas": [
-        {
-          "page": 1,
-          "ok": true,
-          "msg": "OK",
-          "got": 0,
-          "totalCount": 0
-        }
-      ],
-      "count": 0
-    },
-    {
-      "mode": "sigungu_2",
-      "metas": [
-        {
-          "page": 1,
-          "ok": true,
-          "msg": "OK",
-          "got": 0,
-          "totalCount": 0
-        }
-      ],
-      "count": 0
-    },
-    {
-      "mode": "sigungu_3",
-      "metas": [
-        {
-          "page": 1,
-          "ok": true,
-          "msg": "OK",
-          "got": 0,
-          "totalCount": 0
-        }
-      ],
-      "count": 0
-    },
-    {
-      "mode": "sigungu_4",
-      "metas": [
-        {
-          "page": 1,
-          "ok": true,
-          "msg": "OK",
-          "got": 0,
-          "totalCount": 0
-        }
-      ],
-      "count": 0
-    },
-    {
-      "mode": "ldong_41",
-      "metas": [
-        {
-          "page": 1,
-          "ok": true,
-          "msg": "OK",
-          "got": 100,
-          "totalCount": 100
-        }
-      ],
-      "count": 100
-    },
-    {
       "mode": "nationwide",
+      "eventStartDate": "20260101",
       "metas": [
         {
           "page": 1,
@@ -159,7 +84,6 @@
     }
   ],
   "suwon_count": 15,
-  "nationwide_suwon_count": 15,
   "items": [
     {
       "addr1": "경기도 수원시 권선구 서둔로 166 (서둔동)",

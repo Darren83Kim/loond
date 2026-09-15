@@ -1,7 +1,8 @@
 {
-  "collectedAt": "2026-09-15T14:33:27.270912+09:00",
+  "collectedAt": "2026-09-15T16:59:20+09:00",
   "base": "https://apis.data.go.kr/B551011/KorService2",
-  "suwon_count": 264,
+  "strategy": "area_filter",
+  "suwon_count": 263,
   "by_type_summary": {
     "12": {
       "category": "tour_spot",
@@ -18,9 +19,6 @@
         "동북공심돈",
         "만석거공원",
         "만석공원"
-      ],
-      "run_modes": [
-        "area31"
       ],
       "first_meta": {
         "page": 1,
@@ -46,9 +44,6 @@
         "수원광교박물관",
         "수원문화원"
       ],
-      "run_modes": [
-        "area31"
-      ],
       "first_meta": {
         "page": 1,
         "ok": true,
@@ -59,20 +54,9 @@
     },
     "25": {
       "category": "travel_course",
-      "suwon_count": 1,
-      "unique_total": 13,
-      "sample_titles": [
-        "수원화성의 도시, 수원에서 즐기는 특별한 여행"
-      ],
-      "run_modes": [
-        "area31",
-        "sigungu_1",
-        "sigungu_2",
-        "sigungu_3",
-        "sigungu_4",
-        "ldong_41",
-        "keyword_suwon"
-      ],
+      "suwon_count": 0,
+      "unique_total": 12,
+      "sample_titles": [],
       "first_meta": {
         "page": 1,
         "ok": true,
@@ -94,9 +78,6 @@
         "점핑파크 정자점",
         "[경기옛길 삼남길 제5길] 중복들길(서호공원입구 ~ 배양교)"
       ],
-      "run_modes": [
-        "area31"
-      ],
       "first_meta": {
         "page": 1,
         "ok": true,
@@ -115,9 +96,6 @@
         "반딧불이 연무시장",
         "수원 남문시장",
         "화서시장"
-      ],
-      "run_modes": [
-        "area31"
       ],
       "first_meta": {
         "page": 1,
@@ -142,9 +120,6 @@
         "고등반점",
         "골디스",
         "광교갈비"
-      ],
-      "run_modes": [
-        "area31"
       ],
       "first_meta": {
         "page": 1,
@@ -1748,33 +1723,6 @@
       "lclsSystm1": "VE",
       "lclsSystm2": "VE07",
       "lclsSystm3": "VE070600"
-    },
-    {
-      "addr1": "",
-      "addr2": "",
-      "zipcode": "",
-      "areacode": "",
-      "cat1": "",
-      "cat2": "",
-      "cat3": "",
-      "contentid": "1887407",
-      "contenttypeid": "25",
-      "createdtime": "20140121012629",
-      "firstimage": "",
-      "firstimage2": "",
-      "cpyrhtDivCd": "",
-      "mapx": "127.0000686555",
-      "mapy": "37.2969634675",
-      "mlevel": "7",
-      "modifiedtime": "20260820172930",
-      "sigungucode": "",
-      "tel": "",
-      "title": "수원화성의 도시, 수원에서 즐기는 특별한 여행",
-      "lDongRegnCd": "",
-      "lDongSignguCd": "",
-      "lclsSystm1": "C01",
-      "lclsSystm2": "C0112",
-      "lclsSystm3": "C01120001"
     },
     {
       "addr1": "경기도 수원시 권선구 매송고색로 620 (고색동)",
