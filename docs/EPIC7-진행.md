@@ -52,3 +52,7 @@
 - **배선 스모크 PASS**: 임시 `sourceUrl=https://example.com/` → CTA 클릭 → 같은 탭 `https://example.com/` 확인.
 - **수원 원문 목적지**: Grok Bot 컴퓨터에서 `https://www.suwon.go.kr/...` TLS 실패(`unexpected eof`) — Chrome 탭이 닫힘. TourAPI와 동일 계열 네트워크/TLS 제약. JSON의 `sourceUrl`은 정식 수원 URL로 유지.
 - 판정: **코드·배선 Done / 수원 목적지 E2E는 Windows PC·실기기에서 확인 (Deferred)**.
+- **Windows PC (2026-09-15)**: `suwon.go.kr` APPLY 원문 URL `curl` **HTTP 200** (TLS OK). 기본 브라우저로 동일 URL 오픈. 앱 내 CTA 클릭 E2E는 로컬 Flutter 미리보기에서 추가 확인 권장.
+
+## 스토어 스크린샷
+- 웹 프리뷰 4장 → `docs/store/screenshots/` (2026-09-15)

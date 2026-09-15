@@ -58,3 +58,15 @@
 ## 비고
 - 스토어 개인정보 URL: 당분간 GitHub `docs/legal/privacy-policy.md` 가능, **배포 시 전용 HTTPS 페이지로 교체**
 - AdMob **운영(프로덕션) 유닛 ID는 문서·리스팅에 기재하지 않음** — 출시 직전 앱 설정에서만 교체
+
+## 촬영본 (웹 · 2026-09-15)
+
+경로: `docs/store/screenshots/`
+
+1. `01-home-now.webp` — 홈 NOW
+2. `02-apply-detail.webp` — APPLY 상세 + 원문 CTA
+3. `03-enjoy-section.webp` — ENJOY
+4. `04-settings-privacy.webp` — 설정/개인정보
+
+스토어 제출 전 **실기기 세로 샷**으로 교체.
+
