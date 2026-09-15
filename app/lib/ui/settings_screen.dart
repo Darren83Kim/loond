@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../util/open_url.dart';
+import 'package:url_launcher/link.dart';
 
 /// Privacy policy — raw GitHub until a hosted URL is set for store release.
 const kPrivacyPolicyUrl =
@@ -8,29 +8,25 @@ const kPrivacyPolicyUrl =
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
-  Future<void> _openPrivacy(BuildContext context) async {
-    final uri = Uri.parse(kPrivacyPolicyUrl);
-    final ok = await openOutboundUrl(uri);
-    if (!ok && context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('브라우저를 열 수 없어요')),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('설정')),
       body: ListView(
         children: [
-          ListTile(
-            title: const Text('개인정보 처리방침'),
-            subtitle: const Text(
-              '탭하여 보기 · 배포 시 URL 교체 가능',
-            ),
-            trailing: const Icon(Icons.open_in_new, size: 18),
-            onTap: () => _openPrivacy(context),
+          Link(
+            uri: Uri.parse(kPrivacyPolicyUrl),
+            target: LinkTarget.blank,
+            builder: (context, followLink) {
+              return ListTile(
+                title: const Text('개인정보 처리방침'),
+                subtitle: const Text(
+                  '탭하여 보기 · 배포 시 URL 교체 가능',
+                ),
+                trailing: const Icon(Icons.open_in_new, size: 18),
+                onTap: followLink,
+              );
+            },
           ),
           const ListTile(
             title: Text('출처 안내'),
