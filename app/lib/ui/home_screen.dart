@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../ads/banner_ad_widget.dart';
+import '../ads/feed_with_ads.dart';
+import '../ads/interstitial_ad_manager.dart';
 import '../analytics/analytics_stub.dart';
 import '../data/opportunity_repository.dart';
 import '../models/opportunity.dart';
 import 'detail_screen.dart';
 import 'settings_screen.dart';
 import 'widgets/empty_state.dart';
-import 'widgets/opportunity_card.dart';
 import 'widgets/section_header.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _future = _repo.loadPublished();
+    InterstitialAdManager.instance.preload();
   }
 
   Future<void> _reload() async {
@@ -33,11 +36,14 @@ class _HomeScreenState extends State<HomeScreen> {
     await _future;
   }
 
-  void _openDetail(Opportunity item) {
+  Future<void> _openDetail(Opportunity item) async {
     AnalyticsStub.opportunityOpen(item.id);
-    Navigator.of(context).push(
+    await Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => DetailScreen(item: item)),
     );
+    // Interstitial only AFTER leaving detail — never near source CTA.
+    if (!mounted) return;
+    await InterstitialAdManager.instance.maybeShowAfterDetailPop();
   }
 
   @override
@@ -85,6 +91,18 @@ class _HomeScreenState extends State<HomeScreen> {
           final enjoy = bundle.enjoySorted;
           final discover = bundle.discoverSorted;
 
+          // Global card index across NOW+ANYTIME so ads never hit 1st/2nd.
+          var cardIndex = 0;
+          List<Widget> sectionCards(List<Opportunity> list) {
+            final widgets = buildFeedWithAds(
+              items: list,
+              onOpen: _openDetail,
+              startIndex: cardIndex,
+            );
+            cardIndex += list.length;
+            return widgets;
+          }
+
           return RefreshIndicator(
             onRefresh: _reload,
             child: ListView(
@@ -98,22 +116,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (apply.isEmpty)
                   const EmptyState(message: '지금 신청 가능한 공고가 없어요')
                 else
-                  ...apply.map(
-                    (o) => OpportunityCard(
-                      item: o,
-                      onTap: () => _openDetail(o),
-                    ),
-                  ),
+                  ...sectionCards(apply),
                 const SectionHeader(title: '즐기기 (ENJOY)'),
                 if (enjoy.isEmpty)
                   const EmptyState(message: '지금 즐길 수 있는 행사가 없어요')
                 else
-                  ...enjoy.map(
-                    (o) => OpportunityCard(
-                      item: o,
-                      onTap: () => _openDetail(o),
-                    ),
-                  ),
+                  ...sectionCards(enjoy),
                 const SectionHeader(
                   title: 'ANYTIME',
                   subtitle: '언제든 둘러보는 발견',
@@ -122,12 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (discover.isEmpty)
                   const EmptyState(message: '등록된 발견 콘텐츠가 없어요')
                 else
-                  ...discover.map(
-                    (o) => OpportunityCard(
-                      item: o,
-                      onTap: () => _openDetail(o),
-                    ),
-                  ),
+                  ...sectionCards(discover),
                 const SectionHeader(
                   title: 'MY CHANCE',
                   subtitle: '나에게 맞는 기회 (준비 중)',
@@ -171,6 +174,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           );
         },
+      ),
+      // 메인 하단 배너 (기획 §8) — web에서는 shrink
+      bottomNavigationBar: const SafeArea(
+        child: BannerAdWidget(),
       ),
     );
   }

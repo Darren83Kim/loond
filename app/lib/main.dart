@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'ads/ads_init.dart';
+import 'ads/interstitial_ad_manager.dart';
 import 'theme/app_theme.dart';
 import 'ui/home_screen.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeMobileAds();
+  InterstitialAdManager.instance.preload();
   runApp(const LoondApp());
 }
 
