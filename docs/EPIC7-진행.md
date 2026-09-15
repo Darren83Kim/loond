@@ -42,3 +42,10 @@
 - 웹 CTA 최종: `web.window.location.assign(sourceUrl)` (같은 탭). `_blank`/Link 시그널 레이스는 about:blank. 스모크 시 Chrome에 남은 AdMob 탭은 오탐 주의.
 - 웹 CTA: `dart.library.js_interop` → `location.assign` (dart.library.html만 쓰면 dart2js/wasm에서 IO launcher로 빠질 수 있음)
 
+## 7-1a 원문 CTA E2E (2026-09-15)
+
+- 웹 구현: `openOutboundUrl` → `dart.library.js_interop` + `window.location.assign` (같은 탭). 모바일은 `url_launcher` externalApplication.
+- **배선 스모크 PASS**: 임시 `sourceUrl=https://example.com/` → CTA 클릭 → 같은 탭 `https://example.com/` 확인.
+- **수원 원문 목적지**: Grok Bot 컴퓨터에서 `https://www.suwon.go.kr/...` TLS 실패(`unexpected eof`) — Chrome 탭이 닫힘. TourAPI와 동일 계열 네트워크/TLS 제약. JSON의 `sourceUrl`은 정식 수원 URL로 유지.
+- 판정: **코드·배선 Done / 수원 목적지 E2E는 Windows PC·실기기에서 확인 (Deferred)**.
+
