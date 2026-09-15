@@ -189,9 +189,11 @@ class OpportunityBundle {
       opportunities.where((o) => o.status == 'published').toList();
 
   /// Hard Sort: APPLY by applicationEnd asc, then title.
+  /// Excludes past applicationEnd (dDay < 0). JSON may still contain them.
   List<Opportunity> get applySorted {
     final list = published
         .where((o) => o.type == OpportunityType.apply)
+        .where((o) => o.dDay == null || o.dDay! >= 0)
         .toList();
     list.sort((a, b) {
       final ae = a.applicationEnd;
@@ -209,9 +211,18 @@ class OpportunityBundle {
   }
 
   /// Hard Sort: ENJOY by startDate asc, then title.
+  /// Optionally hides items whose endDate is already past.
   List<Opportunity> get enjoySorted {
     final list = published
         .where((o) => o.type == OpportunityType.enjoy)
+        .where((o) {
+          final end = o.endDate;
+          if (end == null) return true;
+          final today = DateTime.now();
+          final a = DateTime(today.year, today.month, today.day);
+          final b = DateTime(end.year, end.month, end.day);
+          return !b.isBefore(a);
+        })
         .toList();
     list.sort((a, b) {
       final as_ = a.startDate;
