@@ -114,3 +114,11 @@ Copy-Item E:\DsDevelop_Loond\data\published\opportunities.json `
 - [x] published JSON 에셋 로드
 - [x] 이벤트 스텁
 - [x] 회원가입/Score/지도/알림/AdMob 미구현
+
+---
+
+## 잔여·이월
+
+EPIC 1–3 감사에서 남은 항목은 `docs/구현계획서.md` **§11 잔여·이월 레지스터**에 모았다.  
+뒤 에픽 Task(4-0, 4-7, 5-6, 5-7, 7-1a, 7-5) 또는 EPIC 7 최종 재점검(7-1b)에서 닫는다.
+
