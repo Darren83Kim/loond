@@ -4,7 +4,7 @@
 
 ## 요약
 
-EPIC 3 Flutter MVP 앱 코드를 완성했고, Flutter stable SDK를 `C:\flutter`에 설치했습니다.  
+EPIC 3 Flutter MVP 앱 코드를 완성했고, (당시) Flutter stable SDK를 Windows `C:\flutter`에 설치했습니다. **현재 그록컴 기준 SDK는 `/home/box/flutter`.**  
 `flutter analyze` 이슈 없음. **Windows 데스크톱 빌드·Android debug APK 빌드 성공**.  
 에뮬레이터/실기기는 아직 없음(AVD 미생성). AdMob·Score·회원가입·지도·알림은 구현하지 않음.
 
@@ -14,7 +14,7 @@ EPIC 3 Flutter MVP 앱 코드를 완성했고, Flutter stable SDK를 `C:\flutter
 
 | 항목 | 내용 |
 |------|------|
-| 경로 | `C:\flutter` (`git clone … -b stable --depth 1`) |
+| 경로(당시) | `C:\flutter` (`git clone … -b stable --depth 1`) — **현재: `/home/box/flutter`** |
 | 버전 | Flutter **3.47.4** (stable), Dart **3.13.3** |
 | PATH | 사용자 PATH에 `C:\flutter\bin` 추가 |
 | 기존 깨진 SDK | `C:\DsDevelop\flutter` (bin/cache만 있고 `flutter.bat` 없음) — **사용하지 말 것** |
@@ -30,7 +30,7 @@ EPIC 3 Flutter MVP 앱 코드를 완성했고, Flutter stable SDK를 `C:\flutter
 | 라이선스 | 일부 수동 파일로 처리. `flutter doctor --android-licenses` 완전 통과는 미확인일 수 있음 |
 | 에뮬레이터 | **미설치/미생성** — AVD 없음 |
 
-참고: 프로젝트가 **E:**, Pub 캐시가 **C:** 인 경우 Kotlin incremental 캐시 오류가 나서  
+참고(역사): 당시 프로젝트가 **E:**, Pub 캐시가 **C:** 이라 Kotlin incremental 캐시 오류가 나서  
 `android/gradle.properties`에 `kotlin.incremental=false` 를 넣었습니다.
 
 ### 3. 앱 (EPIC 3)
@@ -60,32 +60,39 @@ EPIC 3 Flutter MVP 앱 코드를 완성했고, Flutter stable SDK를 `C:\flutter
 
 ## 실행 방법
 
-새 터미널에서 (PATH 반영 후):
+**현재 기준** — GitHub `Darren83Kim/loond` · 체크아웃 `/home/box/projects/loond` · Flutter `/home/box/flutter` (그록컴).
+
+```bash
+cd /home/box/projects/loond/app   # 또는 클론의 app/
+flutter pub get
+flutter run -d chrome            # 또는 연결된 기기/에뮬
+# Android: flutter run -d android
+```
+
+데이터 갱신:
+
+```bash
+# 저장소 루트에서
+python3 scripts/sync_published_assets.py
+# 또는: ./scripts/sync_published_assets.sh
+```
+
+<details>
+<summary>역사 기록 — 2026-09-14 Windows 로컬 (E:\ · C:\flutter)</summary>
+
+당시 EPIC 3 빌드는 Windows에서 `E:\DsDevelop_Loond` + `C:\flutter`로 수행됨. **현재 안내가 아님.**
 
 ```powershell
 $env:Path = "C:\flutter\bin;" + $env:Path
 $env:JAVA_HOME = "C:\Program Files\Android\Android Studio\jbr"
 $env:ANDROID_HOME = "$env:LOCALAPPDATA\Android\Sdk"
 cd E:\DsDevelop_Loond\app
-
-# Windows 데스크톱
-flutter run -d windows
-
-# 또는 Chrome
-flutter run -d chrome
-
-# Android (기기/에뮬 연결 후)
-flutter run -d android
-# 또는 이미 빌드된 APK 설치
-# adb install build\app\outputs\flutter-apk\app-debug.apk
-```
-
-데이터 갱신 시:
-
-```powershell
+flutter run -d windows   # 또는 chrome / android
 Copy-Item E:\DsDevelop_Loond\data\published\opportunities.json `
   E:\DsDevelop_Loond\app\assets\data\opportunities.json -Force
 ```
+
+</details>
 
 ## 주요 파일
 

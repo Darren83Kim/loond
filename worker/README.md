@@ -77,3 +77,8 @@ From repo root:
 ```
 
 Copies `data/published/opportunities.json` → `app/assets/data/opportunities.json`.
+
+## pending → published 검증 (EPIC 5-4 / R15)
+
+수동 승격 체크리스트: [`docs/ops/pending-publish-checklist.md`](../docs/ops/pending-publish-checklist.md)  
+(마감일·화이트리스트 APPLY·채용/입찰 제외·sourceUrl·HWP 확인·asset sync)

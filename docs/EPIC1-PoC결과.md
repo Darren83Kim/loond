@@ -2,7 +2,8 @@
 
 > 작성: 2026-09-14 · 갱신(정리): 2026-09-14  
 > 기획: `docs/기획서.md` · 계획: `docs/구현계획서.md` · 스파이크: `docs/참고.md`  
-> 환경: `E:\DsDevelop_Loond` · Python 3.12 · Windows
+> 환경(당시 Windows 기록): `E:\DsDevelop_Loond` · Python 3.12 · Windows  
+> **현재 기준 경로:** GitHub `Darren83Kim/loond` · 체크아웃 `/home/box/projects/loond` (그록컴)
 
 ---
 
@@ -44,10 +45,13 @@
 | pending_review 큐 | 72 |
 | **published** | **3** |
 
-```text
-cd E:\DsDevelop_Loond\worker
+```bash
+# 현재: /home/box/projects/loond (또는 클론 루트)
+cd worker
 python -m loond_worker.run_poc
 ```
+
+> 참고: 최초 PoC는 Windows `E:\DsDevelop_Loond\worker`에서 실행됨(역사 기록).
 
 ---
 

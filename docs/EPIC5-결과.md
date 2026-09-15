@@ -17,7 +17,7 @@
 |------|------|
 | 스케줄/수동 1회 성공 로그 | PASS (`workflow_dispatch`) |
 | Actions에 asset sync | PASS (5-1a / R14) |
-| 검증 체크리스트 1쪽 (5-4) | 이월 → §11 R15 |
+| 검증 체크리스트 1쪽 (5-4) | **Done** — `docs/ops/pending-publish-checklist.md` (R15) |
 | 문화포털·증분동기화·sigungu | 이월 R11–R13 |
 | CORS/`?v=` (5-6) | 이월 (Phase A asset) |
 | HWP 운영 루틴 (5-7) | 이월 |
@@ -30,4 +30,4 @@
 
 ## 다음
 
-EPIC 6 AdMob (테스트 유닛). 잔여 R11–R13, R15–R17은 §11.
+EPIC 6 AdMob (테스트 유닛). R15–R17 Done. 잔여 R11–R13 등은 §11.
