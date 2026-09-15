@@ -5,8 +5,19 @@ from __future__ import annotations
 from datetime import date, timedelta
 from pathlib import Path
 
-REGION_ID = "suwon"
-REGION_NAME = "수원"
+from .region_codes import (  # noqa: F401 — re-export TourAPI / region locks
+    FILTER_ADDR_KEYWORD,
+    REGION_ID,
+    REGION_NAME,
+    STRATEGY,
+    TOUR_API_AREA_CODE,
+    TOUR_API_BASE_URL,
+    TOUR_API_ENDPOINTS,
+    TOUR_API_SIGUNGU,
+    VERIFY_PENDING,
+    tour_api_service_key,
+)
+
 SOURCE_NAME = "수원특례시"
 
 # Prefer HTTP — HTTPS TLS may fail from some environments (spike finding).
