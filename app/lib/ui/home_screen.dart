@@ -12,7 +12,10 @@ import 'widgets/empty_state.dart';
 import 'widgets/section_header.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, this.loadBundle});
+
+  /// Optional loader for tests / fixtures. Defaults to asset repository.
+  final Future<OpportunityBundle> Function()? loadBundle;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -22,16 +25,18 @@ class _HomeScreenState extends State<HomeScreen> {
   final _repo = OpportunityRepository();
   late Future<OpportunityBundle> _future;
 
+  Future<OpportunityBundle> _defaultLoad() => _repo.loadPublished();
+
   @override
   void initState() {
     super.initState();
-    _future = _repo.loadPublished();
+    _future = (widget.loadBundle ?? _defaultLoad)();
     InterstitialAdManager.instance.preload();
   }
 
   Future<void> _reload() async {
     setState(() {
-      _future = _repo.loadPublished();
+      _future = (widget.loadBundle ?? _defaultLoad)();
     });
     await _future;
   }
