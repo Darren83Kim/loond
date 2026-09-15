@@ -35,3 +35,6 @@ python -m loond_worker.run_tour_daily
 ## 비용/한도 메모
 - Actions Free ~2,000분/월 → 일 1회 5–10분이면 충분
 - TourAPI 개발 1,000회/일 → 앱 미호출, Worker만
+
+## 마감
+핵심 DoD PASS — 详见 `docs/EPIC5-결과.md`. 다음 EPIC 6.
