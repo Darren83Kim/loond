@@ -49,20 +49,20 @@ python -m loond_worker.run_poc --proxy-samples
 - 게재기간 종료일은 `applicationEndSource=publish_period_proxy` 로만 표시 가능 (자동 published 금지).
 - HWP/HWPX는 존재 여부만 기록 (본 파서 PoC 범위 밖).
 
-## 지역 · TourAPI (EPIC 4-0)
+## 지역 · TourAPI (EPIC 4-0 / 4-1)
 
-- `region_id=suwon` / `region_name=수원` — see `loond_worker/region_codes.py` (also re-exported from `config`)
-- `TOUR_API_AREA_CODE="31"` (경기도)
-- Sigungu draft (TourAPI-relative, **not** 법정동): 장안=1, 권선=2, 팔달=3, 영통=4 — **`VERIFY_PENDING=True`** until `areaCode1` live check
-- Strategy: `multi_sigungu` primary; fallback `FILTER_ADDR_KEYWORD="수원"`
-- Base URL: `https://apis.data.go.kr/B551011/KorService1`
-- Service key: env **`TOUR_API_SERVICE_KEY`** only (never commit)
+- `region_id=suwon` / `region_name=수원` — see `loond_worker/region_codes.py`
+- Base URL: **`https://apis.data.go.kr/B551011/KorService2`** (KorService1 retired)
+- `TOUR_API_AREA_CODE="31"` (경기도) + **`STRATEGY=area_filter`** (`FILTER_ADDR_KEYWORD="수원"`)
+- Draft sigungu 1–4 under 31 returned 0 live; legal-dong 41/{111,113,115,117} observed on items
+- `VERIFY_PENDING=True` — `areaCode2` key-scope error; list APIs OK
+- Service key: env **`TOUR_API_SERVICE_KEY`** only (never commit). Prefer Windows host if box TLS fails.
 
 ```bash
 # no key → exit 0 with message (CI-safe)
 python -m loond_worker.tour_collect
 
-# with key → areaCode1 for 31, writes data/raw/tourapi_*.json
+# with key → areaCode2 probe (may fail); live collect used searchFestival2/areaBasedList2
 export TOUR_API_SERVICE_KEY=your_key
 python -m loond_worker.tour_collect
 ```

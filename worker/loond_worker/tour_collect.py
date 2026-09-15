@@ -1,8 +1,11 @@
-"""TourAPI areaCode1 stub — EPIC 4-0 / prep for 4-1.
+"""TourAPI KorService2 collector stub — EPIC 4-0 / 4-1.
 
 Without TOUR_API_SERVICE_KEY: exit 0 with a clear message (CI-safe).
-With key: call areaCode1 for areaCode=31, print Suwon-related sigungu,
-write raw JSON under data/raw/, and emit a verified snapshot for review.
+With key: probe areaCode2 for areaCode=31, and optionally searchFestival2 /
+areaBasedList2 with STRATEGY=area_filter (addr/title contains 수원).
+
+NOTE: Box TLS to apis.data.go.kr often fails; prefer running live collection
+on a Windows/desktop host. This module remains the in-repo contract.
 
 Does NOT invent festival / ENJOY data without a successful API call.
 """
@@ -12,9 +15,8 @@ from __future__ import annotations
 import json
 import sys
 from datetime import datetime, timezone
-from pathlib import Path
 from typing import Any
-from urllib.parse import urlencode
+from urllib.parse import quote
 
 import requests
 
@@ -29,26 +31,30 @@ def _utc_now_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
 
-def _area_code1_url(service_key: str, area_code: str | None = None) -> str:
-    params: dict[str, str] = {
-        "serviceKey": service_key,
+def _build_url(endpoint: str, service_key: str, extra: dict[str, str]) -> str:
+    """Build URL splicing serviceKey as-is (supports pre-URL-encoded keys)."""
+    parts = [f"serviceKey={service_key}"]
+    params = {
         "MobileOS": MOBILE_OS,
         "MobileApp": MOBILE_APP,
         "_type": "json",
         "numOfRows": "100",
         "pageNo": "1",
+        **extra,
     }
-    if area_code:
-        params["areaCode"] = area_code
-    path = rc.TOUR_API_ENDPOINTS["areaCode1"]
-    return f"{rc.TOUR_API_BASE_URL}/{path}?{urlencode(params)}"
+    for k, v in params.items():
+        if v is None or v == "":
+            continue
+        parts.append(f"{k}={quote(str(v), safe='')}")
+    path = rc.TOUR_API_ENDPOINTS[endpoint]
+    return f"{rc.TOUR_API_BASE_URL}/{path}?{'&'.join(parts)}"
 
 
 def _normalize_items(body: dict[str, Any]) -> list[dict[str, Any]]:
     items = body.get("items")
-    if not items:
+    if not items or items == "":
         return []
-    raw = items.get("item", []) if isinstance(items, dict) else []
+    raw = items.get("item", []) if isinstance(items, dict) else items
     if isinstance(raw, dict):
         return [raw]
     if isinstance(raw, list):
@@ -56,10 +62,7 @@ def _normalize_items(body: dict[str, Any]) -> list[dict[str, Any]]:
     return []
 
 
-def fetch_area_codes(service_key: str, area_code: str | None = None) -> dict[str, Any]:
-    url = _area_code1_url(service_key, area_code)
-    # serviceKey may be pre-encoded; requests.get with params would double-encode.
-    # We already built the query string; pass URL as-is.
+def fetch_json(url: str) -> dict[str, Any]:
     resp = requests.get(url, timeout=config.REQUEST_TIMEOUT)
     resp.raise_for_status()
     return resp.json()
@@ -69,8 +72,8 @@ def main() -> int:
     key = rc.tour_api_service_key()
     if not key:
         print(
-            "TOUR_API_SERVICE_KEY not set — skipping TourAPI areaCode1 call "
-            "(exit 0; set the env var to verify Suwon sigungu codes)."
+            "TOUR_API_SERVICE_KEY not set — skipping TourAPI KorService2 call "
+            "(exit 0; set the env var to verify codes / collect)."
         )
         return 0
 
@@ -78,11 +81,20 @@ def main() -> int:
     out_all = config.RAW_DIR / "tourapi_area_codes_31.json"
     out_verified = config.RAW_DIR / "tourapi_suwon_codes_verified.json"
 
-    print(f"Calling areaCode1 for areaCode={rc.TOUR_API_AREA_CODE} …")
+    print(
+        f"Calling areaCode2 for areaCode={rc.TOUR_API_AREA_CODE} "
+        f"(STRATEGY={rc.STRATEGY}) …"
+    )
     try:
-        payload = fetch_area_codes(key, rc.TOUR_API_AREA_CODE)
-    except Exception as exc:  # noqa: BLE001 — surface API/network errors clearly
-        print(f"TourAPI areaCode1 failed: {exc}", file=sys.stderr)
+        url = _build_url("areaCode2", key, {"areaCode": rc.TOUR_API_AREA_CODE})
+        payload = fetch_json(url)
+    except Exception as exc:  # noqa: BLE001
+        print(f"TourAPI areaCode2 failed: {exc}", file=sys.stderr)
+        print(
+            "Hint: areaCode2 may reject some keys (resultCode 30); "
+            "use searchFestival2/areaBasedList2 + FILTER_ADDR_KEYWORD instead.",
+            file=sys.stderr,
+        )
         return 1
 
     out_all.write_text(
@@ -93,16 +105,48 @@ def main() -> int:
 
     header = (payload.get("response") or {}).get("header") or {}
     body = (payload.get("response") or {}).get("body") or {}
+    # Top-level error shape (some KorService2 gateways)
+    if "resultCode" in payload and "response" not in payload:
+        header = {
+            "resultCode": payload.get("resultCode"),
+            "resultMsg": payload.get("resultMsg"),
+        }
     result_code = str(header.get("resultCode", ""))
-    if result_code and result_code != "0000":
+    if result_code and result_code not in ("0000", "0"):
         print(
             f"TourAPI resultCode={result_code} msg={header.get('resultMsg')}",
             file=sys.stderr,
         )
+        verified_doc = {
+            "fetchedAt": _utc_now_iso(),
+            "areaCode": rc.TOUR_API_AREA_CODE,
+            "verifyPendingInSource": rc.VERIFY_PENDING,
+            "areaCode2Result": {"resultCode": result_code, "resultMsg": header.get("resultMsg")},
+            "note": (
+                "areaCode2 did not succeed. Collection STRATEGY=area_filter "
+                f"(areaCode={rc.TOUR_API_AREA_CODE} + keyword "
+                f"'{rc.FILTER_ADDR_KEYWORD}'). Observed legal-dong Suwon "
+                f"signgu={list(rc.TOUR_API_LDONG_SIGNGU_SUWON)}."
+            ),
+            "draftConstants": {
+                "TOUR_API_BASE_URL": rc.TOUR_API_BASE_URL,
+                "TOUR_API_AREA_CODE": rc.TOUR_API_AREA_CODE,
+                "TOUR_API_SIGUNGU": list(rc.TOUR_API_SIGUNGU),
+                "TOUR_API_SIGUNGU_OBSERVED": list(rc.TOUR_API_SIGUNGU_OBSERVED),
+                "TOUR_API_LDONG_REGN": rc.TOUR_API_LDONG_REGN,
+                "TOUR_API_LDONG_SIGNGU_SUWON": list(rc.TOUR_API_LDONG_SIGNGU_SUWON),
+                "STRATEGY": rc.STRATEGY,
+                "FILTER_ADDR_KEYWORD": rc.FILTER_ADDR_KEYWORD,
+            },
+        }
+        out_verified.write_text(
+            json.dumps(verified_doc, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        print(f"Wrote {out_verified.relative_to(config.PROJECT_ROOT)}")
         return 1
 
     items = _normalize_items(body)
-    # Names containing 수원 (e.g. 수원시 장안구) — filter for operator review
     suwon_like = [
         it
         for it in items
@@ -116,26 +160,17 @@ def main() -> int:
         marker = " *" if rc.FILTER_ADDR_KEYWORD in str(name) else ""
         print(f"  {code}: {name}{marker}")
 
-    if suwon_like:
-        print(f"\nSuwon-related ({rc.FILTER_ADDR_KEYWORD}*): {len(suwon_like)}")
-        for it in suwon_like:
-            print(f"  {it.get('code')}: {it.get('name')}")
-    else:
-        print(
-            f"\nNo name containing '{rc.FILTER_ADDR_KEYWORD}' in area "
-            f"{rc.TOUR_API_AREA_CODE} list — inspect {out_all.name} manually."
-        )
-
     verified_doc = {
         "fetchedAt": _utc_now_iso(),
         "areaCode": rc.TOUR_API_AREA_CODE,
         "verifyPendingInSource": rc.VERIFY_PENDING,
         "note": (
-            "Live areaCode1 snapshot. Compare codes/names to "
+            "Live areaCode2 snapshot. Compare codes/names to "
             "region_codes.TOUR_API_SIGUNGU; when they match, set "
-            "VERIFY_PENDING=False in region_codes.py (EPIC 4-1)."
+            "VERIFY_PENDING=False in region_codes.py."
         ),
         "draftConstants": {
+            "TOUR_API_BASE_URL": rc.TOUR_API_BASE_URL,
             "TOUR_API_AREA_CODE": rc.TOUR_API_AREA_CODE,
             "TOUR_API_SIGUNGU": list(rc.TOUR_API_SIGUNGU),
             "STRATEGY": rc.STRATEGY,
@@ -155,10 +190,6 @@ def main() -> int:
         encoding="utf-8",
     )
     print(f"Wrote {out_verified.relative_to(config.PROJECT_ROOT)}")
-    print(
-        "VERIFY_PENDING remains True in region_codes.py until you confirm "
-        "the mapping and flip the flag (do not invent ENJOY data here)."
-    )
     return 0
 
 
