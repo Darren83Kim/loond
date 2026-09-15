@@ -38,4 +38,5 @@
 - 2026-09-15: `LaunchMode.externalApplication` → about:blank 이슈
 - 수정: `lib/util/open_url.dart` — 웹은 `platformDefault` + `_blank`
 - 재시도: `url_launcher` `Link` 위젯(웹 DOM `<a target=_blank>`)으로 CTA 교체 — window.open 팝업차단/about:blank 회피
+- 웹 CTA: `LinkTarget.self` / `webOnlyWindowName: _self` (같은 탭) — `_blank`는 스모크·일부 환경에서 about:blank
 

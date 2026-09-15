@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/link.dart';
@@ -134,7 +135,7 @@ class DetailScreen extends StatelessWidget {
               }
               return Link(
                 uri: uri,
-                target: LinkTarget.blank,
+                target: kIsWeb ? LinkTarget.self : LinkTarget.blank,
                 builder: (context, followLink) {
                   return FilledButton.icon(
                     onPressed: followLink == null

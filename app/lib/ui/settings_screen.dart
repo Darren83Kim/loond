@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/link.dart';
 
@@ -16,7 +17,7 @@ class SettingsScreen extends StatelessWidget {
         children: [
           Link(
             uri: Uri.parse(kPrivacyPolicyUrl),
-            target: LinkTarget.blank,
+            target: kIsWeb ? LinkTarget.self : LinkTarget.blank,
             builder: (context, followLink) {
               return ListTile(
                 title: const Text('개인정보 처리방침'),
