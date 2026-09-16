@@ -72,6 +72,7 @@ class Opportunity {
     this.createdAt,
     this.updatedAt,
     this.hasHwp = false,
+    this.lDongSignguCd,
   });
 
   final String id;
@@ -103,6 +104,8 @@ class Opportunity {
   final DateTime? updatedAt;
   /// meta.hasHwp — HWP/첨부 안내 표시용 (meta 없으면 false).
   final bool hasHwp;
+  /// TourAPI meta.lDongSignguCd (수원 구: 111/113/115/117). null if absent.
+  final String? lDongSignguCd;
 
   /// Prefer imageUrl → thumbnailUrl → thumbnail when non-empty.
   String? get displayImageUrl {
@@ -116,8 +119,14 @@ class Opportunity {
   factory Opportunity.fromJson(Map<String, dynamic> json) {
     final meta = json['meta'];
     var hasHwp = false;
-    if (meta is Map<String, dynamic>) {
+    String? lDongSignguCd;
+    if (meta is Map) {
       hasHwp = meta['hasHwp'] == true;
+      final rawCd = meta['lDongSignguCd'];
+      if (rawCd != null) {
+        final s = rawCd.toString().trim();
+        if (s.isNotEmpty) lDongSignguCd = s;
+      }
     }
     return Opportunity(
       id: json['id'] as String? ?? '',
@@ -146,6 +155,7 @@ class Opportunity {
       createdAt: _parseDate(json['createdAt']),
       updatedAt: _parseDate(json['updatedAt']),
       hasHwp: hasHwp,
+      lDongSignguCd: lDongSignguCd,
     );
   }
 
