@@ -110,6 +110,14 @@ class DiscoverDistrict {
     return null;
   }
 
+
+  /// Map/chip shared selection: tap selected gu again or 「전체」 → clear.
+  static String toggleSelection(String currentId, String tappedId) {
+    if (tappedId == all.id) return all.id;
+    if (currentId == tappedId) return all.id;
+    return tappedId;
+  }
+
   static DiscoverDistrict byId(String id) {
     for (final d in suwonGus) {
       if (d.id == id) return d;

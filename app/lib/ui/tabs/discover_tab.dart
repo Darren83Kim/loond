@@ -6,9 +6,10 @@ import '../../models/opportunity.dart';
 import '../../theme/app_theme.dart';
 import '../../util/discover_district.dart';
 import '../widgets/discover_grid_card.dart';
+import '../widgets/suwon_district_map.dart';
 import '../widgets/empty_state.dart';
 
-/// 발견 — 검색 + 카테고리·구 필터 칩 + 2열 그리드 카드.
+/// 발견 — 검색 + 카테고리·구 필터 칩(+수원 개략 지도) + 2열 그리드 카드.
 class DiscoverTab extends StatefulWidget {
   const DiscoverTab({
     super.key,
@@ -16,12 +17,16 @@ class DiscoverTab extends StatefulWidget {
     required this.regionReady,
     required this.onOpen,
     required this.onRefresh,
+    this.regionId = 'suwon',
   });
 
   final List<Opportunity> items;
   final bool regionReady;
   final void Function(Opportunity) onOpen;
   final Future<void> Function() onRefresh;
+
+  /// When `suwon`, show schematic 4-gu map (phase 2). Other regions hide it.
+  final String regionId;
 
   @override
   State<DiscoverTab> createState() => _DiscoverTabState();
@@ -247,6 +252,11 @@ class _DiscoverTabState extends State<DiscoverTab> {
             selectedId: _filter,
             onSelect: (id) => setState(() => _filter = id),
           ),
+          if (widget.regionId == 'suwon')
+            SuwonDistrictMap(
+              selectedDistrictId: _districtId,
+              onDistrictSelected: (id) => setState(() => _districtId = id),
+            ),
           _chipRow(
             items: districtChips,
             selectedId: _districtId,

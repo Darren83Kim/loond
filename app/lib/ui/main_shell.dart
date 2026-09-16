@@ -188,6 +188,7 @@ class _MainShellState extends State<MainShell> {
             DiscoverTab(
               items: discover,
               regionReady: regionReady,
+              regionId: widget.region.id,
               onOpen: _openDetail,
               onRefresh: _reload,
             ),

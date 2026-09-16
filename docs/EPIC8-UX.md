@@ -10,7 +10,7 @@
 | 변경 | 홈 앱바 **지역 칩** + 더보기「지역 변경」. 피커는 **검색 + 인기/최근 칩**. |
 | 탭 | Material 3 `NavigationBar`: **홈 \| 발견 \| 내 기회 \| 더보기** (컨셉 목업). |
 | 기본 탭 | **홈** — 히어로, 퀵 카테고리, NOW 신청(APPLY), 곧 시작(ENJOY 가로). 퀵 APPLY/ENJOY·섹션 타이틀 → 전체 목록 화면. |
-| 발견 | 검색 + 카테고리·**구(수원)** 필터 칩(AND), **2열 그리드** 카드. 지도는 deferred. |
+| 발견 | 검색 + 카테고리·**구(수원)** 필터 칩(AND) + **수원 4구 개략 지도**(탭=동일 구 필터), **2열 그리드** 카드. 실좌표 핀은 deferred. |
 | 내 기회 | **저장한 기회**(로컬 `BookmarkStore` ids → bundle resolve) + BENEFIT 얇게 + 관심 키워드 UI(로컬). |
 | 데이터 | 레지스트리 확장 가능. **수원만** published JSON. 타 지역: 「이 지역 데이터 준비 중」. |
 | 비주얼 | 소프트 블루 시드, 카드 radius ~14, 여백 많은 밝은 UI. `docs/design/CONCEPT.md` + mockup. |
@@ -31,14 +31,23 @@
 |------|------|
 | 상세 | 대형 히어로 이미지(`displayImageUrl`) + AppBar **공유**(share_plus) · **북마크**(로컬 SharedPreferences `BookmarkStore`). 서버 동기화 없음. CTA「공식 원문 보기」유지. |
 | 내 기회 | 「저장한 기회」섹션: bookmark id를 bundle 전 타입(APPLY/ENJOY/DISCOVER/BENEFIT)에 resolve, 저장 순서 유지. 빈 상태 안내. 상세 토글 후 pop 시 MainShell `setState`로 목록 갱신. |
-| 발견 | **구 칩** 전체\|장안\|권선\|팔달\|영통 — `meta.lDongSignguCd`(111/113/115/117) 우선, 없으면 location/summary/description/title 문자열. 카테고리 칩과 AND. **2열 그리드**(`DiscoverGridCard`: 짧은 이미지·제목 1–2줄·구 라벨·작은 카테고리). 결과 건수 유지. **지도 deferred**. 별점·가짜 평점 없음. |
+| 발견 | **구 칩** 전체\|장안\|권선\|팔달\|영통 — `meta.lDongSignguCd`(111/113/115/117) 우선, 없으면 location/summary/description/title 문자열. 카테고리 칩과 AND. **수원 개략 지도**(CustomPainter 4구, 칩과 동일 `_district` 상태; 재탭/「전체」→클리어; 타 시군은 지도 숨김). **2열 그리드**(`DiscoverGridCard`). 결과 건수 유지. **실좌표 핀 deferred**. 별점·가짜 평점 없음. |
 | 홈 | 히어로(~78)·퀵 카테고리·섹션 타이틀 주변 세로 여백 추가 축소. 지역명 히어로 타이틀·NOW/곧 열려요 유지. |
 | 브랜딩·히어로 | 홈 헤더 Material pin → **커스텀 Loond pin 로고** (`assets/images/loond_pin_logo.png`). 지역 히어로: 수원 `hero_suwon.png`(화성 성곽 배너), 기타 레지스트리 지역 `hero_default.png`. `Region.heroAsset` 우선, 없으면 `heroImageUrl`/플레이스홀더. 레퍼런스 카피: `docs/design/`. |
+
+
+## Discover map phases
+
+| Phase | 내용 | 상태 |
+|-------|------|------|
+| 1 | 구 칩 + 2열 그리드 | Done (`74828a5`) |
+| 2 | 수원 4구 **개략 지도**(CustomPainter) → 동일 구 필터. SDK/핀 없음 | Done (본 커밋) |
+| 3 | 실좌표 핀 (Worker mapx/mapy 등) | Deferred — 좌표·멀티지역 준비 후 |
 
 ## 11. Residual / Open / Deferred
 
 | 항목 | 상태 | 이유 |
 |------|------|------|
 | 시군별 **고유** 히어로 아트 (용인·성남·고양·부천·화성 등) | Open / Deferred | 현재는 수원 전용 + 공용 default 배너만 번들. 도시별 커스텀 일러스트/사진은 아트 제작·라이선스 후 `Region.heroAsset`에 개별 경로로 확장. |
-| 발견 **지도** / 멀티지역 Worker | Deferred | phase 1은 구 칩 + 그리드 스캔성만. 지도·타 시군 Worker는 별도. |
+| 발견 **실좌표 핀 / 멀티지역 Worker** | Deferred | phase 2는 수원 4구 개략 지도(칩과 동일 필터). phase 3 핀·좌표·타 시군 Worker는 별도. |
 
