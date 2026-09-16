@@ -17,3 +17,12 @@ Play 폰 스크린샷: 최소 2장. 위 `01`–`05` 권장.
 ## 웹 프리뷰 (구)
 
 `01`–`04` …webp 및 CTA 확인용 `05`–`06` png는 자리표시·증거용.
+
+## Play 업로드용 (광고 제거 · 상호 스샷 제외)
+
+경로: `play/`
+
+- 하단 테스트 광고 띠 크롭
+- `발견` 스샷 제외 (업체 상호 노출)
+- PC 사본: `C:\Users\round1studio_34\loond-play-assets\screenshots-play\`
+
