@@ -255,4 +255,23 @@ class OpportunityBundle {
     });
     return list;
   }
+
+  /// 루트 region 또는 개별 opportunity.region 이 [regionId]와 일치하면 true.
+  bool hasDataForRegion(String regionId) {
+    if (region == regionId) return true;
+    return opportunities.any((o) => o.region == regionId);
+  }
+
+  List<Opportunity> applySortedForRegion(String regionId) => applySorted
+      .where((o) => o.region == regionId)
+      .toList();
+
+  List<Opportunity> enjoySortedForRegion(String regionId) => enjoySorted
+      .where((o) => o.region == regionId)
+      .toList();
+
+  List<Opportunity> discoverSortedForRegion(String regionId) => discoverSorted
+      .where((o) => o.region == regionId)
+      .toList();
 }
+

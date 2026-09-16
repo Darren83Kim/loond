@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'ads/ads_init.dart';
 import 'ads/interstitial_ad_manager.dart';
 import 'theme/app_theme.dart';
-import 'ui/home_screen.dart';
+import 'ui/app_root.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +21,7 @@ class LoondApp extends StatelessWidget {
       title: '로온드',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
-      home: const HomeScreen(),
+      home: const AppRoot(),
     );
   }
 }
