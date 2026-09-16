@@ -71,7 +71,11 @@ class HomeTab extends StatelessWidget {
       ),
       Padding(
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-        child: _HeroBand(region: region),
+        child: _HeroBand(
+          region: region,
+          regionReady: regionReady,
+          applyCount: apply.length,
+        ),
       ),
       Padding(
         padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
@@ -182,23 +186,32 @@ class HomeTab extends StatelessWidget {
 }
 
 class _HeroBand extends StatelessWidget {
-  const _HeroBand({required this.region});
+  const _HeroBand({
+    required this.region,
+    required this.regionReady,
+    required this.applyCount,
+  });
 
   final Region region;
+  final bool regionReady;
+  final int applyCount;
+
+  static const double _height = 78;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return ClipRRect(
       borderRadius: BorderRadius.circular(AppTheme.cardRadius + 2),
       child: SizedBox(
-        height: 132,
+        height: _height,
         width: double.infinity,
         child: Stack(
           fit: StackFit.expand,
           children: [
             RemoteOrPlaceholderImage(
               url: region.heroImageUrl,
-              height: 132,
+              height: _height,
               width: double.infinity,
               borderRadius: BorderRadius.zero,
               seedColor: AppTheme.seed,
@@ -216,15 +229,30 @@ class _HeroBand extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(18),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  '이 지역, 지금 뭐가 있지?',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '「${region.chipLabel}, 지금 뭐가 있지?」',
+                      style: theme.textTheme.titleMedium?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w800,
                       ),
+                    ),
+                    if (regionReady) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        '신청 가능 $applyCount건',
+                        style: theme.textTheme.labelMedium?.copyWith(
+                          color: Colors.white.withValues(alpha: 0.9),
+                        ),
+                      ),
+                    ],
+                  ],
                 ),
               ),
             ),

@@ -8,6 +8,7 @@ import '../data/region_store.dart';
 import '../models/opportunity.dart';
 import '../models/region.dart';
 import 'detail_screen.dart';
+import 'opportunity_list_screen.dart';
 import 'region_picker_screen.dart';
 import 'settings_screen.dart';
 import 'tabs/discover_tab.dart';
@@ -82,14 +83,40 @@ class _MainShellState extends State<MainShell> {
     widget.onRegionChanged(selected);
   }
 
-  void _onQuickCategory(int categoryIndex) {
+  void _onQuickCategory(
+    int categoryIndex, {
+    required List<Opportunity> apply,
+    required List<Opportunity> enjoy,
+    required bool regionReady,
+  }) {
     switch (categoryIndex) {
       case 0:
-        // APPLY — stay on home (NOW section already visible)
-        setState(() => _tabIndex = 0);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => OpportunityListScreen(
+              title: '신청할 수 있는 기회',
+              items: apply,
+              emptyMessage: '지금 신청 가능한 공고가 없어요',
+              regionDataReady: regionReady,
+              onOpen: _openDetail,
+              onRefresh: _reload,
+            ),
+          ),
+        );
         break;
       case 1:
-        setState(() => _tabIndex = 0);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => OpportunityListScreen(
+              title: '곧 열리는 행사',
+              items: enjoy,
+              emptyMessage: '지금 즐길 수 있는 행사가 없어요',
+              regionDataReady: regionReady,
+              onOpen: _openDetail,
+              onRefresh: _reload,
+            ),
+          ),
+        );
         break;
       case 2:
         setState(() => _tabIndex = 1);
@@ -142,7 +169,12 @@ class _MainShellState extends State<MainShell> {
               onRefresh: _reload,
               onChangeRegion: _changeRegion,
               onSearch: () => setState(() => _tabIndex = 1),
-              onQuickCategory: _onQuickCategory,
+              onQuickCategory: (i) => _onQuickCategory(
+                i,
+                apply: apply,
+                enjoy: enjoy,
+                regionReady: regionReady,
+              ),
             ),
             DiscoverTab(
               items: discover,
