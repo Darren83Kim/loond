@@ -79,3 +79,10 @@
 - 환경: Windows Chrome · `flutter run -d chrome` · `http://localhost:8080`
 - 흐름: APPLY 상세 → 「원문에서 확인하기」 → `suwon.go.kr` 해당 공고(조원2동 가을 힐링원예) 확인
 - 판정: **R7 Done**
+
+## 실기기 스모크 (2026-09-16)
+
+- 기기: Samsung SM-A405S (Android 10) · `flutter run -d R59N204EJ2F`
+- debug APK 설치·실행 OK → §11 R8 Done
+- 사용자 수동 확인: 홈 / APPLY 상세 / 원문 CTA / 설정
+
