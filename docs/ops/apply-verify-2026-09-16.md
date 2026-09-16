@@ -27,3 +27,23 @@
 - 4번 심리상담: 단순 상시 서비스가 아니라 모집기간·자격·신청서·선정통지가 있어 APPLY 정의에 들어감. 다만 대상이 좁고 마감이 매우 임박.
 - HTML 본문에 기간·대상·방법이 보이나, 상세는 HWP/PDF 첨부 — 운영 난이도(첨부 마감) 가설과 일치.
 - **다음 액션(사람):** 위 적합 건 중 승격 여부 결정 후 sync. proxy 마감 3건은 여전히 제외.
+
+## Publish 결정 (2026-09-16 저녁)
+
+목적: APPLY **유형 다양성 실험** (물량 확대 아님). UX/기능 추가 없음.
+
+**승격 4건** → published + `app/assets` sync.
+
+| id | category | applicationEnd | target (상세 노출) |
+|----|----------|----------------|-------------------|
+| suwon-ofr-156601 | support_apply | 2026-09-30 | 탄소모니터링 가입 아파트 |
+| suwon-ofr-156369 | support_apply | 2026-09-30 | 민간 투명방음벽 소유·관리자 |
+| suwon-ofr-156587 | experience_apply | 2026-09-18 | 자원봉사자 2명 |
+| suwon-ofr-156307 | support_apply | 2026-09-17 | 새일 관련 여성 구직자 등 |
+
+### APPLY 7건 유형 분포
+- course_local 3
+- support_apply 3
+- experience_apply 1
+
+Hard Sort: 마감 임박순 → 홈 NOW 상단에 심리상담(D~1)·봉사(D~2)가 먼저 보임.
