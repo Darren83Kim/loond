@@ -6,6 +6,7 @@ class Region {
     this.areaCode,
     this.sigunguCode,
     this.hasPublishedData = false,
+    this.heroImageUrl,
   });
 
   final String id;
@@ -19,6 +20,17 @@ class Region {
 
   /// 앱에 실데이터가 실려 있는지 (지금은 수원만 true).
   final bool hasPublishedData;
+
+  /// Optional hero band image for 홈 (없으면 그라데이션 플레이스홀더).
+  final String? heroImageUrl;
+
+  /// Display chip label (e.g. 수원시).
+  String get chipLabel {
+    if (nameKo.endsWith('시') || nameKo.endsWith('군') || nameKo.endsWith('구')) {
+      return nameKo;
+    }
+    return '$nameKo시';
+  }
 }
 
 /// 성장 가능한 시군 레지스트리. 데이터 없는 지역은 빈 상태 카피로 안내.
@@ -64,6 +76,13 @@ class RegionRegistry {
       hasPublishedData: false,
     ),
   ];
+
+  /// 인기 칩용 — 데이터 있는 지역 우선, 그다음 레지스트리 앞쪽.
+  static List<Region> get popular {
+    final withData = all.where((r) => r.hasPublishedData).toList();
+    final rest = all.where((r) => !r.hasPublishedData).take(4).toList();
+    return [...withData, ...rest];
+  }
 
   static Region? byId(String id) {
     for (final r in all) {

@@ -137,7 +137,7 @@ class DetailScreen extends StatelessWidget {
           FilledButton.icon(
             onPressed: () => _openSource(context),
             icon: const Icon(Icons.open_in_new),
-            label: const Text('원문에서 확인하기'),
+            label: const Text('공식 원문 보기'),
           ),
         ],
       ),

@@ -111,4 +111,37 @@ void main() {
       expect(enjoy.every((o) => o.type == OpportunityType.enjoy), isTrue);
     });
   });
+
+  group('Opportunity image fields', () {
+    test('displayImageUrl prefers imageUrl then thumbnailUrl then thumbnail',
+        () {
+      const o = Opportunity(
+        id: 'x',
+        region: 'suwon',
+        title: 't',
+        type: OpportunityType.discover,
+        category: 'food',
+        summary: 's',
+        sourceName: 'n',
+        sourceUrl: 'https://example.com',
+        thumbnail: 'https://a.example/t.jpg',
+        thumbnailUrl: 'https://a.example/tu.jpg',
+        imageUrl: 'https://a.example/i.jpg',
+      );
+      expect(o.displayImageUrl, 'https://a.example/i.jpg');
+
+      final fromJson = Opportunity.fromJson({
+        'id': 'y',
+        'region': 'suwon',
+        'title': 't',
+        'type': 'DISCOVER',
+        'category': 'food',
+        'summary': 's',
+        'sourceName': 'n',
+        'sourceUrl': 'https://example.com',
+        'thumbnailUrl': 'https://a.example/tu.jpg',
+      });
+      expect(fromJson.displayImageUrl, 'https://a.example/tu.jpg');
+    });
+  });
 }

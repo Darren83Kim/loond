@@ -5,6 +5,11 @@ import '../ui/widgets/opportunity_card.dart';
 import 'ad_config.dart';
 import 'native_ad_card.dart';
 
+typedef OpportunityCardBuilder = Widget Function(
+  Opportunity item,
+  VoidCallback onTap,
+);
+
 /// Builds opportunity cards + in-feed native ads.
 /// [startIndex] continues a global counter across sections so ads stay
 /// every ~4 cards and never on the 1st/2nd list cards.
@@ -12,16 +17,17 @@ List<Widget> buildFeedWithAds({
   required List<Opportunity> items,
   required void Function(Opportunity) onOpen,
   required int startIndex,
+  OpportunityCardBuilder? cardBuilder,
 }) {
   final out = <Widget>[];
   for (var i = 0; i < items.length; i++) {
     final globalIndex = startIndex + i;
     final o = items[i];
+    void onTap() => onOpen(o);
     out.add(
-      OpportunityCard(
-        item: o,
-        onTap: () => onOpen(o),
-      ),
+      cardBuilder != null
+          ? cardBuilder(o, onTap)
+          : OpportunityCard(item: o, onTap: onTap),
     );
     if (AdConfig.shouldInsertFeedAdAfterCardIndex(globalIndex)) {
       out.add(const NativeAdCard());

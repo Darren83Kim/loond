@@ -69,6 +69,7 @@ class _AppRootState extends State<AppRoot> {
     if (_region == null) {
       return RegionPickerScreen(
         allowDismiss: false,
+        regionStore: _store,
         onSelected: _onRegionSelected,
       );
     }

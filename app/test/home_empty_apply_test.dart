@@ -30,7 +30,7 @@ void main() {
   });
 
   testWidgets(
-    'empty APPLY tab shows Korean empty copy; ENJOY stays out of APPLY',
+    'home NOW apply empty; ENJOY appears in 곧 열려요 section',
     (tester) async {
       const enjoyTitle = '수원 가을 축제 테스트';
       final fixture = OpportunityBundle(
@@ -52,16 +52,20 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Default tab is 신청 — empty APPLY copy, no ENJOY card mixed in.
+      // Default tab is 홈 — empty APPLY copy, ENJOY in horizontal section.
       expect(find.text('지금 신청 가능한 공고가 없어요'), findsOneWidget);
-      expect(find.text(enjoyTitle), findsNothing);
-      expect(find.text('신청'), findsWidgets);
-
-      // Switch to 즐기기 — ENJOY card appears; APPLY empty gone from view tree
-      // (IndexedStack keeps offstage children; use NavigationBar tap).
-      await tester.tap(find.text('즐기기'));
-      await tester.pumpAndSettle();
+      expect(find.textContaining('곧 열려요'), findsOneWidget);
       expect(find.text(enjoyTitle), findsOneWidget);
+      expect(find.text('홈'), findsWidgets);
+      expect(find.text('발견'), findsOneWidget);
+
+      // Switch to 발견 — ENJOY not mixed into discover feed.
+      await tester.tap(find.text('발견'));
+      await tester.pumpAndSettle();
+      expect(find.text('발견하기'), findsOneWidget);
+      // IndexedStack keeps offstage home; ENJOY title may still be in tree.
+      // Discover empty copy should show (no DISCOVER items in fixture).
+      expect(find.text('등록된 발견 콘텐츠가 없어요'), findsOneWidget);
     },
   );
 }

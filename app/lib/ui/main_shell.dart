@@ -8,12 +8,14 @@ import '../data/region_store.dart';
 import '../models/opportunity.dart';
 import '../models/region.dart';
 import 'detail_screen.dart';
-import 'my_chance_screen.dart';
-import 'opportunity_tab.dart';
 import 'region_picker_screen.dart';
 import 'settings_screen.dart';
+import 'tabs/discover_tab.dart';
+import 'tabs/home_tab.dart';
+import 'tabs/more_tab.dart';
+import 'tabs/my_chance_tab.dart';
 
-/// 메인 셸: 지역 칩 + MY CHANCE 아이콘 + 신청|즐기기|발견 탭.
+/// 메인 셸: 홈 | 발견 | 내 기회 | 더보기.
 class MainShell extends StatefulWidget {
   const MainShell({
     super.key,
@@ -37,7 +39,7 @@ class MainShell extends StatefulWidget {
 class _MainShellState extends State<MainShell> {
   final _repo = OpportunityRepository();
   late Future<OpportunityBundle> _future;
-  int _tabIndex = 0; // default: 신청
+  int _tabIndex = 0; // default: 홈
 
   Future<OpportunityBundle> _defaultLoad() => _repo.loadPublished();
 
@@ -70,6 +72,7 @@ class _MainShellState extends State<MainShell> {
         builder: (_) => RegionPickerScreen(
           allowDismiss: true,
           selectedRegionId: widget.region.id,
+          regionStore: widget.regionStore,
           onSelected: (region) => Navigator.of(context).pop(region),
         ),
       ),
@@ -79,50 +82,27 @@ class _MainShellState extends State<MainShell> {
     widget.onRegionChanged(selected);
   }
 
+  void _onQuickCategory(int categoryIndex) {
+    switch (categoryIndex) {
+      case 0:
+        // APPLY — stay on home (NOW section already visible)
+        setState(() => _tabIndex = 0);
+        break;
+      case 1:
+        setState(() => _tabIndex = 0);
+        break;
+      case 2:
+        setState(() => _tabIndex = 1);
+        break;
+      case 3:
+        setState(() => _tabIndex = 2);
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('로온드'),
-            Text(
-              '${widget.region.nameKo}의 기회',
-              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-            ),
-          ],
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 4),
-            child: ActionChip(
-              avatar: const Icon(Icons.place_outlined, size: 16),
-              label: Text(widget.region.nameKo),
-              visualDensity: VisualDensity.compact,
-              onPressed: _changeRegion,
-            ),
-          ),
-          IconButton(
-            tooltip: 'MY CHANCE',
-            icon: const Icon(Icons.auto_awesome_outlined),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const MyChanceScreen()),
-              );
-            },
-          ),
-          IconButton(
-            tooltip: '설정',
-            icon: const Icon(Icons.settings_outlined),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const SettingsScreen()),
-              );
-            },
-          ),
-        ],
-      ),
       body: FutureBuilder<OpportunityBundle>(
         future: _future,
         builder: (context, snap) {
@@ -148,28 +128,42 @@ class _MainShellState extends State<MainShell> {
           final discover = regionReady
               ? bundle.discoverSortedForRegion(widget.region.id)
               : const <Opportunity>[];
+          final benefit = regionReady
+              ? bundle.benefitSortedForRegion(widget.region.id)
+              : const <Opportunity>[];
 
           final tabs = [
-            OpportunityTab(
-              items: apply,
-              emptyMessage: '지금 신청 가능한 공고가 없어요',
+            HomeTab(
+              region: widget.region,
+              regionReady: regionReady,
+              apply: apply,
+              enjoy: enjoy,
               onOpen: _openDetail,
               onRefresh: _reload,
-              regionDataReady: regionReady,
+              onChangeRegion: _changeRegion,
+              onSearch: () => setState(() => _tabIndex = 1),
+              onQuickCategory: _onQuickCategory,
             ),
-            OpportunityTab(
-              items: enjoy,
-              emptyMessage: '지금 즐길 수 있는 행사가 없어요',
-              onOpen: _openDetail,
-              onRefresh: _reload,
-              regionDataReady: regionReady,
-            ),
-            OpportunityTab(
+            DiscoverTab(
               items: discover,
-              emptyMessage: '등록된 발견 콘텐츠가 없어요',
+              regionReady: regionReady,
               onOpen: _openDetail,
               onRefresh: _reload,
-              regionDataReady: regionReady,
+            ),
+            MyChanceTab(
+              benefits: benefit,
+              regionReady: regionReady,
+              onOpen: _openDetail,
+              onRefresh: _reload,
+            ),
+            MoreTab(
+              regionLabel: widget.region.chipLabel,
+              onChangeRegion: _changeRegion,
+              onOpenSettings: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                );
+              },
             ),
           ];
 
@@ -187,19 +181,24 @@ class _MainShellState extends State<MainShell> {
             onDestinationSelected: (i) => setState(() => _tabIndex = i),
             destinations: const [
               NavigationDestination(
-                icon: Icon(Icons.assignment_outlined),
-                selectedIcon: Icon(Icons.assignment),
-                label: '신청',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.celebration_outlined),
-                selectedIcon: Icon(Icons.celebration),
-                label: '즐기기',
+                icon: Icon(Icons.home_outlined),
+                selectedIcon: Icon(Icons.home),
+                label: '홈',
               ),
               NavigationDestination(
                 icon: Icon(Icons.explore_outlined),
                 selectedIcon: Icon(Icons.explore),
                 label: '발견',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.bookmark_border),
+                selectedIcon: Icon(Icons.bookmark),
+                label: '내 기회',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.menu),
+                selectedIcon: Icon(Icons.menu),
+                label: '더보기',
               ),
             ],
           ),

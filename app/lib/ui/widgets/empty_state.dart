@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/app_theme.dart';
+
 class EmptyState extends StatelessWidget {
   const EmptyState({super.key, required this.message});
 
@@ -15,7 +17,7 @@ class EmptyState extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppTheme.cardRadius),
           border: Border.all(color: theme.dividerColor.withValues(alpha: 0.4)),
         ),
         child: Text(

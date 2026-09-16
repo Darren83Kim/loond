@@ -35,13 +35,14 @@ void main() {
     expect(find.text('어느 시군의 기회를 볼까요?'), findsOneWidget);
     expect(find.text('로온드'), findsNothing);
 
-    await tester.tap(find.text('수원'));
+    await tester.tap(find.text('수원시').first);
     await tester.pumpAndSettle();
 
     expect(find.text('로온드'), findsOneWidget);
-    expect(find.text('신청'), findsWidgets);
-    expect(find.text('즐기기'), findsOneWidget);
+    expect(find.text('홈'), findsWidgets);
     expect(find.text('발견'), findsOneWidget);
+    expect(find.text('내 기회'), findsOneWidget);
+    expect(find.text('더보기'), findsOneWidget);
 
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getString(RegionStore.selectedRegionKey), 'suwon');
@@ -68,7 +69,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('이 지역 데이터 준비 중'), findsOneWidget);
-    expect(find.text('용인'), findsWidgets);
+    expect(find.text('이 지역 데이터 준비 중'), findsWidgets);
+    expect(find.textContaining('용인'), findsWidgets);
   });
 }
