@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-09-15T16:59:20+09:00",
+  "collectedAt": "2026-09-16T12:21:52+09:00",
   "base": "https://apis.data.go.kr/B551011/KorService2",
   "strategy": "area_filter",
   "eventStartDate": "20260101",
@@ -27,60 +27,60 @@
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 724
+          "totalCount": 728
         },
         {
           "page": 2,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 724
+          "totalCount": 728
         },
         {
           "page": 3,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 724
+          "totalCount": 728
         },
         {
           "page": 4,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 724
+          "totalCount": 728
         },
         {
           "page": 5,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 724
+          "totalCount": 728
         },
         {
           "page": 6,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 724
+          "totalCount": 728
         },
         {
           "page": 7,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 724
+          "totalCount": 728
         },
         {
           "page": 8,
           "ok": true,
           "msg": "OK",
-          "got": 24,
-          "totalCount": 724
+          "got": 28,
+          "totalCount": 728
         }
       ],
-      "count": 724,
-      "totalCount": 724
+      "count": 728,
+      "totalCount": 728
     }
   ],
   "suwon_count": 15,
