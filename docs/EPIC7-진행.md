@@ -74,3 +74,8 @@
 - release signing은 아직 **debug** — Play 업로드 전 upload keystore 권장
 - 체크리스트: `docs/store/internal-test.md` §9
 
+## 7-1a 원문 CTA — Windows in-app PASS (2026-09-16)
+
+- 환경: Windows Chrome · `flutter run -d chrome` · `http://localhost:8080`
+- 흐름: APPLY 상세 → 「원문에서 확인하기」 → `suwon.go.kr` 해당 공고(조원2동 가을 힐링원예) 확인
+- 판정: **R7 Done**

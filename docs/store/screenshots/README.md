@@ -10,3 +10,7 @@ Grok Bot 컴퓨터 Chrome · `http://localhost:8080` 기준. 실기기/플레이
 | `04-settings-privacy.webp` | 설정 · 개인정보 처리방침 링크 |
 
 참고: 수원 원문(`suwon.go.kr`)은 이 환경 TLS 불가 — 상세 CTA는 클릭하지 않고 버튼 노출만 촬영.
+
+| `05-cta-detail-windows.png` | Windows 앱 APPLY 상세 + CTA (E2E 증거) |
+| `06-cta-suwon-destination.png` | CTA 목적지 수원 공고 페이지 |
+
