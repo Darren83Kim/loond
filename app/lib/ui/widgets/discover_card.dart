@@ -15,9 +15,12 @@ class DiscoverCard extends StatelessWidget {
   final Opportunity item;
   final VoidCallback onTap;
 
+  static const double imageHeight = 180;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final location = item.location?.trim();
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
@@ -27,7 +30,7 @@ class DiscoverCard extends StatelessWidget {
           children: [
             RemoteOrPlaceholderImage(
               url: item.displayImageUrl,
-              height: 148,
+              height: imageHeight,
               width: double.infinity,
               borderRadius: BorderRadius.zero,
               seedColor: categoryLabelColor(item),
@@ -47,6 +50,29 @@ class DiscoverCard extends StatelessWidget {
                       fontWeight: FontWeight.w800,
                     ),
                   ),
+                  if (location != null && location.isNotEmpty) ...[
+                    const SizedBox(height: 6),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.place_outlined,
+                          size: 14,
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: Text(
+                            location,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: theme.textTheme.labelMedium?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                   if (item.summary.isNotEmpty) ...[
                     const SizedBox(height: 6),
                     Text(

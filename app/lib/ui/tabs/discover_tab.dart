@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../ads/feed_with_ads.dart';
 import '../../models/opportunity.dart';
+import '../../theme/app_theme.dart';
 import '../widgets/discover_card.dart';
 import '../widgets/empty_state.dart';
 
@@ -35,6 +36,13 @@ class _DiscoverTabState extends State<DiscoverTab> {
     ('course', '여행코스'),
   ];
 
+  String get _filterLabel {
+    for (final (id, label) in _filters) {
+      if (id == _filter) return label;
+    }
+    return '전체';
+  }
+
   @override
   void dispose() {
     _search.dispose();
@@ -53,8 +61,19 @@ class _DiscoverTabState extends State<DiscoverTab> {
       if (q.isEmpty) return true;
       return o.title.toLowerCase().contains(q) ||
           o.summary.toLowerCase().contains(q) ||
-          o.categoryBadgeKo.contains(q);
+          o.categoryBadgeKo.contains(q) ||
+          (o.location?.toLowerCase().contains(q) ?? false);
     }).toList();
+  }
+
+  String get _emptyMessage {
+    if (_filter != 'all') {
+      return '「$_filterLabel」에 맞는 발견 콘텐츠가 없어요';
+    }
+    if (_search.text.trim().isNotEmpty) {
+      return '검색 결과가 없어요';
+    }
+    return '등록된 발견 콘텐츠가 없어요';
   }
 
   @override
@@ -77,7 +96,7 @@ class _DiscoverTabState extends State<DiscoverTab> {
 
     final filtered = _filtered;
     final feed = filtered.isEmpty
-        ? <Widget>[const EmptyState(message: '등록된 발견 콘텐츠가 없어요')]
+        ? <Widget>[EmptyState(message: _emptyMessage)]
         : buildFeedWithAds(
             items: filtered,
             onOpen: widget.onOpen,
@@ -131,15 +150,41 @@ class _DiscoverTabState extends State<DiscoverTab> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: FilterChip(
-                      label: Text(label),
+                      label: Text(
+                        label,
+                        style: TextStyle(
+                          fontWeight:
+                              _filter == id ? FontWeight.w700 : FontWeight.w500,
+                          color: _filter == id ? Colors.white : null,
+                        ),
+                      ),
                       selected: _filter == id,
+                      showCheckmark: false,
+                      selectedColor: AppTheme.seed,
+                      backgroundColor: Colors.white,
+                      side: BorderSide(
+                        color: _filter == id
+                            ? AppTheme.seed
+                            : theme.colorScheme.outlineVariant,
+                      ),
                       onSelected: (_) => setState(() => _filter = id),
                     ),
                   ),
               ],
             ),
           ),
-          const SizedBox(height: 4),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
+            child: Text(
+              filtered.isEmpty
+                  ? '결과 0건'
+                  : '$_filterLabel · ${filtered.length}건',
+              style: theme.textTheme.labelMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
           ...feed,
         ],
       ),

@@ -42,7 +42,7 @@ class HomeTab extends StatelessWidget {
       SafeArea(
         bottom: false,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 8, 0),
+          padding: const EdgeInsets.fromLTRB(16, 4, 8, 0),
           child: Row(
             children: [
               const Icon(Icons.location_on, color: AppTheme.seed, size: 26),
@@ -70,7 +70,7 @@ class HomeTab extends StatelessWidget {
         ),
       ),
       Padding(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
         child: _HeroBand(
           region: region,
           regionReady: regionReady,
@@ -78,7 +78,7 @@ class HomeTab extends StatelessWidget {
         ),
       ),
       Padding(
-        padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
+        padding: const EdgeInsets.fromLTRB(8, 4, 8, 0),
         child: Row(
           children: [
             _QuickCategory(
@@ -229,7 +229,7 @@ class _HeroBand extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Column(
@@ -283,7 +283,7 @@ class _QuickCategory extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
           child: Column(
             children: [
               Container(
@@ -295,7 +295,7 @@ class _QuickCategory extends StatelessWidget {
                 ),
                 child: Icon(icon, color: color),
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: 4),
               Text(
                 label,
                 textAlign: TextAlign.center,
@@ -329,7 +329,7 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 20, 16, 8),
+      padding: const EdgeInsets.fromLTRB(16, 14, 16, 4),
       child: Row(
         children: [
           Text(emoji, style: theme.textTheme.titleMedium),
