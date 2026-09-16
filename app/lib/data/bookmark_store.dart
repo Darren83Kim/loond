@@ -12,9 +12,16 @@ class BookmarkStore {
     return _prefs ??= await SharedPreferences.getInstance();
   }
 
-  Future<Set<String>> getIds() async {
+  /// Bookmark ids in save order (oldest first).
+  Future<List<String>> getIdsOrdered() async {
     final prefs = await _ensure();
-    final list = prefs.getStringList(bookmarksKey) ?? const <String>[];
+    return List<String>.from(
+      prefs.getStringList(bookmarksKey) ?? const <String>[],
+    );
+  }
+
+  Future<Set<String>> getIds() async {
+    final list = await getIdsOrdered();
     return list.toSet();
   }
 

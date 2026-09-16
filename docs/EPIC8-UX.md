@@ -11,7 +11,7 @@
 | 탭 | Material 3 `NavigationBar`: **홈 \| 발견 \| 내 기회 \| 더보기** (컨셉 목업). |
 | 기본 탭 | **홈** — 히어로, 퀵 카테고리, NOW 신청(APPLY), 곧 시작(ENJOY 가로). 퀵 APPLY/ENJOY·섹션 타이틀 → 전체 목록 화면. |
 | 발견 | 검색 + 필터 칩, DISCOVER 이미지 카드. |
-| 내 기회 | BENEFIT 얇게 + 관심 키워드 UI(로컬). |
+| 내 기회 | **저장한 기회**(로컬 `BookmarkStore` ids → bundle resolve) + BENEFIT 얇게 + 관심 키워드 UI(로컬). |
 | 데이터 | 레지스트리 확장 가능. **수원만** published JSON. 타 지역: 「이 지역 데이터 준비 중」. |
 | 비주얼 | 소프트 블루 시드, 카드 radius ~14, 여백 많은 밝은 UI. `docs/design/CONCEPT.md` + mockup. |
 
@@ -30,5 +30,6 @@
 | 영역 | 내용 |
 |------|------|
 | 상세 | 대형 히어로 이미지(`displayImageUrl`) + AppBar **공유**(share_plus) · **북마크**(로컬 SharedPreferences `BookmarkStore`). 서버 동기화 없음. CTA「공식 원문 보기」유지. |
+| 내 기회 | 「저장한 기회」섹션: bookmark id를 bundle 전 타입(APPLY/ENJOY/DISCOVER/BENEFIT)에 resolve, 저장 순서 유지. 빈 상태 안내. 상세 토글 후 pop 시 MainShell `setState`로 목록 갱신. |
 | 발견 | 카드 이미지 ~180px, 장소 라인(`location`), 선택 FilterChip 강조, 칩 아래 결과 건수. 필터 빈 상태는 활성 필터명 안내. **별점·가짜 평점 없음**. |
 | 홈 | 히어로(~78)·퀵 카테고리·섹션 타이틀 주변 세로 여백 추가 축소. 지역명 히어로 타이틀·NOW/곧 열려요 유지. |

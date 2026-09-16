@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../ads/banner_ad_widget.dart';
 import '../ads/interstitial_ad_manager.dart';
 import '../analytics/analytics_stub.dart';
+import '../data/bookmark_store.dart';
 import '../data/opportunity_repository.dart';
 import '../data/region_store.dart';
 import '../models/opportunity.dart';
@@ -39,6 +40,7 @@ class MainShell extends StatefulWidget {
 
 class _MainShellState extends State<MainShell> {
   final _repo = OpportunityRepository();
+  final _bookmarks = BookmarkStore();
   late Future<OpportunityBundle> _future;
   int _tabIndex = 0; // default: 홈
 
@@ -61,9 +63,16 @@ class _MainShellState extends State<MainShell> {
   Future<void> _openDetail(Opportunity item) async {
     AnalyticsStub.opportunityOpen(item.id);
     await Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => DetailScreen(item: item)),
+      MaterialPageRoute(
+        builder: (_) => DetailScreen(
+          item: item,
+          bookmarkStore: _bookmarks,
+        ),
+      ),
     );
     if (!mounted) return;
+    // Refresh 내 기회 bookmark list after toggle-and-pop.
+    setState(() {});
     await InterstitialAdManager.instance.maybeShowAfterDetailPop();
   }
 
@@ -184,6 +193,8 @@ class _MainShellState extends State<MainShell> {
             ),
             MyChanceTab(
               benefits: benefit,
+              allOpportunities: bundle.opportunities,
+              bookmarkStore: _bookmarks,
               regionReady: regionReady,
               onOpen: _openDetail,
               onRefresh: _reload,
