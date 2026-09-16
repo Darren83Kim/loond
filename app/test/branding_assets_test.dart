@@ -4,9 +4,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:loond/models/region.dart';
 import 'package:loond/ui/tabs/home_tab.dart';
 import 'package:loond/ui/widgets/remote_or_placeholder_image.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+
+  setUp(() {
+    SharedPreferences.setMockInitialValues({});
+  });
 
   test('branding image assets are loadable from the bundle', () async {
     for (final path in const [
@@ -53,6 +58,7 @@ void main() {
             regionReady: true,
             apply: const [],
             enjoy: const [],
+            discover: const [],
             onOpen: (_) {},
             onRefresh: () async {},
             onChangeRegion: () {},

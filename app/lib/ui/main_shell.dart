@@ -174,6 +174,7 @@ class _MainShellState extends State<MainShell> {
               regionReady: regionReady,
               apply: apply,
               enjoy: enjoy,
+              discover: discover,
               onOpen: _openDetail,
               onRefresh: _reload,
               onChangeRegion: _changeRegion,

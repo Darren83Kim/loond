@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../data/home_audience_store.dart';
 import '../../models/opportunity.dart';
 import '../../models/region.dart';
 import '../../theme/app_theme.dart';
@@ -8,25 +9,28 @@ import '../widgets/enjoy_horizon_card.dart';
 import '../widgets/opportunity_card.dart';
 import '../widgets/remote_or_placeholder_image.dart';
 
-/// 홈 — 지역칩·히어로·퀵 카테고리·NOW 신청·곧 시작.
-class HomeTab extends StatelessWidget {
+/// 홈 — 지역칩·히어로·오디언스 세그먼트·퀵 카테고리·모드별 섹션.
+class HomeTab extends StatefulWidget {
   const HomeTab({
     super.key,
     required this.region,
     required this.regionReady,
     required this.apply,
     required this.enjoy,
+    required this.discover,
     required this.onOpen,
     required this.onRefresh,
     required this.onChangeRegion,
     required this.onSearch,
     required this.onQuickCategory,
+    this.audienceStore,
   });
 
   final Region region;
   final bool regionReady;
   final List<Opportunity> apply;
   final List<Opportunity> enjoy;
+  final List<Opportunity> discover;
   final void Function(Opportunity) onOpen;
   final Future<void> Function() onRefresh;
   final VoidCallback onChangeRegion;
@@ -34,6 +38,39 @@ class HomeTab extends StatelessWidget {
 
   /// 0=APPLY, 1=ENJOY, 2=DISCOVER, 3=BENEFIT/MY
   final void Function(int categoryIndex) onQuickCategory;
+
+  final HomeAudienceStore? audienceStore;
+
+  @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  late final HomeAudienceStore _store;
+  HomeAudienceMode _mode = HomeAudienceMode.resident;
+  bool _modeLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _store = widget.audienceStore ?? HomeAudienceStore();
+    _loadMode();
+  }
+
+  Future<void> _loadMode() async {
+    final mode = await _store.getMode();
+    if (!mounted) return;
+    setState(() {
+      _mode = mode;
+      _modeLoaded = true;
+    });
+  }
+
+  Future<void> _setMode(HomeAudienceMode mode) async {
+    if (_mode == mode) return;
+    setState(() => _mode = mode);
+    await _store.setMode(mode);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,14 +97,14 @@ class HomeTab extends StatelessWidget {
               const Spacer(),
               ActionChip(
                 avatar: const Icon(Icons.place_outlined, size: 16),
-                label: Text(region.chipLabel),
+                label: Text(widget.region.chipLabel),
                 visualDensity: VisualDensity.compact,
-                onPressed: onChangeRegion,
+                onPressed: widget.onChangeRegion,
               ),
               IconButton(
                 tooltip: '검색',
                 icon: const Icon(Icons.search),
-                onPressed: onSearch,
+                onPressed: widget.onSearch,
               ),
             ],
           ),
@@ -76,9 +113,18 @@ class HomeTab extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
         child: _HeroBand(
-          region: region,
-          regionReady: regionReady,
-          applyCount: apply.length,
+          region: widget.region,
+          regionReady: widget.regionReady,
+          applyCount: widget.apply.length,
+          mode: _mode,
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+        child: _AudienceSegment(
+          mode: _mode,
+          enabled: _modeLoaded,
+          onChanged: _setMode,
         ),
       ),
       Padding(
@@ -89,95 +135,49 @@ class HomeTab extends StatelessWidget {
               icon: Icons.description_outlined,
               label: '신청할 수 있는\n기회',
               color: AppTheme.categoryApply,
-              onTap: () => onQuickCategory(0),
+              emphasized: _mode == HomeAudienceMode.resident,
+              onTap: () => widget.onQuickCategory(0),
             ),
             _QuickCategory(
               icon: Icons.event_outlined,
               label: '곧 열리는\n행사',
               color: AppTheme.categoryEnjoy,
-              onTap: () => onQuickCategory(1),
+              emphasized: _mode == HomeAudienceMode.traveler,
+              onTap: () => widget.onQuickCategory(1),
             ),
             _QuickCategory(
               icon: Icons.place_outlined,
               label: '가볼 만한 곳\n맛집·관광',
               color: AppTheme.categoryDiscover,
-              onTap: () => onQuickCategory(2),
+              emphasized: _mode == HomeAudienceMode.traveler,
+              onTap: () => widget.onQuickCategory(2),
             ),
             _QuickCategory(
               icon: Icons.card_giftcard_outlined,
               label: '나에게 맞는\n혜택',
               color: AppTheme.categoryBenefit,
-              onTap: () => onQuickCategory(3),
+              onTap: () => widget.onQuickCategory(3),
             ),
           ],
         ),
       ),
     ];
 
-    if (!regionReady) {
+    if (!widget.regionReady) {
       children.add(const Padding(
         padding: EdgeInsets.only(top: 24),
         child: EmptyState(message: '이 지역 데이터 준비 중'),
       ));
+    } else if (_mode == HomeAudienceMode.traveler) {
+      children.addAll(_travelerSections());
     } else {
-      children.add(
-        _SectionTitle(
-          emoji: '🔥',
-          title: 'NOW 지금 신청할 수 있어요',
-          count: apply.length,
-          onTap: () => onQuickCategory(0),
-        ),
-      );
-      if (apply.isEmpty) {
-        children.add(
-          const EmptyState(message: '지금 신청 가능한 공고가 없어요'),
-        );
-      } else {
-        final shown = apply.take(5);
-        for (final item in shown) {
-          children.add(
-            OpportunityCard(item: item, onTap: () => onOpen(item)),
-          );
-        }
-      }
-
-      children.add(
-        _SectionTitle(
-          emoji: '🎉',
-          title: '곧 열려요',
-          count: enjoy.length,
-          onTap: () => onQuickCategory(1),
-        ),
-      );
-      if (enjoy.isEmpty) {
-        children.add(
-          const EmptyState(message: '지금 즐길 수 있는 행사가 없어요'),
-        );
-      } else {
-        children.add(
-          SizedBox(
-            height: 120,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.fromLTRB(16, 0, 8, 8),
-              itemCount: enjoy.length > 12 ? 12 : enjoy.length,
-              itemBuilder: (context, i) {
-                final item = enjoy[i];
-                return EnjoyHorizonCard(
-                  item: item,
-                  onTap: () => onOpen(item),
-                );
-              },
-            ),
-          ),
-        );
-      }
+      children.addAll(_residentSections());
     }
 
     children.add(const SizedBox(height: 96));
 
     return RefreshIndicator(
-      onRefresh: onRefresh,
+      onRefresh: widget.onRefresh,
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         child: Column(
@@ -187,6 +187,182 @@ class HomeTab extends StatelessWidget {
       ),
     );
   }
+
+  List<Widget> _residentSections() {
+    final out = <Widget>[
+      _SectionTitle(
+        emoji: '🔥',
+        title: 'NOW 지금 신청·참여할 수 있어요',
+        count: widget.apply.length,
+        onTap: () => widget.onQuickCategory(0),
+      ),
+    ];
+    if (widget.apply.isEmpty) {
+      out.add(
+        const EmptyState(message: '지금 신청 가능한 공고가 없어요'),
+      );
+    } else {
+      for (final item in widget.apply.take(5)) {
+        out.add(
+          OpportunityCard(item: item, onTap: () => widget.onOpen(item)),
+        );
+      }
+    }
+
+    out.add(
+      _SectionTitle(
+        emoji: '🎉',
+        title: '곧 열려요',
+        count: widget.enjoy.length,
+        onTap: () => widget.onQuickCategory(1),
+      ),
+    );
+    out.add(_enjoyHorizon());
+    return out;
+  }
+
+  List<Widget> _travelerSections() {
+    final out = <Widget>[
+      _SectionTitle(
+        emoji: '🎉',
+        title: '곧 열려요 · 즐길 거리',
+        count: widget.enjoy.length,
+        onTap: () => widget.onQuickCategory(1),
+      ),
+      _enjoyHorizon(),
+      _SectionTitle(
+        emoji: '📍',
+        title: '발견 미리보기',
+        count: widget.discover.length,
+        onTap: () => widget.onQuickCategory(2),
+      ),
+      _discoverPreview(),
+      _SectionTitle(
+        emoji: '📝',
+        title: '이 지역에서 신청할 수 있는 것',
+        count: widget.apply.length,
+        onTap: () => widget.onQuickCategory(0),
+        compact: true,
+      ),
+    ];
+    if (widget.apply.isEmpty) {
+      out.add(
+        const EmptyState(message: '지금 신청 가능한 공고가 없어요'),
+      );
+    } else {
+      for (final item in widget.apply.take(3)) {
+        out.add(
+          OpportunityCard(item: item, onTap: () => widget.onOpen(item)),
+        );
+      }
+    }
+    return out;
+  }
+
+  Widget _enjoyHorizon() {
+    if (widget.enjoy.isEmpty) {
+      return const EmptyState(message: '지금 즐길 수 있는 행사가 없어요');
+    }
+    return SizedBox(
+      height: 120,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.fromLTRB(16, 0, 8, 8),
+        itemCount: widget.enjoy.length > 12 ? 12 : widget.enjoy.length,
+        itemBuilder: (context, i) {
+          final item = widget.enjoy[i];
+          return EnjoyHorizonCard(
+            item: item,
+            onTap: () => widget.onOpen(item),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _discoverPreview() {
+    if (widget.discover.isEmpty) {
+      return const EmptyState(message: '등록된 발견 콘텐츠가 없어요');
+    }
+    final shown = widget.discover.take(6).toList();
+    return SizedBox(
+      height: 148,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.fromLTRB(16, 0, 8, 8),
+        itemCount: shown.length,
+        itemBuilder: (context, i) {
+          final item = shown[i];
+          return _DiscoverPreviewCard(
+            item: item,
+            onTap: () => widget.onOpen(item),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _AudienceSegment extends StatelessWidget {
+  const _AudienceSegment({
+    required this.mode,
+    required this.enabled,
+    required this.onChanged,
+  });
+
+  final HomeAudienceMode mode;
+  final bool enabled;
+  final ValueChanged<HomeAudienceMode> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return SegmentedButton<HomeAudienceMode>(
+      segments: const [
+        ButtonSegment(
+          value: HomeAudienceMode.resident,
+          label: Text('살고 있어요'),
+          icon: Icon(Icons.home_outlined, size: 16),
+        ),
+        ButtonSegment(
+          value: HomeAudienceMode.traveler,
+          label: Text('여행·체류 중'),
+          icon: Icon(Icons.luggage_outlined, size: 16),
+        ),
+      ],
+      selected: {mode},
+      onSelectionChanged: enabled
+          ? (set) {
+              if (set.isNotEmpty) onChanged(set.first);
+            }
+          : null,
+      style: ButtonStyle(
+        visualDensity: VisualDensity.compact,
+        textStyle: WidgetStatePropertyAll(
+          theme.textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w700),
+        ),
+        backgroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppTheme.seed.withValues(alpha: 0.14);
+          }
+          return theme.colorScheme.surface;
+        }),
+        foregroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppTheme.seed;
+          }
+          return theme.colorScheme.onSurfaceVariant;
+        }),
+        side: WidgetStatePropertyAll(
+          BorderSide(color: AppTheme.seed.withValues(alpha: 0.22)),
+        ),
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        ),
+      ),
+      showSelectedIcon: false,
+    );
+  }
 }
 
 class _HeroBand extends StatelessWidget {
@@ -194,17 +370,28 @@ class _HeroBand extends StatelessWidget {
     required this.region,
     required this.regionReady,
     required this.applyCount,
+    required this.mode,
   });
 
   final Region region;
   final bool regionReady;
   final int applyCount;
+  final HomeAudienceMode mode;
 
   static const double _height = 78;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final headline = mode == HomeAudienceMode.traveler
+        ? '「${region.chipLabel}, 여행·체류 중 뭐가 있지?」'
+        : '「${region.chipLabel}, 지금 뭐가 있지?」';
+    final subtitle = !regionReady
+        ? null
+        : mode == HomeAudienceMode.traveler
+            ? '즐길 거리·발견을 먼저 보여드려요'
+            : '신청 가능 $applyCount건';
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(AppTheme.cardRadius + 2),
       child: SizedBox(
@@ -242,16 +429,16 @@ class _HeroBand extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '「${region.chipLabel}, 지금 뭐가 있지?」',
+                      headline,
                       style: theme.textTheme.titleMedium?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
-                    if (regionReady) ...[
+                    if (subtitle != null) ...[
                       const SizedBox(height: 2),
                       Text(
-                        '신청 가능 $applyCount건',
+                        subtitle,
                         style: theme.textTheme.labelMedium?.copyWith(
                           color: Colors.white.withValues(alpha: 0.9),
                         ),
@@ -274,12 +461,14 @@ class _QuickCategory extends StatelessWidget {
     required this.label,
     required this.color,
     required this.onTap,
+    this.emphasized = false,
   });
 
   final IconData icon;
   final String label;
   final Color color;
   final VoidCallback onTap;
+  final bool emphasized;
 
   @override
   Widget build(BuildContext context) {
@@ -295,8 +484,11 @@ class _QuickCategory extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.12),
+                  color: color.withValues(alpha: emphasized ? 0.22 : 0.12),
                   borderRadius: BorderRadius.circular(14),
+                  border: emphasized
+                      ? Border.all(color: color.withValues(alpha: 0.45), width: 1.5)
+                      : null,
                 ),
                 child: Icon(icon, color: color),
               ),
@@ -305,7 +497,7 @@ class _QuickCategory extends StatelessWidget {
                 label,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      fontWeight: FontWeight.w600,
+                      fontWeight: emphasized ? FontWeight.w800 : FontWeight.w600,
                       height: 1.2,
                     ),
               ),
@@ -323,29 +515,34 @@ class _SectionTitle extends StatelessWidget {
     required this.title,
     required this.count,
     required this.onTap,
+    this.compact = false,
   });
 
   final String emoji;
   final String title;
   final int count;
   final VoidCallback onTap;
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final titleStyle = compact
+        ? theme.textTheme.titleSmall?.copyWith(
+            fontWeight: FontWeight.w700,
+            color: theme.colorScheme.onSurfaceVariant,
+          )
+        : theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w800,
+          );
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 4),
+      padding: EdgeInsets.fromLTRB(16, compact ? 10 : 14, 16, 4),
       child: Row(
         children: [
           Text(emoji, style: theme.textTheme.titleMedium),
           const SizedBox(width: 6),
           Expanded(
-            child: Text(
-              title,
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w800,
-              ),
-            ),
+            child: Text(title, style: titleStyle),
           ),
           TextButton(
             onPressed: onTap,
@@ -357,6 +554,58 @@ class _SectionTitle extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Compact horizontal discover preview card for traveler home.
+class _DiscoverPreviewCard extends StatelessWidget {
+  const _DiscoverPreviewCard({
+    required this.item,
+    required this.onTap,
+  });
+
+  final Opportunity item;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return SizedBox(
+      width: 148,
+      child: Card(
+        margin: const EdgeInsets.only(right: 10, top: 2, bottom: 2),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: RemoteOrPlaceholderImage(
+                  url: item.displayImageUrl,
+                  height: double.infinity,
+                  width: double.infinity,
+                  borderRadius: BorderRadius.zero,
+                  seedColor: AppTheme.categoryDiscover,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 6, 8, 8),
+                child: Text(
+                  item.title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    height: 1.2,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
