@@ -5,7 +5,7 @@ import '../analytics/analytics_stub.dart';
 import '../theme/app_theme.dart';
 import 'ad_config.dart';
 
-/// Bottom / inline banner with 「광고」 label. No-op when ads disabled.
+/// Bottom banner with 「광고」 label. Fixed slot height; no-op when ads disabled.
 class BannerAdWidget extends StatefulWidget {
   const BannerAdWidget({super.key});
 
@@ -59,9 +59,11 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (!AdConfig.adsEnabled || !_loaded || _banner == null) {
+    if (!AdConfig.adsEnabled) {
       return const SizedBox.shrink();
     }
+    final h = AdSize.banner.height.toDouble();
+    final w = AdSize.banner.width.toDouble();
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -81,9 +83,17 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
         ColoredBox(
           color: AppTheme.surfaceMuted,
           child: SizedBox(
-            width: _banner!.size.width.toDouble(),
-            height: _banner!.size.height.toDouble(),
-            child: AdWidget(ad: _banner!),
+            width: double.infinity,
+            height: h,
+            child: !_loaded || _banner == null
+                ? const SizedBox.shrink()
+                : Center(
+                    child: SizedBox(
+                      width: w,
+                      height: h,
+                      child: ClipRect(child: AdWidget(ad: _banner!)),
+                    ),
+                  ),
           ),
         ),
       ],

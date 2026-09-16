@@ -5,8 +5,8 @@ import '../analytics/analytics_stub.dart';
 import '../theme/app_theme.dart';
 import 'ad_config.dart';
 
-/// In-feed native ad styled like [OpportunityCard] (height/tone).
-/// Uses Google [NativeTemplateStyle] — no custom factory required.
+/// In-feed native ad. Uses [TemplateType.small] with a fixed height so the
+/// platform view cannot overflow and paint over neighboring cards.
 class NativeAdCard extends StatefulWidget {
   const NativeAdCard({super.key});
 
@@ -17,6 +17,9 @@ class NativeAdCard extends StatefulWidget {
 class _NativeAdCardState extends State<NativeAdCard> {
   NativeAd? _ad;
   bool _loaded = false;
+
+  /// Small template needs ~90–120 logical px; keep a stable slot.
+  static const double _adHeight = 120;
 
   @override
   void initState() {
@@ -48,7 +51,7 @@ class _NativeAdCardState extends State<NativeAdCard> {
       ),
       request: const AdRequest(),
       nativeTemplateStyle: NativeTemplateStyle(
-        templateType: TemplateType.medium,
+        templateType: TemplateType.small,
         mainBackgroundColor: Colors.white,
         cornerRadius: 12,
         callToActionTextStyle: NativeTemplateTextStyle(
@@ -90,6 +93,7 @@ class _NativeAdCardState extends State<NativeAdCard> {
     }
     final theme = Theme.of(context);
     return Card(
+      clipBehavior: Clip.antiAlias,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -104,11 +108,12 @@ class _NativeAdCardState extends State<NativeAdCard> {
               ),
             ),
           ),
-          // Medium template ~ Opportunity card visual weight
           SizedBox(
-            height: 120,
+            height: _adHeight,
             width: double.infinity,
-            child: AdWidget(ad: _ad!),
+            child: ClipRect(
+              child: AdWidget(ad: _ad!),
+            ),
           ),
         ],
       ),

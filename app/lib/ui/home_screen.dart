@@ -174,7 +174,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 32),
+                // Leave room above bottom banner so cards are not covered.
+                const SizedBox(height: 88),
               ],
             ),
           );
