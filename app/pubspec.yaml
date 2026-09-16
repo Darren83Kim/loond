@@ -27,3 +27,4 @@ flutter:
   assets:
     - assets/data/opportunities.json
     - assets/data/opportunities_sample.json
+    - assets/images/

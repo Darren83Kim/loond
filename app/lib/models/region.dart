@@ -7,6 +7,7 @@ class Region {
     this.sigunguCode,
     this.hasPublishedData = false,
     this.heroImageUrl,
+    this.heroAsset,
   });
 
   final String id;
@@ -21,8 +22,12 @@ class Region {
   /// 앱에 실데이터가 실려 있는지 (지금은 수원만 true).
   final bool hasPublishedData;
 
-  /// Optional hero band image for 홈 (없으면 그라데이션 플레이스홀더).
+  /// Optional remote hero band image for 홈 (없으면 그라데이션 플레이스홀더).
   final String? heroImageUrl;
+
+  /// Bundled hero asset path (e.g. `assets/images/hero_suwon.png`).
+  /// Preferred over [heroImageUrl] when both are set.
+  final String? heroAsset;
 
   /// Display chip label (e.g. 수원시).
   String get chipLabel {
@@ -37,6 +42,9 @@ class Region {
 class RegionRegistry {
   RegionRegistry._();
 
+  static const String _heroSuwon = 'assets/images/hero_suwon.png';
+  static const String _heroDefault = 'assets/images/hero_default.png';
+
   static const List<Region> all = [
     Region(
       id: 'suwon',
@@ -44,36 +52,42 @@ class RegionRegistry {
       areaCode: '31',
       sigunguCode: '13',
       hasPublishedData: true,
+      heroAsset: _heroSuwon,
     ),
     Region(
       id: 'yongin',
       nameKo: '용인',
       areaCode: '31',
       hasPublishedData: false,
+      heroAsset: _heroDefault,
     ),
     Region(
       id: 'seongnam',
       nameKo: '성남',
       areaCode: '31',
       hasPublishedData: false,
+      heroAsset: _heroDefault,
     ),
     Region(
       id: 'goyang',
       nameKo: '고양',
       areaCode: '31',
       hasPublishedData: false,
+      heroAsset: _heroDefault,
     ),
     Region(
       id: 'bucheon',
       nameKo: '부천',
       areaCode: '31',
       hasPublishedData: false,
+      heroAsset: _heroDefault,
     ),
     Region(
       id: 'hwaseong',
       nameKo: '화성',
       areaCode: '31',
       hasPublishedData: false,
+      heroAsset: _heroDefault,
     ),
   ];
 

@@ -28,3 +28,7 @@
 
 ## 유지
 원문 CTA, Hard Sort·만료 제외, AdMob 규칙, 출처 신뢰
+
+## 브랜딩·히어로 에셋 (번들)
+- 핀 로고: `loond_pin_logo.png` — 홈 헤더 「로온드」 옆 (앱: `assets/images/`)
+- 지역 히어로: `hero_suwon.png` (수원), `hero_default.png` (기타 시군 공용). 시군별 고유 아트는 추후.

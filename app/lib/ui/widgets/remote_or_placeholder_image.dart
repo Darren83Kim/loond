@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../../theme/app_theme.dart';
 
-/// Network image with colored gradient placeholder on missing/error URL.
+/// Image from bundled asset, network URL, or colored gradient placeholder.
+///
+/// Prefer [asset] when set. Otherwise if [url] looks like an `assets/` path,
+/// load via [Image.asset]; http(s) URLs use [Image.network]. Missing/error → placeholder.
 class RemoteOrPlaceholderImage extends StatelessWidget {
   const RemoteOrPlaceholderImage({
     super.key,
-    required this.url,
+    this.url,
+    this.asset,
     this.height,
     this.width,
     this.borderRadius,
@@ -15,11 +19,22 @@ class RemoteOrPlaceholderImage extends StatelessWidget {
   });
 
   final String? url;
+  final String? asset;
   final double? height;
   final double? width;
   final BorderRadius? borderRadius;
   final BoxFit fit;
   final Color? seedColor;
+
+  static bool _isAssetPath(String path) {
+    final p = path.trim();
+    return p.startsWith('assets/') || p.startsWith('package:');
+  }
+
+  static bool _isNetworkUrl(String path) {
+    final lower = path.trim().toLowerCase();
+    return lower.startsWith('http://') || lower.startsWith('https://');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +45,39 @@ class RemoteOrPlaceholderImage extends StatelessWidget {
       width: width,
     );
 
+    final assetPath = asset?.trim();
+    if (assetPath != null && assetPath.isNotEmpty) {
+      return ClipRRect(
+        borderRadius: radius,
+        child: Image.asset(
+          assetPath,
+          height: height,
+          width: width,
+          fit: fit,
+          errorBuilder: (_, __, ___) => placeholder,
+        ),
+      );
+    }
+
     final trimmed = url?.trim();
     if (trimmed == null || trimmed.isEmpty) {
+      return ClipRRect(borderRadius: radius, child: placeholder);
+    }
+
+    if (_isAssetPath(trimmed)) {
+      return ClipRRect(
+        borderRadius: radius,
+        child: Image.asset(
+          trimmed,
+          height: height,
+          width: width,
+          fit: fit,
+          errorBuilder: (_, __, ___) => placeholder,
+        ),
+      );
+    }
+
+    if (!_isNetworkUrl(trimmed)) {
       return ClipRRect(borderRadius: radius, child: placeholder);
     }
 

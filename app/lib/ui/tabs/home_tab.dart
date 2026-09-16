@@ -45,7 +45,11 @@ class HomeTab extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(16, 4, 8, 0),
           child: Row(
             children: [
-              const Icon(Icons.location_on, color: AppTheme.seed, size: 26),
+              Image.asset(
+                'assets/images/loond_pin_logo.png',
+                height: 28,
+                width: 28,
+              ),
               const SizedBox(width: 4),
               Text(
                 '로온드',
@@ -210,6 +214,7 @@ class _HeroBand extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             RemoteOrPlaceholderImage(
+              asset: region.heroAsset,
               url: region.heroImageUrl,
               height: _height,
               width: double.infinity,
