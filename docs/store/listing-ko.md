@@ -3,6 +3,14 @@
 ## 앱 이름
 **로온드**
 
+## Play 앱 만들기 필드
+- 패키지 이름: `com.loond.loond` (변경 불가 · applicationId와 동일)
+- 기본 언어: 한국어(ko-KR)
+- 앱 / 무료
+- 그래픽: `docs/store/play/icon-512.png`, `feature-graphic.png`
+- 스크린샷: `docs/store/screenshots/phone/`
+
+
 ## 짧은 설명 (≈80자 이내)
 수원의 신청·행사·발견 기회를 한곳에서. 회원가입 없이 원문으로 바로 확인.
 
