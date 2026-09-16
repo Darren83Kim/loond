@@ -86,3 +86,8 @@
 - debug APK 설치·실행 OK → §11 R8 Done
 - 사용자 수동 확인: 홈 / APPLY 상세 / 원문 CTA / 설정
 
+## AdMob Native Validator (2026-09-16)
+
+- 테스트 네이티브 광고 + debug 빌드에서 「What is this? / Dismiss」 오버레이가 스크롤 시 중첩될 수 있음.
+- `AndroidManifest`: `com.google.android.gms.ads.flag.NATIVE_AD_DEBUGGER_ENABLED=false` 로 비활성.
+
