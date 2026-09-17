@@ -23,6 +23,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from . import config
+from .collect import extract_application_end_from_body
 from .notice_sources import ACTION_PATH, get_source, list_regions
 
 KST = ZoneInfo("Asia/Seoul")
@@ -41,7 +42,17 @@ except Exception:  # noqa: BLE001
 _SEARCH_DETAIL_RE = re.compile(
     r"searchDetail\s*\(\s*['\"]?(\d+)['\"]?\s*\)", re.I
 )
+
 _DATE_RE = re.compile(r"(20\d{2})[.\-/](\d{1,2})[.\-/](\d{1,2})")
+
+_DETAIL_PRIORITY_RE = re.compile(r"(모집|신청|수강|참가|공모|지원|체험)")
+
+
+def title_detail_priority(title: str) -> int:
+    """Higher = fetch detail sooner (citizen APPLY-looking titles)."""
+    t = title or ""
+    return 1 if _DETAIL_PRIORITY_RE.search(t) else 0
+
 
 
 def _now_iso() -> str:
@@ -395,6 +406,17 @@ def parse_detail_html(html: str) -> dict[str, Any]:
     if not title:
         title = info.get("제목") or (soup.title.get_text(strip=True) if soup.title else "")
 
+    # Full body for deadline parse; excerpt stays truncated for pending JSON size.
+    app_end, app_src = extract_application_end_from_body(body or "")
+    # Also scan meta fields that sometimes carry 접수기간 / 마감.
+    if not app_end:
+        for key in ("접수기간", "신청기간", "모집기간", "마감일", "접수마감"):
+            val = info.get(key) or ""
+            if val:
+                e2, s2 = extract_application_end_from_body(f"{key}: {val}")
+                if e2:
+                    app_end, app_src = e2, s2 or f"meta:{key}"
+                    break
     return {
         "fetch_ok": True,
         "title_detail": title,
@@ -407,6 +429,8 @@ def parse_detail_html(html: str) -> dict[str, Any]:
         "dept_detail": info.get("담당부서", ""),
         "publish_date_detail": info.get("등록일") or info.get("게재(공고)일자", ""),
         "notice_no_detail": info.get("고시공고번호", ""),
+        "applicationEnd": app_end,
+        "applicationEndSource": app_src,
     }
 
 
@@ -449,8 +473,8 @@ def to_pending(
         "startDate": None,
         "endDate": None,
         "applicationStart": None,
-        "applicationEnd": None,
-        "applicationEndSource": None,
+        "applicationEnd": (detail or {}).get("applicationEnd"),
+        "applicationEndSource": (detail or {}).get("applicationEndSource"),
         "target": None,
         "benefit": None,
         "location": cfg.get("name_ko"),
@@ -496,9 +520,15 @@ def run(
     pending: list[dict[str, Any]] = []
     detail_samples: list[dict[str, Any]] = []
     n_details = max(0, details)
+    # Prefer citizen-APPLY-looking titles when choosing which details to fetch.
+    ranked = sorted(
+        range(len(rows)),
+        key=lambda i: (-title_detail_priority(str(rows[i].get("title") or "")), i),
+    )
+    detail_indices = set(ranked[:n_details]) if n_details else set()
     for i, row in enumerate(rows):
         detail = None
-        if i < n_details and row.get("detail_url"):
+        if i in detail_indices and row.get("detail_url"):
             try:
                 detail = fetch_detail(row["detail_url"])
                 detail_samples.append({"not_ancmt_mgt_no": row["not_ancmt_mgt_no"], **detail})
@@ -554,7 +584,7 @@ def main(argv: list[str] | None = None) -> int:
         "--details",
         type=int,
         default=3,
-        help="optional detail fetches for first N rows (0=list only)",
+        help="optional detail fetches for top-N keyword-priority rows (0=list only)",
     )
     p.add_argument("--delay", type=float, default=None, help="override page delay sec")
     p.add_argument(

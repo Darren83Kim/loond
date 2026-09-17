@@ -197,39 +197,63 @@ def extract_application_end_from_body(body: str) -> tuple[str | None, str | None
     """Return (YYYY-MM-DD, source) for true apply/receipt deadline in HTML body.
 
     Skips open-ended phrases (선착순…까지, 종료 공고시까지) when no hard end date.
+    Prefers labeled spans that actually contain a date (skips headings like
+    "신청기간 및 방법").
     """
     if not body:
         return None, None
-    m = re.search(
-        r"(신청\s*기간|접수\s*기간|모집\s*기간)\s*[:：]?\s*([^\n]{5,160})",
-        body,
+    # Normalize NBSP so labels/dates still parse.
+    body = body.replace("\u00a0", " ")  # NBSP
+    label_re = (
+        r"(신청\s*기간|접수\s*기간|모집\s*기간|접수\s*마감(?:일)?|신청\s*마감(?:일)?|"
+        r"모집\s*마감(?:일)?|마감\s*일(?:시)?|접수\s*기한)"
     )
-    if not m:
+    candidates: list[tuple[str, str]] = []
+    for m in re.finditer(label_re + r"\s*[:：]?\s*([^\n]{3,200})", body):
+        label = re.sub(r"\s+", "", m.group(1))
+        span = m.group(2).strip()
+        if not _DATE_TOKEN.search(span) and not _DATE_MD.search(span):
+            continue
+        candidates.append((label, span))
+    if not candidates:
         return None, None
-    label = re.sub(r"\s+", "", m.group(1))
-    span = m.group(2)
-    open_ended = any(
-        p in span
-        for p in ("선착순", "마감시까지", "종료 공고", "예산 소진", "별도 공고", "상시")
-    )
-    full_dates = _DATE_TOKEN.findall(span)
-    if len(full_dates) >= 2:
-        y, mo, d = full_dates[-1]
-        return f"{y}-{int(mo):02d}-{int(d):02d}", f"body:{label}"
-    if len(full_dates) == 1:
-        y, mo, d = full_dates[0]
-        # "~ 9. 14" without year
-        after = span[span.find("~") :] if "~" in span else ""
-        md = _DATE_MD.findall(after)
-        if md:
-            return f"{y}-{int(md[-1][0]):02d}-{int(md[-1][1]):02d}", f"body:{label}"
+
+    def _parse_span(label: str, span: str) -> tuple[str | None, str | None]:
+        # Drop trailing notes (발표예정 등) so MD does not pick 발표일.
+        cut = re.search(r"[※]|발표|문의|상세", span)
+        if cut:
+            span = span[: cut.start()]
+        open_ended = any(
+            p in span
+            for p in ("선착순", "마감시까지", "종료 공고", "예산 소진", "별도 공고", "상시")
+        )
+        full_dates = _DATE_TOKEN.findall(span)
+        if len(full_dates) >= 2:
+            y, mo, d = full_dates[-1]
+            return f"{y}-{int(mo):02d}-{int(d):02d}", f"body:{label}"
+        if len(full_dates) == 1:
+            y, mo, d = full_dates[0]
+            after = span[span.find("~") :] if "~" in span else ""
+            md = _DATE_MD.findall(after)
+            if md:
+                # First MD after "~" is the range end (not a later note date).
+                return f"{y}-{int(md[0][0]):02d}-{int(md[0][1]):02d}", f"body:{label}"
+            if open_ended:
+                return None, f"body:{label}:open_ended"
+            return f"{y}-{int(mo):02d}-{int(d):02d}", f"body:{label}"
         if open_ended:
-            # start-only open-ended → no hard end
             return None, f"body:{label}:open_ended"
-        return f"{y}-{int(mo):02d}-{int(d):02d}", f"body:{label}"
-    if open_ended:
-        return None, f"body:{label}:open_ended"
-    return None, None
+        return None, None
+
+    last_end: str | None = None
+    last_src: str | None = None
+    for label, span in candidates:
+        end, src = _parse_span(label, span)
+        if end:
+            last_end, last_src = end, src
+        elif src and last_end is None:
+            last_src = src
+    return last_end, last_src
 
 
 def extract_publish_period_end(period: str) -> str | None:

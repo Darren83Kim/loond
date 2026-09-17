@@ -1,25 +1,86 @@
 {
   "meta": {
     "source": "../data/pending_review/eminwon_goyang_pending.json",
-    "input_count": 20,
+    "input_count": 150,
     "region": "goyang",
     "host": "eminwon.goyang.go.kr",
     "scheme": "http",
-    "list_url": "http://eminwon.goyang.go.kr/emwp/gov/mogaha/ntis/web/ofr/action/OfrAction.do?context=NTIS&countYn=Y&epcCheck=Y&homepage_pbs_yn=Y&initValue=Y&jndinm=OfrNotAncmtEJB&method=selectListOfrNotAncmt&methodnm=selectListOfrNotAncmtHomepage&not_ancmt_se_code=01%2C04%2C05&ofr_pageSize=10&subCheck=Y&pageIndex=2",
-    "pages_requested": 2,
-    "rows": 20,
+    "list_url": "http://eminwon.goyang.go.kr/emwp/gov/mogaha/ntis/web/ofr/action/OfrAction.do?context=NTIS&countYn=Y&epcCheck=Y&homepage_pbs_yn=Y&initValue=Y&jndinm=OfrNotAncmtEJB&method=selectListOfrNotAncmt&methodnm=selectListOfrNotAncmtHomepage&not_ancmt_se_code=01%2C04%2C05&ofr_pageSize=10&subCheck=Y&pageIndex=15",
+    "pages_requested": 15,
+    "rows": 150,
     "empty_hint": "",
     "list_method": "selectListOfrNotAncmt",
     "list_methodnm": "selectListOfrNotAncmtHomepage",
-    "collected_at": "2026-09-17T16:26:10+09:00",
+    "collected_at": "2026-09-17T17:47:11+09:00",
     "transport": "http(s) requests+BeautifulSoup",
-    "details_fetched": 3,
-    "pending_count": 20,
+    "details_fetched": 40,
+    "pending_count": 150,
     "note": "PoC only — do not auto-merge into published/opportunities.json",
     "reviewDecision": "auto_publish",
-    "count": 0,
-    "reviewedAt": "2026-09-17T17:09:36+09:00",
+    "count": 1,
+    "reviewedAt": "2026-09-17T17:57:20+09:00",
     "engine": "loond_worker.apply_rules"
   },
-  "items": []
+  "items": [
+    {
+      "id": "goyang-ofr-149252",
+      "region": "goyang",
+      "region_name": "고양",
+      "title": "고양시 다함께돌봄센터 수탁운영자 모집 공고",
+      "type": "APPLY",
+      "category": "experience_apply",
+      "summary": "「사회복지사업법」제34조 및 「아동복지법」제44조의2, 「고양시 민간위탁관리조례」제7조의 규정에 의거 고양시 다함께돌봄센터 수탁운영자를 다음과 같이 모집공고합니다.",
+      "description": "「사회복지사업법」제34조 및 「아동복지법」제44조의2, 「고양시 민간위탁관리조례」제7조의 규정에 의거 고양시 다함께돌봄센터 수탁운영자를 다음과 같이 모집공고합니다.\n■ 공고개요\n가. 위탁대상 시설현황(신규 1개소)\n- 장항4호점 다함께돌봄센터(고양시 일산동구 장항지구 B-1블록) : 신규위탁\n나. 공고기간 : 2026. 9. 16.(수) ~ 2026. 10. 7.(수)(21일간)\n다. 접수기간 : 2026. 10. 6.(화) ~ 2026. 10. 7.(수)(2일간)\n붙임 1. 고양시 다함께돌봄센터 수탁운영자 모집 공고 1부.\n2. 신청서류 1부.  끝.",
+      "startDate": null,
+      "endDate": null,
+      "applicationStart": null,
+      "applicationEnd": "2026-10-07",
+      "applicationEndSource": "body:접수기간",
+      "target": null,
+      "benefit": null,
+      "location": "고양",
+      "organization": "아동보육과",
+      "thumbnail": null,
+      "sourceName": "고양특례시",
+      "sourceUrl": "https://eminwon.goyang.go.kr/emwp/gov/mogaha/ntis/web/ofr/action/OfrAction.do?context=NTIS&jndinm=OfrNotAncmtEJB&method=selectOfrNotAncmt&methodnm=selectOfrNotAncmtRegst&not_ancmt_mgt_no=149252&homepage_pbs_yn=Y&subCheck=Y&not_ancmt_se_code=01%2C04%2C05&ofr_pageSize=10",
+      "sourcePublishedAt": "2026-09-16",
+      "status": "pending_review",
+      "opportunityScore": 0,
+      "collectedAt": "2026-09-17T17:47:33+09:00",
+      "createdAt": "2026-09-17T17:47:33+09:00",
+      "updatedAt": "2026-09-17T17:47:33+09:00",
+      "not_ancmt_mgt_no": "149252",
+      "notice_no": "고양시 공고 제2026-2109호",
+      "attachments": [
+        {
+          "name": "고양시 다함께돌봄센터 수탁운영자 신청서류.hwpx",
+          "href": "javascript:goDownLoad('고양시 다함께돌봄센터 수탁운영자 신청서류.hwpx','고양시 다함께돌봄센터 수탁운영자 신청서류_ofr_ofr_peW@@iV1p80O4gFk_20260916102028898_2.hwpx','/ntishome/file/upload/ofr/ofr/20260916')",
+          "user_file": "고양시 다함께돌봄센터 수탁운영자 신청서류.hwpx",
+          "sys_file": "고양시 다함께돌봄센터 수탁운영자 신청서류_ofr_ofr_peW@@iV1p80O4gFk_20260916102028898_2.hwpx",
+          "file_path": "/ntishome/file/upload/ofr/ofr/20260916"
+        },
+        {
+          "name": "고양시 다함께돌봄센터 수탁운영자 모집 공고.hwpx",
+          "href": "javascript:goDownLoad('고양시 다함께돌봄센터 수탁운영자 모집 공고.hwpx','고양시 다함께돌봄센터 수탁운영자 모집 공고_ofr_ofr_peW@@iV1p80O4gFk_20260916102028898_3.hwpx','/ntishome/file/upload/ofr/ofr/20260916')",
+          "user_file": "고양시 다함께돌봄센터 수탁운영자 모집 공고.hwpx",
+          "sys_file": "고양시 다함께돌봄센터 수탁운영자 모집 공고_ofr_ofr_peW@@iV1p80O4gFk_20260916102028898_3.hwpx",
+          "file_path": "/ntishome/file/upload/ofr/ofr/20260916"
+        }
+      ],
+      "has_hwp": true,
+      "poc_source_type": "eminwon_ofr",
+      "reviewDecision": "auto_publish",
+      "reviewReasons": [
+        "all_auto_publish_gates_passed"
+      ],
+      "filterScore": 2,
+      "filterPosHits": "모집,신청",
+      "filterNegHits": "",
+      "filterStrongNeg": "",
+      "filterBlacklistHit": "",
+      "isKeywordCandidate": true,
+      "titleFilterScore": 1,
+      "pipeline_status": "candidate"
+    }
+  ]
 }
