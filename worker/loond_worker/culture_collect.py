@@ -101,16 +101,14 @@ def _ymd(s: str | None) -> str | None:
 
 
 def _keep_city(it: dict[str, str], city_name: str, gugun: str | None) -> bool:
-    blob = " ".join(
-        it.get(k, "")
-        for k in ("title", "place", "area", "sigungu", "realmName", "serviceName")
-    )
-    # Prefer explicit sigungu/gugun (avoids title false friends like 고양이→고양).
+    """Keep only if place/area/sigungu ties the item to the city.
+
+    Title-only matches are rejected (e.g. 고양이 / 고양이라서 → 고양).
+    """
     if gugun and it.get("sigungu") in {gugun, city_name}:
         return True
-    if rc.city_keyword_in_blob(city_name, blob):
-        return True
-    return False
+    place_blob = " ".join(it.get(k, "") for k in ("place", "area", "sigungu"))
+    return rc.city_keyword_in_blob(city_name, place_blob)
 
 
 def _build_enjoy_rows(
