@@ -58,6 +58,14 @@ class _DiscoverTabState extends State<DiscoverTab> {
     super.dispose();
   }
 
+  @override
+  void didUpdateWidget(covariant DiscoverTab oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.regionId != widget.regionId && widget.regionId != 'suwon') {
+      _districtId = DiscoverDistrict.all.id;
+    }
+  }
+
   List<Opportunity> get _filtered {
     final q = _search.text.trim().toLowerCase();
     final district = _district;
@@ -206,9 +214,12 @@ class _DiscoverTabState extends State<DiscoverTab> {
         ? <Widget>[EmptyState(message: _emptyMessage)]
         : _buildGridFeed(filtered);
 
-    final districtChips = [
-      for (final d in DiscoverDistrict.suwonGus) (d.id, d.shortLabel),
-    ];
+    final showDistrictChips = widget.regionId == 'suwon';
+    final districtChips = showDistrictChips
+        ? [
+            for (final d in DiscoverDistrict.suwonGus) (d.id, d.shortLabel),
+          ]
+        : <(String, String)>[];
 
     return RefreshIndicator(
       onRefresh: widget.onRefresh,
@@ -251,11 +262,12 @@ class _DiscoverTabState extends State<DiscoverTab> {
             selectedId: _filter,
             onSelect: (id) => setState(() => _filter = id),
           ),
-          _chipRow(
-            items: districtChips,
-            selectedId: _districtId,
-            onSelect: (id) => setState(() => _districtId = id),
-          ),
+          if (showDistrictChips)
+            _chipRow(
+              items: districtChips,
+              selectedId: _districtId,
+              onSelect: (id) => setState(() => _districtId = id),
+            ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
             child: Text(

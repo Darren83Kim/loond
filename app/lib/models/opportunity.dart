@@ -73,6 +73,7 @@ class Opportunity {
     this.updatedAt,
     this.hasHwp = false,
     this.lDongSignguCd,
+    this.metaSource,
   });
 
   final String id;
@@ -106,6 +107,8 @@ class Opportunity {
   final bool hasHwp;
   /// TourAPI meta.lDongSignguCd (수원 구: 111/113/115/117). null if absent.
   final String? lDongSignguCd;
+  /// meta.source when present (e.g. culture_portal).
+  final String? metaSource;
 
   /// Prefer imageUrl → thumbnailUrl → thumbnail when non-empty.
   String? get displayImageUrl {
@@ -116,15 +119,22 @@ class Opportunity {
     return null;
   }
 
-  /// Culture-portal ENJOY (id prefix suwon-culture-*).
-  bool get isCulturePortal => id.startsWith('suwon-culture-');
+  /// Culture-portal ENJOY (meta.source or id contains -culture-).
+  bool get isCulturePortal =>
+      metaSource == 'culture_portal' || id.contains('-culture-');
 
   factory Opportunity.fromJson(Map<String, dynamic> json) {
     final meta = json['meta'];
     var hasHwp = false;
     String? lDongSignguCd;
+    String? metaSource;
     if (meta is Map) {
       hasHwp = meta['hasHwp'] == true;
+      final rawSrc = meta['source'];
+      if (rawSrc != null) {
+        final s = rawSrc.toString().trim();
+        if (s.isNotEmpty) metaSource = s;
+      }
       final rawCd = meta['lDongSignguCd'];
       if (rawCd != null) {
         final s = rawCd.toString().trim();
@@ -159,6 +169,7 @@ class Opportunity {
       updatedAt: _parseDate(json['updatedAt']),
       hasHwp: hasHwp,
       lDongSignguCd: lDongSignguCd,
+      metaSource: metaSource,
     );
   }
 

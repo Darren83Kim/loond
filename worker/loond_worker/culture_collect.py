@@ -18,6 +18,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
+from . import region_codes as rc
+
 KST = timezone(timedelta(hours=9))
 BASE = "http://apis.data.go.kr/B553457/cultureinfo"
 # Portal fallback that works (broken: /oneclt/oneCltView.do?seq= without menuNo)
@@ -97,63 +99,27 @@ def _ymd(s: str | None) -> str | None:
     return f"{s[:4]}-{s[4:6]}-{s[6:8]}" if len(s) == 8 and s.isdigit() else None
 
 
-def _keep_suwon(it: dict[str, str]) -> bool:
-    blob = " ".join(it.get(k, "") for k in ("title", "place", "area", "sigungu", "realmName", "serviceName"))
-    return "수원" in blob or it.get("sigungu") in {"수원시", "수원"}
+
+def _keep_city(it: dict[str, str], city_name: str, gugun: str | None) -> bool:
+    blob = " ".join(
+        it.get(k, "")
+        for k in ("title", "place", "area", "sigungu", "realmName", "serviceName")
+    )
+    if city_name in blob:
+        return True
+    if gugun and it.get("sigungu") in {gugun, city_name}:
+        return True
+    return False
 
 
-def collect_suwon_enjoy(days_ahead: int = 120) -> list[dict[str, Any]]:
-    now = datetime.now(KST).replace(microsecond=0)
-    today = now.date()
-    frm = today.strftime("%Y%m%d")
-    to = (today + timedelta(days=days_ahead)).strftime("%Y%m%d")
-    now_iso = now.isoformat()
-
-    by: dict[str, dict[str, str]] = {}
-    page = 1
-    while True:
-        total, items = _items(
-            _curl(
-                "period2",
-                {
-                    "from": frm,
-                    "to": to,
-                    "PageNo": str(page),
-                    "numOfrows": "100",
-                    "keyword": "수원",
-                    "sortStdr": "1",
-                },
-            )
-        )
-        for it in items:
-            if _keep_suwon(it) and it.get("seq"):
-                by[it["seq"]] = it
-        if page * 100 >= total or not items:
-            break
-        page += 1
-        if page > 15:
-            break
-
-    try:
-        _, area_items = _items(
-            _curl(
-                "area2",
-                {
-                    "sido": "경기",
-                    "gugun": "수원시",
-                    "PageNo": "1",
-                    "numOfrows": "100",
-                    "from": frm,
-                    "to": to,
-                },
-            )
-        )
-        for it in area_items:
-            if _keep_suwon(it) and it.get("seq"):
-                by[it["seq"]] = it
-    except Exception as e:  # noqa: BLE001 — area is best-effort
-        print(f"area2 skip: {e}")
-
+def _build_enjoy_rows(
+    by: dict[str, dict[str, str]],
+    *,
+    region_id: str,
+    region_name: str,
+    today,
+    now_iso: str,
+) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
     for it in by.values():
         end = _ymd(it.get("endDate"))
@@ -165,7 +131,6 @@ def collect_suwon_enjoy(days_ahead: int = 120) -> list[dict[str, Any]]:
                 pass
         seq = it["seq"]
         detail = _detail(seq)
-        # Prefer list fields; overlay non-empty detail fields
         for k, v in detail.items():
             if v:
                 it[k] = v
@@ -173,7 +138,10 @@ def collect_suwon_enjoy(days_ahead: int = 120) -> list[dict[str, Any]]:
         realm = it.get("realmName") or it.get("serviceName") or ""
         start = _ymd(it.get("startDate"))
         place = it.get("place") or ""
-        loc = ", ".join(x for x in [it.get("area") or "", it.get("sigungu") or "", place] if x) or "수원"
+        loc = (
+            ", ".join(x for x in [it.get("area") or "", it.get("sigungu") or "", place] if x)
+            or region_name
+        )
         thumb = it.get("thumbnail") or it.get("imgUrl") or None
         if thumb and thumb.startswith("http://"):
             thumb = "https://" + thumb[len("http://") :]
@@ -207,7 +175,7 @@ def collect_suwon_enjoy(days_ahead: int = 120) -> list[dict[str, Any]]:
         description = " | ".join(desc_parts) if desc_parts else None
 
         meta: dict[str, Any] = {
-            "regionLabel": "수원",
+            "regionLabel": region_name,
             "cultureSeq": seq,
             "realmName": realm,
             "source": "culture_portal",
@@ -222,8 +190,8 @@ def collect_suwon_enjoy(days_ahead: int = 120) -> list[dict[str, Any]]:
 
         out.append(
             {
-                "id": f"suwon-culture-{seq}",
-                "region": "suwon",
+                "id": f"{region_id}-culture-{seq}",
+                "region": region_id,
                 "title": title,
                 "type": "ENJOY",
                 "category": REALM_CAT.get(realm, "culture_event"),
@@ -252,6 +220,91 @@ def collect_suwon_enjoy(days_ahead: int = 120) -> list[dict[str, Any]]:
     return out
 
 
+def collect_enjoy_for_region(
+    region: dict[str, Any], days_ahead: int = 120
+) -> list[dict[str, Any]]:
+    """Collect culture ENJOY for one city. Soft-fails to [] on API errors."""
+    rid = region["id"]
+    name = region["name_ko"]
+    gugun = region.get("culture_gugun")
+    now = datetime.now(KST).replace(microsecond=0)
+    today = now.date()
+    frm = today.strftime("%Y%m%d")
+    to = (today + timedelta(days=days_ahead)).strftime("%Y%m%d")
+    now_iso = now.isoformat()
+
+    by: dict[str, dict[str, str]] = {}
+    try:
+        page = 1
+        while True:
+            total, items = _items(
+                _curl(
+                    "period2",
+                    {
+                        "from": frm,
+                        "to": to,
+                        "PageNo": str(page),
+                        "numOfrows": "100",
+                        "keyword": name,
+                        "sortStdr": "1",
+                    },
+                )
+            )
+            for it in items:
+                if _keep_city(it, name, gugun) and it.get("seq"):
+                    by[it["seq"]] = it
+            if page * 100 >= total or not items:
+                break
+            page += 1
+            if page > 15:
+                break
+    except Exception as e:  # noqa: BLE001
+        print(f"culture period2 soft-fail region={rid}: {e}")
+
+    if gugun:
+        try:
+            _, area_items = _items(
+                _curl(
+                    "area2",
+                    {
+                        "sido": "경기",
+                        "gugun": gugun,
+                        "PageNo": "1",
+                        "numOfrows": "100",
+                        "from": frm,
+                        "to": to,
+                    },
+                )
+            )
+            for it in area_items:
+                if _keep_city(it, name, gugun) and it.get("seq"):
+                    by[it["seq"]] = it
+        except Exception as e:  # noqa: BLE001
+            print(f"culture area2 soft-fail region={rid}: {e}")
+
+    rows = _build_enjoy_rows(
+        by, region_id=rid, region_name=name, today=today, now_iso=now_iso
+    )
+    print(f"culture region={rid}: collected={len(rows)}")
+    return rows
+
+
+def collect_suwon_enjoy(days_ahead: int = 120) -> list[dict[str, Any]]:
+    """Backward-compat wrapper — suwon only."""
+    return collect_enjoy_for_region(rc.REGION_BY_ID["suwon"], days_ahead=days_ahead)
+
+
+def collect_enjoy_for_regions(days_ahead: int = 120) -> list[dict[str, Any]]:
+    """Collect culture ENJOY for all REGIONS; soft-fail per city."""
+    all_rows: list[dict[str, Any]] = []
+    for region in rc.REGIONS:
+        try:
+            all_rows.extend(collect_enjoy_for_region(region, days_ahead=days_ahead))
+        except Exception as e:  # noqa: BLE001 — never abort whole run
+            print(f"culture region={region['id']} aborted soft: {e}")
+    return all_rows
+
+
 _BRACKET_RE = re.compile(r"[\[\(（【「『].*?[\]\)）】」』]")
 _PUNCT_RE = re.compile(r"[\W_]+", re.UNICODE)
 
@@ -267,28 +320,37 @@ def normalize_title(title: str | None) -> str:
     return s
 
 
+
+def _is_culture_row(o: dict[str, Any]) -> bool:
+    oid = str(o.get("id", ""))
+    return (o.get("meta") or {}).get("source") == "culture_portal" or "-culture-" in oid
+
+
 def merge_into_published(pub_path: Path, enjoy: list[dict[str, Any]]) -> dict[str, int]:
-    """Replace culture_portal ENJOY; drop culture rows whose title matches existing non-culture ENJOY.
+    """Replace culture_portal ENJOY; title-dedupe vs non-culture ENJOY within same region.
 
     Prefer TourAPI (and other non-culture) titles; culture duplicates are dropped.
     """
     d = json.loads(pub_path.read_text(encoding="utf-8"))
-    ops = [
-        o
-        for o in d["opportunities"]
-        if not str(o.get("id", "")).startswith("suwon-culture-")
-        and (o.get("meta") or {}).get("source") != "culture_portal"
-    ]
-    existing_enjoy_titles = {
-        normalize_title(o.get("title"))
-        for o in ops
-        if o.get("type") == "ENJOY" and normalize_title(o.get("title"))
-    }
+    ops = [o for o in d["opportunities"] if not _is_culture_row(o)]
+
+    # Existing non-culture ENJOY titles keyed by region
+    existing_by_region: dict[str, set[str]] = {}
+    for o in ops:
+        if o.get("type") != "ENJOY":
+            continue
+        nt = normalize_title(o.get("title"))
+        if not nt:
+            continue
+        rid = str(o.get("region") or "")
+        existing_by_region.setdefault(rid, set()).add(nt)
+
     kept: list[dict[str, Any]] = []
     dropped: list[str] = []
     for row in enjoy:
         nt = normalize_title(row.get("title"))
-        if nt and nt in existing_enjoy_titles:
+        rid = str(row.get("region") or "")
+        if nt and nt in existing_by_region.get(rid, set()):
             dropped.append(str(row.get("title") or ""))
             continue
         kept.append(row)
@@ -296,7 +358,7 @@ def merge_into_published(pub_path: Path, enjoy: list[dict[str, Any]]) -> dict[st
         sample = dropped[:8]
         print(
             f"culture title-dedupe: dropped {len(dropped)} vs non-culture ENJOY "
-            f"sample={sample}"
+            f"(same region) sample={sample}"
         )
     else:
         print("culture title-dedupe: dropped 0")
@@ -314,9 +376,18 @@ def merge_into_published(pub_path: Path, enjoy: list[dict[str, Any]]) -> dict[st
 
 
 if __name__ == "__main__":
-    rows = collect_suwon_enjoy()
-    print(f"collected {len(rows)}")
+    rows = collect_enjoy_for_regions()
+    print(f"collected {len(rows)} across regions")
     root = Path(__file__).resolve().parents[2]
-    for rel in ("data/published/opportunities.json", "app/assets/data/opportunities.json"):
-        stats = merge_into_published(root / rel, rows)
-        print(rel, stats)
+    pub = root / "data/published/opportunities.json"
+    stats = merge_into_published(pub, rows)
+    print("data/published/opportunities.json", stats)
+    # Keep assets in sync with published (avoid merging into a stale asset copy).
+    try:
+        import subprocess
+        subprocess.run(
+            ["python3", str(root / "scripts" / "sync_published_assets.py")],
+            check=False,
+        )
+    except Exception as e:  # noqa: BLE001
+        print(f"sync_published_assets warn: {e}")

@@ -56,3 +56,8 @@
 - `merge_into_published`: TourAPI ENJOY와 **정규화 제목 중복**이면 문화 쪽 drop (TourAPI 우선)
 - 2026-09-17 재수집: culture 17→**16** keep (drop 예: 화성행궁 야간개장)
 - 홈 「곧 열려요」: culture_portal 우선 정렬, horizon 미리보기 16
+
+## Multi-city (2026-09-17)
+- Generalized to `collect_enjoy_for_regions()` over `region_codes.REGIONS`.
+- ids: `{region_id}-culture-{seq}` (not only suwon-).
+- See `docs/ops/multi-city.md`.

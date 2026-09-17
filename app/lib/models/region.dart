@@ -19,7 +19,7 @@ class Region {
   /// TourAPI/관측 sigungu 코드 (없으면 null — 수집 전략에 따름).
   final String? sigunguCode;
 
-  /// 앱에 실데이터가 실려 있는지 (지금은 수원만 true).
+  /// 앱에 실데이터가 실려 있는지 (multi-city internal test: registry cities with published rows).
   final bool hasPublishedData;
 
   /// Optional remote hero band image for 홈 (없으면 그라데이션 플레이스홀더).
@@ -58,35 +58,35 @@ class RegionRegistry {
       id: 'yongin',
       nameKo: '용인',
       areaCode: '31',
-      hasPublishedData: false,
+      hasPublishedData: true,
       heroAsset: _heroDefault,
     ),
     Region(
       id: 'seongnam',
       nameKo: '성남',
       areaCode: '31',
-      hasPublishedData: false,
+      hasPublishedData: true,
       heroAsset: _heroDefault,
     ),
     Region(
       id: 'goyang',
       nameKo: '고양',
       areaCode: '31',
-      hasPublishedData: false,
+      hasPublishedData: true,
       heroAsset: _heroDefault,
     ),
     Region(
       id: 'bucheon',
       nameKo: '부천',
       areaCode: '31',
-      hasPublishedData: false,
+      hasPublishedData: true,
       heroAsset: _heroDefault,
     ),
     Region(
       id: 'hwaseong',
       nameKo: '화성',
       areaCode: '31',
-      hasPublishedData: false,
+      hasPublishedData: true,
       heroAsset: _heroDefault,
     ),
   ];

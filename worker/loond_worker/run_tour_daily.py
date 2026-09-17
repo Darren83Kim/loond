@@ -1,21 +1,21 @@
-"""Daily TourAPI KorService2 collector → published opportunities.json (EPIC 5).
+"""Daily TourAPI KorService2 collector -> published opportunities.json (EPIC 5).
 
-STRATEGY=area_filter (proven EPIC 4):
-  - ENJOY: searchFestival2 + addr/title contains 수원
-  - DISCOVER: areaBasedList2 (contentTypeId 12/14/25/28/38/39) + 수원 filter
-  - Preserve municipal APPLY + curated_traveler/tour_apply + culture_portal ENJOY;
-    replace prior TourAPI suwon-tour-* ENJOY/DISCOVER only
+STRATEGY=area_filter (multi-city internal test):
+  - Fetch Gyeonggi (areaCode=31) festivals + discover once
+  - Partition into RegionRegistry cities by addr/title keywords
+  - Preserve municipal APPLY + curated_traveler + culture_portal ENJOY;
+    replace prior TourAPI *-tour-* ENJOY/DISCOVER with multi-city set
 
 Requires env TOUR_API_SERVICE_KEY. Never prints the key.
 Exit 0 on success.
 """
-
 from __future__ import annotations
 
 import json
 import re
 import sys
 import time
+import subprocess
 import urllib.error
 import urllib.request
 from collections import Counter
@@ -52,10 +52,8 @@ SOURCE_NAME = "한국관광공사 TourAPI"
 def _now_kst() -> datetime:
     return datetime.now(KST).replace(microsecond=0)
 
-
 def _now_iso() -> str:
     return _now_kst().isoformat()
-
 
 def _prepare_service_key(raw: str) -> str:
     """Use env key as-is when already URL-encoded; otherwise encode once.
@@ -74,7 +72,6 @@ def _prepare_service_key(raw: str) -> str:
     # Decoded form — encode once for query string
     return quote(key, safe="")
 
-
 def _build_url(endpoint: str, service_key: str, extra: dict[str, str]) -> str:
     parts = [f"serviceKey={service_key}"]
     params = {
@@ -91,7 +88,6 @@ def _build_url(endpoint: str, service_key: str, extra: dict[str, str]) -> str:
     path = rc.TOUR_API_ENDPOINTS[endpoint]
     return f"{rc.TOUR_API_BASE_URL}/{path}?{'&'.join(parts)}"
 
-
 def _safe_url_for_log(url: str) -> str:
     if "serviceKey=" not in url:
         return url
@@ -99,44 +95,90 @@ def _safe_url_for_log(url: str) -> str:
     amp = rest.find("&")
     return pre + "serviceKey=***" + (rest[amp:] if amp >= 0 else "")
 
+def _curl_get(url: str) -> tuple[int | None, str]:
+    """curl HTTP/1.1 — preferred on this box (HTTPS TLS EOF to apis.data.go.kr)."""
+    # Prefer HTTP: TLS often fails with unexpected EOF from this environment.
+    if url.startswith("https://apis.data.go.kr/"):
+        url = "http://" + url[len("https://") :]
+    r = subprocess.run(
+        [
+            "curl",
+            "-sS",
+            "--http1.1",
+            "--connect-timeout",
+            "20",
+            "--max-time",
+            str(config.REQUEST_TIMEOUT + 15),
+            "-A",
+            "LoondCollector/1.0",
+            "-H",
+            "Accept: application/json",
+            "-w",
+            "\n%{http_code}",
+            url,
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if r.returncode != 0:
+        raise RuntimeError(r.stderr.strip() or "curl failed")
+    body, _, code = r.stdout.rpartition("\n")
+    try:
+        return int(code), body
+    except Exception:
+        return None, body
+
 
 def fetch_json(url: str) -> dict[str, Any]:
-    """GET JSON via urllib (EPIC4-proven). Avoids requests requoting quirks."""
-    req = urllib.request.Request(
-        url,
-        headers={"User-Agent": "LoondCollector/1.0", "Accept": "application/json"},
-    )
+    """GET JSON via curl HTTP/1.1 (TLS-safe); urllib fallback."""
+    body = ""
     try:
-        with urllib.request.urlopen(req, timeout=config.REQUEST_TIMEOUT) as resp:
-            body = resp.read().decode("utf-8", errors="replace")
-    except urllib.error.HTTPError as exc:
-        body = exc.read().decode("utf-8", errors="replace")
-        try:
-            data = json.loads(body)
-            # Preserve HTTP status for diagnostics without raising
-            if isinstance(data, dict):
-                data = {**data, "_http_status": exc.code}
-            return data
-        except Exception:
+        code, body = _curl_get(url)
+        if code not in (200, None):
+            # still try parse body; else fall through
+            try:
+                data = json.loads(body)
+                if isinstance(data, dict):
+                    return {**data, "_http_status": code, "_via": "curl"}
+            except Exception:
+                pass
             return {
-                "_http_error": exc.code,
+                "_http_error": code,
                 "_body": body[:500],
                 "_url": _safe_url_for_log(url),
+                "_via": "curl",
             }
-    except Exception as exc:  # noqa: BLE001
-        return {
-            "_error": type(exc).__name__,
-            "_msg": str(exc)[:200],
-            "_url": _safe_url_for_log(url),
-        }
-    try:
         return json.loads(body)
-    except Exception:
-        return {
-            "_parse_error": True,
-            "_body": body[:500],
-            "_url": _safe_url_for_log(url),
-        }
+    except Exception as curl_exc:  # noqa: BLE001
+        req = urllib.request.Request(
+            url,
+            headers={"User-Agent": "LoondCollector/1.0", "Accept": "application/json"},
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=config.REQUEST_TIMEOUT) as resp:
+                body = resp.read().decode("utf-8", errors="replace")
+            return json.loads(body)
+        except urllib.error.HTTPError as exc:
+            body = exc.read().decode("utf-8", errors="replace")
+            try:
+                data = json.loads(body)
+                if isinstance(data, dict):
+                    return {**data, "_http_status": exc.code}
+                return data
+            except Exception:
+                return {
+                    "_http_error": exc.code,
+                    "_body": body[:500],
+                    "_url": _safe_url_for_log(url),
+                }
+        except Exception as exc:  # noqa: BLE001
+            return {
+                "_error": type(exc).__name__,
+                "_msg": str(exc)[:200],
+                "_curl": str(curl_exc)[:200],
+                "_url": _safe_url_for_log(url),
+            }
 
 
 def normalize_items(payload: dict[str, Any]) -> list[dict[str, Any]]:
@@ -156,7 +198,6 @@ def normalize_items(payload: dict[str, Any]) -> list[dict[str, Any]]:
         return [x for x in raw if isinstance(x, dict)]
     return []
 
-
 def header_ok(payload: dict[str, Any]) -> tuple[bool, str]:
     if "_error" in payload or "_http_error" in payload or "_parse_error" in payload:
         return False, str(payload.get("_msg") or payload.get("_http_error") or "error")
@@ -173,7 +214,6 @@ def header_ok(payload: dict[str, Any]) -> tuple[bool, str]:
         return False, f"{code}:{header.get('resultMsg')}"
     return True, "OK"
 
-
 def total_count(payload: dict[str, Any]) -> int:
     body = ((payload.get("response") or {}).get("body")) or {}
     try:
@@ -181,19 +221,34 @@ def total_count(payload: dict[str, Any]) -> int:
     except Exception:
         return 0
 
-
 def matches_suwon(item: dict[str, Any]) -> bool:
-    kw = rc.FILTER_ADDR_KEYWORD
-    blob = " ".join(
-        str(item.get(k, "") or "")
-        for k in ("addr1", "addr2", "title", "fullname", "addr")
-    )
-    return kw in blob
+    """Backward-compat: True if item assigns to suwon."""
+    return rc.matches_suwon(item)
+
+
+def partition_by_region(
+    items: list[dict[str, Any]],
+) -> tuple[dict[str, list[dict[str, Any]]], int]:
+    """Exclusive city assignment by REGIONS priority; drop unmatched."""
+    by: dict[str, list[dict[str, Any]]] = {r["id"]: [] for r in rc.REGIONS}
+    seen: set[str] = set()
+    dropped = 0
+    for it in items:
+        cid = str(it.get("contentid") or "")
+        if cid and cid in seen:
+            continue
+        region = rc.assign_region(it)
+        if region is None:
+            dropped += 1
+            continue
+        if cid:
+            seen.add(cid)
+        by[region["id"]].append(it)
+    return by, dropped
 
 
 def _log(msg: str) -> None:
     print(msg, flush=True)
-
 
 def paginate(
     endpoint: str,
@@ -236,7 +291,6 @@ def paginate(
         time.sleep(0.12)
     return all_items, metas
 
-
 def event_start_date() -> str:
     """Prefer year-start window; fall back no earlier than today-30d conceptually.
 
@@ -250,14 +304,12 @@ def event_start_date() -> str:
     start = min(year_start, d30)
     return start.strftime("%Y%m%d")
 
-
 def collect_festivals(service_key: str) -> dict[str, Any]:
-    """ENJOY via searchFestival2; area_filter STRATEGY."""
+    """ENJOY via searchFestival2; fetch area31 once, partition to cities."""
     esd = event_start_date()
     runs: list[dict[str, Any]] = []
     collected: dict[str, dict[str, Any]] = {}
 
-    # Primary: areaCode=31
     items, metas = paginate(
         "searchFestival2",
         service_key,
@@ -271,10 +323,10 @@ def collect_festivals(service_key: str) -> dict[str, Any]:
         if cid:
             collected[cid] = it
 
-    suwon = [it for it in collected.values() if matches_suwon(it)]
+    by_region, dropped = partition_by_region(list(collected.values()))
+    assigned = sum(len(v) for v in by_region.values())
 
-    # Nationwide + filter if area31 is thin (EPIC 4: area31=2, nationwide→15)
-    if len(suwon) < 5:
+    if assigned < 10:
         items, metas = paginate(
             "searchFestival2",
             service_key,
@@ -292,30 +344,40 @@ def collect_festivals(service_key: str) -> dict[str, Any]:
             }
         )
         for it in items:
-            if matches_suwon(it):
-                cid = str(it.get("contentid") or "")
-                if cid:
-                    collected[cid] = it
-        suwon = [it for it in collected.values() if matches_suwon(it)]
+            cid = str(it.get("contentid") or "")
+            if cid:
+                collected[cid] = it
+        by_region, dropped = partition_by_region(list(collected.values()))
+        assigned = sum(len(v) for v in by_region.values())
+
+    flat: list[dict[str, Any]] = []
+    for rows in by_region.values():
+        flat.extend(rows)
 
     return {
         "endpoint": "searchFestival2",
         "eventStartDate": esd,
         "runs": runs,
-        "items": suwon,
-        "suwon_count": len(suwon),
-        "sample_titles": [str(it.get("title", "")) for it in suwon[:20]],
+        "by_region": by_region,
+        "items": flat,
+        "counts": {rid: len(rows) for rid, rows in by_region.items()},
+        "assigned": assigned,
+        "dropped": dropped,
+        "sample_titles": {
+            rid: [str(it.get("title", "")) for it in rows[:5]]
+            for rid, rows in by_region.items()
+        },
+        "suwon_count": len(by_region.get("suwon", [])),
     }
 
 
 def collect_discover(service_key: str) -> dict[str, Any]:
-    """DISCOVER via areaBasedList2 for known content types + 수원 filter."""
+    """DISCOVER via areaBasedList2; fetch area31 once per type, then partition."""
     by_type: dict[str, Any] = {}
-    suwon_all: list[dict[str, Any]] = []
+    raw_all: list[dict[str, Any]] = []
     seen: set[str] = set()
 
     for ctid in DISCOVER_TYPES:
-        # Dense food/shopping: still paginate fully for filter, cap later at publish
         max_pages = 40 if ctid in (38, 39) else 30
         items, metas = paginate(
             "areaBasedList2",
@@ -328,30 +390,47 @@ def collect_discover(service_key: str) -> dict[str, Any]:
             max_pages=max_pages,
             label=f"discover_{ctid}",
         )
-        filtered = [it for it in items if matches_suwon(it)]
         by_type[str(ctid)] = {
             "contentTypeId": ctid,
             "category": CONTENT_CAT.get(str(ctid), str(ctid)),
             "metas": metas,
             "unique_total": len(items),
-            "suwon_count": len(filtered),
-            "sample_titles": [str(it.get("title", "")) for it in filtered[:10]],
+            "sample_titles": [str(it.get("title", "")) for it in items[:5]],
         }
-        for it in filtered:
+        for it in items:
             cid = str(it.get("contentid") or "")
             if cid and cid not in seen:
                 seen.add(cid)
-                suwon_all.append(it)
+                raw_all.append(it)
         time.sleep(0.1)
+
+    by_region, dropped = partition_by_region(raw_all)
+
+    type_city: dict[str, dict[str, int]] = {str(t): {} for t in DISCOVER_TYPES}
+    for rid, rows in by_region.items():
+        for it in rows:
+            ctid = str(it.get("contenttypeid") or "")
+            type_city.setdefault(ctid, {})
+            type_city[ctid][rid] = type_city[ctid].get(rid, 0) + 1
+    for ctid, info in by_type.items():
+        info["by_region"] = type_city.get(ctid, {})
+        info["assigned"] = sum(type_city.get(ctid, {}).values())
+        info["suwon_count"] = type_city.get(ctid, {}).get("suwon", 0)
+
+    flat: list[dict[str, Any]] = []
+    for rows in by_region.values():
+        flat.extend(rows)
 
     return {
         "endpoint": "areaBasedList2",
         "by_type": by_type,
-        "items": suwon_all,
-        "suwon_count": len(suwon_all),
-        "sample_titles": [str(it.get("title", "")) for it in suwon_all[:25]],
+        "by_region": by_region,
+        "items": flat,
+        "counts": {rid: len(rows) for rid, rows in by_region.items()},
+        "assigned": sum(len(v) for v in by_region.values()),
+        "dropped": dropped,
+        "suwon_count": len(by_region.get("suwon", [])),
     }
-
 
 def enrich_homepages(
     service_key: str, items: list[dict[str, Any]], limit: int = 40
@@ -381,7 +460,6 @@ def enrich_homepages(
         time.sleep(0.1)
     return out
 
-
 def ymd_to_iso(s: str | None) -> str | None:
     if not s:
         return None
@@ -391,7 +469,6 @@ def ymd_to_iso(s: str | None) -> str | None:
     if re.fullmatch(r"\d{4}-\d{2}-\d{2}", s):
         return s
     return None
-
 
 def clean_url(u: str | None) -> str | None:
     if not u:
@@ -406,7 +483,6 @@ def clean_url(u: str | None) -> str | None:
         return u
     return None
 
-
 def source_url(
     item: dict[str, Any], homepages: dict[str, str], *, enjoy: bool
 ) -> tuple[str, str]:
@@ -419,8 +495,7 @@ def source_url(
         return pat.format(cid=cid), "visitkorea_detail_cotid"
     return "https://korean.visitkorea.or.kr/", "visitkorea_root_fallback"
 
-
-def make_summary(item: dict[str, Any], kind: str) -> str:
+def make_summary(item: dict[str, Any], kind: str, region_name: str) -> str:
     title = str(item.get("title") or "").strip()
     addr = str(item.get("addr1") or "").strip()
     if kind == "ENJOY":
@@ -432,13 +507,18 @@ def make_summary(item: dict[str, Any], kind: str) -> str:
         elif sd:
             when = f" 시작 {sd}."
         loc = f" 장소: {addr}." if addr else ""
-        return f"{title} — 수원 지역 축제/행사.{when}{loc}".strip()
+        return f"{title} — {region_name} 지역 축제/행사.{when}{loc}".strip()
     loc = f" 위치: {addr}." if addr else ""
-    return f"{title} — 수원 관광·문화 정보.{loc}".strip()
+    return f"{title} — {region_name} 관광·문화 정보.{loc}".strip()
 
 
 def to_opportunity(
-    item: dict[str, Any], *, typ: str, homepages: dict[str, str], now_iso: str
+    item: dict[str, Any],
+    *,
+    typ: str,
+    region: dict[str, Any],
+    homepages: dict[str, str],
+    now_iso: str,
 ) -> dict[str, Any]:
     cid = str(item.get("contentid") or "unknown")
     ctid = str(item.get("contenttypeid") or ("15" if typ == "ENJOY" else ""))
@@ -454,13 +534,15 @@ def to_opportunity(
     end = ymd_to_iso(item.get("eventenddate")) if typ == "ENJOY" else None
     addr = str(item.get("addr1") or "").strip() or None
     tel = str(item.get("tel") or "").strip() or None
+    rid = region["id"]
+    rname = region["name_ko"]
     return {
-        "id": f"suwon-tour-{cid}",
-        "region": rc.REGION_ID,
+        "id": f"{rid}-tour-{cid}",
+        "region": rid,
         "title": title,
         "type": typ,
         "category": cat,
-        "summary": make_summary(item, typ),
+        "summary": make_summary(item, typ, rname),
         "description": None,
         "startDate": start,
         "endDate": end,
@@ -479,7 +561,7 @@ def to_opportunity(
         "createdAt": now_iso,
         "updatedAt": now_iso,
         "meta": {
-            "regionLabel": rc.REGION_NAME,
+            "regionLabel": rname,
             "contentId": cid,
             "contentTypeId": ctid,
             "areaCode": str(item.get("areacode") or ""),
@@ -487,14 +569,14 @@ def to_opportunity(
             "lDongRegnCd": str(item.get("lDongRegnCd") or ""),
             "lDongSignguCd": str(item.get("lDongSignguCd") or ""),
             "tel": tel,
+            "source": "tour_api",
             "sourceUrlSource": url_src,
             "pipelineNotes": (
-                "EPIC5 daily TourAPI KorService2; filtered addr/title contains "
-                f"{rc.FILTER_ADDR_KEYWORD}; sourceUrl via {url_src}."
+                f"multi-city TourAPI KorService2; region={rid}; "
+                f"keyword partition; sourceUrl via {url_src}."
             ),
         },
     }
-
 
 def curate_discover(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Keep sparse types fully; cap dense food/shopping preferring images."""
@@ -518,15 +600,13 @@ def curate_discover(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
         kept.extend(bucket_sorted[:cap])
     return kept
 
-
 def write_json(path: Any, doc: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-
 def merge_and_publish(
-    fest_items: list[dict[str, Any]],
-    disc_items: list[dict[str, Any]],
+    fest_by_region: dict[str, list[dict[str, Any]]],
+    disc_by_region: dict[str, list[dict[str, Any]]],
     homepages: dict[str, str],
 ) -> dict[str, Any]:
     now_iso = _now_iso()
@@ -540,39 +620,39 @@ def merge_and_publish(
         meta = o.get("meta") or {}
         return str(meta.get("source") or "")
 
-    # Municipal APPLY + curated traveler reserves (tour_apply). Never drop
-    # curated rows just because their id uses the suwon-tour-* prefix.
-    apply_items = []
-    for o in pub.get("opportunities", []):
-        if o.get("type") != "APPLY":
-            continue
+    def _is_culture_enjoy(o: dict[str, Any]) -> bool:
+        if o.get("type") != "ENJOY":
+            return False
         oid = str(o.get("id", ""))
-        src = _meta_source(o)
-        cat = str(o.get("category") or "")
-        curated = src == "curated_traveler" or cat.startswith("tour")
-        if curated or not oid.startswith("suwon-tour-"):
-            apply_items.append(o)
+        return _meta_source(o) == "culture_portal" or "-culture-" in oid
 
-    # Culture-portal ENJOY (R11) survives TourAPI refresh.
-    culture_enjoy = [
-        o
-        for o in pub.get("opportunities", [])
-        if o.get("type") == "ENJOY"
-        and (
-            _meta_source(o) == "culture_portal"
-            or str(o.get("id", "")).startswith("suwon-culture-")
-        )
-    ]
+    apply_items = [o for o in pub.get("opportunities", []) if o.get("type") == "APPLY"]
+    culture_enjoy = [o for o in pub.get("opportunities", []) if _is_culture_enjoy(o)]
 
-    enjoy = [
-        to_opportunity(i, typ="ENJOY", homepages=homepages, now_iso=now_iso)
-        for i in fest_items
-    ]
-    disc_curated = curate_discover(disc_items)
-    discover = [
-        to_opportunity(i, typ="DISCOVER", homepages=homepages, now_iso=now_iso)
-        for i in disc_curated
-    ]
+    enjoy: list[dict[str, Any]] = []
+    discover: list[dict[str, Any]] = []
+    per_city: dict[str, dict[str, int]] = {}
+
+    for region in rc.REGIONS:
+        rid = region["id"]
+        fest_items = fest_by_region.get(rid, [])
+        disc_items = curate_discover(disc_by_region.get(rid, []))
+        city_enjoy = [
+            to_opportunity(
+                i, typ="ENJOY", region=region, homepages=homepages, now_iso=now_iso
+            )
+            for i in fest_items
+        ]
+        city_disc = [
+            to_opportunity(
+                i, typ="DISCOVER", region=region, homepages=homepages, now_iso=now_iso
+            )
+            for i in disc_items
+        ]
+        enjoy.extend(city_enjoy)
+        discover.extend(city_disc)
+        per_city[rid] = {"ENJOY": len(city_enjoy), "DISCOVER": len(city_disc)}
+        _log(f"  city {rid}: ENJOY={len(city_enjoy)} DISCOVER={len(city_disc)}")
 
     seen: set[str] = set()
     merged: list[dict[str, Any]] = []
@@ -585,8 +665,9 @@ def merge_and_publish(
 
     out = {
         "schemaVersion": 1,
-        "region": rc.REGION_ID,
-        "regionLabel": rc.REGION_NAME,
+        "region": "multi",
+        "regionLabel": "경기 다지역",
+        "regions": [r["id"] for r in rc.REGIONS],
         "updatedAt": now_iso,
         "opportunities": merged,
     }
@@ -595,17 +676,8 @@ def merge_and_publish(
     missing: list[tuple[Any, str]] = []
     for o in merged:
         for f in (
-            "id",
-            "title",
-            "type",
-            "category",
-            "summary",
-            "sourceName",
-            "sourceUrl",
-            "sourcePublishedAt",
-            "status",
-            "createdAt",
-            "updatedAt",
+            "id", "title", "type", "category", "summary", "sourceName",
+            "sourceUrl", "sourcePublishedAt", "status", "createdAt", "updatedAt",
         ):
             if o.get(f) in (None, ""):
                 missing.append((o.get("id"), f))
@@ -620,10 +692,12 @@ def merge_and_publish(
         "discover_cats": dict(
             Counter(o["category"] for o in merged if o["type"] == "DISCOVER")
         ),
+        "per_city_tour": per_city,
         "total": len(merged),
         "enjoy": len(enjoy),
         "discover": len(discover),
         "apply": len(apply_items),
+        "culture": len(culture_enjoy),
         "missing_required": len(missing),
     }
 
@@ -635,39 +709,54 @@ def main() -> int:
         return 1
 
     service_key = _prepare_service_key(raw_key)
-    # Never print the key; only length / encoding hint
     _log(
-        f"TourAPI daily collect STRATEGY={rc.STRATEGY} "
-        f"areaCode={rc.TOUR_API_AREA_CODE} key_len={len(service_key)} "
-        f"key_pct_encoded={('%' in service_key)}"
+        f"TourAPI daily collect STRATEGY={rc.STRATEGY} multi-city "
+        f"areaCode={rc.TOUR_API_AREA_CODE} cities={[r['id'] for r in rc.REGIONS]} "
+        f"key_len={len(service_key)} key_pct_encoded={('%' in service_key)}"
     )
 
     config.RAW_DIR.mkdir(parents=True, exist_ok=True)
     collected_at = _now_iso()
 
-    _log("=== ENJOY searchFestival2 ===")
+    _log("=== ENJOY searchFestival2 (area31 -> partition) ===")
     fest = collect_festivals(service_key)
-    _log(f"festivals suwon={fest['suwon_count']} sample={fest['sample_titles'][:5]}")
+    _log(
+        f"festivals assigned={fest['assigned']} dropped={fest['dropped']} "
+        f"counts={fest['counts']}"
+    )
+    for rid, titles in fest["sample_titles"].items():
+        if titles:
+            _log(f"  {rid} sample={titles}")
     for run in fest.get("runs", []):
-        _log(f"  run mode={run.get('mode')} count={run.get('count')} metas0={ (run.get('metas') or [None])[0] }")
-
-    _log("=== DISCOVER areaBasedList2 ===")
-    disc = collect_discover(service_key)
-    _log(f"discover suwon={disc['suwon_count']}")
-    for ctid, info in disc["by_type"].items():
         _log(
-            f"  type {ctid} ({info['category']}): suwon={info['suwon_count']} "
-            f"unique={info['unique_total']} meta0={(info.get('metas') or [None])[0]}"
+            f"  run mode={run.get('mode')} count={run.get('count')} "
+            f"metas0={(run.get('metas') or [None])[0]}"
         )
 
-    if fest["suwon_count"] == 0 and disc["suwon_count"] == 0:
+    _log("=== DISCOVER areaBasedList2 (area31 -> partition) ===")
+    disc = collect_discover(service_key)
+    _log(
+        f"discover assigned={disc['assigned']} dropped={disc['dropped']} "
+        f"counts={disc['counts']}"
+    )
+    for ctid, info in disc["by_type"].items():
+        _log(
+            f"  type {ctid} ({info['category']}): assigned={info.get('assigned', 0)} "
+            f"unique={info['unique_total']} by_region={info.get('by_region')}"
+        )
+
+    if fest["assigned"] == 0 and disc["assigned"] == 0:
         print(
-            "TourAPI returned 0 Suwon ENJOY/DISCOVER rows — refusing empty invent",
+            "TourAPI returned 0 multi-city ENJOY/DISCOVER rows — refusing empty invent",
             file=sys.stderr,
         )
         return 1
 
-    to_enrich = fest["items"] + disc["items"]
+    to_enrich: list[dict[str, Any]] = []
+    for rid in [r["id"] for r in rc.REGIONS]:
+        to_enrich.extend(fest["by_region"].get(rid, [])[:3])
+    for rid in [r["id"] for r in rc.REGIONS]:
+        to_enrich.extend(disc["by_region"].get(rid, [])[:4])
     _log(f"=== detailCommon2 homepage enrich n={min(40, len(to_enrich))} ===")
     homepages = enrich_homepages(service_key, to_enrich, limit=40)
     _log(f"homepages found: {len(homepages)}")
@@ -676,28 +765,33 @@ def main() -> int:
         "collectedAt": collected_at,
         "base": rc.TOUR_API_BASE_URL,
         "strategy": rc.STRATEGY,
+        "mode": "multi_city_partition",
         "eventStartDate": fest["eventStartDate"],
         "runs": fest["runs"],
-        "suwon_count": fest["suwon_count"],
-        "items": fest["items"],
+        "counts": fest["counts"],
+        "dropped": fest["dropped"],
+        "by_region_titles": fest["sample_titles"],
+        "items_by_region": dict(fest["by_region"]),
         "homepages": homepages,
     }
     disc_doc = {
         "collectedAt": collected_at,
         "base": rc.TOUR_API_BASE_URL,
         "strategy": rc.STRATEGY,
-        "suwon_count": disc["suwon_count"],
+        "mode": "multi_city_partition",
+        "counts": disc["counts"],
+        "dropped": disc["dropped"],
         "by_type_summary": {
             k: {
                 "category": v["category"],
-                "suwon_count": v["suwon_count"],
+                "assigned": v.get("assigned", 0),
                 "unique_total": v["unique_total"],
-                "sample_titles": v["sample_titles"],
+                "by_region": v.get("by_region", {}),
                 "first_meta": (v["metas"][0] if v["metas"] else None),
             }
             for k, v in disc["by_type"].items()
         },
-        "items": disc["items"],
+        "items_by_region": dict(disc["by_region"]),
         "homepages": homepages,
     }
     write_json(config.RAW_DIR / "festivals_raw.json", fest_doc)
@@ -707,27 +801,23 @@ def main() -> int:
         f"collectedAt={collected_at}",
         f"base={rc.TOUR_API_BASE_URL}",
         f"strategy={rc.STRATEGY}",
-        f"festivals_suwon={fest['suwon_count']}",
-        f"discover_suwon={disc['suwon_count']}",
+        "mode=multi_city_partition",
+        f"festivals_counts={fest['counts']}",
+        f"discover_counts={disc['counts']}",
         f"homepages={len(homepages)}",
-        "festival_titles:",
-        *[f"  - {t}" for t in fest["sample_titles"][:15]],
-        "discover_by_type:",
-        *[
-            f"  - {k}: {v['suwon_count']} ({v['category']})"
-            for k, v in disc["by_type"].items()
-        ],
     ]
     (config.RAW_DIR / "summary.txt").write_text(
         "\n".join(summary_lines) + "\n", encoding="utf-8"
     )
 
-    _log("=== merge → published ===")
-    stats = merge_and_publish(fest["items"], disc["items"], homepages)
+    _log("=== merge -> published ===")
+    stats = merge_and_publish(fest["by_region"], disc["by_region"], homepages)
     _log(
         f"published updatedAt={stats['updatedAt']} counts={stats['counts']} "
-        f"total={stats['total']} missing={stats['missing_required']}"
+        f"total={stats['total']} culture={stats['culture']} "
+        f"missing={stats['missing_required']}"
     )
+    _log(f"per_city_tour={stats['per_city_tour']}")
     _log(
         f"Wrote {config.PUBLISHED_JSON.relative_to(config.PROJECT_ROOT)} "
         f"+ raw festivals/discover/summary"

@@ -1,29 +1,7 @@
-collectedAt=2026-09-17T12:27:32+09:00
-base=https://apis.data.go.kr/B551011/KorService2
+collectedAt=2026-09-17T15:24:39+09:00
+base=http://apis.data.go.kr/B551011/KorService2
 strategy=area_filter
-festivals_suwon=16
-discover_suwon=263
-homepages=19
-festival_titles:
-  - 경기도 문화사계 "봄" 경기 상상해 봄 페스타
-  - 경기미 김밥페스타
-  - 경기미 디저트 페스타
-  - 꼬마농부의 컬러 팜 대모험
-  - 만석거 새빛축제
-  - 수원 국가유산야행
-  - 수원남문시장 「불취무귀」 야시장
-  - 수원연극축제
-  - 수원재즈페스티벌
-  - 수원화성 미디어아트
-  - 수원화성문화제
-  - 컬처라운지 경기, 장(場)
-  - 2026 경기인형극제 in 수원
-  - 2026 대한민국 AI 콘텐츠 어워즈
-  - 2026 서가콘서트 : 셜록홈즈
-discover_by_type:
-  - 12: 40 (tour_spot)
-  - 14: 19 (culture_facility)
-  - 25: 0 (travel_course)
-  - 28: 7 (leports)
-  - 38: 5 (shopping)
-  - 39: 192 (food)
+mode=multi_city_partition
+festivals_counts={'suwon': 16, 'yongin': 3, 'seongnam': 3, 'goyang': 9, 'bucheon': 1, 'hwaseong': 6}
+discover_counts={'suwon': 261, 'yongin': 306, 'seongnam': 166, 'goyang': 274, 'bucheon': 102, 'hwaseong': 176}
+homepages=21
