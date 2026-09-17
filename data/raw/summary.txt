@@ -1,9 +1,9 @@
-collectedAt=2026-09-16T12:21:52+09:00
+collectedAt=2026-09-17T12:27:32+09:00
 base=https://apis.data.go.kr/B551011/KorService2
 strategy=area_filter
-festivals_suwon=15
+festivals_suwon=16
 discover_suwon=263
-homepages=18
+homepages=19
 festival_titles:
   - 경기도 문화사계 "봄" 경기 상상해 봄 페스타
   - 경기미 김밥페스타
@@ -18,8 +18,8 @@ festival_titles:
   - 수원화성문화제
   - 컬처라운지 경기, 장(場)
   - 2026 경기인형극제 in 수원
+  - 2026 대한민국 AI 콘텐츠 어워즈
   - 2026 서가콘서트 : 셜록홈즈
-  - 2026 화성행궁 야간개장
 discover_by_type:
   - 12: 40 (tour_spot)
   - 14: 19 (culture_facility)

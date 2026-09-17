@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-09-16T12:21:52+09:00",
+  "collectedAt": "2026-09-17T12:27:32+09:00",
   "base": "https://apis.data.go.kr/B551011/KorService2",
   "strategy": "area_filter",
   "eventStartDate": "20260101",
@@ -27,63 +27,63 @@
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 728
+          "totalCount": 733
         },
         {
           "page": 2,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 728
+          "totalCount": 733
         },
         {
           "page": 3,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 728
+          "totalCount": 733
         },
         {
           "page": 4,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 728
+          "totalCount": 733
         },
         {
           "page": 5,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 728
+          "totalCount": 733
         },
         {
           "page": 6,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 728
+          "totalCount": 733
         },
         {
           "page": 7,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 728
+          "totalCount": 733
         },
         {
           "page": 8,
           "ok": true,
           "msg": "OK",
-          "got": 28,
-          "totalCount": 728
+          "got": 33,
+          "totalCount": 733
         }
       ],
-      "count": 728,
-      "totalCount": 728
+      "count": 733,
+      "totalCount": 733
     }
   ],
-  "suwon_count": 15,
+  "suwon_count": 16,
   "items": [
     {
       "addr1": "경기도 수원시 권선구 서둔로 166 (서둔동)",
@@ -489,6 +489,37 @@
       "festivaltype": ""
     },
     {
+      "addr1": "경기도 수원시 권선구 세화로 134 (서둔동)",
+      "addr2": "4층",
+      "zipcode": "16621",
+      "cat1": "",
+      "cat2": "",
+      "cat3": "",
+      "contentid": "3343831",
+      "contenttypeid": "15",
+      "createdtime": "20240806163248",
+      "eventstartdate": "20261015",
+      "eventenddate": "20261016",
+      "firstimage": "https://tong.visitkorea.or.kr/cms/resource/34/4111534_image2_1.png",
+      "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/34/4111534_image3_1.png",
+      "cpyrhtDivCd": "Type3",
+      "mapx": "126.9973855390",
+      "mapy": "37.2641627269",
+      "mlevel": "6",
+      "modifiedtime": "20260916150518",
+      "areacode": "",
+      "sigungucode": "",
+      "tel": "070-7575-2351",
+      "title": "2026 대한민국 AI 콘텐츠 어워즈",
+      "lDongRegnCd": "41",
+      "lDongSignguCd": "113",
+      "lclsSystm1": "EV",
+      "lclsSystm2": "EV02",
+      "lclsSystm3": "EV020800",
+      "progresstype": "선택안함",
+      "festivaltype": ""
+    },
+    {
       "addr1": "경기도 수원시 팔달구 효원로307번길 20 (인계동)",
       "addr2": "",
       "zipcode": "16488",
@@ -556,6 +587,7 @@
     "4099101": "https://sscf2016.or.kr/",
     "2751090": "https://www.swcf.or.kr/hlfl/",
     "914138": "https://shfestival.com/",
+    "3343831": "https://www.instagram.com/kaica.gcon/",
     "2747134": "https://www.instagram.com/gosaeknew",
     "2633915": "https://www.gglakepark.or.kr/theme/sample28/html/b4.php",
     "125577": "https://www.suwon.go.kr/web/visitsuwon/tour/cultureTour/cultureTourView.do?categoryCd=1439&mstSeqNo=425527",
