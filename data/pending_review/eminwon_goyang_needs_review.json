@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "source": "../data/pending_review/eminwon_goyang_pending.json",
+    "input_count": 20,
+    "region": "goyang",
+    "host": "eminwon.goyang.go.kr",
+    "scheme": "http",
+    "list_url": "http://eminwon.goyang.go.kr/emwp/gov/mogaha/ntis/web/ofr/action/OfrAction.do?context=NTIS&countYn=Y&epcCheck=Y&homepage_pbs_yn=Y&initValue=Y&jndinm=OfrNotAncmtEJB&method=selectListOfrNotAncmt&methodnm=selectListOfrNotAncmtHomepage&not_ancmt_se_code=01%2C04%2C05&ofr_pageSize=10&subCheck=Y&pageIndex=2",
+    "pages_requested": 2,
+    "rows": 20,
+    "empty_hint": "",
+    "list_method": "selectListOfrNotAncmt",
+    "list_methodnm": "selectListOfrNotAncmtHomepage",
+    "collected_at": "2026-09-17T16:26:10+09:00",
+    "transport": "http(s) requests+BeautifulSoup",
+    "details_fetched": 3,
+    "pending_count": 20,
+    "note": "PoC only — do not auto-merge into published/opportunities.json",
+    "reviewDecision": "needs_review",
+    "count": 0,
+    "reviewedAt": "2026-09-17T17:09:36+09:00",
+    "engine": "loond_worker.apply_rules"
+  },
+  "items": []
+}

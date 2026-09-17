@@ -41,3 +41,25 @@ python3 scripts/sync_published_assets.py
 | `worker/README.md` | 워커 실행·규칙 요약 |
 
 TourAPI ENJOY/DISCOVER는 일일 Actions가 published에 병합한다. **시민 APPLY**만 이 체크리스트로 사람 승격한다.
+
+## 자동화 경로 (규칙 엔진)
+
+전량 수동이 아니라, 규칙으로 1차 분기할 수 있다.
+
+```bash
+cd worker
+.venv/bin/python -m loond_worker.apply_review \
+  --in ../data/pending_review/eminwon_goyang_pending.json
+# 안전: 기본은 publish 안 함. auto_publish만 merge하려면 --publish
+```
+
+| 결과 | 다음 행동 |
+|------|-----------|
+| `reject` | 폐기 (블랙리스트·행정공고·비후보) |
+| `needs_review` | **이 체크리스트**로 사람 검증 후 승격 |
+| `auto_publish` | 규칙 전부 충족 시에만 `--publish`로 published merge |
+
+상세 결정표·행정 블랙리스트: [`apply-review-rules.md`](./apply-review-rules.md)
+
+> 1차 고양 eminwon 배치는 대부분 reject/needs_review 예상 (마감일·시민 모집 신호 부족). North Star: 가짜 마감으로 카드 채우지 않기.
+

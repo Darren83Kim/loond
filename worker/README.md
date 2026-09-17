@@ -95,7 +95,26 @@ From repo root:
 
 Copies `data/published/opportunities.json` → `app/assets/data/opportunities.json`.
 
+## APPLY review 규칙 엔진 (reject / needs_review / auto_publish)
+
+eminwon·수원 pending을 전량 publish하지 않고 규칙으로 분기한다.
+
+```bash
+cd worker
+.venv/bin/python -m loond_worker.apply_review \
+  --in ../data/pending_review/eminwon_goyang_pending.json
+# auto_publish만 published merge + asset sync
+.venv/bin/python -m loond_worker.apply_review \
+  --in ../data/pending_review/eminwon_goyang_pending.json --publish
+```
+
+- 코드: `loond_worker/apply_rules.py`, CLI `loond_worker.apply_review`
+- 행정 블랙리스트: `config.EMINWON_ADMIN_BLACKLIST` (수원 BLACKLIST와 분리)
+- 문서: [`docs/ops/apply-review-rules.md`](../docs/ops/apply-review-rules.md)
+- 기본은 `--publish` 없음 (안전). 1차 고양 배치는 대부분 reject/needs_review 예상.
+
 ## pending → published 검증 (EPIC 5-4 / R15)
+
 
 수동 승격 체크리스트: [`docs/ops/pending-publish-checklist.md`](../docs/ops/pending-publish-checklist.md)  
 (마감일·화이트리스트 APPLY·채용/입찰 제외·sourceUrl·HWP 확인·asset sync)

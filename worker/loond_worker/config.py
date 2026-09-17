@@ -148,3 +148,42 @@ BLACKLIST_PATTERNS = (
 def cutoff_date(today: date | None = None) -> date:
     today = today or date.today()
     return today - timedelta(days=LOOKBACK_DAYS)
+
+# ---------------------------------------------------------------------------
+# eminwon / municipal admin-only notice patterns (APPLY review engine)
+# Kept SEPARATE from BLACKLIST_PATTERNS so Suwon collect→filter is unchanged.
+# Used by apply_rules.py / apply_review CLI only. Single source of truth —
+# do not duplicate this list elsewhere.
+# ---------------------------------------------------------------------------
+EMINWON_ADMIN_BLACKLIST = (
+    "등록 공고",
+    "직권말소",
+    "영업신고",
+    "과태료 처분",
+    "건설업 등록",
+    "전문건설업",
+    "공시송달",
+    "송달",
+    "인가 고시",
+    "지형도면",
+    "도시관리계획",
+    "지적재조사",
+    "이동제한",
+    "행정명령",
+)
+
+# Result / closed wording — never auto_publish; treat as reject when matched.
+RESULT_CLOSED_PATTERNS = (
+    "선정결과",
+    "선정 결과",
+    "최종결과",
+    "최종 결과",
+    "결과 공고",
+    "결과공고",
+    "모집 종료",
+    "모집종료",
+    "접수 마감",
+    "접수마감",
+    "종료 안내",
+    "마감 안내",
+)

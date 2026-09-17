@@ -123,8 +123,12 @@ HTML이 JS 의존/빈 셸이면 meta.`empty_hint`에 남기고, config의 method
 
 권장 다음 스텝:
 1. verified 도시(고양·화성·충주·나주·목포·군산 등) config 스모크
-2. pending → 수원과 동일한 필터/마감 검증 파이프 연결
+2. pending → **규칙 엔진**으로 reject/needs_review/auto_publish 분기 — [`apply-review-rules.md`](./apply-review-rules.md) (`python -m loond_worker.apply_review`)
 3. 여수·안동 `portal_custom` 어댑터 여부 결정
+
+### pending → publish (자동화 + 사람)
+- **자동화:** `python -m loond_worker.apply_review --in data/pending_review/eminwon_{region}_pending.json` → `*_rejected` / `*_needs_review` / `*_auto_publish`. 기본은 publish 안 함; `--publish`는 auto_publish만 merge.
+- **사람:** `needs_review` 건은 [`pending-publish-checklist.md`](./pending-publish-checklist.md)로 승격.
 
 ---
 
