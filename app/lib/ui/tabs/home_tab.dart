@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../data/home_audience_store.dart';
+import '../../util/traveler_apply_filter.dart';
 import '../../models/opportunity.dart';
 import '../../models/region.dart';
 import '../../theme/app_theme.dart';
@@ -222,6 +223,7 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   List<Widget> _travelerSections() {
+    final travelerApply = filterApplyForTraveler(widget.apply);
     final out = <Widget>[
       _SectionTitle(
         emoji: '🎉',
@@ -240,17 +242,17 @@ class _HomeTabState extends State<HomeTab> {
       _SectionTitle(
         emoji: '📝',
         title: '이 지역에서 신청할 수 있는 것',
-        count: widget.apply.length,
+        count: travelerApply.length,
         onTap: () => widget.onQuickCategory(0),
         compact: true,
       ),
     ];
-    if (widget.apply.isEmpty) {
+    if (travelerApply.isEmpty) {
       out.add(
-        const EmptyState(message: '지금 신청 가능한 공고가 없어요'),
+        const EmptyState(message: '여행·체류 중 신청할 수 있는 건은 아직 없어요'),
       );
     } else {
-      for (final item in widget.apply.take(3)) {
+      for (final item in travelerApply.take(3)) {
         out.add(
           OpportunityCard(item: item, onTap: () => widget.onOpen(item)),
         );
