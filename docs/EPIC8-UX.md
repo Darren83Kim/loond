@@ -66,3 +66,6 @@
 - Curated: `suwon-tour-swcf-alley-2026` 행궁동 왕의 골목여행(방문객 사전예약, swcf).
 - Filter: visitor cue / `tour_*` category first.
 - 2026-09-17: traveler reserve set expanded to 5 (골목여행 + 태평성대 고궁산책/궁중다과 + 일월·영흥 수목원 해설).
+
+### 문화포털 ENJOY (2026-09-17)
+- R11 스파이크: `docs/ops/culture-portal-spike.md`. ENJOY +17 (culture portal).
