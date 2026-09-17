@@ -10,7 +10,7 @@
     "bucheon",
     "hwaseong"
   ],
-  "updatedAt": "2026-09-17T17:57:27+09:00",
+  "updatedAt": "2026-09-17T18:34:06+09:00",
   "opportunities": [
     {
       "id": "suwon-tour-swcf-alley-2026",
@@ -26348,41 +26348,6 @@
         "placeUrl": "http://www.snart.or.kr",
         "phone": "지누락엔터테인먼트 070-8680-8477",
         "price": "VIP석 88,000원 R석 77,000원, S석 66,000원, A석 55,000원"
-      }
-    },
-    {
-      "id": "goyang-culture-388570",
-      "region": "goyang",
-      "title": "대구미술관 교육형 전시 《고양이도 임금을 볼 수 있다》",
-      "type": "ENJOY",
-      "category": "exhibition",
-      "summary": "전시 — 대구미술관 교육형 전시 《고양이도 임금을 볼 수 있다》. 기간 2026-05-01 ~ 2026-11-29. 장소: 대구미술관. 요금: 성인 1,000원 / 소년, 청년, 대학생, 군인, 예술인 700원",
-      "description": "문의: 대구미술관 053-430-7500 | 공연장/장소: https://daeguartmuseum.or.kr/",
-      "startDate": "2026-05-01",
-      "endDate": "2026-11-29",
-      "applicationStart": null,
-      "applicationEnd": null,
-      "target": null,
-      "benefit": null,
-      "location": "대구, 수성구, 대구미술관",
-      "organization": "문화포털",
-      "thumbnail": "https://www.culture.go.kr/upload/ucms/oneCltInfo/2026/202607/2bd49226409547d3a1e0d109066173d8.png",
-      "sourceName": "문화포털(한눈에보는문화정보)",
-      "sourceUrl": "https://daeguartmuseum.or.kr/index.do?menu_id=00000731&menu_link=/front/ehi/ehiViewFront.do&ehi_id=EHI_00000333",
-      "sourcePublishedAt": null,
-      "status": "published",
-      "opportunityScore": 70,
-      "createdAt": "2026-09-17T15:26:04+09:00",
-      "updatedAt": "2026-09-17T15:26:04+09:00",
-      "meta": {
-        "regionLabel": "고양",
-        "cultureSeq": "388570",
-        "realmName": "전시",
-        "source": "culture_portal",
-        "sourceUrlSource": "detail2_url",
-        "placeUrl": "https://daeguartmuseum.or.kr/",
-        "phone": "대구미술관 053-430-7500",
-        "price": "성인 1,000원 / 소년, 청년, 대학생, 군인, 예술인 700원"
       }
     },
     {

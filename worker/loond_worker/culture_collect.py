@@ -105,9 +105,10 @@ def _keep_city(it: dict[str, str], city_name: str, gugun: str | None) -> bool:
         it.get(k, "")
         for k in ("title", "place", "area", "sigungu", "realmName", "serviceName")
     )
-    if city_name in blob:
-        return True
+    # Prefer explicit sigungu/gugun (avoids title false friends like 고양이→고양).
     if gugun and it.get("sigungu") in {gugun, city_name}:
+        return True
+    if rc.city_keyword_in_blob(city_name, blob):
         return True
     return False
 

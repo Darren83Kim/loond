@@ -17,6 +17,8 @@ keywords into RegionRegistry cities. See docs/ops/multi-city.md.
 
 from __future__ import annotations
 
+import re
+
 import os
 from typing import Any, Final
 
@@ -135,6 +137,18 @@ def item_text_blob(item: dict[str, Any]) -> str:
     )
 
 
+def city_keyword_in_blob(keyword: str, blob: str) -> bool:
+    """Substring match with Korean city false-friend guards.
+
+    고양 must not match 고양이; allow 고양시 / bare 고양 as a token.
+    """
+    if not keyword or not blob:
+        return False
+    if keyword == "고양":
+        return re.search(r"고양(시|특례시)?(?![가-힣])", blob) is not None
+    return keyword in blob
+
+
 def assign_region(item: dict[str, Any]) -> dict[str, Any] | None:
     """Exclusive city assignment by keyword priority (REGIONS order).
 
@@ -150,7 +164,7 @@ def assign_region(item: dict[str, Any]) -> dict[str, Any] | None:
             return region
     for region in REGIONS:
         for kw in region["filter_keywords"]:
-            if kw not in blob:
+            if not city_keyword_in_blob(kw, blob):
                 continue
             if region["id"] == "seongnam" and "홍성남" in blob:
                 continue
