@@ -1,7 +1,7 @@
 # 지역별 원격 로드 설계
 
-상태: **P1 Done** — worker 시별 산출물 + 매니페스트  
-작성: 2026-09-17 · P1 완료: 2026-09-17  
+상태: **P2 workflow landed** — Pages 배포 파이프라인 준비 (repo private → Pages 활성화는 사용자 조치 필요)  
+작성: 2026-09-17 · P1 완료: 2026-09-17 · P2 workflow: 2026-09-17  
 관련: `docs/ops/multi-city.md`, `OpportunityRepository` (현재 에셋 로드)
 
 ## 1. 문제
@@ -91,17 +91,27 @@
 
 | 옵션 | 상태 |
 |------|------|
-| **A. GitHub Pages** | **Locked (1차)** |
+| **A. GitHub Pages** | **Locked (1차)** — workflow `.github/workflows/pages.yml` |
 | B. Cloudflare R2 + 공개 버킷 | 트래픽·안정성 필요 시 이전 (앱 `baseUrl`만 교체) |
 | C. 자체 API | 비목표 |
 
-**의도 Pages 경로 (P2, 아직 미활성):**
+**Live Pages 경로 (목표):**
 
 - Site: `https://darren83kim.github.io/loond/`
-- Region files: `https://darren83kim.github.io/loond/regions/{id}.json`
 - Manifest: `https://darren83kim.github.io/loond/manifest.json`
-- `manifest.baseUrl` placeholder: `https://darren83kim.github.io/loond/regions/`
-- Deploy source: publish `data/published/` (또는 그 복사본) to Pages — workflow는 P2에서 추가. **repo Settings에서 Pages를 지금 켜지 않음.**
+- Region files: `https://darren83kim.github.io/loond/regions/{id}.json` (+ `.json.gz`)
+- `manifest.baseUrl`: `https://darren83kim.github.io/loond/regions/`
+- Deploy: Actions uploads `data/published/` contents to **site root** (not nested under `/data/published/`).
+
+**Pages 활성화 (2026-09-17):**
+
+- Workflow: on push to `main` when `data/published/**` changes, plus `workflow_dispatch`.
+- API enable attempt: `POST /repos/Darren83Kim/loond/pages` with `build_type=workflow` → **422** — *Your current plan does not support GitHub Pages for this repository* (repo is **private** on Free).
+- **User must do one of:**
+  1. **Make repo Public** — Settings → General → Danger Zone → Change repository visibility → Public; **or**
+  2. **Upgrade** to GitHub Pro (private Pages supported).
+- Then: Settings → Pages → Build and deployment → **Source = GitHub Actions** (or re-run `gh api -X POST repos/Darren83Kim/loond/pages -f build_type=workflow`).
+- After enable: `gh workflow run deploy-pages` (or push under `data/published/`) and wait for the `github-pages` environment deploy.
 
 ### 3.4 앱 동작 (P3 — 미구현)
 
@@ -143,7 +153,7 @@
 |-------|------|-----------|------|
 | **P0** | 설계 합의 + 오분류 핫픽스(고양이) | 문서 OK, 폰에서 대구 항목 사라짐 | 설계 OK · 핫픽스 Open |
 | **P1** | Worker: `regions/*.json` + `manifest.json` 산출 | repo에 시별 파일 존재 | **Done** |
-| **P2** | 정적 호스트 배포 (GitHub Pages) | URL로 curl 가능 | Open |
+| **P2** | 정적 호스트 배포 (GitHub Pages) | URL로 curl 가능 | **Workflow Done** · Pages Settings **Blocked** (private/Free) |
 | **P3** | 앱: 원격 로드 + 디스크 캐시, 에셋은 시드만 | 지역 전환 시 네트워크 확인, APK 용량 감소 | Open |
 | **P4** | Thin 도시·전국 확장 | 매니페스트에 도시만 추가 | Open |
 
@@ -155,12 +165,41 @@
 - [x] `data/published/regions/*.json` + `manifest.json` 생성·커밋
 - [x] 통합 JSON + 앱 에셋 sync 유지
 - [x] 호스팅 결정 = GitHub Pages (문서)
-- [ ] P2 Pages workflow / Settings 활성화
+- [x] P2 Pages workflow (`.github/workflows/pages.yml`) on main
+- [ ] P2 Pages Settings 활성화 — **blocker**: private repo on Free plan (make Public or upgrade Pro, then Source=GitHub Actions)
 - [ ] P3 Flutter remote fetch
+
+
+### P2 체크리스트
+
+- [x] `.github/workflows/pages.yml` — `upload-pages-artifact` + `deploy-pages`, site root = `data/published/`
+- [x] `permissions: pages: write` + `id-token: write` + `github-pages` environment
+- [x] Trigger: push `main` + `data/published/**`, `workflow_dispatch`
+- [x] `manifest.baseUrl` = `https://darren83kim.github.io/loond/regions/`
+- [ ] Repo Pages enabled (Public or Pro) + Source = GitHub Actions
+- [ ] Live curl 200 for manifest + region JSON
+
+### P2 curl smoke (Pages live 후)
+
+```bash
+# manifest
+curl -fsSL -o /tmp/loond-manifest.json -w "%{http_code}\n" \
+  https://darren83kim.github.io/loond/manifest.json
+python3 -c "import json; m=json.load(open('/tmp/loond-manifest.json')); print(m['baseUrl'], len(m['regions']), [r['id'] for r in m['regions']])"
+
+# one region
+curl -fsSL -o /tmp/loond-suwon.json -w "%{http_code}\n" \
+  https://darren83kim.github.io/loond/regions/suwon.json
+python3 -c "import json; d=json.load(open('/tmp/loond-suwon.json')); print(d.get('region'), d.get('counts'), len(d.get('opportunities',[])))"
+
+# optional gzip (if client sends Accept-Encoding or fetches .gz)
+curl -fsSL -o /tmp/loond-suwon.json.gz -w "%{http_code}\n" \
+  https://darren83kim.github.io/loond/regions/suwon.json.gz
+```
 
 ## 7. 결정 로그
 
-1. **호스팅**: GitHub Pages (1차) — **Locked 2026-09-17**. R2는 필요 시.
+1. **호스팅**: GitHub Pages (1차) — **Locked 2026-09-17**. Workflow landed 2026-09-17; live URL blocked until repo Public or Pro. R2는 필요 시.
 2. **시드 범위**: P3에서 확정 (수원만 vs 최근 선택 없음 → 수원).
 3. **통합 JSON**: P1 유지 (디버그·현행 에셋).
 4. **P0 오분류**: 설계와 병행 가능; 본 P1 범위 밖.

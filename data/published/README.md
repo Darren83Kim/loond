@@ -6,3 +6,4 @@
 - `regions/{regionId}.json` (+ optional `.json.gz`) — 시별 피드
 - 계약: `../SCHEMA.md`
 - 설계: `docs/ops/remote-region-load.md`
+- Hosting (P2): GitHub Pages → `https://darren83kim.github.io/loond/` (site root = this folder)

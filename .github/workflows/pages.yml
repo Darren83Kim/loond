@@ -1,0 +1,54 @@
+# P2: Deploy data/published/ to GitHub Pages (site root = manifest + regions/)
+# Site: https://darren83kim.github.io/loond/
+name: deploy-pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/published/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare site root from data/published
+        run: |
+          set -euo pipefail
+          mkdir -p _site
+          # Publish published/ contents at site root (NOT nested under /data/published/)
+          cp -a data/published/. _site/
+          # Sanity: required feed paths must exist at root
+          test -f _site/manifest.json
+          test -d _site/regions
+          test -f _site/regions/suwon.json
+          ls -la _site _site/regions | head -40
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

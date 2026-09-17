@@ -257,7 +257,7 @@ def main(argv: list[str] | None = None) -> int:
         "--base-url",
         type=str,
         default=DEFAULT_BASE_URL,
-        help="manifest baseUrl placeholder for future GitHub Pages",
+        help="manifest baseUrl (GitHub Pages regions root)",
     )
     args = parser.parse_args(argv)
 
