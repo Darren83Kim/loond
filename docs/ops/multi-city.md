@@ -58,3 +58,6 @@ Catalog: `worker/loond_worker/region_codes.py` → `REGIONS` (matches app `Regio
 - curated traveler APPLY: 5 (suwon)
 - culture ENJOY: 56 (after 1 title-dedupe)
 - TourAPI base on box: **HTTP** `apis.data.go.kr` (HTTPS TLS EOF)
+
+## APPLY 소스 타입
+- 초안: [`docs/ops/notice-source-types.md`](notice-source-types.md) (2026-09-17)
