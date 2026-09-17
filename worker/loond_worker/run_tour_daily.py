@@ -24,6 +24,7 @@ from typing import Any
 from urllib.parse import quote
 
 from . import config
+from .publish_regions import sync_published_outputs
 from . import region_codes as rc
 
 MOBILE_OS = "ETC"
@@ -672,6 +673,16 @@ def merge_and_publish(
         "opportunities": merged,
     }
     write_json(pub_path, out)
+
+    # Remote-load P1: refresh app asset + per-region files + manifest
+    try:
+        region_stats = sync_published_outputs(bundle_path=pub_path)
+        _log(
+            f"sync_published_outputs regions={region_stats.get('region_ids')} "
+            f"manifest={region_stats.get('manifest')}"
+        )
+    except Exception as e:  # noqa: BLE001
+        print(f"WARN sync_published_outputs: {e}", file=sys.stderr)
 
     missing: list[tuple[Any, str]] = []
     for o in merged:

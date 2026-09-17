@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-09-17T17:57:27+09:00",
+  "baseUrl": "https://darren83kim.github.io/loond/regions/",
+  "regions": [
+    {
+      "id": "suwon",
+      "label": "수원",
+      "path": "suwon.json",
+      "etag": "sha256:217d95703de5afd8cb5a78a8d94610236021e88c75fc12c9f8bda1ce146cd5be",
+      "bytes": 225195,
+      "bytesGzip": 17579,
+      "counts": {
+        "APPLY": 12,
+        "ENJOY": 32,
+        "DISCOVER": 100
+      },
+      "depth": "deep"
+    },
+    {
+      "id": "yongin",
+      "label": "용인",
+      "path": "yongin.json",
+      "etag": "sha256:25cc090c1101e924c00aebbc0c73269c37da06f69f71f73e963657e968c67f81",
+      "bytes": 263142,
+      "bytesGzip": 13814,
+      "counts": {
+        "ENJOY": 9,
+        "DISCOVER": 165
+      },
+      "depth": "deep"
+    },
+    {
+      "id": "seongnam",
+      "label": "성남",
+      "path": "seongnam.json",
+      "etag": "sha256:f50cc104c0481e16e0cf2121c58275e55a9a5bfc5ee42d7fa6c7cc8023ade604",
+      "bytes": 178164,
+      "bytesGzip": 13685,
+      "counts": {
+        "APPLY": 10,
+        "ENJOY": 9,
+        "DISCOVER": 91
+      },
+      "depth": "deep"
+    },
+    {
+      "id": "goyang",
+      "label": "고양",
+      "path": "goyang.json",
+      "etag": "sha256:e31da304b452f4e2121bde1979a75b331ae8d484b25c37bfc2525e9773d6c61f",
+      "bytes": 163083,
+      "bytesGzip": 11211,
+      "counts": {
+        "APPLY": 1,
+        "ENJOY": 19,
+        "DISCOVER": 87
+      },
+      "depth": "deep"
+    },
+    {
+      "id": "bucheon",
+      "label": "부천",
+      "path": "bucheon.json",
+      "etag": "sha256:46a4be03185c898eca23a580a15a30ddf7a848fc290754847232294547330592",
+      "bytes": 123298,
+      "bytesGzip": 8077,
+      "counts": {
+        "ENJOY": 12,
+        "DISCOVER": 69
+      },
+      "depth": "deep"
+    },
+    {
+      "id": "hwaseong",
+      "label": "화성",
+      "path": "hwaseong.json",
+      "etag": "sha256:f1d1c175892ccf6bda9d8252632cde1b2c0bed4f10b299a6d8465a8867c8cc66",
+      "bytes": 179230,
+      "bytesGzip": 10528,
+      "counts": {
+        "ENJOY": 13,
+        "DISCOVER": 107
+      },
+      "depth": "deep"
+    }
+  ]
+}

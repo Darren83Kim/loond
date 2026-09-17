@@ -16,7 +16,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import shutil
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -24,6 +23,7 @@ from typing import Any
 from zoneinfo import ZoneInfo
 
 from . import config
+from .publish_regions import sync_published_outputs
 from .apply_rules import (
     DECISION_AUTO_PUBLISH,
     DECISION_NEEDS_REVIEW,
@@ -190,11 +190,13 @@ def merge_auto_publish(
 
 
 def sync_assets() -> None:
-    src = config.PUBLISHED_JSON
-    dest = config.PROJECT_ROOT / "app" / "assets" / "data" / "opportunities.json"
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(src, dest)
-    print(f"synced: {src} -> {dest}")
+    """Sync app asset + per-region JSON + manifest (remote load P1)."""
+    stats = sync_published_outputs()
+    print(f"synced: {stats.get('bundle')} -> {stats.get('app_asset')}")
+    print(
+        f"regions+manifest: n={len(stats.get('region_ids') or [])} "
+        f"manifest={stats.get('manifest')}"
+    )
 
 
 def main(argv: list[str] | None = None) -> int:

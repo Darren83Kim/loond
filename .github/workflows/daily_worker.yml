@@ -66,7 +66,7 @@ jobs:
           fi
           cd worker && python -m loond_worker.culture_collect
 
-      - name: Sync published → app assets
+      - name: Sync published → app assets + region feeds
         run: |
           python scripts/sync_published_assets.py
 
@@ -74,7 +74,7 @@ jobs:
         run: |
           git config user.name "loond-bot"
           git config user.email "loond-bot@users.noreply.github.com"
-          git add data/published/opportunities.json app/assets/data/opportunities.json data/raw || true
+          git add data/published/opportunities.json data/published/manifest.json data/published/regions app/assets/data/opportunities.json data/raw || true
           if git diff --staged --quiet; then
             echo "No data changes to commit."
           else

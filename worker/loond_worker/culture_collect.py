@@ -382,12 +382,14 @@ if __name__ == "__main__":
     pub = root / "data/published/opportunities.json"
     stats = merge_into_published(pub, rows)
     print("data/published/opportunities.json", stats)
-    # Keep assets in sync with published (avoid merging into a stale asset copy).
+    # Keep assets + per-region feeds in sync with published (remote load P1).
     try:
-        import subprocess
-        subprocess.run(
-            ["python3", str(root / "scripts" / "sync_published_assets.py")],
-            check=False,
+        from .publish_regions import sync_published_outputs
+
+        stats = sync_published_outputs(bundle_path=pub)
+        print(
+            f"sync_published_outputs: asset={stats.get('app_asset')} "
+            f"regions={stats.get('region_ids')} manifest={stats.get('manifest')}"
         )
     except Exception as e:  # noqa: BLE001
-        print(f"sync_published_assets warn: {e}")
+        print(f"sync_published_outputs warn: {e}")

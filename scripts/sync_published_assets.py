@@ -1,25 +1,35 @@
 #!/usr/bin/env python3
-"""EPIC 4-7: copy published opportunities.json into the Flutter asset path."""
+"""Copy published opportunities.json into Flutter assets + refresh region feeds.
+
+EPIC 4-7 asset sync; remote-load P1 also writes regions/*.json + manifest.json
+via loond_worker.publish_regions.sync_published_outputs.
+"""
 
 from __future__ import annotations
 
-import shutil
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = ROOT / "data" / "published" / "opportunities.json"
-DEST = ROOT / "app" / "assets" / "data" / "opportunities.json"
+WORKER = ROOT / "worker"
+if str(WORKER) not in sys.path:
+    sys.path.insert(0, str(WORKER))
+
+from loond_worker.publish_regions import sync_published_outputs  # noqa: E402
 
 
 def main() -> int:
-    if not SRC.is_file():
-        print(f"error: source missing: {SRC}", file=sys.stderr)
+    try:
+        stats = sync_published_outputs()
+    except FileNotFoundError as e:
+        print(f"error: {e}", file=sys.stderr)
         return 1
-    DEST.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(SRC, DEST)
     print(
         "synced: data/published/opportunities.json -> app/assets/data/opportunities.json"
+    )
+    print(
+        f"regions+manifest: n={len(stats.get('region_ids') or [])} "
+        f"-> data/published/regions/ + data/published/manifest.json"
     )
     return 0
 

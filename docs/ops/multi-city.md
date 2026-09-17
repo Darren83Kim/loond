@@ -61,3 +61,9 @@ Catalog: `worker/loond_worker/region_codes.py` → `REGIONS` (matches app `Regio
 
 ## APPLY 소스 타입
 - 초안: [`docs/ops/notice-source-types.md`](notice-source-types.md) (2026-09-17)
+
+## Remote region load (P1)
+
+- Per-region feeds + manifest are emitted on every publish sync:
+  `data/published/regions/{id}.json`, `data/published/manifest.json`.
+- See `docs/ops/remote-region-load.md` (hosting = GitHub Pages; **P2 Pages / P3 app fetch still open**).
