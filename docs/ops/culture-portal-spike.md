@@ -34,7 +34,7 @@
 - 제목·URL 등 문자열은 HTML unescape (`&middot;` 등)
 
 ## 결과
-- 문화포털 ENJOY **17건**을 published/app assets에 병합 (TourAPI ENJOY와 병존)
+- 문화포털 ENJOY 수집·병합 (TourAPI와 병존; 2026-09-17 dedupe 후 **16건**)
 - Worker: `worker/loond_worker/culture_collect.py`
 
 ## TourAPI daily 주의 (2026-09-17)
@@ -49,3 +49,10 @@
 ## Traveler home 「곧 열려요」
 - `enjoySorted`: culture_portal (`suwon-culture-*`) boosted before other ENJOY, then startDate, then title.
 - Horizon preview cap: **16**.
+
+## Daily Actions (2026-09-17)
+- `.github/workflows/daily_worker.yml`: TourAPI 수집 후 `python -m loond_worker.culture_collect`
+- Secret: `CULTURE_API_SERVICE_KEY` (없으면 warn 후 skip, TourAPI 잡은 유지)
+- `merge_into_published`: TourAPI ENJOY와 **정규화 제목 중복**이면 문화 쪽 drop (TourAPI 우선)
+- 2026-09-17 재수집: culture 17→**16** keep (drop 예: 화성행궁 야간개장)
+- 홈 「곧 열려요」: culture_portal 우선 정렬, horizon 미리보기 16

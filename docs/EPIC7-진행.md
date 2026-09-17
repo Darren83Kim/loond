@@ -45,7 +45,9 @@
 - Android 에뮬/실기기 스모크 (R8)
 - AdMob 프로덕션 ID 교체 — 출시 직전 (문서에 운영 ID 기재 금지) (R18)
 - Play 내부 테스트 트랙 실제 업로드·테스터 초대 (`docs/store/internal-test.md`)
-- §11 Deferred: R1/R2/R3/R5/R8/R11/R12/R13/R18 (+ R7) — 출시 후/키·기기 확보 후
+- §11 Deferred: R1/R2/R3/R5/R8/R12/R13/R18 (+ R7) — 출시 후/키·기기 확보 후
+- §11 **R11 Done** (2026-09-17): 문화포털 ENJOY + daily Actions + detail2 URL + 제목 dedupe
+- §11 **R20 Open**: 폰 며칠 도그푸딩 — Play 업로드보다 우선
 
 ## CTA E2E (웹)
 - 2026-09-15: `LaunchMode.externalApplication` → about:blank 이슈
