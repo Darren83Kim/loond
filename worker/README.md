@@ -49,6 +49,23 @@ python -m loond_worker.run_poc --proxy-samples
 - 게재기간 종료일은 `applicationEndSource=publish_period_proxy` 로만 표시 가능 (자동 published 금지).
 - HWP/HWPX는 존재 여부만 기록 (본 파서 PoC 범위 밖).
 
+## eminwon_ofr PoC (multi-city notices)
+
+수원 `collect.py`와 별도로, 새올 `OfrAction.do` 고시공고 목록→상세→`pending_review`만 쌓는 PoC.
+
+```bash
+cd worker
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+.venv/bin/python -m loond_worker.eminwon_collect --region goyang --pages 2 --details 3
+```
+
+- city config: `loond_worker/notice_sources.py`
+- 산출: `../data/raw/eminwon_{region}_list.json`, `../data/pending_review/eminwon_{region}_pending.json`
+- **published/opportunities.json 자동 병합 없음**
+- TLS 실패 시 http fallback
+
+자세한 도시 URL·신뢰도: `docs/ops/notice-source-types.md`
+
 ## 지역 · TourAPI (EPIC 4-0 / 4-1)
 
 - `region_id=suwon` / `region_name=수원` — see `loond_worker/region_codes.py`
