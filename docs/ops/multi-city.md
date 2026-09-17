@@ -69,4 +69,4 @@ Catalog: `worker/loond_worker/region_codes.py` → `REGIONS` (matches app `Regio
 - Hosting = GitHub Pages. Workflow: `.github/workflows/pages.yml` (site root = `data/published/`).
 - **P2 blocker**: repo is private on Free — Pages API 422. Make **Public** or upgrade **Pro**, then Settings → Pages → Source = GitHub Actions.
 - Target URLs: `https://darren83kim.github.io/loond/manifest.json`, `.../regions/{id}.json`.
-- See `docs/ops/remote-region-load.md`. **P3 app remote fetch still open**.
+- See `docs/ops/remote-region-load.md`. **P3 Done** — app loads per-region from Pages + disk cache; APK seed = suwon only.

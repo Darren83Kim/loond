@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../data/opportunity_repository.dart';
 import '../data/region_store.dart';
 import '../models/region.dart';
 import '../theme/app_theme.dart';
@@ -31,6 +32,7 @@ class _RegionPickerScreenState extends State<RegionPickerScreen> {
   void initState() {
     super.initState();
     _loadRecent();
+    _refreshManifestSoft();
   }
 
   Future<void> _loadRecent() async {
@@ -39,6 +41,15 @@ class _RegionPickerScreenState extends State<RegionPickerScreen> {
     final ids = await store.getRecentRegionIds();
     if (!mounted) return;
     setState(() => _recentIds = ids);
+  }
+
+  /// Best-effort manifest refresh when the picker opens (P3).
+  Future<void> _refreshManifestSoft() async {
+    try {
+      await OpportunityRepository().refreshManifest();
+    } catch (_) {
+      // ignore — picker listing still uses RegionRegistry
+    }
   }
 
   @override

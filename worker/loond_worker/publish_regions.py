@@ -5,7 +5,8 @@ Outputs (under data/published/):
   regions/{regionId}.json.gz — gzip sibling (optional disk write)
   manifest.json             — index with etag/bytes/counts for future Pages hosting
 
-Does NOT change the combined opportunities.json or app asset load (P1 keeps monolith).
+Combined opportunities.json is kept for debug. App asset sync (P3) copies the
+suwon seed region feed only — not the full multi-city monolith.
 """
 
 from __future__ import annotations
@@ -188,20 +189,59 @@ def publish_region_artifacts(
     }
 
 
+# Bundled Flutter seed region (offline first-launch). Must stay single-city.
+SEED_REGION_ID = "suwon"
+
+
 def sync_app_assets(
     *,
     src: Path | None = None,
     dest: Path | None = None,
+    seed_region_id: str = SEED_REGION_ID,
 ) -> Path:
-    """Copy combined opportunities.json into the Flutter asset path."""
-    src = src or config.PUBLISHED_JSON
+    """Copy the seed region feed into the Flutter asset path (P3).
+
+    Prefers ``data/published/regions/{seed}.json``. Falls back to filtering the
+    combined opportunities.json so daily workers never re-bloat the APK asset
+    with the full multi-city monolith.
+    """
     dest = dest or (
         config.PROJECT_ROOT / "app" / "assets" / "data" / "opportunities.json"
     )
-    if not src.is_file():
-        raise FileNotFoundError(f"published source missing: {src}")
+    published_dir = config.PUBLISHED_DIR
+    region_src = published_dir / "regions" / f"{seed_region_id}.json"
+
+    if src is not None:
+        region_src = src
+    elif not region_src.is_file():
+        # Filter combined monolith down to seed region.
+        bundle_path = config.PUBLISHED_JSON
+        if not bundle_path.is_file():
+            raise FileNotFoundError(
+                f"seed region missing ({region_src}) and combined missing ({bundle_path})"
+            )
+        bundle = json.loads(bundle_path.read_text(encoding="utf-8"))
+        ops = [
+            o
+            for o in (bundle.get("opportunities") or [])
+            if str(o.get("region") or "") == seed_region_id
+        ]
+        feed = build_region_feed(
+            seed_region_id,
+            ops,
+            updated_at=str(bundle.get("updatedAt") or _now_iso()),
+        )
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text(
+            json.dumps(feed, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        return dest
+
+    if not region_src.is_file():
+        raise FileNotFoundError(f"seed region source missing: {region_src}")
     dest.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(src, dest)
+    shutil.copy2(region_src, dest)
     return dest
 
 
@@ -212,21 +252,23 @@ def sync_published_outputs(
     sync_assets: bool = True,
     base_url: str = DEFAULT_BASE_URL,
 ) -> dict[str, Any]:
-    """Canonical last-writer helper: app asset sync + region split + manifest.
+    """Canonical last-writer helper: region split + manifest + seed asset sync.
 
     Call after any path that updates data/published/opportunities.json.
+    App asset receives the suwon seed only (not the combined monolith).
     """
     bundle_path = bundle_path or config.PUBLISHED_JSON
     summary: dict[str, Any] = {}
-    if sync_assets:
-        dest = sync_app_assets(src=bundle_path)
-        summary["app_asset"] = str(dest)
+    # Split regions first so seed sync can copy regions/suwon.json (not monolith).
     region_stats = publish_region_artifacts(
         bundle_path,
         write_gzip=write_gzip,
         base_url=base_url,
     )
     summary.update(region_stats)
+    if sync_assets:
+        dest = sync_app_assets()  # default: regions/{SEED}.json → app asset
+        summary["app_asset"] = str(dest)
     return summary
 
 
@@ -251,7 +293,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--sync-assets",
         action="store_true",
-        help="also copy opportunities.json → app/assets/data/",
+        help="also copy regions/suwon.json → app/assets/data/opportunities.json (seed)",
     )
     parser.add_argument(
         "--base-url",

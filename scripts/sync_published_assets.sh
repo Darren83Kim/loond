@@ -1,19 +1,11 @@
 #!/usr/bin/env bash
-# EPIC 4-7: sync published opportunities JSON into the Flutter app asset bundle.
+# Sync Flutter seed asset (suwon region) + region feeds via Python helper.
 # Usage (from repo root):
 #   ./scripts/sync_published_assets.sh
 #   bash scripts/sync_published_assets.sh
+#
+# P3: does NOT copy the full multi-city opportunities.json into the APK asset.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SRC="${ROOT}/data/published/opportunities.json"
-DEST="${ROOT}/app/assets/data/opportunities.json"
-
-if [[ ! -f "$SRC" ]]; then
-  echo "error: source missing: $SRC" >&2
-  exit 1
-fi
-
-mkdir -p "$(dirname "$DEST")"
-cp -f "$SRC" "$DEST"
-echo "synced: data/published/opportunities.json -> app/assets/data/opportunities.json"
+exec python3 "$ROOT/scripts/sync_published_assets.py"

@@ -1,8 +1,8 @@
 # 지역별 원격 로드 설계
 
-상태: **P2 workflow landed** — Pages 배포 파이프라인 준비 (repo private → Pages 활성화는 사용자 조치 필요)  
-작성: 2026-09-17 · P1 완료: 2026-09-17 · P2 workflow: 2026-09-17  
-관련: `docs/ops/multi-city.md`, `OpportunityRepository` (현재 에셋 로드)
+상태: **P3 Done** — 앱 원격 시별 로드 + 디스크 캐시 + suwon 시드 에셋  
+작성: 2026-09-17 · P1: 2026-09-17 · P2 live: 2026-09-17 · P3: 2026-09-17  
+관련: `docs/ops/multi-city.md`, `OpportunityRepository.loadForRegion`
 
 ## 1. 문제
 
@@ -103,17 +103,15 @@
 - `manifest.baseUrl`: `https://darren83kim.github.io/loond/regions/`
 - Deploy: Actions uploads `data/published/` contents to **site root** (not nested under `/data/published/`).
 
-**Pages 활성화 (2026-09-17):**
+**Pages 상태 (2026-09-17):**
 
 - Workflow: on push to `main` when `data/published/**` changes, plus `workflow_dispatch`.
-- API enable attempt: `POST /repos/Darren83Kim/loond/pages` with `build_type=workflow` → **422** — *Your current plan does not support GitHub Pages for this repository* (repo is **private** on Free).
-- **User must do one of:**
-  1. **Make repo Public** — Settings → General → Danger Zone → Change repository visibility → Public; **or**
-  2. **Upgrade** to GitHub Pro (private Pages supported).
-- Then: Settings → Pages → Build and deployment → **Source = GitHub Actions** (or re-run `gh api -X POST repos/Darren83Kim/loond/pages -f build_type=workflow`).
-- After enable: `gh workflow run deploy-pages` (or push under `data/published/`) and wait for the `github-pages` environment deploy.
+- **Live** site root serves `data/published/`:
+  - Manifest: `https://darren83kim.github.io/loond/manifest.json`
+  - Regions: `https://darren83kim.github.io/loond/regions/{id}.json`
+- Curl smoke: manifest 200; suwon ~144 ops; goyang ~107 ops.
 
-### 3.4 앱 동작 (P3 — 미구현)
+### 3.4 앱 동작 (P3 — Done)
 
 1. **시드**: APK에 `suwon`(또는 빈 stub + 매니페스트 스냅샷)만 포함.
 2. **선택**: `RegionStore`에 `selected_region_id` 저장 (기존 유지).
@@ -138,7 +136,7 @@
 | Outputs | `data/published/regions/{id}.json` (+ `.gz`), `data/published/manifest.json` |
 | Daily commit | `.github/workflows/daily_worker.yml`도 regions/ + manifest 포함 |
 
-통합 `opportunities.json`은 **유지** (디버그·현행 앱 에셋). P3에서 에셋은 시드만 남기는 방향.
+통합 `opportunities.json`은 **유지** (디버그). 앱 에셋은 P3부터 **suwon 시드만** (`sync_app_assets` → `regions/suwon.json`).
 
 ## 5. 보안·품질
 
@@ -153,8 +151,8 @@
 |-------|------|-----------|------|
 | **P0** | 설계 합의 + 오분류 핫픽스(고양이) | 문서 OK, 폰에서 대구 항목 사라짐 | 설계 OK · 핫픽스 Open |
 | **P1** | Worker: `regions/*.json` + `manifest.json` 산출 | repo에 시별 파일 존재 | **Done** |
-| **P2** | 정적 호스트 배포 (GitHub Pages) | URL로 curl 가능 | **Workflow Done** · Pages Settings **Blocked** (private/Free) |
-| **P3** | 앱: 원격 로드 + 디스크 캐시, 에셋은 시드만 | 지역 전환 시 네트워크 확인, APK 용량 감소 | Open |
+| **P2** | 정적 호스트 배포 (GitHub Pages) | URL로 curl 가능 | **Done** (live curl 200) |
+| **P3** | 앱: 원격 로드 + 디스크 캐시, 에셋은 시드만 | 지역 전환 시 네트워크 확인, APK 용량 감소 | **Done** |
 | **P4** | Thin 도시·전국 확장 | 매니페스트에 도시만 추가 | Open |
 
 ### P1 체크리스트
@@ -166,8 +164,8 @@
 - [x] 통합 JSON + 앱 에셋 sync 유지
 - [x] 호스팅 결정 = GitHub Pages (문서)
 - [x] P2 Pages workflow (`.github/workflows/pages.yml`) on main
-- [ ] P2 Pages Settings 활성화 — **blocker**: private repo on Free plan (make Public or upgrade Pro, then Source=GitHub Actions)
-- [ ] P3 Flutter remote fetch
+- [x] P2 Pages Settings 활성화 — live at `https://darren83kim.github.io/loond/`
+- [x] P3 Flutter remote fetch
 
 
 ### P2 체크리스트
@@ -176,8 +174,8 @@
 - [x] `permissions: pages: write` + `id-token: write` + `github-pages` environment
 - [x] Trigger: push `main` + `data/published/**`, `workflow_dispatch`
 - [x] `manifest.baseUrl` = `https://darren83kim.github.io/loond/regions/`
-- [ ] Repo Pages enabled (Public or Pro) + Source = GitHub Actions
-- [ ] Live curl 200 for manifest + region JSON
+- [x] Repo Pages enabled + Source = GitHub Actions
+- [x] Live curl 200 for manifest + region JSON (suwon 144, goyang 107)
 
 ### P2 curl smoke (Pages live 후)
 
@@ -197,11 +195,22 @@ curl -fsSL -o /tmp/loond-suwon.json.gz -w "%{http_code}\n" \
   https://darren83kim.github.io/loond/regions/suwon.json.gz
 ```
 
+
+### P3 체크리스트
+
+- [x] `OpportunityRepository.loadForRegion` — manifest/etag → disk cache → HTTPS GET → seed fallback
+- [x] `MainShell` 지역 전환 시 per-region load + 로딩 오버레이 + 실패 스낵바
+- [x] 번들 에셋 = suwon seed only (`regions/suwon.json` sync; ~225 KB vs monolith ~1.1 MB)
+- [x] `sync_app_assets` / `scripts/sync_published_assets.*` 가 통합 JSON으로 에셋을 덮어쓰지 않음
+- [x] Android `INTERNET` 권한 유지 (HTTPS Pages; cleartext 불필요)
+- [ ] 폰 도그푸딩 (지역 전환·오프라인 시드)
+- [ ] P0 잔여: 고양⊂고양이 문화포털 오분류 핫픽스
+
 ## 7. 결정 로그
 
 1. **호스팅**: GitHub Pages (1차) — **Locked 2026-09-17**. Workflow landed 2026-09-17; live URL blocked until repo Public or Pro. R2는 필요 시.
-2. **시드 범위**: P3에서 확정 (수원만 vs 최근 선택 없음 → 수원).
-3. **통합 JSON**: P1 유지 (디버그·현행 에셋).
+2. **시드 범위**: **수원만** (P3 확정). 앱 에셋 = `regions/suwon.json`.
+3. **통합 JSON**: P1 유지 (디버그 전용). 릴리스 에셋 sync는 시드만.
 4. **P0 오분류**: 설계와 병행 가능; 본 P1 범위 밖.
 
 ## 8. 비고 — 왜 지금 에셋이었나

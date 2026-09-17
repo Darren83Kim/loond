@@ -31,7 +31,7 @@ class MainShell extends StatefulWidget {
   final RegionStore regionStore;
   final ValueChanged<Region> onRegionChanged;
 
-  /// Optional loader for tests / fixtures. Defaults to asset repository.
+  /// Optional loader for tests / fixtures. Defaults to remote+cache repository.
   final Future<OpportunityBundle> Function()? loadBundle;
 
   @override
@@ -41,23 +41,90 @@ class MainShell extends StatefulWidget {
 class _MainShellState extends State<MainShell> {
   final _repo = OpportunityRepository();
   final _bookmarks = BookmarkStore();
-  late Future<OpportunityBundle> _future;
+
+  OpportunityBundle? _bundle;
+  Object? _error;
+  bool _loading = true;
+  bool _switching = false;
   int _tabIndex = 0; // default: 홈
 
-  Future<OpportunityBundle> _defaultLoad() => _repo.loadPublished();
+  Future<OpportunityBundle> _defaultLoad({bool forceRefresh = false}) async {
+    final result = await _repo.loadForRegion(
+      widget.region.id,
+      forceRefresh: forceRefresh,
+    );
+    if (result.warning != null && mounted) {
+      _showMessage(result.warning!);
+    }
+    return result.bundle;
+  }
+
+  Future<OpportunityBundle> _resolveLoad({bool forceRefresh = false}) {
+    final override = widget.loadBundle;
+    if (override != null) return override();
+    return _defaultLoad(forceRefresh: forceRefresh);
+  }
 
   @override
   void initState() {
     super.initState();
-    _future = (widget.loadBundle ?? _defaultLoad)();
+    _load(initial: true);
     InterstitialAdManager.instance.preload();
   }
 
-  Future<void> _reload() async {
+  @override
+  void didUpdateWidget(covariant MainShell oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.region.id != widget.region.id) {
+      _load(initial: false);
+    }
+  }
+
+  Future<void> _load({required bool initial, bool forceRefresh = false}) async {
+    final previous = _bundle;
     setState(() {
-      _future = (widget.loadBundle ?? _defaultLoad)();
+      if (initial || previous == null) {
+        _loading = true;
+        _error = null;
+      } else {
+        _switching = true;
+      }
     });
-    await _future;
+
+    try {
+      final bundle = await _resolveLoad(forceRefresh: forceRefresh);
+      if (!mounted) return;
+      setState(() {
+        _bundle = bundle;
+        _loading = false;
+        _switching = false;
+        _error = null;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      if (previous != null && !initial) {
+        setState(() {
+          _switching = false;
+          _loading = false;
+        });
+        _showMessage('피드를 불러오지 못했어요. 이전 지역 데이터를 유지합니다.');
+      } else {
+        setState(() {
+          _error = e;
+          _loading = false;
+          _switching = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _reload() => _load(initial: _bundle == null, forceRefresh: true);
+
+  void _showMessage(String message) {
+    final messenger = ScaffoldMessenger.maybeOf(context);
+    messenger
+      ?..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(message)));
   }
 
   Future<void> _openDetail(Opportunity item) async {
@@ -139,85 +206,7 @@ class _MainShellState extends State<MainShell> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<OpportunityBundle>(
-        future: _future,
-        builder: (context, snap) {
-          if (snap.connectionState != ConnectionState.done) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (snap.hasError) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Text('데이터를 불러오지 못했어요.\n${snap.error}'),
-              ),
-            );
-          }
-          final bundle = snap.data!;
-          final regionReady = bundle.hasDataForRegion(widget.region.id);
-          final apply = regionReady
-              ? bundle.applySortedForRegion(widget.region.id)
-              : const <Opportunity>[];
-          final enjoy = regionReady
-              ? bundle.enjoySortedForRegion(widget.region.id)
-              : const <Opportunity>[];
-          final discover = regionReady
-              ? bundle.discoverSortedForRegion(widget.region.id)
-              : const <Opportunity>[];
-          final benefit = regionReady
-              ? bundle.benefitSortedForRegion(widget.region.id)
-              : const <Opportunity>[];
-
-          final tabs = [
-            HomeTab(
-              region: widget.region,
-              regionReady: regionReady,
-              apply: apply,
-              enjoy: enjoy,
-              discover: discover,
-              onOpen: _openDetail,
-              onRefresh: _reload,
-              onChangeRegion: _changeRegion,
-              onSearch: () => setState(() => _tabIndex = 1),
-              onQuickCategory: (i) => _onQuickCategory(
-                i,
-                apply: apply,
-                enjoy: enjoy,
-                regionReady: regionReady,
-              ),
-            ),
-            DiscoverTab(
-              items: discover,
-              regionReady: regionReady,
-              regionId: widget.region.id,
-              onOpen: _openDetail,
-              onRefresh: _reload,
-            ),
-            MyChanceTab(
-              benefits: benefit,
-              allOpportunities: bundle.opportunities,
-              bookmarkStore: _bookmarks,
-              regionReady: regionReady,
-              onOpen: _openDetail,
-              onRefresh: _reload,
-            ),
-            MoreTab(
-              regionLabel: widget.region.chipLabel,
-              onChangeRegion: _changeRegion,
-              onOpenSettings: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const SettingsScreen()),
-                );
-              },
-            ),
-          ];
-
-          return IndexedStack(
-            index: _tabIndex,
-            children: tabs,
-          );
-        },
-      ),
+      body: _buildBody(),
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -253,6 +242,108 @@ class _MainShellState extends State<MainShell> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildBody() {
+    if (_loading && _bundle == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    if (_error != null && _bundle == null) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                '데이터를 불러오지 못했어요.\n$_error',
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              FilledButton(
+                onPressed: () => _load(initial: true, forceRefresh: true),
+                child: const Text('다시 시도'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    final bundle = _bundle!;
+    final regionReady = bundle.hasDataForRegion(widget.region.id);
+    final apply = regionReady
+        ? bundle.applySortedForRegion(widget.region.id)
+        : const <Opportunity>[];
+    final enjoy = regionReady
+        ? bundle.enjoySortedForRegion(widget.region.id)
+        : const <Opportunity>[];
+    final discover = regionReady
+        ? bundle.discoverSortedForRegion(widget.region.id)
+        : const <Opportunity>[];
+    final benefit = regionReady
+        ? bundle.benefitSortedForRegion(widget.region.id)
+        : const <Opportunity>[];
+
+    final tabs = [
+      HomeTab(
+        region: widget.region,
+        regionReady: regionReady,
+        apply: apply,
+        enjoy: enjoy,
+        discover: discover,
+        onOpen: _openDetail,
+        onRefresh: _reload,
+        onChangeRegion: _changeRegion,
+        onSearch: () => setState(() => _tabIndex = 1),
+        onQuickCategory: (i) => _onQuickCategory(
+          i,
+          apply: apply,
+          enjoy: enjoy,
+          regionReady: regionReady,
+        ),
+      ),
+      DiscoverTab(
+        items: discover,
+        regionReady: regionReady,
+        regionId: widget.region.id,
+        onOpen: _openDetail,
+        onRefresh: _reload,
+      ),
+      MyChanceTab(
+        benefits: benefit,
+        allOpportunities: bundle.opportunities,
+        bookmarkStore: _bookmarks,
+        regionReady: regionReady,
+        onOpen: _openDetail,
+        onRefresh: _reload,
+      ),
+      MoreTab(
+        regionLabel: widget.region.chipLabel,
+        onChangeRegion: _changeRegion,
+        onOpenSettings: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const SettingsScreen()),
+          );
+        },
+      ),
+    ];
+
+    return Stack(
+      children: [
+        IndexedStack(
+          index: _tabIndex,
+          children: tabs,
+        ),
+        if (_switching)
+          const Positioned.fill(
+            child: ColoredBox(
+              color: Color(0x66000000),
+              child: Center(child: CircularProgressIndicator()),
+            ),
+          ),
+      ],
     );
   }
 }

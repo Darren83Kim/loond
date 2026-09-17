@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Copy published opportunities.json into Flutter assets + refresh region feeds.
+"""Sync Flutter seed asset + refresh region feeds/manifest.
 
-EPIC 4-7 asset sync; remote-load P1 also writes regions/*.json + manifest.json
-via loond_worker.publish_regions.sync_published_outputs.
+P3: app asset is the suwon seed only (regions/suwon.json), NOT the full
+multi-city data/published/opportunities.json. Combined JSON remains for debug.
 """
 
 from __future__ import annotations
@@ -25,12 +25,15 @@ def main() -> int:
         print(f"error: {e}", file=sys.stderr)
         return 1
     print(
-        "synced: data/published/opportunities.json -> app/assets/data/opportunities.json"
+        "synced seed: data/published/regions/suwon.json "
+        "-> app/assets/data/opportunities.json"
     )
     print(
         f"regions+manifest: n={len(stats.get('region_ids') or [])} "
         f"-> data/published/regions/ + data/published/manifest.json"
     )
+    if stats.get("app_asset"):
+        print(f"app_asset={stats['app_asset']}")
     return 0
 
 
