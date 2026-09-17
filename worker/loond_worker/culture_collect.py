@@ -9,7 +9,9 @@ from __future__ import annotations
 import html
 import json
 import os
+import re
 import subprocess
+import unicodedata
 import urllib.parse
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
@@ -250,7 +252,26 @@ def collect_suwon_enjoy(days_ahead: int = 120) -> list[dict[str, Any]]:
     return out
 
 
+_BRACKET_RE = re.compile(r"[\[\(（【「『].*?[\]\)）】」』]")
+_PUNCT_RE = re.compile(r"[\W_]+", re.UNICODE)
+
+
+def normalize_title(title: str | None) -> str:
+    """NFKC + lower + strip brackets/punct/spaces for TourAPI↔culture dedupe."""
+    s = _unescape(title)
+    s = unicodedata.normalize("NFKC", s)
+    s = s.lower()
+    s = _BRACKET_RE.sub("", s)
+    s = _PUNCT_RE.sub("", s)
+    s = re.sub(r"\s+", "", s)
+    return s
+
+
 def merge_into_published(pub_path: Path, enjoy: list[dict[str, Any]]) -> dict[str, int]:
+    """Replace culture_portal ENJOY; drop culture rows whose title matches existing non-culture ENJOY.
+
+    Prefer TourAPI (and other non-culture) titles; culture duplicates are dropped.
+    """
     d = json.loads(pub_path.read_text(encoding="utf-8"))
     ops = [
         o
@@ -258,13 +279,36 @@ def merge_into_published(pub_path: Path, enjoy: list[dict[str, Any]]) -> dict[st
         if not str(o.get("id", "")).startswith("suwon-culture-")
         and (o.get("meta") or {}).get("source") != "culture_portal"
     ]
-    ops.extend(enjoy)
+    existing_enjoy_titles = {
+        normalize_title(o.get("title"))
+        for o in ops
+        if o.get("type") == "ENJOY" and normalize_title(o.get("title"))
+    }
+    kept: list[dict[str, Any]] = []
+    dropped: list[str] = []
+    for row in enjoy:
+        nt = normalize_title(row.get("title"))
+        if nt and nt in existing_enjoy_titles:
+            dropped.append(str(row.get("title") or ""))
+            continue
+        kept.append(row)
+    if dropped:
+        sample = dropped[:8]
+        print(
+            f"culture title-dedupe: dropped {len(dropped)} vs non-culture ENJOY "
+            f"sample={sample}"
+        )
+    else:
+        print("culture title-dedupe: dropped 0")
+    ops.extend(kept)
     d["opportunities"] = ops
     d["updatedAt"] = datetime.now(KST).replace(microsecond=0).isoformat()
     pub_path.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return {
         "total": len(ops),
-        "culture_enjoy": len(enjoy),
+        "culture_enjoy": len(kept),
+        "culture_collected": len(enjoy),
+        "culture_deduped": len(dropped),
         "enjoy": sum(1 for o in ops if o.get("type") == "ENJOY"),
     }
 

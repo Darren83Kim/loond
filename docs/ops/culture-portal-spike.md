@@ -40,3 +40,12 @@
 ## TourAPI daily 주의 (2026-09-17)
 - `run_tour_daily` 가 예전엔 `suwon-tour-*` APPLY를 전부 제거해 **예약 체험 5건**이 사라졌음.
 - 이제 `meta.source=curated_traveler` / `category=tour_*` APPLY와 `culture_portal` ENJOY는 보존.
+
+## Title dedupe vs TourAPI (2026-09-17)
+- `culture_collect.merge_into_published` drops culture ENJOY whose **normalized title** matches an existing non-culture ENJOY (prefer TourAPI).
+- Normalize: HTML unescape → NFKC → lower → strip `[…]`/`(…)` brackets → remove punct/quotes/spaces.
+- Daily Actions: TourAPI first (preserves culture), then `python -m loond_worker.culture_collect` with `CULTURE_API_SERVICE_KEY` (skip+warn if missing).
+
+## Traveler home 「곧 열려요」
+- `enjoySorted`: culture_portal (`suwon-culture-*`) boosted before other ENJOY, then startDate, then title.
+- Horizon preview cap: **16**.

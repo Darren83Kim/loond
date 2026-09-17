@@ -116,6 +116,9 @@ class Opportunity {
     return null;
   }
 
+  /// Culture-portal ENJOY (id prefix suwon-culture-*).
+  bool get isCulturePortal => id.startsWith('suwon-culture-');
+
   factory Opportunity.fromJson(Map<String, dynamic> json) {
     final meta = json['meta'];
     var hasHwp = false;
@@ -266,7 +269,7 @@ class OpportunityBundle {
     return list;
   }
 
-  /// Hard Sort: ENJOY by startDate asc, then title.
+  /// Hard Sort: ENJOY — culture_portal first, then startDate asc, then title.
   /// Optionally hides items whose endDate is already past.
   List<Opportunity> get enjoySorted {
     final list = published
@@ -281,6 +284,10 @@ class OpportunityBundle {
         })
         .toList();
     list.sort((a, b) {
+      // Boost culture_portal / suwon-culture-* earlier on traveler/resident home.
+      final ac = a.isCulturePortal ? 0 : 1;
+      final bc = b.isCulturePortal ? 0 : 1;
+      if (ac != bc) return ac.compareTo(bc);
       final as_ = a.startDate;
       final bs = b.startDate;
       if (as_ == null && bs == null) {

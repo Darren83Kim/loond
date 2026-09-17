@@ -270,7 +270,7 @@ class _HomeTabState extends State<HomeTab> {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.fromLTRB(16, 0, 8, 8),
-        itemCount: widget.enjoy.length > 12 ? 12 : widget.enjoy.length,
+        itemCount: widget.enjoy.length > 16 ? 16 : widget.enjoy.length,
         itemBuilder: (context, i) {
           final item = widget.enjoy[i];
           return EnjoyHorizonCard(

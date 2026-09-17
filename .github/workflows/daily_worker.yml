@@ -1,5 +1,6 @@
-# EPIC 5-1: daily TourAPI worker → published JSON → app assets
-# Requires repo secret: TOUR_API_SERVICE_KEY (Decoding/Encoding key for KorService2)
+# EPIC 5-1: daily TourAPI + culture-portal worker → published JSON → app assets
+# Requires repo secrets: TOUR_API_SERVICE_KEY and CULTURE_API_SERVICE_KEY
+#   (CULTURE_API_SERVICE_KEY optional at runtime — missing key skips culture with warning)
 name: daily-loond-worker
 
 on:
@@ -51,6 +52,20 @@ jobs:
             cd worker && python -m loond_worker.tour_collect
           fi
 
+      # After TourAPI (preserves culture_portal rows), refresh culture ENJOY.
+      # Soft-skip when CULTURE_API_SERVICE_KEY is absent so TourAPI daily is not blocked.
+      - name: Run culture-portal collect
+        env:
+          CULTURE_API_SERVICE_KEY: ${{ secrets.CULTURE_API_SERVICE_KEY }}
+          PYTHONUNBUFFERED: "1"
+        run: |
+          set -euo pipefail
+          if [ -z "${CULTURE_API_SERVICE_KEY:-}" ]; then
+            echo "WARN: CULTURE_API_SERVICE_KEY secret missing — skipping culture collect."
+            exit 0
+          fi
+          cd worker && python -m loond_worker.culture_collect
+
       - name: Sync published → app assets
         run: |
           python scripts/sync_published_assets.py
@@ -63,7 +78,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "No data changes to commit."
           else
-            git commit -m "chore(data): daily TourAPI publish refresh"
+            git commit -m "chore(data): daily TourAPI + culture publish refresh"
             git push
           fi
 
