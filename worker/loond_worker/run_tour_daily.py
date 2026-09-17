@@ -3,7 +3,8 @@
 STRATEGY=area_filter (proven EPIC 4):
   - ENJOY: searchFestival2 + addr/title contains 수원
   - DISCOVER: areaBasedList2 (contentTypeId 12/14/25/28/38/39) + 수원 filter
-  - Preserve existing APPLY rows; replace prior suwon-tour-* items
+  - Preserve municipal APPLY + curated_traveler/tour_apply + culture_portal ENJOY;
+    replace prior TourAPI suwon-tour-* ENJOY/DISCOVER only
 
 Requires env TOUR_API_SERVICE_KEY. Never prints the key.
 Exit 0 on success.
@@ -535,10 +536,32 @@ def merge_and_publish(
     else:
         pub = {"opportunities": []}
 
-    apply_items = [
+    def _meta_source(o: dict[str, Any]) -> str:
+        meta = o.get("meta") or {}
+        return str(meta.get("source") or "")
+
+    # Municipal APPLY + curated traveler reserves (tour_apply). Never drop
+    # curated rows just because their id uses the suwon-tour-* prefix.
+    apply_items = []
+    for o in pub.get("opportunities", []):
+        if o.get("type") != "APPLY":
+            continue
+        oid = str(o.get("id", ""))
+        src = _meta_source(o)
+        cat = str(o.get("category") or "")
+        curated = src == "curated_traveler" or cat.startswith("tour")
+        if curated or not oid.startswith("suwon-tour-"):
+            apply_items.append(o)
+
+    # Culture-portal ENJOY (R11) survives TourAPI refresh.
+    culture_enjoy = [
         o
         for o in pub.get("opportunities", [])
-        if o.get("type") == "APPLY" and not str(o.get("id", "")).startswith("suwon-tour-")
+        if o.get("type") == "ENJOY"
+        and (
+            _meta_source(o) == "culture_portal"
+            or str(o.get("id", "")).startswith("suwon-culture-")
+        )
     ]
 
     enjoy = [
@@ -553,7 +576,7 @@ def merge_and_publish(
 
     seen: set[str] = set()
     merged: list[dict[str, Any]] = []
-    for o in apply_items + enjoy + discover:
+    for o in apply_items + culture_enjoy + enjoy + discover:
         oid = o.get("id")
         if not oid or oid in seen:
             continue

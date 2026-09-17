@@ -25,3 +25,7 @@
 ## 결과
 - 문화포털 ENJOY **17건**을 published/app assets에 병합 (TourAPI ENJOY와 병존)
 - Worker: `worker/loond_worker/culture_collect.py`
+
+## TourAPI daily 주의 (2026-09-17)
+- `run_tour_daily` 가 예전엔 `suwon-tour-*` APPLY를 전부 제거해 **예약 체험 5건**이 사라졌음.
+- 이제 `meta.source=curated_traveler` / `category=tour_*` APPLY와 `culture_portal` ENJOY는 보존.
