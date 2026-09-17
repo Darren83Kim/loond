@@ -65,3 +65,4 @@
 - Traveler APPLY 섹션 카피 → **예약하면 좋은 체험**; empty는 Discover/거주 모드 안내 카드.
 - Curated: `suwon-tour-swcf-alley-2026` 행궁동 왕의 골목여행(방문객 사전예약, swcf).
 - Filter: visitor cue / `tour_*` category first.
+- 2026-09-17: traveler reserve set expanded to 5 (골목여행 + 태평성대 고궁산책/궁중다과 + 일월·영흥 수목원 해설).

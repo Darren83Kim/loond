@@ -252,7 +252,7 @@ class _HomeTabState extends State<HomeTab> {
     if (travelerApply.isEmpty) {
       out.add(const _TravelerReserveHint());
     } else {
-      for (final item in travelerApply.take(3)) {
+      for (final item in travelerApply.take(5)) {
         out.add(
           OpportunityCard(item: item, onTap: () => widget.onOpen(item)),
         );
