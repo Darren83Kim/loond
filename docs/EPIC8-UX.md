@@ -61,3 +61,7 @@
 | 시군별 **고유** 히어로 아트 (용인·성남·고양·부천·화성 등) | Open / Deferred | 현재는 수원 전용 + 공용 default 배너만 번들. 도시별 커스텀 일러스트/사진은 아트 제작·라이선스 후 `Region.heroAsset`에 개별 경로로 확장. |
 | 발견 **실좌표 핀 / 멀티지역 Worker** | Deferred | phase 2는 수원 4구 개략 지도(칩과 동일 필터). phase 3 핀·좌표·타 시군 Worker는 별도. |
 
+### Traveler kick (2026-09-17)
+- Traveler APPLY 섹션 카피 → **예약하면 좋은 체험**; empty는 Discover/거주 모드 안내 카드.
+- Curated: `suwon-tour-swcf-alley-2026` 행궁동 왕의 골목여행(방문객 사전예약, swcf).
+- Filter: visitor cue / `tour_*` category first.

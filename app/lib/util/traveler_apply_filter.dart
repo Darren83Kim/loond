@@ -2,15 +2,10 @@ import '../models/opportunity.dart';
 
 /// Whether an APPLY item is reasonable for a short-term visitor / temporary stay.
 ///
-/// Most municipal APPLY (주민센터 강좌, 자원봉사, 거주자 지원, 구직·상담 등) is
-/// resident-oriented. Without an explicit visitor signal we treat APPLY as
-/// resident-only so traveler home never misleads.
+/// Visitor cues win first. Municipal course / local volunteer without those cues
+/// stay resident-only so traveler home never misleads.
 bool isSuitableForTraveler(Opportunity o) {
   if (o.type != OpportunityType.apply) return true;
-
-  final cat = o.category.toLowerCase();
-  if (cat.contains('course')) return false;
-  if (cat.contains('experience')) return false;
 
   final blob = [
     o.title,
@@ -19,6 +14,28 @@ bool isSuitableForTraveler(Opportunity o) {
     o.description ?? '',
     o.organization ?? '',
   ].join(' ');
+
+  const travelerMarkers = <String>[
+    '관광객',
+    '방문객',
+    '여행자',
+    '체류자',
+    '외국인 관광',
+    '게스트',
+    '관광 체험',
+    '사전예약',
+    '골목여행',
+    '해설 투어',
+    '누구나 신청',
+  ];
+  for (final m in travelerMarkers) {
+    if (blob.contains(m)) return true;
+  }
+
+  final cat = o.category.toLowerCase();
+  if (cat.contains('tour')) return true;
+  if (cat.contains('course')) return false;
+  if (cat.contains('experience')) return false;
 
   const residentMarkers = <String>[
     '주민자치',
@@ -40,19 +57,6 @@ bool isSuitableForTraveler(Opportunity o) {
     if (blob.contains(m)) return false;
   }
 
-  const travelerMarkers = <String>[
-    '관광객',
-    '방문객',
-    '여행자',
-    '체류자',
-    '외국인 관광',
-    '게스트',
-  ];
-  for (final m in travelerMarkers) {
-    if (blob.contains(m)) return true;
-  }
-
-  // APPLY with no visitor cue → hide in traveler mode.
   return false;
 }
 

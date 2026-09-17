@@ -188,6 +188,7 @@ class Opportunity {
     final c = category.toLowerCase();
     if (type == OpportunityType.apply) {
       if (c.contains('course')) return '강좌';
+      if (c.contains('experience') || c.contains('tour')) return '체험';
       return '지원사업';
     }
     if (type == OpportunityType.enjoy) {

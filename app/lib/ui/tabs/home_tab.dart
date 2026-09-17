@@ -240,17 +240,17 @@ class _HomeTabState extends State<HomeTab> {
       ),
       _discoverPreview(),
       _SectionTitle(
-        emoji: '📝',
-        title: '이 지역에서 신청할 수 있는 것',
+        emoji: '🎟️',
+        title: '예약하면 좋은 체험',
         count: travelerApply.length,
-        onTap: () => widget.onQuickCategory(0),
+        onTap: travelerApply.isEmpty
+            ? () => widget.onQuickCategory(2)
+            : () => widget.onQuickCategory(0),
         compact: true,
       ),
     ];
     if (travelerApply.isEmpty) {
-      out.add(
-        const EmptyState(message: '여행·체류 중 신청할 수 있는 건은 아직 없어요'),
-      );
+      out.add(const _TravelerReserveHint());
     } else {
       for (final item in travelerApply.take(3)) {
         out.add(
@@ -391,7 +391,7 @@ class _HeroBand extends StatelessWidget {
     final subtitle = !regionReady
         ? null
         : mode == HomeAudienceMode.traveler
-            ? '즐길 거리·발견을 먼저 보여드려요'
+            ? '행사·가볼 곳·예약 체험을 먼저 보여드려요'
             : '신청 가능 $applyCount건';
 
     return ClipRRect(
@@ -603,6 +603,48 @@ class _DiscoverPreviewCard extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                     height: 1.2,
                   ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Traveler-home empty for reserve/APPLY: honest + nudge to Discover / resident mode.
+class _TravelerReserveHint extends StatelessWidget {
+  const _TravelerReserveHint();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.55),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: theme.colorScheme.outlineVariant),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '지금 열어 둔 방문객 예약은 아직 적어요',
+                style: theme.textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                '행사·가볼 곳은 위 섹션을 보시면 되고, 주민 대상 신청은 「살고 있어요」에서 볼 수 있어요.',
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                  height: 1.35,
                 ),
               ),
             ],
