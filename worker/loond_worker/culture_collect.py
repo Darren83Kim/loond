@@ -2,9 +2,11 @@
 
 Requires env CULTURE_API_SERVICE_KEY (data.go.kr Decoding key).
 Uses HTTP cultureinfo/period2 (legacy nopenapi paths are retired).
+sourceUrl: detail2 `url` when present, else portal view.do?menuNo=200010&seq=.
 """
 from __future__ import annotations
 
+import html
 import json
 import os
 import subprocess
@@ -16,7 +18,11 @@ from typing import Any
 
 KST = timezone(timedelta(hours=9))
 BASE = "http://apis.data.go.kr/B553457/cultureinfo"
-DETAIL = "https://www.culture.go.kr/oneclt/oneCltView.do?seq={seq}"
+# Portal fallback that works (broken: /oneclt/oneCltView.do?seq= without menuNo)
+DETAIL = (
+    "https://www.culture.go.kr/portal/cltInfo/oneCltInfo/view.do"
+    "?menuNo=200010&seq={seq}"
+)
 REALM_CAT = {
     "공연": "performance",
     "전시": "exhibition",
@@ -30,6 +36,10 @@ REALM_CAT = {
 
 def _key() -> str:
     return os.environ.get("CULTURE_API_SERVICE_KEY", "").strip()
+
+
+def _unescape(s: str | None) -> str:
+    return html.unescape((s or "").strip())
 
 
 def _curl(path: str, params: dict[str, str]) -> bytes:
@@ -63,8 +73,21 @@ def _items(xml_bytes: bytes) -> tuple[int, list[dict[str, str]]]:
     if code not in ("00", "0"):
         raise RuntimeError(f"API {code} {root.findtext('.//resultMsg')}")
     total = int(root.findtext(".//totalCount") or "0")
-    items = [{c.tag: (c.text or "").strip() for c in it} for it in root.findall(".//item")]
+    items = [
+        {c.tag: _unescape(c.text) for c in it}
+        for it in root.findall(".//item")
+    ]
     return total, items
+
+
+def _detail(seq: str) -> dict[str, str]:
+    """Fetch cultureinfo/detail2 for outbound url / placeUrl / phone / price."""
+    try:
+        _, items = _items(_curl("detail2", {"seq": seq}))
+    except Exception as e:  # noqa: BLE001 — detail is best-effort per seq
+        print(f"detail2 skip seq={seq}: {e}")
+        return {}
+    return items[0] if items else {}
 
 
 def _ymd(s: str | None) -> str | None:
@@ -138,28 +161,72 @@ def collect_suwon_enjoy(days_ahead: int = 120) -> list[dict[str, Any]]:
                     continue
             except ValueError:
                 pass
+        seq = it["seq"]
+        detail = _detail(seq)
+        # Prefer list fields; overlay non-empty detail fields
+        for k, v in detail.items():
+            if v:
+                it[k] = v
+
         realm = it.get("realmName") or it.get("serviceName") or ""
         start = _ymd(it.get("startDate"))
         place = it.get("place") or ""
         loc = ", ".join(x for x in [it.get("area") or "", it.get("sigungu") or "", place] if x) or "수원"
-        thumb = it.get("thumbnail") or None
+        thumb = it.get("thumbnail") or it.get("imgUrl") or None
         if thumb and thumb.startswith("http://"):
             thumb = "https://" + thumb[len("http://") :]
-        title = it.get("title") or f"문화정보 {it['seq']}"
+        title = _unescape(it.get("title") or f"문화정보 {seq}")
+
+        outbound = _unescape(it.get("url") or "")
+        if outbound.startswith("http://") or outbound.startswith("https://"):
+            source_url = outbound
+            url_src = "detail2_url"
+        else:
+            source_url = DETAIL.format(seq=seq)
+            url_src = "portal_fallback"
+
+        place_url = _unescape(it.get("placeUrl") or "")
+        phone = _unescape(it.get("phone") or "")
+        price = _unescape(it.get("price") or "")
+
         summary = f"{realm} — {title}" if realm else title
         if start or end:
             summary += f". 기간 {start or '?'} ~ {end or '?'}"
         if place:
             summary += f". 장소: {place}"
+        if price:
+            summary += f". 요금: {price}"
+
+        desc_parts: list[str] = []
+        if phone:
+            desc_parts.append(f"문의: {phone}")
+        if place_url:
+            desc_parts.append(f"공연장/장소: {place_url}")
+        description = " | ".join(desc_parts) if desc_parts else None
+
+        meta: dict[str, Any] = {
+            "regionLabel": "수원",
+            "cultureSeq": seq,
+            "realmName": realm,
+            "source": "culture_portal",
+            "sourceUrlSource": url_src,
+        }
+        if place_url:
+            meta["placeUrl"] = place_url
+        if phone:
+            meta["phone"] = phone
+        if price:
+            meta["price"] = price
+
         out.append(
             {
-                "id": f"suwon-culture-{it['seq']}",
+                "id": f"suwon-culture-{seq}",
                 "region": "suwon",
                 "title": title,
                 "type": "ENJOY",
                 "category": REALM_CAT.get(realm, "culture_event"),
                 "summary": summary,
-                "description": None,
+                "description": description,
                 "startDate": start,
                 "endDate": end,
                 "applicationStart": None,
@@ -170,18 +237,13 @@ def collect_suwon_enjoy(days_ahead: int = 120) -> list[dict[str, Any]]:
                 "organization": "문화포털",
                 "thumbnail": thumb,
                 "sourceName": "문화포털(한눈에보는문화정보)",
-                "sourceUrl": DETAIL.format(seq=it["seq"]),
+                "sourceUrl": source_url,
                 "sourcePublishedAt": None,
                 "status": "published",
                 "opportunityScore": 70,
                 "createdAt": now_iso,
                 "updatedAt": now_iso,
-                "meta": {
-                    "regionLabel": "수원",
-                    "cultureSeq": it["seq"],
-                    "realmName": realm,
-                    "source": "culture_portal",
-                },
+                "meta": meta,
             }
         )
     out.sort(key=lambda o: (o.get("startDate") or "9999", o["title"]))
