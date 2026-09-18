@@ -44,6 +44,13 @@ android {
 
     buildTypes {
         release {
+            // AdMob pulls WorkManager; R8 was stripping WorkDatabase_Impl and crashing at launch.
+            isMinifyEnabled = false
+            isShrinkResources = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
             signingConfig = if (keystorePropertiesFile.exists()) {
                 signingConfigs.getByName("release")
             } else {
