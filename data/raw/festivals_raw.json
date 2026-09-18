@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-09-17T15:24:39+09:00",
+  "collectedAt": "2026-09-18T12:13:33+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "area_filter",
   "mode": "multi_city_partition",
@@ -28,71 +28,71 @@
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 733
+          "totalCount": 746
         },
         {
           "page": 2,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 733
+          "totalCount": 746
         },
         {
           "page": 3,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 733
+          "totalCount": 746
         },
         {
           "page": 4,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 733
+          "totalCount": 746
         },
         {
           "page": 5,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 733
+          "totalCount": 746
         },
         {
           "page": 6,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 733
+          "totalCount": 746
         },
         {
           "page": 7,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 733
+          "totalCount": 746
         },
         {
           "page": 8,
           "ok": true,
           "msg": "OK",
-          "got": 33,
-          "totalCount": 733
+          "got": 46,
+          "totalCount": 746
         }
       ],
-      "count": 733,
-      "totalCount": 733
+      "count": 746,
+      "totalCount": 746
     }
   ],
   "counts": {
     "suwon": 16,
     "yongin": 3,
     "seongnam": 3,
-    "goyang": 9,
+    "goyang": 8,
     "bucheon": 1,
     "hwaseong": 6
   },
-  "dropped": 695,
+  "dropped": 709,
   "by_region_titles": {
     "suwon": [
       "경기도 문화사계 \"봄\" 경기 상상해 봄 페스타",
@@ -113,10 +113,10 @@
     ],
     "goyang": [
       "고양 푸드앤비어페스티벌",
-      "고양가을꽃축제",
       "고양행주문화제",
       "고양행주한우 숯불구이축제",
-      "고양호수예술축제"
+      "고양호수예술축제",
+      "코믹월드 SUMMER 2026"
     ],
     "bucheon": [
       "부천국제만화축제"
@@ -851,37 +851,6 @@
         "festivaltype": ""
       },
       {
-        "addr1": "경기도 고양시 일산동구 호수로 595",
-        "addr2": "일산호수공원",
-        "zipcode": "10400",
-        "cat1": "",
-        "cat2": "",
-        "cat3": "",
-        "contentid": "1725993",
-        "contenttypeid": "15",
-        "createdtime": "20120927041535",
-        "eventstartdate": "20261001",
-        "eventenddate": "20261011",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/34/4110534_image2_1.JPG",
-        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/34/4110534_image3_1.JPG",
-        "cpyrhtDivCd": "Type3",
-        "mapx": "126.7686505728",
-        "mapy": "37.6538241589",
-        "mlevel": "6",
-        "modifiedtime": "20260915093317",
-        "areacode": "",
-        "sigungucode": "",
-        "tel": "031-908-7750",
-        "title": "고양가을꽃축제",
-        "lDongRegnCd": "41",
-        "lDongSignguCd": "285",
-        "lclsSystm1": "EV",
-        "lclsSystm2": "EV01",
-        "lclsSystm3": "EV010500",
-        "progresstype": "선택안함",
-        "festivaltype": ""
-      },
-      {
         "addr1": "경기도 고양시 덕양구 행주로15번길 89 (행주외동)",
         "addr2": "",
         "zipcode": "10440",
@@ -1326,8 +1295,8 @@
     "3371765": "https://youth.yongin.go.kr/web/main/",
     "3501104": "https://www.uscoffeefest.com/",
     "3104107": "https://www.ulsanmaduhee.co.kr/pages/index.html",
-    "1725993": "https://gief.or.kr/main/?mc_code=171010",
     "530450": "http://www.hjfestival.or.kr",
+    "3383613": "http://gyfestival.kr/",
     "589386": "https://bicof.com/",
     "2756476": "https://www.jrtf.or.kr/",
     "1725929": "http://www.정조효문화제.com",

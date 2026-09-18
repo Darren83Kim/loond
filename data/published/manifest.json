@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-17T18:35:23+09:00",
+  "updatedAt": "2026-09-18T12:15:12+09:00",
   "baseUrl": "https://darren83kim.github.io/loond/regions/",
   "regions": [
     {
       "id": "suwon",
       "label": "수원",
       "path": "suwon.json",
-      "etag": "sha256:e435018acf1c953f8e66f8448c2943361d2f506cea56d456bd1aa6ba5117be85",
-      "bytes": 225195,
-      "bytesGzip": 17580,
+      "etag": "sha256:a7b5eb4cb3902f92d6f6f3435bcf0fc1a1049f616f700110c0a03825aabcc52b",
+      "bytes": 225554,
+      "bytesGzip": 17670,
       "counts": {
         "APPLY": 12,
         "ENJOY": 32,
@@ -21,12 +21,12 @@
       "id": "yongin",
       "label": "용인",
       "path": "yongin.json",
-      "etag": "sha256:8fce6b3850d80423f5015cf5416e4b3250ebd5608fa87d4b1ca3bb30ed55b260",
-      "bytes": 263142,
-      "bytesGzip": 13814,
+      "etag": "sha256:3538bee0ad04c1816362a427b7cf75f35461bc605925061522f06c279f4385dd",
+      "bytes": 263131,
+      "bytesGzip": 13887,
       "counts": {
-        "ENJOY": 9,
-        "DISCOVER": 165
+        "ENJOY": 10,
+        "DISCOVER": 164
       },
       "depth": "deep"
     },
@@ -34,12 +34,12 @@
       "id": "seongnam",
       "label": "성남",
       "path": "seongnam.json",
-      "etag": "sha256:e0f52710b363a6b2271889be58d435f6f73016b028fd63741bdf3636bd074dbd",
-      "bytes": 178164,
-      "bytesGzip": 13684,
+      "etag": "sha256:753f7d1c16d8b137695df2c2345b923d2fde2e8ed93ce8d027bbcec1e6cceafe",
+      "bytes": 176351,
+      "bytesGzip": 13213,
       "counts": {
         "APPLY": 10,
-        "ENJOY": 9,
+        "ENJOY": 8,
         "DISCOVER": 91
       },
       "depth": "deep"
@@ -48,9 +48,9 @@
       "id": "goyang",
       "label": "고양",
       "path": "goyang.json",
-      "etag": "sha256:ddaf7a5bf6bd2abc6ea160e820609c9e952c00f3e1910ddc48eeca9100496334",
-      "bytes": 158441,
-      "bytesGzip": 10560,
+      "etag": "sha256:c64ba5b04231c32f0fab010fccbd674ea4badd645ec6f2e83ee9950e619cdd5c",
+      "bytes": 158552,
+      "bytesGzip": 10607,
       "counts": {
         "APPLY": 1,
         "ENJOY": 16,
@@ -62,11 +62,11 @@
       "id": "bucheon",
       "label": "부천",
       "path": "bucheon.json",
-      "etag": "sha256:522965a5d333f8fd0b0e93cdda76e97dc27154df9f498d753ba703ddcec62a9a",
-      "bytes": 123298,
-      "bytesGzip": 8077,
+      "etag": "sha256:88a5d2411430a895eecbbb9700e8e0e4065c37e9b75cf3afb0570797760065a8",
+      "bytes": 121851,
+      "bytesGzip": 7961,
       "counts": {
-        "ENJOY": 12,
+        "ENJOY": 11,
         "DISCOVER": 69
       },
       "depth": "deep"
@@ -75,11 +75,11 @@
       "id": "hwaseong",
       "label": "화성",
       "path": "hwaseong.json",
-      "etag": "sha256:426655de7d8db77c2047ed7c966e61c22bf4f3f44e53e9cc87ec4820285fda67",
-      "bytes": 179230,
-      "bytesGzip": 10527,
+      "etag": "sha256:38a2f5dad781baf6471831d3be3e6548da2d908347ad59407fd965d601672890",
+      "bytes": 176411,
+      "bytesGzip": 10136,
       "counts": {
-        "ENJOY": 13,
+        "ENJOY": 11,
         "DISCOVER": 107
       },
       "depth": "deep"
