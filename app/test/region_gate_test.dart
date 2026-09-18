@@ -32,7 +32,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('지역 선택'), findsOneWidget);
-    expect(find.text('어느 시군의 기회를 볼까요?'), findsOneWidget);
+    expect(find.text('관심 지역을 선택하세요'), findsOneWidget);
     expect(find.text('로온드'), findsNothing);
 
     await tester.tap(find.text('수원시').first);

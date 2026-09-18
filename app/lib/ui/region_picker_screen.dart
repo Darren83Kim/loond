@@ -90,15 +90,15 @@ class _RegionPickerScreenState extends State<RegionPickerScreen> {
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
         children: [
           Text(
-            '어느 시군의 기회를 볼까요?',
+            '관심 지역을 선택하세요',
             style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.w800,
             ),
           ),
           const SizedBox(height: 8),
           Text(
-            '선택한 지역의 신청·행사·발견만 보여 드려요. '
-            '지금은 수원에 실제 데이터가 있어요.',
+            '선택한 지역의 신청·행사·발견만 표시합니다. '
+            '현재 실제 데이터가 있는 지역은 수원입니다.',
             style: theme.textTheme.bodyMedium?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),
