@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-09-18T12:13:33+09:00",
+  "collectedAt": "2026-09-19T12:09:48+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "area_filter",
   "mode": "multi_city_partition",
@@ -11,12 +11,12 @@
     "bucheon": 102,
     "hwaseong": 175
   },
-  "dropped": 2748,
+  "dropped": 2745,
   "by_type_summary": {
     "12": {
       "category": "tour_spot",
       "assigned": 230,
-      "unique_total": 818,
+      "unique_total": 816,
       "by_region": {
         "suwon": 40,
         "yongin": 61,
@@ -30,7 +30,7 @@
         "ok": true,
         "msg": "OK",
         "got": 100,
-        "totalCount": 818
+        "totalCount": 816
       }
     },
     "14": {
@@ -111,7 +111,7 @@
     "39": {
       "category": "food",
       "assigned": 836,
-      "unique_total": 2385,
+      "unique_total": 2384,
       "by_region": {
         "suwon": 186,
         "yongin": 167,
@@ -125,7 +125,7 @@
         "ok": true,
         "msg": "OK",
         "got": 100,
-        "totalCount": 2385
+        "totalCount": 2384
       }
     }
   },
@@ -34543,14 +34543,13 @@
   },
   "homepages": {
     "2431706": "https://www.yongin.go.kr/event/2026_festival/",
-    "3371765": "https://youth.yongin.go.kr/web/main/",
     "3501104": "https://www.uscoffeefest.com/",
     "3104107": "https://www.ulsanmaduhee.co.kr/pages/index.html",
     "530450": "http://www.hjfestival.or.kr",
     "3383613": "http://gyfestival.kr/",
     "589386": "https://bicof.com/",
     "2756476": "https://www.jrtf.or.kr/",
-    "1725929": "http://www.정조효문화제.com",
+    "3372236": "http://tuntunpetfesta.com/",
     "2747134": "https://www.instagram.com/gosaeknew",
     "2633915": "https://www.gglakepark.or.kr/theme/sample28/html/b4.php",
     "128988": "https://cafe.naver.com/khaospace",

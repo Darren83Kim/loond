@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-09-18T12:13:33+09:00",
+  "collectedAt": "2026-09-19T12:09:48+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "area_filter",
   "mode": "multi_city_partition",
@@ -28,71 +28,71 @@
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 746
+          "totalCount": 742
         },
         {
           "page": 2,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 746
+          "totalCount": 742
         },
         {
           "page": 3,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 746
+          "totalCount": 742
         },
         {
           "page": 4,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 746
+          "totalCount": 742
         },
         {
           "page": 5,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 746
+          "totalCount": 742
         },
         {
           "page": 6,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 746
+          "totalCount": 742
         },
         {
           "page": 7,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 746
+          "totalCount": 742
         },
         {
           "page": 8,
           "ok": true,
           "msg": "OK",
-          "got": 46,
-          "totalCount": 746
+          "got": 42,
+          "totalCount": 742
         }
       ],
-      "count": 746,
-      "totalCount": 746
+      "count": 742,
+      "totalCount": 742
     }
   ],
   "counts": {
     "suwon": 16,
-    "yongin": 3,
+    "yongin": 2,
     "seongnam": 3,
     "goyang": 8,
     "bucheon": 1,
-    "hwaseong": 6
+    "hwaseong": 5
   },
-  "dropped": 709,
+  "dropped": 707,
   "by_region_titles": {
     "suwon": [
       "경기도 문화사계 \"봄\" 경기 상상해 봄 페스타",
@@ -103,7 +103,6 @@
     ],
     "yongin": [
       "용인사이버과학축제",
-      "용인청년페스티벌",
       "처인성문화제"
     ],
     "seongnam": [
@@ -124,9 +123,9 @@
     "hwaseong": [
       "생생우리음악축제",
       "세계유산 조선왕릉축전",
-      "정조효문화제",
       "튼튼 펫 페스타",
-      "평화온담"
+      "평화온담",
+      "화성 뱃놀이 축제"
     ]
   },
   "items_by_region": {
@@ -661,37 +660,6 @@
         "festivaltype": ""
       },
       {
-        "addr1": "경기도 용인시 처인구 동백죽전대로 61 (삼가동)",
-        "addr2": "",
-        "zipcode": "16997",
-        "cat1": "",
-        "cat2": "",
-        "cat3": "",
-        "contentid": "3371765",
-        "contenttypeid": "15",
-        "createdtime": "20240923155005",
-        "eventstartdate": "20261003",
-        "eventenddate": "20261004",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/78/4109978_image2_1.jpg",
-        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/78/4109978_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "mapx": "127.1651580363",
-        "mapy": "37.2496309759",
-        "mlevel": "6",
-        "modifiedtime": "20260914100506",
-        "areacode": "",
-        "sigungucode": "",
-        "tel": "031-6193-2791",
-        "title": "용인청년페스티벌",
-        "lDongRegnCd": "41",
-        "lDongSignguCd": "461",
-        "lclsSystm1": "EV",
-        "lclsSystm2": "EV01",
-        "lclsSystm3": "EV010200",
-        "progresstype": "",
-        "festivaltype": ""
-      },
-      {
         "addr1": "경기도 용인시 처인구 남사읍 처인성로 673",
         "addr2": "처인성일대",
         "zipcode": "17117",
@@ -1165,37 +1133,6 @@
         "festivaltype": ""
       },
       {
-        "addr1": "경기도 화성시 장조1로 34",
-        "addr2": "정조효공원 일원",
-        "zipcode": "18351",
-        "cat1": "",
-        "cat2": "",
-        "cat3": "",
-        "contentid": "1725929",
-        "contenttypeid": "15",
-        "createdtime": "20120927034844",
-        "eventstartdate": "20261003",
-        "eventenddate": "20261004",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/62/4054062_image2_1.jpg",
-        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/62/4054062_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "mapx": "126.9950637750",
-        "mapy": "37.2066442866",
-        "mlevel": "6",
-        "modifiedtime": "20260908140709",
-        "areacode": "",
-        "sigungucode": "",
-        "tel": "070-4202-5144",
-        "title": "정조효문화제",
-        "lDongRegnCd": "41",
-        "lDongSignguCd": "590",
-        "lclsSystm1": "EV",
-        "lclsSystm2": "EV01",
-        "lclsSystm3": "EV010200",
-        "progresstype": "선택안함",
-        "festivaltype": ""
-      },
-      {
         "addr1": "경기도 화성시 동탄구 여울동 1060",
         "addr2": "",
         "zipcode": "18479",
@@ -1292,14 +1229,13 @@
   },
   "homepages": {
     "2431706": "https://www.yongin.go.kr/event/2026_festival/",
-    "3371765": "https://youth.yongin.go.kr/web/main/",
     "3501104": "https://www.uscoffeefest.com/",
     "3104107": "https://www.ulsanmaduhee.co.kr/pages/index.html",
     "530450": "http://www.hjfestival.or.kr",
     "3383613": "http://gyfestival.kr/",
     "589386": "https://bicof.com/",
     "2756476": "https://www.jrtf.or.kr/",
-    "1725929": "http://www.정조효문화제.com",
+    "3372236": "http://tuntunpetfesta.com/",
     "2747134": "https://www.instagram.com/gosaeknew",
     "2633915": "https://www.gglakepark.or.kr/theme/sample28/html/b4.php",
     "128988": "https://cafe.naver.com/khaospace",
