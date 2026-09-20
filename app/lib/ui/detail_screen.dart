@@ -227,13 +227,23 @@ class _DetailScreenState extends State<DetailScreen> {
                 ],
                 const Divider(),
                 _InfoRow(label: '출처', value: item.sourceName),
+                if (item.sourceUrl.trim().isNotEmpty)
+                  _InfoRow(label: '원문 URL', value: item.sourceUrl.trim()),
                 _InfoRow(
                   label: '게시일',
                   value: item.sourcePublishedAt != null
                       ? _fmt(item.sourcePublishedAt)
                       : '-',
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 8),
+                Text(
+                  '로온드는 정부기관을 대표·제휴하지 않습니다. '
+                  '정확한 내용은 아래 공식 원문에서 확인하세요.',
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+                const SizedBox(height: 12),
                 FilledButton.icon(
                   onPressed: () => _openSource(context),
                   icon: const Icon(Icons.open_in_new),

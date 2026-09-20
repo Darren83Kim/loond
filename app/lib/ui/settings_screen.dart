@@ -35,8 +35,7 @@ class SettingsScreen extends StatelessWidget {
           const ListTile(
             title: Text('출처 안내'),
             subtitle: Text(
-              '공고·행사 정보는 수원특례시 등 공식 원문을 요약·안내합니다. '
-              '정확한 일정·자격·접수는 반드시 원문에서 확인하세요.',
+              '본 앱은 정부기관을 대표하거나 제휴하지 않습니다. 공고·행사 정보는 각 공식 원문을 요약·안내하며, 일정·자격·접수는 반드시 원문 URL에서 확인하세요.',
             ),
             isThreeLine: true,
           ),
@@ -47,7 +46,7 @@ class SettingsScreen extends StatelessWidget {
           const Divider(),
           const ListTile(
             title: Text('앱 정보'),
-            subtitle: Text('로온드 0.1.0 · EPIC 8 UX · 지역 선택'),
+            subtitle: Text('로온드 0.1.3 · EPIC 8 UX · 지역 선택'),
           ),
         ],
       ),
