@@ -7,3 +7,4 @@
 - 계약: `../SCHEMA.md`
 - 설계: `docs/ops/remote-region-load.md`
 - Hosting (P2): GitHub Pages → `https://darren83kim.github.io/loond/` (site root = this folder)
+- BENEFIT 시드: `docs/ops/benefit-seed.md`

@@ -40,7 +40,7 @@
 - NOW APPLY = `type=="APPLY" && status=="published"`
 - NOW ENJOY = `type=="ENJOY" && status=="published"`
 - ANYTIME = `type=="DISCOVER" && status=="published"`
-- BENEFIT = MVP에서 본문 없음 (CTA만) → 배열에 없어도 됨
+- BENEFIT = `type=="BENEFIT" && status=="published"` (수원 curated 시드 가능; 비면 앱 CTA)
 
 빈 섹션: 해당 type이 0건이면 UI Empty (기획서).
 

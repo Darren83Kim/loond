@@ -82,3 +82,7 @@ BENEFIT·APPLY 후보를 **과하게 숨기지 않고** 우선순위를 올리�
 - **맞춤 혜택 분화 (A + light B)**: BENEFIT 재고가 비면 「맞춤 혜택」에 APPLY를 섞지 않음.
   솔직한 빈 상태/CTA + 선택적 「관련 신청」(점수 하한·홈 지금신청 top5 제외·tour/experience 소프트 강등).
   보조금24/복지로 API 연동은 하지 않음(외부 링크만).
+
+## BENEFIT 시드 (2026-09-21)
+- 수원 curated 5건 live — 상세·갱신: `docs/ops/benefit-seed.md`
+- 폰은 GitHub Pages `regions/suwon.json` remote refresh로 수신 (재설치 불필요).

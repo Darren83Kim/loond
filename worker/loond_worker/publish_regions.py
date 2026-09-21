@@ -47,7 +47,7 @@ def _counts_by_type(ops: list[dict[str, Any]]) -> dict[str, int]:
     c = Counter(str(o.get("type") or "UNKNOWN") for o in ops)
     # Stable key order preferred by design sketch
     out: dict[str, int] = {}
-    for t in ("APPLY", "ENJOY", "DISCOVER"):
+    for t in ("APPLY", "ENJOY", "DISCOVER", "BENEFIT"):
         if t in c:
             out[t] = c[t]
     for t, n in sorted(c.items()):

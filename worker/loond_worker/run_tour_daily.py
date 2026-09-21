@@ -3,7 +3,8 @@
 STRATEGY=area_filter (multi-city internal test):
   - Fetch Gyeonggi (areaCode=31) festivals + discover once
   - Partition into RegionRegistry cities by addr/title keywords
-  - Preserve municipal APPLY + curated_traveler + culture_portal ENJOY;
+  - Preserve municipal APPLY + curated_traveler + culture_portal ENJOY
+    + curated BENEFIT (meta.source=curated_benefit);
     replace prior TourAPI *-tour-* ENJOY/DISCOVER with multi-city set
 
 Requires env TOUR_API_SERVICE_KEY. Never prints the key.
@@ -629,6 +630,10 @@ def merge_and_publish(
 
     apply_items = [o for o in pub.get("opportunities", []) if o.get("type") == "APPLY"]
     culture_enjoy = [o for o in pub.get("opportunities", []) if _is_culture_enjoy(o)]
+    # Curated BENEFIT seeds (복지·수당) — not produced by TourAPI; must survive daily merge.
+    benefit_items = [
+        o for o in pub.get("opportunities", []) if o.get("type") == "BENEFIT"
+    ]
 
     enjoy: list[dict[str, Any]] = []
     discover: list[dict[str, Any]] = []
@@ -657,7 +662,7 @@ def merge_and_publish(
 
     seen: set[str] = set()
     merged: list[dict[str, Any]] = []
-    for o in apply_items + culture_enjoy + enjoy + discover:
+    for o in apply_items + benefit_items + culture_enjoy + enjoy + discover:
         oid = o.get("id")
         if not oid or oid in seen:
             continue
@@ -708,6 +713,7 @@ def merge_and_publish(
         "enjoy": len(enjoy),
         "discover": len(discover),
         "apply": len(apply_items),
+        "benefit": len(benefit_items),
         "culture": len(culture_enjoy),
         "missing_required": len(missing),
     }
