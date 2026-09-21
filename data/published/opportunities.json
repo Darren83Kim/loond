@@ -10,7 +10,7 @@
     "bucheon",
     "hwaseong"
   ],
-  "updatedAt": "2026-09-21T12:29:08+09:00",
+  "updatedAt": "2026-09-21T17:21:43+09:00",
   "opportunities": [
     {
       "id": "suwon-tour-swcf-alley-2026",
@@ -719,7 +719,7 @@
       "endDate": null,
       "applicationStart": null,
       "applicationEnd": null,
-      "target": "만 24세 수원시 청년 · 경기도 거주 요건",
+      "target": "만 24세 수원시 청년 · 경기도 거주 요건 (출생연도 근사 23–25세)",
       "benefit": "분기별 지역화폐 25만원(연 최대 100만원)",
       "location": "수원시 전역",
       "organization": "수원시 교육청년청소년과",
@@ -730,18 +730,22 @@
       "status": "published",
       "opportunityScore": 90,
       "createdAt": "2026-09-21T12:29:08+09:00",
-      "updatedAt": "2026-09-21T12:29:08+09:00",
+      "updatedAt": "2026-09-21T17:21:43+09:00",
       "meta": {
         "regionLabel": "수원",
         "source": "curated_benefit",
         "audience": "resident",
-        "pipelineNotes": "Curated BENEFIT seed 2026-09-21: evergreen youth basic income; verified suwon.go.kr.",
+        "pipelineNotes": "Curated BENEFIT seed 2026-09-21; eligibility.ageMin/Max 23–25 (official 만 24세 + birth-year slack).",
         "matchHints": [
           "청년",
           "수당",
           "지역화폐",
           "복지"
-        ]
+        ],
+        "eligibility": {
+          "ageMin": 23,
+          "ageMax": 25
+        }
       }
     },
     {
@@ -767,18 +771,26 @@
       "status": "published",
       "opportunityScore": 88,
       "createdAt": "2026-09-21T12:29:08+09:00",
-      "updatedAt": "2026-09-21T12:29:08+09:00",
+      "updatedAt": "2026-09-21T17:21:43+09:00",
       "meta": {
         "regionLabel": "수원",
         "source": "curated_benefit",
         "audience": "resident",
-        "pipelineNotes": "Curated BENEFIT seed 2026-09-21: evergreen child allowance; verified suwon.go.kr.",
+        "pipelineNotes": "Curated BENEFIT; eligibility child bands infant/preschool/elementary (만 9세 미만; older elementary may over-include).",
         "matchHints": [
           "아동수당",
           "아동",
           "육아",
           "복지"
-        ]
+        ],
+        "eligibility": {
+          "requiresChild": true,
+          "childAgeBands": [
+            "infant0_2",
+            "preschool3_5",
+            "elementary6_12"
+          ]
+        }
       }
     },
     {
@@ -793,7 +805,7 @@
       "endDate": null,
       "applicationStart": null,
       "applicationEnd": null,
-      "target": "영아(0~23개월) 양육 가구 · 임신·육아",
+      "target": "영아(0~23개월) 양육 가구",
       "benefit": "0세 월 100만원 · 1세 월 50만원(가정양육 현금 기준)",
       "location": "수원시 전역 (전국 제도)",
       "organization": "수원시 가족정책과",
@@ -804,12 +816,12 @@
       "status": "published",
       "opportunityScore": 92,
       "createdAt": "2026-09-21T12:29:08+09:00",
-      "updatedAt": "2026-09-21T12:29:08+09:00",
+      "updatedAt": "2026-09-21T17:21:43+09:00",
       "meta": {
         "regionLabel": "수원",
         "source": "curated_benefit",
         "audience": "resident",
-        "pipelineNotes": "Curated BENEFIT seed 2026-09-21: evergreen parental benefit; verified suwon.go.kr amounts 0세 100만/1세 50만.",
+        "pipelineNotes": "Curated BENEFIT; eligibility.requiresChild + childAgeBands infant0_2 (0–23개월). Not for elementary-only.",
         "matchHints": [
           "부모급여",
           "영아",
@@ -817,22 +829,28 @@
           "보육",
           "육아",
           "양육"
-        ]
+        ],
+        "eligibility": {
+          "requiresChild": true,
+          "childAgeBands": [
+            "infant0_2"
+          ]
+        }
       }
     },
     {
       "id": "suwon-benefit-housing-benefit",
       "region": "suwon",
-      "title": "주거급여 (청년주거급여 포함)",
+      "title": "주거급여",
       "type": "BENEFIT",
       "category": "welfare_support",
-      "summary": "기준중위소득 48% 이하 가구의 주거비(임차료 등)를 지원하는 주거급여. 청년주거급여도 포함되며 복지로 또는 동 행정복지센터에서 신청합니다.",
+      "summary": "기준중위소득 48% 이하 가구의 주거비(임차료 등)를 지원하는 주거급여. 복지로 또는 동 행정복지센터에서 신청합니다.",
       "description": "수원시 안내 기준 요약입니다. 소득·재산·주택 조사 결과가 실제 수급을 결정합니다.\n· 대상: 소득인정액이 기준중위소득 48% 이하인 가구(임차 등)\n· 지원: 주거안정·주거생활 향상 목적의 주거비 지원(청년주거급여 포함)\n· 신청: 주소지 동 행정복지센터 방문 또는 복지로(bokjiro.go.kr)\n· 문의: 도시재생과(주거급여) 031-5191-3412",
       "startDate": null,
       "endDate": null,
       "applicationStart": null,
       "applicationEnd": null,
-      "target": "기준중위소득 48% 이하 가구 · 청년 1인가구 포함 가능",
+      "target": "기준중위소득 48% 이하 가구",
       "benefit": "주거비(임차료 등) 지원 — 조사 후 결정",
       "location": "수원시 전역",
       "organization": "수원시 도시재생과",
@@ -843,20 +861,61 @@
       "status": "published",
       "opportunityScore": 85,
       "createdAt": "2026-09-21T12:29:08+09:00",
-      "updatedAt": "2026-09-21T12:29:08+09:00",
+      "updatedAt": "2026-09-21T17:21:43+09:00",
       "meta": {
         "regionLabel": "수원",
         "source": "curated_benefit",
         "audience": "resident",
-        "pipelineNotes": "Curated BENEFIT seed 2026-09-21: evergreen housing benefit (incl. youth); verified suwon.go.kr.",
+        "pipelineNotes": "Curated BENEFIT; general housing (income-based, no age gate). Youth-specific path split to suwon-benefit-youth-housing.",
+        "matchHints": [
+          "주거",
+          "주거급여",
+          "임차",
+          "복지",
+          "보조금"
+        ]
+      }
+    },
+    {
+      "id": "suwon-benefit-youth-housing",
+      "region": "suwon",
+      "title": "청년주거급여",
+      "type": "BENEFIT",
+      "category": "welfare_support",
+      "summary": "주거급여 중 청년·1인가구 경로 안내. 청년 연령대에 해당하는 경우 복지로·동 행정복지센터에서 자격·신청을 확인하세요.",
+      "description": "수원시 안내 기준 요약입니다. 소득·재산·주택 조사 결과가 실제 수급을 결정합니다.\n· 대상: 소득인정액이 기준중위소득 48% 이하인 가구(임차 등)\n· 지원: 주거안정·주거생활 향상 목적의 주거비 지원(청년주거급여 포함)\n· 신청: 주소지 동 행정복지센터 방문 또는 복지로(bokjiro.go.kr)\n· 문의: 도시재생과(주거급여) 031-5191-3412",
+      "startDate": null,
+      "endDate": null,
+      "applicationStart": null,
+      "applicationEnd": null,
+      "target": "청년 연령대 · 주거급여 수급 요건 충족 가구",
+      "benefit": "임차료 등 주거비 지원(청년 경로)",
+      "location": "수원시 전역",
+      "organization": "수원시 도시재생과",
+      "thumbnail": null,
+      "sourceName": "수원특례시",
+      "sourceUrl": "https://www.suwon.go.kr/sw-www/deptHome/dep_city/city09/city09_01.jsp",
+      "sourcePublishedAt": "2026-01-01",
+      "status": "published",
+      "opportunityScore": 88,
+      "createdAt": "2026-09-21T17:21:43+09:00",
+      "updatedAt": "2026-09-21T17:21:43+09:00",
+      "meta": {
+        "regionLabel": "수원",
+        "source": "curated_benefit",
+        "audience": "resident",
+        "pipelineNotes": "Split from housing seed: youth path with eligibility.ageMin/Max 19–34 (GG youth band).",
         "matchHints": [
           "주거",
           "주거급여",
           "청년",
           "1인가구",
-          "복지",
-          "보조금"
-        ]
+          "복지"
+        ],
+        "eligibility": {
+          "ageMin": 19,
+          "ageMax": 34
+        }
       }
     },
     {
@@ -871,7 +930,7 @@
       "endDate": null,
       "applicationStart": null,
       "applicationEnd": null,
-      "target": "임신·출산 · 수원 거주 180일 이상 가정",
+      "target": "임신·출산·입양 · 수원 거주 180일 이상 가정",
       "benefit": "첫째 50만원~다자녀 차등(시 조례)",
       "location": "수원시 전역",
       "organization": "수원시 여성정책과",
@@ -882,19 +941,26 @@
       "status": "published",
       "opportunityScore": 87,
       "createdAt": "2026-09-21T12:29:08+09:00",
-      "updatedAt": "2026-09-21T12:29:08+09:00",
+      "updatedAt": "2026-09-21T17:21:43+09:00",
       "meta": {
         "regionLabel": "수원",
         "source": "curated_benefit",
         "audience": "resident",
-        "pipelineNotes": "Curated BENEFIT seed 2026-09-21: Suwon birth/adoption grant; verified suwon.go.kr ordinance amounts.",
+        "pipelineNotes": "Curated BENEFIT; eligibility pregnancy_planned|infant0_2 — demote for elementary-only.",
         "matchHints": [
           "출산",
           "임신",
           "입양",
           "육아",
           "지원금"
-        ]
+        ],
+        "eligibility": {
+          "requiresChild": true,
+          "childAgeBands": [
+            "pregnancy_planned",
+            "infant0_2"
+          ]
+        }
       }
     },
     {

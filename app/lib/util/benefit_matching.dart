@@ -3,8 +3,43 @@ import '../models/opportunity.dart';
 
 /// Soft-rank BENEFIT (and related APPLY) using a local [BenefitProfile].
 ///
-/// Never hard-hides the whole list when data is thin — only boosts scores.
+/// BENEFIT with [Opportunity.eligibility] is **hard-excluded** when clearly
+/// ineligible; soft score still ranks among remaining items.
+/// APPLY related section does not use the same hard gates (soft only).
 /// APPLY is never shown under the 「맞춤 혜택」 heading; see [buildRelatedApplyFeed].
+
+
+/// Hard eligibility gate for curated BENEFIT (`meta.eligibility`).
+///
+/// Returns false only when the profile **clearly** fails a constraint.
+/// Missing birth year / empty child bands does not hard-fail age/band gates
+/// (not clearly ineligible). Items without eligibility always pass.
+bool passesBenefitEligibility(Opportunity o, BenefitProfile profile) {
+  final e = o.eligibility;
+  if (e == null || !e.hasConstraints) return true;
+
+  if (e.ageMin != null || e.ageMax != null) {
+    final age = profile.ageInYear();
+    if (age != null) {
+      if (e.ageMin != null && age < e.ageMin!) return false;
+      if (e.ageMax != null && age > e.ageMax!) return false;
+    }
+  }
+
+  if (e.requiresChild && !profile.hasChild) return false;
+
+  if (e.childAgeBands.isNotEmpty) {
+    if (!profile.hasChild) return false;
+    final required = e.childAgeBands.toSet();
+    final have = profile.childAgeBands;
+    // Specific bands selected and none overlap → clearly ineligible.
+    if (have.isNotEmpty && have.intersection(required).isEmpty) {
+      return false;
+    }
+  }
+
+  return true;
+}
 
 /// Default floor so thin default keywords alone do not dump the APPLY pool.
 const int kRelatedApplyMinScore = 5;
@@ -190,7 +225,9 @@ List<Opportunity> buildMatchedBenefitFeed({
   required List<Opportunity> benefits,
   required BenefitProfile profile,
 }) {
-  return softRankByProfile(benefits, profile);
+  final eligible =
+      benefits.where((o) => passesBenefitEligibility(o, profile)).toList();
+  return softRankByProfile(eligible, profile);
 }
 
 /// True when APPLY looks like tour / experience (demote vs support·복지).

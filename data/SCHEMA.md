@@ -78,9 +78,18 @@
   "notAncmtMgtNo": "156580",
   "noticeNo": "...",
   "publishPeriod": "...",
-  "pipelineNotes": "..."
+  "pipelineNotes": "...",
+  "source": "curated_benefit",
+  "eligibility": {
+    "ageMin": 23,
+    "ageMax": 25,
+    "requiresChild": true,
+    "childAgeBands": ["infant0_2"]
+  }
 }
 ```
+
+`meta.eligibility` (선택, curated BENEFIT): 앱 `BenefitEligibility` — `ageMin`/`ageMax`(출생연도 나이 inclusive), `childAgeBands`(프로필 칩 wire any-of), `requiresChild`. 명백 실패 시 「맞춤 혜택」 hard exclude. 자세한 운영: `docs/ops/benefit-seed.md`.
 
 ---
 

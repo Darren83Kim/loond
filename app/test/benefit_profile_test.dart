@@ -14,6 +14,7 @@ Opportunity _opp({
   String summary = '',
   DateTime? applicationEnd,
   String region = 'suwon',
+  BenefitEligibility? eligibility,
 }) {
   return Opportunity(
     id: id,
@@ -27,6 +28,7 @@ Opportunity _opp({
     sourceName: 'test',
     sourceUrl: 'https://example.com/$id',
     status: 'published',
+    eligibility: eligibility,
   );
 }
 
@@ -243,4 +245,148 @@ void main() {
     // defaults 청년·문화 → at most keyword hits of 3; floor 5 → empty.
     expect(related, isEmpty);
   });
+
+  test('hard exclude: 40s + elementary hides infant/youth BENEFIT', () {
+    final year = DateTime.now().year;
+    final profile = BenefitProfile(
+      birthYear: year - 42,
+      hasChild: true,
+      childAgeBands: {ChildAgeBand.elementary6_12},
+      keywords: {'복지', '청년'},
+    );
+    final parental = _opp(
+      id: 'parental',
+      title: '부모급여',
+      type: OpportunityType.benefit,
+      summary: '영아 0~23개월',
+      eligibility: const BenefitEligibility(
+        requiresChild: true,
+        childAgeBands: [ChildAgeBand.infant0_2],
+      ),
+    );
+    final youthIncome = _opp(
+      id: 'youth-income',
+      title: '청년기본소득',
+      type: OpportunityType.benefit,
+      summary: '청년 수당',
+      eligibility: const BenefitEligibility(ageMin: 23, ageMax: 25),
+    );
+    final youthHousing = _opp(
+      id: 'youth-housing',
+      title: '청년주거급여',
+      type: OpportunityType.benefit,
+      summary: '청년 주거',
+      eligibility: const BenefitEligibility(ageMin: 19, ageMax: 34),
+    );
+    final housing = _opp(
+      id: 'housing',
+      title: '주거급여',
+      type: OpportunityType.benefit,
+      summary: '주거비 지원',
+    );
+    final childAllow = _opp(
+      id: 'child-allow',
+      title: '아동수당',
+      type: OpportunityType.benefit,
+      summary: '만 9세 미만',
+      eligibility: const BenefitEligibility(
+        requiresChild: true,
+        childAgeBands: [
+          ChildAgeBand.infant0_2,
+          ChildAgeBand.preschool3_5,
+          ChildAgeBand.elementary6_12,
+        ],
+      ),
+    );
+
+    final feed = buildMatchedBenefitFeed(
+      benefits: [parental, youthIncome, youthHousing, housing, childAllow],
+      profile: profile,
+    );
+    final ids = feed.map((o) => o.id).toSet();
+    expect(ids.contains('parental'), isFalse);
+    expect(ids.contains('youth-income'), isFalse);
+    expect(ids.contains('youth-housing'), isFalse);
+    expect(ids.contains('housing'), isTrue);
+    expect(ids.contains('child-allow'), isTrue);
+  });
+
+  test('hard exclude: infant child can see 부모급여', () {
+    const profile = BenefitProfile(
+      hasChild: true,
+      childAgeBands: {ChildAgeBand.infant0_2},
+      keywords: {'복지'},
+    );
+    final parental = _opp(
+      id: 'parental',
+      title: '부모급여',
+      type: OpportunityType.benefit,
+      summary: '영아',
+      eligibility: const BenefitEligibility(
+        requiresChild: true,
+        childAgeBands: [ChildAgeBand.infant0_2],
+      ),
+    );
+    final feed = buildMatchedBenefitFeed(
+      benefits: [parental],
+      profile: profile,
+    );
+    expect(feed.map((o) => o.id), ['parental']);
+  });
+
+  test('hard exclude: age 25 can see youth BENEFIT', () {
+    final year = DateTime.now().year;
+    final profile = BenefitProfile(
+      birthYear: year - 25,
+      keywords: {'청년'},
+    );
+    final youthIncome = _opp(
+      id: 'youth-income',
+      title: '청년기본소득',
+      type: OpportunityType.benefit,
+      summary: '청년',
+      eligibility: const BenefitEligibility(ageMin: 23, ageMax: 25),
+    );
+    final youthHousing = _opp(
+      id: 'youth-housing',
+      title: '청년주거급여',
+      type: OpportunityType.benefit,
+      summary: '청년 주거',
+      eligibility: const BenefitEligibility(ageMin: 19, ageMax: 34),
+    );
+    final feed = buildMatchedBenefitFeed(
+      benefits: [youthIncome, youthHousing],
+      profile: profile,
+    );
+    expect(feed.map((o) => o.id).toSet(), {'youth-income', 'youth-housing'});
+  });
+
+  test('BenefitEligibility parses from opportunity JSON meta', () {
+    final o = Opportunity.fromJson({
+      'id': 'x',
+      'region': 'suwon',
+      'title': '부모급여',
+      'type': 'BENEFIT',
+      'category': 'welfare_support',
+      'summary': '영아',
+      'sourceName': 't',
+      'sourceUrl': 'https://example.com',
+      'status': 'published',
+      'opportunityScore': 0,
+      'meta': {
+        'eligibility': {
+          'requiresChild': true,
+          'childAgeBands': ['infant0_2'],
+          'ageMin': 20,
+          'ageMax': 40,
+        },
+      },
+    });
+    expect(o.eligibility, isNotNull);
+    expect(o.eligibility!.requiresChild, isTrue);
+    expect(o.eligibility!.childAgeBands, [ChildAgeBand.infant0_2]);
+    expect(o.eligibility!.ageMin, 20);
+    expect(o.eligibility!.ageMax, 40);
+  });
+
 }

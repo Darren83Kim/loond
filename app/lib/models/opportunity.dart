@@ -1,3 +1,5 @@
+import 'benefit_profile.dart';
+
 /// 기회(공고·행사·관광) 모델 — SCHEMA schemaVersion 1.
 enum OpportunityType { apply, enjoy, discover, benefit }
 
@@ -44,6 +46,66 @@ extension OpportunityTypeX on OpportunityType {
   }
 }
 
+
+/// Structured eligibility for curated BENEFIT (meta.eligibility).
+///
+/// Field names match JSON under `meta.eligibility`:
+/// - `ageMin` / `ageMax` (inclusive, compared to [BenefitProfile.ageInYear])
+/// - `childAgeBands` (any-of; wire values = [ChildAgeBand] chips)
+/// - `requiresChild` (profile.hasChild must be true)
+class BenefitEligibility {
+  const BenefitEligibility({
+    this.ageMin,
+    this.ageMax,
+    this.childAgeBands = const [],
+    this.requiresChild = false,
+  });
+
+  final int? ageMin;
+  final int? ageMax;
+
+  /// Required any-of bands (empty = no child-band gate).
+  final List<ChildAgeBand> childAgeBands;
+
+  final bool requiresChild;
+
+  bool get hasConstraints =>
+      ageMin != null ||
+      ageMax != null ||
+      childAgeBands.isNotEmpty ||
+      requiresChild;
+
+  factory BenefitEligibility.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return const BenefitEligibility();
+    final bands = <ChildAgeBand>[];
+    final rawBands = json['childAgeBands'];
+    if (rawBands is List) {
+      for (final e in rawBands) {
+        final band = ChildAgeBandX.fromWire(e?.toString());
+        if (band != null) bands.add(band);
+      }
+    }
+    return BenefitEligibility(
+      ageMin: (json['ageMin'] as num?)?.toInt(),
+      ageMax: (json['ageMax'] as num?)?.toInt(),
+      childAgeBands: bands,
+      requiresChild: json['requiresChild'] == true,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final m = <String, dynamic>{};
+    if (ageMin != null) m['ageMin'] = ageMin;
+    if (ageMax != null) m['ageMax'] = ageMax;
+    if (childAgeBands.isNotEmpty) {
+      m['childAgeBands'] =
+          childAgeBands.map((e) => e.wire).toList(growable: false);
+    }
+    if (requiresChild) m['requiresChild'] = true;
+    return m;
+  }
+}
+
 class Opportunity {
   const Opportunity({
     required this.id,
@@ -74,6 +136,7 @@ class Opportunity {
     this.hasHwp = false,
     this.lDongSignguCd,
     this.metaSource,
+    this.eligibility,
   });
 
   final String id;
@@ -109,6 +172,8 @@ class Opportunity {
   final String? lDongSignguCd;
   /// meta.source when present (e.g. culture_portal).
   final String? metaSource;
+  /// meta.eligibility for curated BENEFIT hard gates (null if absent).
+  final BenefitEligibility? eligibility;
 
   /// Prefer imageUrl → thumbnailUrl → thumbnail when non-empty.
   String? get displayImageUrl {
@@ -128,6 +193,7 @@ class Opportunity {
     var hasHwp = false;
     String? lDongSignguCd;
     String? metaSource;
+    BenefitEligibility? eligibility;
     if (meta is Map) {
       hasHwp = meta['hasHwp'] == true;
       final rawSrc = meta['source'];
@@ -139,6 +205,13 @@ class Opportunity {
       if (rawCd != null) {
         final s = rawCd.toString().trim();
         if (s.isNotEmpty) lDongSignguCd = s;
+      }
+      final rawElig = meta['eligibility'];
+      if (rawElig is Map) {
+        final parsed = BenefitEligibility.fromJson(
+          Map<String, dynamic>.from(rawElig),
+        );
+        if (parsed.hasConstraints) eligibility = parsed;
       }
     }
     return Opportunity(
@@ -170,6 +243,7 @@ class Opportunity {
       hasHwp: hasHwp,
       lDongSignguCd: lDongSignguCd,
       metaSource: metaSource,
+      eligibility: eligibility,
     );
   }
 
