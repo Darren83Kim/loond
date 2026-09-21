@@ -46,7 +46,7 @@ class SettingsScreen extends StatelessWidget {
           const Divider(),
           const ListTile(
             title: Text('앱 정보'),
-            subtitle: Text('로온드 0.1.3 · EPIC 8 UX · 지역 선택'),
+            subtitle: Text('로온드 0.1.4 · 맞춤 혜택 프로필'),
           ),
         ],
       ),

@@ -315,6 +315,7 @@ class _MainShellState extends State<MainShell> {
         benefits: benefit,
         allOpportunities: bundle.opportunities,
         bookmarkStore: _bookmarks,
+        region: widget.region,
         regionReady: regionReady,
         onOpen: _openDetail,
         onRefresh: _reload,

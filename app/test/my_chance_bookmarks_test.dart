@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:loond/data/bookmark_store.dart';
 import 'package:loond/models/opportunity.dart';
+import 'package:loond/models/region.dart';
 import 'package:loond/ui/tabs/my_chance_tab.dart';
 import 'package:loond/ui/widgets/opportunity_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -54,6 +55,7 @@ void main() {
             benefits: const [],
             allOpportunities: all,
             bookmarkStore: store,
+            region: RegionRegistry.suwon,
             regionReady: true,
             onOpen: (_) {},
             onRefresh: () async {},
@@ -89,6 +91,7 @@ void main() {
             benefits: const [],
             allOpportunities: all,
             bookmarkStore: store,
+            region: RegionRegistry.suwon,
             regionReady: true,
             onOpen: (_) {},
             onRefresh: () async {},

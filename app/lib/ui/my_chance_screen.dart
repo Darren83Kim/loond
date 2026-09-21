@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/bookmark_store.dart';
+import '../models/region.dart';
 import 'tabs/my_chance_tab.dart';
 
 /// 하위 호환 — 푸시 라우트용 래퍼 (탭은 [MyChanceTab]).
@@ -15,6 +16,7 @@ class MyChanceScreen extends StatelessWidget {
         benefits: const [],
         allOpportunities: const [],
         bookmarkStore: BookmarkStore(),
+        region: RegionRegistry.suwon,
         regionReady: true,
         onOpen: (_) {},
         onRefresh: () async {},

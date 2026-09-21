@@ -73,7 +73,7 @@ class MoreTab extends StatelessWidget {
         ),
         const ListTile(
           title: Text('앱 정보'),
-          subtitle: Text('로온드 0.1.3 · EPIC 8 UX · 컨셉 목업 정렬'),
+          subtitle: Text('로온드 0.1.4 · 맞춤 혜택 프로필'),
         ),
       ],
     );
