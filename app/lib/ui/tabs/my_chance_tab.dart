@@ -7,9 +7,14 @@ import '../../models/opportunity.dart';
 import '../../models/region.dart';
 import '../../theme/app_theme.dart';
 import '../../util/benefit_matching.dart';
+import '../../util/open_url.dart';
 import '../benefit_profile_screen.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/opportunity_card.dart';
+
+/// Official portals — external info only (no scrape / no API).
+final Uri _bokjiroUri = Uri.parse('https://www.bokjiro.go.kr/');
+final Uri _bojomgeum24Uri = Uri.parse('https://www.gov.kr/portal/main');
 
 /// 내 기회 — 저장한 기회 + 맞춤 혜택(프로필) + 관심 키워드(로컬 영속).
 class MyChanceTab extends StatefulWidget {
@@ -27,7 +32,7 @@ class MyChanceTab extends StatefulWidget {
 
   final List<Opportunity> benefits;
 
-  /// Full bundle list (all types) used to resolve bookmark ids + APPLY fallback.
+  /// Full bundle list (all types) used to resolve bookmark ids + related APPLY.
   final List<Opportunity> allOpportunities;
   final BookmarkStore bookmarkStore;
   final Region region;
@@ -115,18 +120,33 @@ class _MyChanceTabState extends State<MyChanceTab> {
     await _profileStore.save(updated);
   }
 
+  /// BENEFIT-only ranked list for 「맞춤 혜택」.
   List<Opportunity> get _matchedBenefits {
     return buildMatchedBenefitFeed(
       benefits: widget.benefits,
-      allOpportunities: widget.allOpportunities,
       profile: _profile,
     );
+  }
+
+  /// Secondary 「관련 신청」 only when BENEFIT inventory is empty.
+  List<Opportunity> get _relatedApply {
+    if (widget.benefits.isNotEmpty) return const [];
+    return buildRelatedApplyFeed(
+      allOpportunities: widget.allOpportunities,
+      profile: _profile,
+      regionId: widget.region.id,
+    );
+  }
+
+  Future<void> _openExternal(Uri uri) async {
+    await openOutboundUrl(uri);
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final matched = _matchedBenefits;
+    final related = _relatedApply;
     final chips = _profile.summaryChips();
 
     return RefreshIndicator(
@@ -340,59 +360,40 @@ class _MyChanceTabState extends State<MyChanceTab> {
           if (!widget.regionReady)
             const EmptyState(message: '이 지역 데이터 준비 중')
           else if (matched.isEmpty)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 44,
-                        height: 44,
-                        decoration: BoxDecoration(
-                          color: AppTheme.seed.withValues(alpha: 0.12),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: const Icon(
-                          Icons.card_giftcard_outlined,
-                          color: AppTheme.seed,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              _profile.isConfigured
-                                  ? '조건에 맞는 혜택을 모으는 중이에요'
-                                  : '맞춤 추천은 곧 제공될 예정이에요',
-                              style: theme.textTheme.titleSmall?.copyWith(
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              _profile.isConfigured
-                                  ? '조건은 저장되어 있어요. 복지로·보조금24에서도 더 찾아볼 수 있어요.'
-                                  : '관심 키워드를 골라 두면 혜택이 열릴 때 바로 보여줄게요.',
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                color: theme.colorScheme.onSurfaceVariant,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+            _BenefitEmptyCard(
+              profileConfigured: _profile.isConfigured,
+              hintRelatedApply: related.isNotEmpty,
+              onOpenBokjiro: () => _openExternal(_bokjiroUri),
+              onOpenBojomgeum: () => _openExternal(_bojomgeum24Uri),
             )
           else
             ...matched.map(
               (o) => OpportunityCard(item: o, onTap: () => widget.onOpen(o)),
             ),
+          // Secondary: related APPLY — never titled as 혜택.
+          if (widget.regionReady && matched.isEmpty && related.isNotEmpty) ...[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 20, 16, 4),
+              child: Text(
+                '관련 신청',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+              child: Text(
+                '혜택 데이터가 준비되기 전에, 조건과 가까운 신청 공고만 골라 봤어요.',
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ),
+            ...related.map(
+              (o) => OpportunityCard(item: o, onTap: () => widget.onOpen(o)),
+            ),
+          ],
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 20, 16, 8),
             child: Text(
@@ -430,6 +431,99 @@ class _MyChanceTabState extends State<MyChanceTab> {
             message: '키워드·맞춤 조건은 기기에만 저장돼요',
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _BenefitEmptyCard extends StatelessWidget {
+  const _BenefitEmptyCard({
+    required this.profileConfigured,
+    required this.hintRelatedApply,
+    required this.onOpenBokjiro,
+    required this.onOpenBojomgeum,
+  });
+
+  final bool profileConfigured;
+  final bool hintRelatedApply;
+  final VoidCallback onOpenBokjiro;
+  final VoidCallback onOpenBojomgeum;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: AppTheme.seed.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(
+                      Icons.card_giftcard_outlined,
+                      color: AppTheme.seed,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          profileConfigured
+                              ? '조건은 저장됨 · 복지 혜택 데이터 준비 중'
+                              : '맞춤 추천은 곧 제공될 예정이에요',
+                          style: theme.textTheme.titleSmall?.copyWith(
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          profileConfigured
+                              ? (hintRelatedApply
+                                  ? '신청 공고는 아래에 「관련 신청」으로 따로 보여 드려요. 복지로·보조금24에서도 더 찾아볼 수 있어요.'
+                                  : '조건은 저장되어 있어요. 복지로·보조금24에서도 더 찾아볼 수 있어요.')
+                              : '관심 키워드를 골라 두면 혜택이 열릴 때 바로 보여줄게요.',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              if (profileConfigured) ...[
+                const SizedBox(height: 12),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    OutlinedButton(
+                      onPressed: onOpenBokjiro,
+                      child: const Text('복지로 보기'),
+                    ),
+                    OutlinedButton(
+                      onPressed: onOpenBojomgeum,
+                      child: const Text('보조금24 보기'),
+                    ),
+                  ],
+                ),
+              ],
+            ],
+          ),
+        ),
       ),
     );
   }

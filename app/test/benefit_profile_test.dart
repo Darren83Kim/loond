@@ -9,17 +9,21 @@ Opportunity _opp({
   required String id,
   required String title,
   required OpportunityType type,
+  String category = 'test',
   String? target,
   String summary = '',
+  DateTime? applicationEnd,
+  String region = 'suwon',
 }) {
   return Opportunity(
     id: id,
-    region: 'suwon',
+    region: region,
     title: title,
     type: type,
-    category: 'test',
+    category: category,
     summary: summary,
     target: target,
+    applicationEnd: applicationEnd,
     sourceName: 'test',
     sourceUrl: 'https://example.com/$id',
     status: 'published',
@@ -75,7 +79,7 @@ void main() {
     expect(loaded.childAgeBands, {ChildAgeBand.elementary6_12});
   });
 
-  test('soft ranking boosts child-related APPLY when BENEFIT empty', () {
+  test('empty BENEFIT feed never mixes APPLY under 혜택', () {
     const profile = BenefitProfile(
       hasChild: true,
       childAgeBands: {ChildAgeBand.infant0_2},
@@ -86,22 +90,157 @@ void main() {
       id: 'a1',
       title: '영아 보육 지원',
       type: OpportunityType.apply,
+      category: 'support_apply',
       target: '영아 자녀가 있는 가정',
       summary: '아동수당·보육 안내',
     );
+    final feed = buildMatchedBenefitFeed(
+      benefits: const [],
+      profile: profile,
+    );
+    expect(feed, isEmpty);
+    expect(feed.any((o) => o.type == OpportunityType.apply), isFalse);
+
+    // Soft score still ranks child-related APPLY higher for related section.
     final applyOther = _opp(
       id: 'a2',
       title: '골프 체험',
       type: OpportunityType.apply,
+      category: 'experience_apply',
       summary: '레포츠',
     );
+    expect(
+      benefitMatchScore(applyChild, profile) >
+          benefitMatchScore(applyOther, profile),
+      isTrue,
+    );
+  });
+
+  test('BENEFIT primary stays BENEFIT-only when inventory non-empty', () {
+    const profile = BenefitProfile(
+      keywords: {'복지'},
+      situationTags: {SituationTag.youth},
+    );
+    final benefit = _opp(
+      id: 'b1',
+      title: '청년 복지 바우처',
+      type: OpportunityType.benefit,
+      summary: '복지 지원',
+    );
+    final apply = _opp(
+      id: 'a1',
+      title: '영아 보육 지원',
+      type: OpportunityType.apply,
+      category: 'support_apply',
+      target: '영아',
+      summary: '아동수당',
+    );
     final feed = buildMatchedBenefitFeed(
-      benefits: const [],
-      allOpportunities: [applyOther, applyChild],
+      benefits: [benefit],
       profile: profile,
     );
-    expect(feed.first.id, 'a1');
-    expect(benefitMatchScore(applyChild, profile) >
-        benefitMatchScore(applyOther, profile), isTrue);
+    expect(feed.map((o) => o.id), ['b1']);
+    expect(feed.every((o) => o.type == OpportunityType.benefit), isTrue);
+    // UI hides 「관련 신청」 when benefits.isNotEmpty (see MyChanceTab).
+    expect(apply.type, OpportunityType.apply);
+  });
+
+  test('related APPLY excludes home top-5 and respects score floor', () {
+    const profile = BenefitProfile(
+      hasChild: true,
+      childAgeBands: {ChildAgeBand.infant0_2},
+      situationTags: {SituationTag.pregnancyChildcare},
+      keywords: {'복지', '교육'},
+    );
+
+    final now = DateTime.now();
+    // Home deadline sort: soonest applicationEnd first → these 5 are top-N.
+    final homeTop = <Opportunity>[
+      for (var i = 0; i < 5; i++)
+        _opp(
+          id: 'home-$i',
+          title: '홈 노출 $i',
+          type: OpportunityType.apply,
+          category: 'support_apply',
+          summary: '영아 보육 복지 아동수당',
+          target: '영아 가정',
+          applicationEnd: now.add(Duration(days: i + 1)),
+        ),
+    ];
+    final relatedStrong = _opp(
+      id: 'rel-strong',
+      title: '영아 보육 지원금',
+      type: OpportunityType.apply,
+      category: 'support_apply',
+      summary: '아동수당·보육 복지',
+      target: '영아 자녀가 있는 가정',
+      applicationEnd: now.add(const Duration(days: 30)),
+    );
+    final thinKeywordOnly = _opp(
+      id: 'rel-thin',
+      title: '문화 행사 안내',
+      type: OpportunityType.apply,
+      category: 'tour_apply',
+      summary: '문화', // single default-ish keyword hit → score 3 < floor 5
+      applicationEnd: now.add(const Duration(days: 40)),
+    );
+    final tourHigh = _opp(
+      id: 'rel-tour',
+      title: '영아 가족 관광 체험',
+      type: OpportunityType.apply,
+      category: 'tour_apply',
+      summary: '영아 보육 체험 관광',
+      target: '영아 자녀',
+      applicationEnd: now.add(const Duration(days: 35)),
+    );
+
+    final all = [...homeTop, relatedStrong, thinKeywordOnly, tourHigh];
+
+    final topIds = homeNowApplyTopIds(all, regionId: 'suwon');
+    expect(topIds.length, 5);
+    expect(topIds, containsAll(['home-0', 'home-1', 'home-2', 'home-3', 'home-4']));
+
+    final related = buildRelatedApplyFeed(
+      allOpportunities: all,
+      profile: profile,
+      regionId: 'suwon',
+    );
+
+    expect(related.any((o) => topIds.contains(o.id)), isFalse);
+    expect(related.map((o) => o.id), contains('rel-strong'));
+    expect(related.map((o) => o.id), isNot(contains('rel-thin')));
+    // Floor: thin keyword alone must not dump the pool.
+    for (final o in related) {
+      expect(benefitMatchScore(o, profile) >= kRelatedApplyMinScore, isTrue);
+    }
+    // Soft demote tour vs support when both pass floor.
+    if (related.any((o) => o.id == 'rel-tour') &&
+        related.any((o) => o.id == 'rel-strong')) {
+      expect(related.first.id, 'rel-strong');
+    }
+  });
+
+  test('default keywords alone do not fill related APPLY (Suwon-like)', () {
+    final profile = BenefitProfile(
+      keywords: Set<String>.from(BenefitKeywords.defaults),
+    );
+    final pool = <Opportunity>[
+      for (var i = 0; i < 12; i++)
+        _opp(
+          id: 'pool-$i',
+          title: i < 5 ? '문화 골목여행 $i' : '일반 공고 $i',
+          type: OpportunityType.apply,
+          category: i < 5 ? 'tour_apply' : 'course_local',
+          summary: i < 5 ? '문화 관광 방문객' : '주민자치 프로그램',
+          applicationEnd: DateTime.now().add(Duration(days: 10 + i)),
+        ),
+    ];
+    final related = buildRelatedApplyFeed(
+      allOpportunities: pool,
+      profile: profile,
+      regionId: 'suwon',
+    );
+    // defaults 청년·문화 → at most keyword hits of 3; floor 5 → empty.
+    expect(related, isEmpty);
   });
 }

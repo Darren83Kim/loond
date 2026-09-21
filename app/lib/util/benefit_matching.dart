@@ -1,9 +1,19 @@
 import '../models/benefit_profile.dart';
 import '../models/opportunity.dart';
 
-/// Soft-rank BENEFIT (and APPLY fallbacks) using a local [BenefitProfile].
+/// Soft-rank BENEFIT (and related APPLY) using a local [BenefitProfile].
 ///
 /// Never hard-hides the whole list when data is thin — only boosts scores.
+/// APPLY is never shown under the 「맞춤 혜택」 heading; see [buildRelatedApplyFeed].
+
+/// Default floor so thin default keywords alone do not dump the APPLY pool.
+const int kRelatedApplyMinScore = 5;
+
+/// Cap for 「관련 신청」 secondary list.
+const int kRelatedApplyLimit = 8;
+
+/// Home resident 「지금 신청」 top-N — must match [HomeTab] `apply.take(5)`.
+const int kHomeNowApplyTake = 5;
 
 /// Keywords that hint at child / age-band relevance in free text.
 const _childBandMarkers = <ChildAgeBand, List<String>>{
@@ -175,33 +185,120 @@ List<Opportunity> softRankByProfile(
   return list;
 }
 
-/// Build the My Chance benefit section list:
-/// - Prefer BENEFIT items (soft-ranked).
-/// - If BENEFIT is empty/thin, also surface APPLY items that match profile cues.
+/// Primary 「맞춤 혜택」 list: BENEFIT-only soft-ranked (never mixes APPLY).
 List<Opportunity> buildMatchedBenefitFeed({
   required List<Opportunity> benefits,
-  required List<Opportunity> allOpportunities,
   required BenefitProfile profile,
-  int applyFallbackLimit = 12,
 }) {
-  final rankedBenefits = softRankByProfile(benefits, profile);
-  if (rankedBenefits.isNotEmpty) {
-    return rankedBenefits;
-  }
+  return softRankByProfile(benefits, profile);
+}
 
-  // Thin BENEFIT seed: soft-surface APPLY with positive match score.
-  final apply = allOpportunities
+/// True when APPLY looks like tour / experience (demote vs support·복지).
+bool isTourOrExperienceApply(Opportunity o) {
+  final c = o.category.toLowerCase();
+  return c.contains('tour') || c.contains('experience');
+}
+
+bool _looksWelfareSupport(Opportunity o) {
+  final c = o.category.toLowerCase();
+  if (c.contains('support')) return true;
+  final blob = _blob(o);
+  for (final m in ['복지', '지원금', '수당', '보조금', '바우처', '돌봄']) {
+    if (blob.contains(m)) return true;
+  }
+  return false;
+}
+
+/// Soft rank key for related APPLY: match score with tour demotion / support prefer.
+int relatedApplyRankScore(Opportunity o, BenefitProfile profile) {
+  var s = benefitMatchScore(o, profile);
+  if (isTourOrExperienceApply(o)) {
+    s -= 3;
+  } else if (_looksWelfareSupport(o)) {
+    s += 1;
+  }
+  return s;
+}
+
+/// Deadline sort matching [OpportunityBundle.applySorted], scoped to [regionId].
+List<Opportunity> applyDeadlineSortedForRegion(
+  Iterable<Opportunity> all, {
+  required String regionId,
+}) {
+  final list = all
       .where((o) => o.type == OpportunityType.apply && o.status == 'published')
+      .where((o) => o.region == regionId)
       .where((o) => o.dDay == null || o.dDay! >= 0)
       .toList();
+  list.sort((a, b) {
+    final ae = a.applicationEnd;
+    final be = b.applicationEnd;
+    if (ae == null && be == null) {
+      return a.title.compareTo(b.title);
+    }
+    if (ae == null) return 1;
+    if (be == null) return -1;
+    final c = ae.compareTo(be);
+    if (c != 0) return c;
+    return a.title.compareTo(b.title);
+  });
+  return list;
+}
 
-  final scored = <Opportunity>[];
-  for (final o in apply) {
-    if (benefitMatchScore(o, profile) > 0) scored.add(o);
+/// Ids shown on Home resident 「지금 신청」 top-N (`applySortedForRegion` + take).
+Set<String> homeNowApplyTopIds(
+  Iterable<Opportunity> all, {
+  required String regionId,
+  int take = kHomeNowApplyTake,
+}) {
+  return applyDeadlineSortedForRegion(all, regionId: regionId)
+      .take(take)
+      .map((o) => o.id)
+      .toSet();
+}
+
+/// Secondary 「관련 신청」 when BENEFIT inventory is empty.
+///
+/// - Soft score floor ([minScore], default [kRelatedApplyMinScore])
+/// - Excludes Home 「지금 신청」 top-N ids
+/// - Soft-demotes tour/experience vs support/복지-ish
+/// - Caps at [limit]
+List<Opportunity> buildRelatedApplyFeed({
+  required List<Opportunity> allOpportunities,
+  required BenefitProfile profile,
+  required String regionId,
+  Set<String>? excludeIds,
+  int minScore = kRelatedApplyMinScore,
+  int limit = kRelatedApplyLimit,
+  int homeTopTake = kHomeNowApplyTake,
+}) {
+  final excluded = excludeIds ??
+      homeNowApplyTopIds(
+        allOpportunities,
+        regionId: regionId,
+        take: homeTopTake,
+      );
+
+  final candidates = allOpportunities
+      .where((o) => o.type == OpportunityType.apply && o.status == 'published')
+      .where((o) => o.region == regionId)
+      .where((o) => o.dDay == null || o.dDay! >= 0)
+      .where((o) => !excluded.contains(o.id))
+      .where((o) => benefitMatchScore(o, profile) >= minScore)
+      .toList();
+
+  candidates.sort((a, b) {
+    final sa = relatedApplyRankScore(a, profile);
+    final sb = relatedApplyRankScore(b, profile);
+    if (sa != sb) return sb.compareTo(sa);
+    final oa = a.opportunityScore;
+    final ob = b.opportunityScore;
+    if (oa != ob) return ob.compareTo(oa);
+    return a.title.compareTo(b.title);
+  });
+
+  if (candidates.length > limit) {
+    return candidates.sublist(0, limit);
   }
-  final ranked = softRankByProfile(scored, profile);
-  if (ranked.length > applyFallbackLimit) {
-    return ranked.sublist(0, applyFallbackLimit);
-  }
-  return ranked;
+  return candidates;
 }

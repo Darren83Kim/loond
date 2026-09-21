@@ -79,3 +79,6 @@ BENEFIT·APPLY 후보를 **과하게 숨기지 않고** 우선순위를 올리�
 - 1차 구현 반영: `BenefitProfile` / `BenefitProfileStore` / `BenefitProfileScreen`
 - `MyChanceTab` CTA·요약 칩·키워드 영속화·`benefit_matching` 소프트 정렬
 - 동 목록은 수원 구별 서브셋 + 자유 입력 폴백 (전체 법정동 DB 아님)
+- **맞춤 혜택 분화 (A + light B)**: BENEFIT 재고가 비면 「맞춤 혜택」에 APPLY를 섞지 않음.
+  솔직한 빈 상태/CTA + 선택적 「관련 신청」(점수 하한·홈 지금신청 top5 제외·tour/experience 소프트 강등).
+  보조금24/복지로 API 연동은 하지 않음(외부 링크만).
