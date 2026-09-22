@@ -1,42 +1,42 @@
 {
-  "collectedAt": "2026-09-20T12:26:33+09:00",
+  "collectedAt": "2026-09-22T12:20:44+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "area_filter",
   "mode": "multi_city_partition",
   "counts": {
-    "suwon": 256,
+    "suwon": 255,
     "yongin": 301,
     "seongnam": 166,
     "goyang": 274,
     "bucheon": 102,
-    "hwaseong": 175
+    "hwaseong": 174
   },
-  "dropped": 2745,
+  "dropped": 2734,
   "by_type_summary": {
     "12": {
       "category": "tour_spot",
-      "assigned": 230,
-      "unique_total": 816,
+      "assigned": 228,
+      "unique_total": 811,
       "by_region": {
-        "suwon": 40,
+        "suwon": 39,
         "yongin": 61,
         "seongnam": 34,
         "goyang": 30,
         "bucheon": 13,
-        "hwaseong": 52
+        "hwaseong": 51
       },
       "first_meta": {
         "page": 1,
         "ok": true,
         "msg": "OK",
         "got": 100,
-        "totalCount": 816
+        "totalCount": 811
       }
     },
     "14": {
       "category": "culture_facility",
       "assigned": 65,
-      "unique_total": 172,
+      "unique_total": 171,
       "by_region": {
         "suwon": 19,
         "yongin": 11,
@@ -50,7 +50,7 @@
         "ok": true,
         "msg": "OK",
         "got": 100,
-        "totalCount": 172
+        "totalCount": 171
       }
     },
     "25": {
@@ -71,7 +71,7 @@
     "28": {
       "category": "leports",
       "assigned": 108,
-      "unique_total": 557,
+      "unique_total": 555,
       "by_region": {
         "suwon": 6,
         "yongin": 57,
@@ -85,13 +85,13 @@
         "ok": true,
         "msg": "OK",
         "got": 100,
-        "totalCount": 557
+        "totalCount": 555
       }
     },
     "38": {
       "category": "shopping",
       "assigned": 34,
-      "unique_total": 78,
+      "unique_total": 77,
       "by_region": {
         "suwon": 5,
         "yongin": 5,
@@ -104,14 +104,14 @@
         "page": 1,
         "ok": true,
         "msg": "OK",
-        "got": 78,
-        "totalCount": 78
+        "got": 77,
+        "totalCount": 77
       }
     },
     "39": {
       "category": "food",
       "assigned": 836,
-      "unique_total": 2384,
+      "unique_total": 2380,
       "by_region": {
         "suwon": 186,
         "yongin": 167,
@@ -125,7 +125,7 @@
         "ok": true,
         "msg": "OK",
         "got": 100,
-        "totalCount": 2384
+        "totalCount": 2380
       }
     }
   },
@@ -238,33 +238,6 @@
         "lclsSystm1": "VE",
         "lclsSystm2": "VE04",
         "lclsSystm3": "VE040100"
-      },
-      {
-        "addr1": "경기도 수원시 장안구 파장동",
-        "addr2": "",
-        "areacode": "31",
-        "cat1": "A01",
-        "cat2": "A0101",
-        "cat3": "A01010400",
-        "contentid": "125577",
-        "contenttypeid": "12",
-        "createdtime": "20031114090000",
-        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/43/3547143_image2_1.jpg",
-        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/43/3547143_image3_1.jpg",
-        "cpyrhtDivCd": "Type1",
-        "mapx": "126.9871161758",
-        "mapy": "37.3160529142",
-        "mlevel": "6",
-        "modifiedtime": "20251023143000",
-        "sigungucode": "13",
-        "tel": "",
-        "title": "노송지대",
-        "zipcode": "16206",
-        "lDongRegnCd": "41",
-        "lDongSignguCd": "111",
-        "lclsSystm1": "NA",
-        "lclsSystm2": "NA01",
-        "lclsSystm3": "NA010200"
       },
       {
         "addr1": "경기도 수원시 권선구 당수로 235",
@@ -29842,33 +29815,6 @@
         "lclsSystm3": "VE030100"
       },
       {
-        "addr1": "경기도 화성시 우정읍 국화길 8",
-        "addr2": "",
-        "areacode": "31",
-        "cat1": "A01",
-        "cat2": "A0101",
-        "cat3": "A01011300",
-        "contentid": "127134",
-        "contenttypeid": "12",
-        "createdtime": "20030723090000",
-        "firstimage": "",
-        "firstimage2": "",
-        "cpyrhtDivCd": "",
-        "mapx": "126.5589898548",
-        "mapy": "37.0610776678",
-        "mlevel": "6",
-        "modifiedtime": "20250321154433",
-        "sigungucode": "31",
-        "tel": "",
-        "title": "국화도",
-        "zipcode": "18557",
-        "lDongRegnCd": "41",
-        "lDongSignguCd": "590",
-        "lclsSystm1": "NA",
-        "lclsSystm2": "NA02",
-        "lclsSystm3": "NA020500"
-      },
-      {
         "addr1": "경기도 화성시 서신면 궁평리 513-9",
         "addr2": "",
         "areacode": "31",
@@ -34560,7 +34506,6 @@
     "3449335": "https://www.goyang.go.kr/gydrone/index.do",
     "2741593": "https://bucheon.go.kr/site/main/index172",
     "2781609": "https://ecopark.bucheon.go.kr/site/homepage/menu/viewMenu?menuid=149003001001",
-    "127943": "https://bucheon.go.kr/site/main/index172",
-    "127134": "https://tour.hscity.go.kr/NEW/1tour/nature7.jsp"
+    "127943": "https://bucheon.go.kr/site/main/index172"
   }
 }

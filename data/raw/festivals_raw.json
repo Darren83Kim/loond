@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-09-20T12:26:33+09:00",
+  "collectedAt": "2026-09-22T12:20:44+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "area_filter",
   "mode": "multi_city_partition",
@@ -28,60 +28,60 @@
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 742
+          "totalCount": 749
         },
         {
           "page": 2,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 742
+          "totalCount": 749
         },
         {
           "page": 3,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 742
+          "totalCount": 749
         },
         {
           "page": 4,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 742
+          "totalCount": 749
         },
         {
           "page": 5,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 742
+          "totalCount": 749
         },
         {
           "page": 6,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 742
+          "totalCount": 749
         },
         {
           "page": 7,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 742
+          "totalCount": 749
         },
         {
           "page": 8,
           "ok": true,
           "msg": "OK",
-          "got": 42,
-          "totalCount": 742
+          "got": 49,
+          "totalCount": 749
         }
       ],
-      "count": 742,
-      "totalCount": 742
+      "count": 749,
+      "totalCount": 749
     }
   ],
   "counts": {
@@ -92,7 +92,7 @@
     "bucheon": 1,
     "hwaseong": 5
   },
-  "dropped": 707,
+  "dropped": 714,
   "by_region_titles": {
     "suwon": [
       "경기도 문화사계 \"봄\" 경기 상상해 봄 페스타",
@@ -1246,7 +1246,6 @@
     "3449335": "https://www.goyang.go.kr/gydrone/index.do",
     "2741593": "https://bucheon.go.kr/site/main/index172",
     "2781609": "https://ecopark.bucheon.go.kr/site/homepage/menu/viewMenu?menuid=149003001001",
-    "127943": "https://bucheon.go.kr/site/main/index172",
-    "127134": "https://tour.hscity.go.kr/NEW/1tour/nature7.jsp"
+    "127943": "https://bucheon.go.kr/site/main/index172"
   }
 }
