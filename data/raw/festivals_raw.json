@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-09-22T12:20:44+09:00",
+  "collectedAt": "2026-09-23T12:21:48+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "area_filter",
   "mode": "multi_city_partition",
@@ -28,71 +28,71 @@
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 749
+          "totalCount": 764
         },
         {
           "page": 2,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 749
+          "totalCount": 764
         },
         {
           "page": 3,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 749
+          "totalCount": 764
         },
         {
           "page": 4,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 749
+          "totalCount": 764
         },
         {
           "page": 5,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 749
+          "totalCount": 764
         },
         {
           "page": 6,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 749
+          "totalCount": 764
         },
         {
           "page": 7,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 749
+          "totalCount": 764
         },
         {
           "page": 8,
           "ok": true,
           "msg": "OK",
-          "got": 49,
-          "totalCount": 749
+          "got": 64,
+          "totalCount": 764
         }
       ],
-      "count": 749,
-      "totalCount": 749
+      "count": 764,
+      "totalCount": 764
     }
   ],
   "counts": {
-    "suwon": 16,
+    "suwon": 17,
     "yongin": 2,
     "seongnam": 3,
     "goyang": 8,
     "bucheon": 1,
     "hwaseong": 5
   },
-  "dropped": 714,
+  "dropped": 728,
   "by_region_titles": {
     "suwon": [
       "경기도 문화사계 \"봄\" 경기 상상해 봄 페스타",
@@ -561,6 +561,37 @@
         "lclsSystm1": "EV",
         "lclsSystm2": "EV02",
         "lclsSystm3": "EV020800",
+        "progresstype": "선택안함",
+        "festivaltype": ""
+      },
+      {
+        "addr1": "경기도 수원시 영통구 광교중앙로 140 (하동)",
+        "addr2": "",
+        "zipcode": "16514",
+        "cat1": "",
+        "cat2": "",
+        "cat3": "",
+        "contentid": "3552019",
+        "contenttypeid": "15",
+        "createdtime": "20251021095250",
+        "eventstartdate": "20261105",
+        "eventenddate": "20261107",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/86/4114586_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/86/4114586_image3_1.jpg",
+        "cpyrhtDivCd": "Type3",
+        "mapx": "127.0594469415",
+        "mapy": "37.2858286641",
+        "mlevel": "6",
+        "modifiedtime": "20260922135644",
+        "areacode": "",
+        "sigungucode": "",
+        "tel": "02-6121-6229",
+        "title": "2026 뷰티썸 수원",
+        "lDongRegnCd": "41",
+        "lDongSignguCd": "117",
+        "lclsSystm1": "EV",
+        "lclsSystm2": "EV03",
+        "lclsSystm3": "EV030200",
         "progresstype": "선택안함",
         "festivaltype": ""
       },

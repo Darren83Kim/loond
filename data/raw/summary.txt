@@ -1,7 +1,7 @@
-collectedAt=2026-09-22T12:20:44+09:00
+collectedAt=2026-09-23T12:21:48+09:00
 base=http://apis.data.go.kr/B551011/KorService2
 strategy=area_filter
 mode=multi_city_partition
-festivals_counts={'suwon': 16, 'yongin': 2, 'seongnam': 3, 'goyang': 8, 'bucheon': 1, 'hwaseong': 5}
-discover_counts={'suwon': 255, 'yongin': 301, 'seongnam': 166, 'goyang': 274, 'bucheon': 102, 'hwaseong': 174}
+festivals_counts={'suwon': 17, 'yongin': 2, 'seongnam': 3, 'goyang': 8, 'bucheon': 1, 'hwaseong': 5}
+discover_counts={'suwon': 252, 'yongin': 301, 'seongnam': 161, 'goyang': 272, 'bucheon': 101, 'hwaseong': 174}
 homepages=19
