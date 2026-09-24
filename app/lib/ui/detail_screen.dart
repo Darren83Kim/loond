@@ -237,8 +237,8 @@ class _DetailScreenState extends State<DetailScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '이 앱은 정부·지자체 공식 앱이 아니며 공공기관을 대표하지 않습니다. '
-                  '정확한 내용은 아래 공식 원문(.go.kr 등)에서 확인하세요.',
+                  '로온드는 민간 비제휴 안내 앱이며 정부·지자체를 대표하지 않습니다. '
+                  '신청·자격·일정은 아래 「공식 원문 보기」에서 확인하세요.',
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),

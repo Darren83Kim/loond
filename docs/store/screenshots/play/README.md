@@ -4,6 +4,7 @@
 - **발견** 탭 스샷 제외 (상호·업체명 노출)
 - 원본(광고 포함): `../phone/`
 - **2026-09-22 Misleading Claims 수정**: 면책 + `suwon.go.kr` 출처를 스샷에 명시
+- **2026-09-24 Misleading Claims 4차**: 「서비스 안내 / 데이터 출처」+ suwon/visitkorea/data.go.kr URL · 성남·고양 단독 언급 제거 · 0.1.7
 
 | 파일 | 내용 |
 |------|------|

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import '../legal/service_disclaimer.dart';
 import '../util/open_url.dart';
+import 'service_info_screen.dart';
 
 /// Privacy policy — raw GitHub until a hosted URL is set for store release.
 const kPrivacyPolicyUrl =
@@ -18,12 +22,37 @@ class SettingsScreen extends StatelessWidget {
     }
   }
 
+  void _openServiceInfo(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (_) => const ServiceInfoScreen()),
+    );
+  }
+
+  Future<void> _copyEmail(BuildContext context) async {
+    await Clipboard.setData(const ClipboardData(text: kSupportEmail));
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('문의 메일을 복사했어요')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final muted = theme.colorScheme.onSurfaceVariant;
+
     return Scaffold(
       appBar: AppBar(title: const Text('설정')),
       body: ListView(
         children: [
+          ListTile(
+            leading: const Icon(Icons.info_outline),
+            title: const Text('서비스 안내 / 데이터 출처'),
+            subtitle: const Text(kNonGovShort),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => _openServiceInfo(context),
+          ),
           ListTile(
             title: const Text('개인정보 처리방침'),
             subtitle: const Text(
@@ -32,34 +61,46 @@ class SettingsScreen extends StatelessWidget {
             trailing: const Icon(Icons.open_in_new, size: 18),
             onTap: () => _openPrivacy(context),
           ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '출처 · 면책 안내',
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                  '서비스 안내 / 데이터 출처',
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-                SizedBox(height: 6),
+                const SizedBox(height: 6),
                 Text(
-                  '이 앱은 정부·지자체 공식 앱이 아니며 공공기관을 대표하지 않습니다. '
-                  '공고·행사 정보는 공개 고시/공고를 모아 안내하며, 원문은 '
-                  'https://www.suwon.go.kr 등 공식 사이트로 이동합니다. '
-                  '일정·자격·접수는 반드시 원문에서 확인하세요.',
-                  style: TextStyle(fontSize: 13, height: 1.35, color: Color(0xFF5F6368)),
+                  kDisclaimerBody,
+                  style: TextStyle(fontSize: 13, height: 1.35, color: muted),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  '대표 출처: https://www.suwon.go.kr · '
+                  'https://korean.visitkorea.or.kr · '
+                  'https://www.data.go.kr',
+                  style: TextStyle(
+                    fontSize: 12,
+                    height: 1.35,
+                    color: theme.colorScheme.primary,
+                  ),
                 ),
               ],
             ),
           ),
-          const ListTile(
-            title: Text('문의'),
-            subtitle: Text('contact@loond.example (플레이스홀더)'),
+          ListTile(
+            title: const Text('문의'),
+            subtitle: const Text(kSupportEmail),
+            trailing: const Icon(Icons.copy, size: 18),
+            onTap: () => _copyEmail(context),
           ),
           const Divider(),
           const ListTile(
             title: Text('앱 정보'),
-            subtitle: Text('로온드 0.1.4 · 맞춤 혜택 프로필'),
+            subtitle: Text('$kAppDisplayName 0.1.7 · 민간 비제휴 안내'),
           ),
         ],
       ),
