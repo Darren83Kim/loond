@@ -1,22 +1,22 @@
 {
-  "collectedAt": "2026-09-23T12:21:48+09:00",
+  "collectedAt": "2026-09-24T12:10:56+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "area_filter",
   "mode": "multi_city_partition",
   "counts": {
     "suwon": 252,
-    "yongin": 301,
+    "yongin": 298,
     "seongnam": 161,
     "goyang": 272,
     "bucheon": 101,
-    "hwaseong": 174
+    "hwaseong": 172
   },
-  "dropped": 2713,
+  "dropped": 2706,
   "by_type_summary": {
     "12": {
       "category": "tour_spot",
       "assigned": 227,
-      "unique_total": 804,
+      "unique_total": 800,
       "by_region": {
         "suwon": 39,
         "yongin": 61,
@@ -30,7 +30,7 @@
         "ok": true,
         "msg": "OK",
         "got": 100,
-        "totalCount": 804
+        "totalCount": 800
       }
     },
     "14": {
@@ -90,42 +90,42 @@
     },
     "38": {
       "category": "shopping",
-      "assigned": 33,
-      "unique_total": 75,
+      "assigned": 32,
+      "unique_total": 74,
       "by_region": {
         "suwon": 5,
         "yongin": 5,
         "seongnam": 7,
         "goyang": 4,
         "bucheon": 10,
-        "hwaseong": 2
+        "hwaseong": 1
       },
       "first_meta": {
         "page": 1,
         "ok": true,
         "msg": "OK",
-        "got": 75,
-        "totalCount": 75
+        "got": 74,
+        "totalCount": 74
       }
     },
     "39": {
       "category": "food",
-      "assigned": 829,
-      "unique_total": 2362,
+      "assigned": 825,
+      "unique_total": 2355,
       "by_region": {
         "suwon": 184,
-        "yongin": 167,
+        "yongin": 164,
         "seongnam": 101,
         "goyang": 216,
         "bucheon": 63,
-        "hwaseong": 98
+        "hwaseong": 97
       },
       "first_meta": {
         "page": 1,
         "ok": true,
         "msg": "OK",
         "got": 100,
-        "totalCount": 2362
+        "totalCount": 2355
       }
     }
   },
@@ -12635,33 +12635,6 @@
         "lclsSystm3": "FD010100"
       },
       {
-        "addr1": "경기도 용인시 수지구 신봉1로330번길 10 (신봉동)",
-        "addr2": "",
-        "areacode": "31",
-        "cat1": "A05",
-        "cat2": "A0502",
-        "cat3": "A05020100",
-        "contentid": "2739411",
-        "contenttypeid": "39",
-        "createdtime": "20210902223701",
-        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/98/2775298_image2_1.jpg",
-        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/98/2775298_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "mapx": "127.0541956980",
-        "mapy": "37.3337881689",
-        "mlevel": "6",
-        "modifiedtime": "20250731154239",
-        "sigungucode": "23",
-        "tel": "",
-        "title": "송정갈비",
-        "zipcode": "16803",
-        "lDongRegnCd": "41",
-        "lDongSignguCd": "465",
-        "lclsSystm1": "FD",
-        "lclsSystm2": "FD01",
-        "lclsSystm3": "FD010100"
-      },
-      {
         "addr1": "경기도 용인시 기흥구 죽전로27번길 14-6",
         "addr2": "(보정동)",
         "areacode": "31",
@@ -13283,33 +13256,6 @@
         "lclsSystm3": "FD010100"
       },
       {
-        "addr1": "경기도 용인시 수지구 고기로 454 (고기동)",
-        "addr2": "",
-        "areacode": "31",
-        "cat1": "A05",
-        "cat2": "A0502",
-        "cat3": "A05020100",
-        "contentid": "2739427",
-        "contenttypeid": "39",
-        "createdtime": "20210902225615",
-        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/54/2775354_image2_1.jpg",
-        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/54/2775354_image2_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "mapx": "127.0592583742",
-        "mapy": "37.3605740443",
-        "mlevel": "6",
-        "modifiedtime": "20250731093701",
-        "sigungucode": "23",
-        "tel": "",
-        "title": "열두화덕",
-        "zipcode": "16801",
-        "lDongRegnCd": "41",
-        "lDongSignguCd": "465",
-        "lclsSystm1": "FD",
-        "lclsSystm2": "FD01",
-        "lclsSystm3": "FD010100"
-      },
-      {
         "addr1": "경기도 용인시 기흥구 용구대로 2384-6 (마북동)",
         "addr2": "",
         "areacode": "31",
@@ -13362,33 +13308,6 @@
         "lclsSystm1": "FD",
         "lclsSystm2": "FD01",
         "lclsSystm3": "FD010100"
-      },
-      {
-        "addr1": "경기도 용인시 기흥구 기흥단지로121번길 9 (고매동)",
-        "addr2": "",
-        "areacode": "31",
-        "cat1": "A05",
-        "cat2": "A0502",
-        "cat3": "A05020200",
-        "contentid": "2739437",
-        "contenttypeid": "39",
-        "createdtime": "20210902231520",
-        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/76/2775376_image2_1.jpg",
-        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/76/2775376_image2_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "mapx": "127.1094547891",
-        "mapy": "37.2270265208",
-        "mlevel": "6",
-        "modifiedtime": "20250730153849",
-        "sigungucode": "23",
-        "tel": "",
-        "title": "오뜨아르",
-        "zipcode": "17086",
-        "lDongRegnCd": "41",
-        "lDongSignguCd": "463",
-        "lclsSystm1": "FD",
-        "lclsSystm2": "FD02",
-        "lclsSystm3": "FD020300"
       },
       {
         "addr1": "경기도 용인시 수지구 현암로 28 (죽전동)",
@@ -31489,33 +31408,6 @@
         "lclsSystm3": "LS020600"
       },
       {
-        "addr1": "경기도 화성시 송산면 사강로 189",
-        "addr2": "",
-        "areacode": "31",
-        "cat1": "A04",
-        "cat2": "A0401",
-        "cat3": "A04010100",
-        "contentid": "1807706",
-        "contenttypeid": "38",
-        "createdtime": "20130426221031",
-        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/33/3396533_image2_1.JPG",
-        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/33/3396533_image3_1.JPG",
-        "cpyrhtDivCd": "Type3",
-        "mapx": "126.7369139757",
-        "mapy": "37.2134381443",
-        "mlevel": "6",
-        "modifiedtime": "20250730165351",
-        "sigungucode": "31",
-        "tel": "",
-        "title": "사강시장",
-        "zipcode": "18550",
-        "lDongRegnCd": "41",
-        "lDongSignguCd": "590",
-        "lclsSystm1": "SH",
-        "lclsSystm2": "SH06",
-        "lclsSystm3": "SH060100"
-      },
-      {
         "addr1": "경기도 화성시 우정읍 조암서로22번길 22",
         "addr2": "",
         "areacode": "31",
@@ -33055,33 +32947,6 @@
         "lclsSystm3": "FD010100"
       },
       {
-        "addr1": "경기도 화성시 향남읍 행정서로3길 3",
-        "addr2": "",
-        "areacode": "31",
-        "cat1": "A05",
-        "cat2": "A0502",
-        "cat3": "A05020300",
-        "contentid": "2747190",
-        "contenttypeid": "39",
-        "createdtime": "20210917234500",
-        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/34/2747234_image2_1.jpg",
-        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/34/2747234_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "mapx": "126.9156805723",
-        "mapy": "37.1313202525",
-        "mlevel": "6",
-        "modifiedtime": "20250826111555",
-        "sigungucode": "31",
-        "tel": "",
-        "title": "어부 화성점",
-        "zipcode": "18598",
-        "lDongRegnCd": "41",
-        "lDongSignguCd": "590",
-        "lclsSystm1": "FD",
-        "lclsSystm2": "FD02",
-        "lclsSystm3": "FD020200"
-      },
-      {
         "addr1": "경기도 화성시 금곡로 257 (금곡동)",
         "addr2": "",
         "areacode": "31",
@@ -34191,14 +34056,15 @@
     ]
   },
   "homepages": {
+    "3543595": "https://www.yongin.go.kr/",
     "2431706": "https://www.yongin.go.kr/event/2026_festival/",
     "3501104": "https://www.uscoffeefest.com/",
     "3104107": "https://www.ulsanmaduhee.co.kr/pages/index.html",
+    "1725993": "https://gief.or.kr/main/?mc_code=171010",
     "530450": "http://www.hjfestival.or.kr",
-    "3383613": "http://gyfestival.kr/",
     "589386": "https://bicof.com/",
     "2756476": "https://www.jrtf.or.kr/",
-    "3372236": "http://tuntunpetfesta.com/",
+    "1725929": "http://www.정조효문화제.com",
     "2747134": "https://www.instagram.com/gosaeknew",
     "2633915": "https://www.gglakepark.or.kr/theme/sample28/html/b4.php",
     "128988": "https://cafe.naver.com/khaospace",
