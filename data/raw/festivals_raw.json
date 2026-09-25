@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-09-24T12:10:56+09:00",
+  "collectedAt": "2026-09-25T12:28:00+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "area_filter",
   "mode": "multi_city_partition",
