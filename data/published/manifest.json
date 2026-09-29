@@ -1,89 +1,589 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-29T13:19:27+09:00",
+  "updatedAt": "2026-09-29T15:35:35+09:00",
   "baseUrl": "https://darren83kim.github.io/loond/regions/",
   "regions": [
     {
-      "id": "suwon",
-      "label": "수원",
-      "path": "suwon.json",
-      "etag": "sha256:87bd2205aa83465ee8c58546f918a1826ce4c745a9e4f85bff1125f6dbc25814",
-      "bytes": 247516,
-      "bytesGzip": 20819,
+      "id": "seoul",
+      "label": "서울",
+      "displayName": "서울",
+      "sido": "서울",
+      "path": "seoul.json",
+      "etag": "sha256:a02e51ffefd266835f92923f5e3658ec06e9fa0d57b6ca3defa408549043cf9b",
+      "bytes": 722565,
+      "bytesGzip": 43359,
       "counts": {
-        "APPLY": 12,
-        "ENJOY": 40,
-        "DISCOVER": 98,
-        "BENEFIT": 6
+        "ENJOY": 183,
+        "DISCOVER": 290
       },
-      "depth": "deep"
+      "depth": "deep",
+      "tier": "phase1",
+      "applyStatus": "preparing"
     },
     {
-      "id": "yongin",
-      "label": "용인",
-      "path": "yongin.json",
-      "etag": "sha256:baead4e2b36e1c048b13c3a2c6dd5c95ed0a169af90ffa94b95e5b77c5fdc0ec",
-      "bytes": 261704,
-      "bytesGzip": 13676,
+      "id": "busan",
+      "label": "부산",
+      "displayName": "부산",
+      "sido": "부산",
+      "path": "busan.json",
+      "etag": "sha256:da7cd5d988473a90a4ce6fe6b306aa33ed5becec73ea47eeb829a904163888d4",
+      "bytes": 460886,
+      "bytesGzip": 27142,
       "counts": {
-        "ENJOY": 9,
-        "DISCOVER": 164
+        "ENJOY": 92,
+        "DISCOVER": 211
       },
-      "depth": "deep"
+      "depth": "deep",
+      "tier": "phase1",
+      "applyStatus": "preparing"
+    },
+    {
+      "id": "daegu",
+      "label": "대구",
+      "displayName": "대구",
+      "sido": "대구",
+      "path": "daegu.json",
+      "etag": "sha256:6bc6ce7fbafb12388d6b8dc5ae23a5942287306d892ce1f5b16c4c833021b7c8",
+      "bytes": 380852,
+      "bytesGzip": 21918,
+      "counts": {
+        "ENJOY": 41,
+        "DISCOVER": 211
+      },
+      "depth": "deep",
+      "tier": "phase1",
+      "applyStatus": "preparing"
+    },
+    {
+      "id": "incheon",
+      "label": "인천",
+      "displayName": "인천",
+      "sido": "인천",
+      "path": "incheon.json",
+      "etag": "sha256:9f8d1520d1e73507bc08558c26579bc3b0ceea7dcac9593a50a2cc2c7216b91c",
+      "bytes": 400268,
+      "bytesGzip": 22832,
+      "counts": {
+        "ENJOY": 46,
+        "DISCOVER": 217
+      },
+      "depth": "deep",
+      "tier": "phase1",
+      "applyStatus": "preparing"
+    },
+    {
+      "id": "gwangju",
+      "label": "광주",
+      "displayName": "광주",
+      "sido": "전남광주",
+      "path": "gwangju.json",
+      "etag": "sha256:69bbb5de721ec9e48703635fbacd0aa9e2ef93b5aee3d5c329a0ddd85b891476",
+      "bytes": 386773,
+      "bytesGzip": 21213,
+      "counts": {
+        "ENJOY": 40,
+        "DISCOVER": 212
+      },
+      "depth": "deep",
+      "tier": "phase1",
+      "applyStatus": "preparing"
+    },
+    {
+      "id": "daejeon",
+      "label": "대전",
+      "displayName": "대전",
+      "sido": "대전",
+      "path": "daejeon.json",
+      "etag": "sha256:40d9edb0ccc2df72212e8ca835396e0dc0df3adaadae8e3f858a0dbd68503726",
+      "bytes": 379985,
+      "bytesGzip": 20081,
+      "counts": {
+        "ENJOY": 38,
+        "DISCOVER": 214
+      },
+      "depth": "deep",
+      "tier": "phase1",
+      "applyStatus": "preparing"
+    },
+    {
+      "id": "ulsan",
+      "label": "울산",
+      "displayName": "울산",
+      "sido": "울산",
+      "path": "ulsan.json",
+      "etag": "sha256:17541b0ca9b329894462cd6cb279271718348a7023d6de2cef963ad1d11ee3ce",
+      "bytes": 376270,
+      "bytesGzip": 20179,
+      "counts": {
+        "ENJOY": 22,
+        "DISCOVER": 230
+      },
+      "depth": "deep",
+      "tier": "phase1",
+      "applyStatus": "preparing"
+    },
+    {
+      "id": "sejong",
+      "label": "세종",
+      "displayName": "세종",
+      "sido": "세종",
+      "path": "sejong.json",
+      "etag": "sha256:fd8738ea078a6f18f94552035440ab3a1d6fae1922e78cbe60edf26697869583",
+      "bytes": 214237,
+      "bytesGzip": 11468,
+      "counts": {
+        "ENJOY": 12,
+        "DISCOVER": 131
+      },
+      "depth": "deep",
+      "tier": "phase1",
+      "applyStatus": "preparing"
+    },
+    {
+      "id": "suwon",
+      "label": "수원시",
+      "displayName": "수원시",
+      "sido": "경기",
+      "path": "suwon.json",
+      "etag": "sha256:e3e3e0045d70774097f28986e2f6f45cbce40f8ecb298208858109fc60a5b5a3",
+      "bytes": 352218,
+      "bytesGzip": 24676,
+      "counts": {
+        "APPLY": 12,
+        "ENJOY": 37,
+        "DISCOVER": 170,
+        "BENEFIT": 6
+      },
+      "depth": "deep",
+      "tier": "phase1",
+      "applyStatus": "provided"
     },
     {
       "id": "seongnam",
-      "label": "성남",
+      "label": "성남시",
+      "displayName": "성남시",
+      "sido": "경기",
       "path": "seongnam.json",
-      "etag": "sha256:19c6e978dea6ff8599ee2c5728e5329294654f1135eb92d028d7fb978d83ecb7",
-      "bytes": 176363,
-      "bytesGzip": 13494,
+      "etag": "sha256:8627e4919f41e6362dcaa007d579daae3a26b9b709ce12c184b2b508d1dd91cb",
+      "bytes": 182417,
+      "bytesGzip": 13556,
       "counts": {
         "APPLY": 10,
-        "ENJOY": 9,
-        "DISCOVER": 90
+        "ENJOY": 7,
+        "DISCOVER": 95
       },
-      "depth": "deep"
+      "depth": "deep",
+      "tier": "legacy",
+      "applyStatus": "provided"
     },
     {
       "id": "goyang",
-      "label": "고양",
+      "label": "고양시",
+      "displayName": "고양시",
+      "sido": "경기",
       "path": "goyang.json",
-      "etag": "sha256:ffc717c343b19d76ebbb08f399315fc0f375799607c1b9489ae455c114eec0a4",
-      "bytes": 154117,
-      "bytesGzip": 9943,
+      "etag": "sha256:132eb645e660d841042476bd17ef2ac0e91371ea5e5b325cc370305c76d2199f",
+      "bytes": 236425,
+      "bytesGzip": 12954,
       "counts": {
         "APPLY": 1,
         "ENJOY": 14,
-        "DISCOVER": 86
+        "DISCOVER": 140
       },
-      "depth": "deep"
+      "depth": "deep",
+      "tier": "phase1",
+      "applyStatus": "provided"
+    },
+    {
+      "id": "yongin",
+      "label": "용인시",
+      "displayName": "용인시",
+      "sido": "경기",
+      "path": "yongin.json",
+      "etag": "sha256:dea75eedea62432b107fffac6d140e2bf2cd7131f858e1adc3e7ef8ddc124e81",
+      "bytes": 312993,
+      "bytesGzip": 15830,
+      "counts": {
+        "ENJOY": 9,
+        "DISCOVER": 198
+      },
+      "depth": "deep",
+      "tier": "phase1",
+      "applyStatus": "preparing"
     },
     {
       "id": "bucheon",
-      "label": "부천",
+      "label": "부천시",
+      "displayName": "부천시",
+      "sido": "경기",
       "path": "bucheon.json",
-      "etag": "sha256:f18e6d9b22410ea13a6933eb4193b1b4e68d736f8b14144d95c41bfa84f721a5",
-      "bytes": 118906,
-      "bytesGzip": 7731,
+      "etag": "sha256:dd9ebd9fed70926f78f98508d2dd0494476ee01f8023307ef8ea3e7fbfd0c22d",
+      "bytes": 126609,
+      "bytesGzip": 7806,
       "counts": {
-        "ENJOY": 10,
-        "DISCOVER": 68
+        "ENJOY": 9,
+        "DISCOVER": 74
       },
-      "depth": "deep"
+      "depth": "deep",
+      "tier": "legacy",
+      "applyStatus": "preparing"
     },
     {
       "id": "hwaseong",
-      "label": "화성",
+      "label": "화성시",
+      "displayName": "화성시",
+      "sido": "경기",
       "path": "hwaseong.json",
-      "etag": "sha256:7ef8c63488b42ea3f07afbad012dc6da0ff1656b52c168d92a4a975662a71480",
-      "bytes": 174854,
-      "bytesGzip": 10120,
+      "etag": "sha256:4f4b1853d5d2dbe561afd421a27e9b43c275a719d7a54b1ac3df4a2525a45de1",
+      "bytes": 209344,
+      "bytesGzip": 11437,
       "counts": {
-        "ENJOY": 12,
-        "DISCOVER": 105
+        "ENJOY": 10,
+        "DISCOVER": 130
       },
-      "depth": "deep"
+      "depth": "deep",
+      "tier": "phase1",
+      "applyStatus": "preparing"
+    },
+    {
+      "id": "gapyeong",
+      "label": "가평군",
+      "displayName": "가평군",
+      "sido": "경기",
+      "path": "gapyeong.json",
+      "etag": "sha256:d48ef99aa7c4193c13b5686d73f55258be636d5515a926012b52f659687f4e8f",
+      "bytes": 205201,
+      "bytesGzip": 10057,
+      "counts": {
+        "ENJOY": 4,
+        "DISCOVER": 134
+      },
+      "depth": "tour",
+      "tier": "phase2",
+      "applyStatus": "not_provided"
+    },
+    {
+      "id": "paju",
+      "label": "파주시",
+      "displayName": "파주시",
+      "sido": "경기",
+      "path": "paju.json",
+      "etag": "sha256:e1765d25b375225c5c9326d8b1ae221d334e0e920a1ddbdc8287426c190ffdfb",
+      "bytes": 291589,
+      "bytesGzip": 15109,
+      "counts": {
+        "ENJOY": 13,
+        "DISCOVER": 182
+      },
+      "depth": "tour",
+      "tier": "phase2",
+      "applyStatus": "not_provided"
+    },
+    {
+      "id": "changwon",
+      "label": "창원시",
+      "displayName": "창원시",
+      "sido": "경남",
+      "path": "changwon.json",
+      "etag": "sha256:3e8f1367aa9e6ff6292f2763224feba1f6dc0af877ddd67d7b216956cb0c8e3f",
+      "bytes": 316576,
+      "bytesGzip": 16387,
+      "counts": {
+        "ENJOY": 11,
+        "DISCOVER": 197
+      },
+      "depth": "deep",
+      "tier": "phase1",
+      "applyStatus": "preparing"
+    },
+    {
+      "id": "chuncheon",
+      "label": "춘천시",
+      "displayName": "춘천시",
+      "sido": "강원",
+      "path": "chuncheon.json",
+      "etag": "sha256:22256d1eb06ffcf6b85a5e240dfd5bf5a39ce4671e9dd73d2a4834a3d9ce5b13",
+      "bytes": 330724,
+      "bytesGzip": 17321,
+      "counts": {
+        "ENJOY": 20,
+        "DISCOVER": 197
+      },
+      "depth": "tour",
+      "tier": "phase2",
+      "applyStatus": "not_provided"
+    },
+    {
+      "id": "gangneung",
+      "label": "강릉시",
+      "displayName": "강릉시",
+      "sido": "강원",
+      "path": "gangneung.json",
+      "etag": "sha256:18698f6deaff020a73290fa3d8f7a89ba1cbd957ce61f042e003584a7c190e67",
+      "bytes": 346368,
+      "bytesGzip": 17076,
+      "counts": {
+        "ENJOY": 15,
+        "DISCOVER": 212
+      },
+      "depth": "tour",
+      "tier": "phase2",
+      "applyStatus": "not_provided"
+    },
+    {
+      "id": "sokcho",
+      "label": "속초시",
+      "displayName": "속초시",
+      "sido": "강원",
+      "path": "sokcho.json",
+      "etag": "sha256:dbb0a7df3b81d26b6d235186a572c54acf39b83779af6835ae9d2c057aec79f5",
+      "bytes": 197935,
+      "bytesGzip": 9872,
+      "counts": {
+        "ENJOY": 5,
+        "DISCOVER": 127
+      },
+      "depth": "tour",
+      "tier": "phase2",
+      "applyStatus": "not_provided"
+    },
+    {
+      "id": "chungju",
+      "label": "충주시",
+      "displayName": "충주시",
+      "sido": "충북",
+      "path": "chungju.json",
+      "etag": "sha256:94b804369132414237653409efd94812fb4a335735676aabba4cc5dad8728023",
+      "bytes": 281989,
+      "bytesGzip": 13398,
+      "counts": {
+        "ENJOY": 1,
+        "DISCOVER": 188
+      },
+      "depth": "tour",
+      "tier": "phase2",
+      "applyStatus": "not_provided"
+    },
+    {
+      "id": "danyang",
+      "label": "단양군",
+      "displayName": "단양군",
+      "sido": "충북",
+      "path": "danyang.json",
+      "etag": "sha256:fda8c335918f2f965f59ac5ec5a9598c1a71ef343628d97be6302c01a181bc84",
+      "bytes": 215725,
+      "bytesGzip": 10338,
+      "counts": {
+        "ENJOY": 2,
+        "DISCOVER": 143
+      },
+      "depth": "tour",
+      "tier": "phase2",
+      "applyStatus": "not_provided"
+    },
+    {
+      "id": "gongju",
+      "label": "공주시",
+      "displayName": "공주시",
+      "sido": "충남",
+      "path": "gongju.json",
+      "etag": "sha256:41048aed40452b9da7fe553fc4fead835934adce3e565b034a5de7a72f31321e",
+      "bytes": 238535,
+      "bytesGzip": 12447,
+      "counts": {
+        "ENJOY": 6,
+        "DISCOVER": 155
+      },
+      "depth": "tour",
+      "tier": "phase2",
+      "applyStatus": "not_provided"
+    },
+    {
+      "id": "buyeo",
+      "label": "부여군",
+      "displayName": "부여군",
+      "sido": "충남",
+      "path": "buyeo.json",
+      "etag": "sha256:a690ad4334f7fef542599f6bb3a39d9ea5a5857d71dae3e7ecf23544484017f4",
+      "bytes": 238937,
+      "bytesGzip": 11242,
+      "counts": {
+        "ENJOY": 6,
+        "DISCOVER": 155
+      },
+      "depth": "tour",
+      "tier": "phase2",
+      "applyStatus": "not_provided"
+    },
+    {
+      "id": "jeonju",
+      "label": "전주시",
+      "displayName": "전주시",
+      "sido": "전북",
+      "path": "jeonju.json",
+      "etag": "sha256:8da7550974b688915ed34bdf439fb5adec5825f35a3c585c5618625184d999e4",
+      "bytes": 338104,
+      "bytesGzip": 17780,
+      "counts": {
+        "ENJOY": 27,
+        "DISCOVER": 193
+      },
+      "depth": "tour",
+      "tier": "phase2",
+      "applyStatus": "not_provided"
+    },
+    {
+      "id": "gunsan",
+      "label": "군산시",
+      "displayName": "군산시",
+      "sido": "전북",
+      "path": "gunsan.json",
+      "etag": "sha256:4ffe53bc167762795264c577770566ab3901e27c948211e92a89c89865956cd7",
+      "bytes": 254239,
+      "bytesGzip": 12210,
+      "counts": {
+        "ENJOY": 7,
+        "DISCOVER": 162
+      },
+      "depth": "tour",
+      "tier": "phase2",
+      "applyStatus": "not_provided"
+    },
+    {
+      "id": "yeosu",
+      "label": "여수시",
+      "displayName": "여수시",
+      "sido": "전남광주",
+      "path": "yeosu.json",
+      "etag": "sha256:00841f1f8db9524cfffaff2777b2c93e0bd8f5286b5dbd07fa376207f69ee144",
+      "bytes": 289220,
+      "bytesGzip": 14104,
+      "counts": {
+        "ENJOY": 9,
+        "DISCOVER": 182
+      },
+      "depth": "tour",
+      "tier": "phase2",
+      "applyStatus": "not_provided"
+    },
+    {
+      "id": "suncheon",
+      "label": "순천시",
+      "displayName": "순천시",
+      "sido": "전남광주",
+      "path": "suncheon.json",
+      "etag": "sha256:133714dd9b488b5776df032d3e3f16a031265e43868aef6c3dc5aadee257939c",
+      "bytes": 201929,
+      "bytesGzip": 10107,
+      "counts": {
+        "ENJOY": 4,
+        "DISCOVER": 129
+      },
+      "depth": "tour",
+      "tier": "phase2",
+      "applyStatus": "not_provided"
+    },
+    {
+      "id": "gyeongju",
+      "label": "경주시",
+      "displayName": "경주시",
+      "sido": "경북",
+      "path": "gyeongju.json",
+      "etag": "sha256:0aaa6754c7016d08de9e41e6690bcdf0bc196c0f9740723c0a924a22aa5874dc",
+      "bytes": 340336,
+      "bytesGzip": 17025,
+      "counts": {
+        "ENJOY": 14,
+        "DISCOVER": 213
+      },
+      "depth": "tour",
+      "tier": "phase2",
+      "applyStatus": "not_provided"
+    },
+    {
+      "id": "andong",
+      "label": "안동시",
+      "displayName": "안동시",
+      "sido": "경북",
+      "path": "andong.json",
+      "etag": "sha256:7ff43303bea15c27581d138c0765d22c8a41c408b7893415de40bf1e67a844a7",
+      "bytes": 241242,
+      "bytesGzip": 12410,
+      "counts": {
+        "ENJOY": 11,
+        "DISCOVER": 150
+      },
+      "depth": "tour",
+      "tier": "phase2",
+      "applyStatus": "not_provided"
+    },
+    {
+      "id": "tongyeong",
+      "label": "통영시",
+      "displayName": "통영시",
+      "sido": "경남",
+      "path": "tongyeong.json",
+      "etag": "sha256:e6488bec190fb21687a62e7a9060190dd678bb4cf7547e7f42076a78927145ef",
+      "bytes": 242572,
+      "bytesGzip": 11898,
+      "counts": {
+        "ENJOY": 7,
+        "DISCOVER": 157
+      },
+      "depth": "tour",
+      "tier": "phase2",
+      "applyStatus": "not_provided"
+    },
+    {
+      "id": "geoje",
+      "label": "거제시",
+      "displayName": "거제시",
+      "sido": "경남",
+      "path": "geoje.json",
+      "etag": "sha256:5cebf78123125b3af3f90d077fb91ed97daf70c156f3e0d094659dee98cc86f8",
+      "bytes": 252698,
+      "bytesGzip": 12441,
+      "counts": {
+        "ENJOY": 7,
+        "DISCOVER": 163
+      },
+      "depth": "tour",
+      "tier": "phase2",
+      "applyStatus": "not_provided"
+    },
+    {
+      "id": "jeju",
+      "label": "제주시",
+      "displayName": "제주시",
+      "sido": "제주",
+      "path": "jeju.json",
+      "etag": "sha256:bfed3bbffac3dd7eeb9e00e314d0250290341e8c8c8379cec7985c03d0c9d79b",
+      "bytes": 344220,
+      "bytesGzip": 17921,
+      "counts": {
+        "ENJOY": 18,
+        "DISCOVER": 210
+      },
+      "depth": "tour",
+      "tier": "phase2",
+      "applyStatus": "not_provided"
+    },
+    {
+      "id": "seogwipo",
+      "label": "서귀포시",
+      "displayName": "서귀포시",
+      "sido": "제주",
+      "path": "seogwipo.json",
+      "etag": "sha256:6f375e03af432676b731cc05d1a1866d94dcfb037cb40d1f1c5a9e1091af76fb",
+      "bytes": 340419,
+      "bytesGzip": 16388,
+      "counts": {
+        "ENJOY": 11,
+        "DISCOVER": 210
+      },
+      "depth": "tour",
+      "tier": "phase2",
+      "applyStatus": "not_provided"
     }
   ]
 }

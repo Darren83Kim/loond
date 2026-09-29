@@ -100,13 +100,36 @@ def _ymd(s: str | None) -> str | None:
 
 
 
-def _keep_city(it: dict[str, str], city_name: str, gugun: str | None) -> bool:
+def _keep_city(
+    it: dict[str, str],
+    city_name: str,
+    *,
+    culture_gugun: str | None = None,
+    culture_sigungu: tuple[str, ...] | list[str] | None = None,
+    culture_areas: tuple[str, ...] | list[str] | None = None,
+) -> bool:
     """Keep only if place/area/sigungu ties the item to the city.
 
     Title-only matches are rejected (e.g. 고양이 / 고양이라서 → 고양).
+    culture_areas filters sido labels (광주 vs 경기 광주시).
     """
-    if gugun and it.get("sigungu") in {gugun, city_name}:
+    area = (it.get("area") or "").strip()
+    sigungu = (it.get("sigungu") or "").strip()
+    if culture_areas:
+        if area and area not in culture_areas:
+            return False
+    allowed_sig = set()
+    if culture_gugun:
+        allowed_sig.add(culture_gugun)
+        allowed_sig.add(city_name)
+    if culture_sigungu:
+        allowed_sig.update(culture_sigungu)
+        allowed_sig.add(city_name)
+    if allowed_sig and sigungu in allowed_sig:
         return True
+    if allowed_sig and sigungu:
+        # sigungu present but not ours
+        return False
     place_blob = " ".join(it.get(k, "") for k in ("place", "area", "sigungu"))
     return rc.city_keyword_in_blob(city_name, place_blob)
 
@@ -226,11 +249,22 @@ def collect_enjoy_for_region(
     rid = region["id"]
     name = region["name_ko"]
     gugun = region.get("culture_gugun")
+    culture_sigungu = region.get("culture_sigungu")
+    culture_areas = tuple(region.get("culture_areas") or ())
     now = datetime.now(KST).replace(microsecond=0)
     today = now.date()
     frm = today.strftime("%Y%m%d")
     to = (today + timedelta(days=days_ahead)).strftime("%Y%m%d")
     now_iso = now.isoformat()
+
+    def _ok(it: dict[str, str]) -> bool:
+        return bool(it.get("seq")) and _keep_city(
+            it,
+            name,
+            culture_gugun=gugun,
+            culture_sigungu=culture_sigungu,
+            culture_areas=culture_areas or None,
+        )
 
     by: dict[str, dict[str, str]] = {}
     try:
@@ -250,37 +284,40 @@ def collect_enjoy_for_region(
                 )
             )
             for it in items:
-                if _keep_city(it, name, gugun) and it.get("seq"):
+                if _ok(it):
                     by[it["seq"]] = it
             if page * 100 >= total or not items:
                 break
             page += 1
-            if page > 15:
+            if page > 8:
                 break
     except Exception as e:  # noqa: BLE001
         print(f"culture period2 soft-fail region={rid}: {e}")
 
-    if gugun:
+    # area2: try each culture_areas sido (+ optional gugun)
+    sidos = list(culture_areas) or (["경기"] if gugun else [])
+    for sido in sidos:
         try:
-            _, area_items = _items(
-                _curl(
-                    "area2",
-                    {
-                        "sido": "경기",
-                        "gugun": gugun,
-                        "PageNo": "1",
-                        "numOfrows": "100",
-                        "from": frm,
-                        "to": to,
-                    },
-                )
-            )
+            params: dict[str, str] = {
+                "sido": sido,
+                "PageNo": "1",
+                "numOfrows": "100",
+                "from": frm,
+                "to": to,
+            }
+            if gugun:
+                params["gugun"] = gugun
+            _, area_items = _items(_curl("area2", params))
             for it in area_items:
-                if _keep_city(it, name, gugun) and it.get("seq"):
+                if _ok(it):
                     by[it["seq"]] = it
         except Exception as e:  # noqa: BLE001
-            print(f"culture area2 soft-fail region={rid}: {e}")
+            print(f"culture area2 soft-fail region={rid} sido={sido}: {e}")
 
+    # Cap before detail2 enrichment (Phase 2: 34 cities × detail calls)
+    if len(by) > 25:
+        keep_ids = list(by.keys())[:25]
+        by = {k: by[k] for k in keep_ids}
     rows = _build_enjoy_rows(
         by, region_id=rid, region_name=name, today=today, now_iso=now_iso
     )

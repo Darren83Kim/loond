@@ -35,7 +35,8 @@ void main() {
     expect(find.text('관심 지역을 선택하세요'), findsOneWidget);
     expect(find.text('로온드'), findsNothing);
 
-    await tester.tap(find.text('수원시').first);
+    // Popular chip is above the fold (수원 first).
+    await tester.tap(find.widgetWithText(FilterChip, '수원시'));
     await tester.pumpAndSettle();
 
     expect(find.text('로온드'), findsOneWidget);

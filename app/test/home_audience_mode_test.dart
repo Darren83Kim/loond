@@ -125,13 +125,13 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('발견 미리보기'), findsOneWidget);
-    expect(find.text('이 지역에서 신청할 수 있는 것'), findsOneWidget);
+    expect(find.text('예약하면 좋은 체험'), findsOneWidget);
     expect(find.textContaining('곧 열려요 · 즐길 거리'), findsOneWidget);
     expect(find.text(discoverTitle), findsOneWidget);
 
     final enjoyT = tester.getTopLeft(find.textContaining('곧 열려요 · 즐길 거리'));
     final discT = tester.getTopLeft(find.text('발견 미리보기'));
-    final applyT = tester.getTopLeft(find.text('이 지역에서 신청할 수 있는 것'));
+    final applyT = tester.getTopLeft(find.text('예약하면 좋은 체험'));
     expect(enjoyT.dy < discT.dy, isTrue);
     expect(discT.dy < applyT.dy, isTrue);
 

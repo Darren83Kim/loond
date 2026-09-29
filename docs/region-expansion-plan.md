@@ -1,6 +1,6 @@
 # 지역 확장 계획서 (Phase 1 대도시 13 · Phase 2 관광도시 19)
 
-작성: 2026-09-29 (KST) · 상태: **초안 — 사용자 검토 대기 (코드 미구현)**  
+작성: 2026-09-29 (KST) · 상태: **Phase 2 구현 완료 (2026-09-29)** — Phase 1 APPLY는 미착수  
 관련: [`구현계획서.md`](구현계획서.md) §11 · [`ops/multi-city.md`](ops/multi-city.md) · [`ops/notice-source-types.md`](ops/notice-source-types.md) · [`ops/remote-region-load.md`](ops/remote-region-load.md)
 
 > 승인된 결정: 테스터 모집 전에 지역을 확장한다.  
@@ -206,3 +206,11 @@ eminwon 공통 경로: `/emwp/gov/mogaha/ntis/web/ofr/action/OfrAction.do?method
 
 ## 4. 잔여 레지스터 연결
 [`구현계획서.md`](구현계획서.md) §11 "지역 확장 계획 등록분 (2026-09-29)"에 R25–R30 추가. R12·R13은 본 계획의 S2/S1에서 함께 해소 예정(상태 변경은 구현 시).
+
+
+## 5. Phase 2 구현 결과 (2026-09-29)
+
+- 34도시 레지스트리·법정동 배정·피커 시도 그룹·구 칩·APPLY 미제공 UI·manifest `tier`/`applyStatus` 적용.
+- TourAPI 로컬 수집 api_calls=354. 문화포털 +295 ENJOY.
+- ENJOY 약함: 충주(1)·단양(2) — R31.
+- 다음: Phase 1 APPLY (수원 외 eminwon·광역시 어댑터).

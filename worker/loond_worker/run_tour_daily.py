@@ -1,14 +1,13 @@
-"""Daily TourAPI KorService2 collector -> published opportunities.json (EPIC 5).
+"""Daily TourAPI KorService2 collector -> published opportunities.json.
 
-STRATEGY=area_filter (multi-city internal test):
-  - Fetch Gyeonggi (areaCode=31) festivals + discover once
-  - Partition into RegionRegistry cities by addr/title keywords
-  - Preserve municipal APPLY + curated_traveler + culture_portal ENJOY
-    + curated BENEFIT (meta.source=curated_benefit);
-    replace prior TourAPI *-tour-* ENJOY/DISCOVER with multi-city set
+STRATEGY=ldong_code (Phase 2 expansion):
+  - ENJOY: nationwide searchFestival2 once → assign via lDong codes
+  - DISCOVER: areaBasedList2 per lDongRegnCd (시도) → assign via lDong codes
+  - Preserve municipal APPLY + culture_portal ENJOY + curated BENEFIT;
+    replace prior TourAPI *-tour-* ENJOY/DISCOVER
 
 Requires env TOUR_API_SERVICE_KEY. Never prints the key.
-Exit 0 on success.
+Exit 0 on success. Soft-retry on timeout (R26).
 """
 from __future__ import annotations
 
@@ -43,12 +42,43 @@ CONTENT_CAT = {
     "38": "shopping",
     "39": "food",
 }
-# Cap dense types in published feed (EPIC 4: food 192 raw → 30 published)
-DENSE_TYPE_CAPS = {"39": 30, "38": 30}
+# Cap dense types in published feed (per city after partition)
+DENSE_TYPE_CAPS = {"39": 30, "38": 30, "12": 80, "14": 50, "28": 40}
+# Extra caps for very large metros (서울 등) — applied after DENSE_TYPE_CAPS
+LARGE_CITY_CAPS = {
+    "seoul": {"12": 100, "14": 60, "25": 20, "28": 40, "38": 40, "39": 50},
+    "busan": {"12": 80, "14": 40, "28": 30},
+    "incheon": {"12": 80, "14": 40, "28": 30},
+    "daegu": {"12": 80, "14": 40, "28": 30},
+    "gwangju": {"12": 80, "14": 40, "28": 30, "38": 30, "39": 40},
+    "jeju": {"12": 80, "14": 40, "28": 30},
+    "seogwipo": {"12": 80, "14": 40, "28": 30},
+}
+# Per-contentType max pages when sweeping a sido (dense types stay low)
+SIDO_MAX_PAGES = {"12": 12, "14": 8, "25": 4, "28": 8, "38": 3, "39": 3}
+# Soft budget for TourAPI calls (개발계정 ~1000/오퍼레이션)
+API_BUDGET = 900
 
 DETAIL_URL = "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid={cid}"
 FEST_URL = "https://korean.visitkorea.or.kr/detail/fes_detail.do?cotid={cid}"
 SOURCE_NAME = "한국관광공사 TourAPI"
+
+SOURCE_NAME = "한국관광공사 TourAPI"
+
+# Runtime call counter (reset in main)
+_API_CALLS = 0
+_API_BY_EP: dict[str, int] = {}
+
+
+def _count_api(endpoint: str) -> None:
+    global _API_CALLS
+    _API_CALLS += 1
+    _API_BY_EP[endpoint] = _API_BY_EP.get(endpoint, 0) + 1
+
+
+def _budget_ok() -> bool:
+    return _API_CALLS < API_BUDGET
+
 
 
 def _now_kst() -> datetime:
@@ -132,13 +162,12 @@ def _curl_get(url: str) -> tuple[int | None, str]:
         return None, body
 
 
-def fetch_json(url: str) -> dict[str, Any]:
-    """GET JSON via curl HTTP/1.1 (TLS-safe); urllib fallback."""
+def _fetch_json_once(url: str) -> dict[str, Any]:
+    """Single GET via curl HTTP/1.1 (TLS-safe); urllib fallback."""
     body = ""
     try:
         code, body = _curl_get(url)
         if code not in (200, None):
-            # still try parse body; else fall through
             try:
                 data = json.loads(body)
                 if isinstance(data, dict):
@@ -181,6 +210,37 @@ def fetch_json(url: str) -> dict[str, Any]:
                 "_curl": str(curl_exc)[:200],
                 "_url": _safe_url_for_log(url),
             }
+
+
+def fetch_json(url: str, *, endpoint: str = "?", retries: int = 3) -> dict[str, Any]:
+    """GET JSON with soft retries on timeout / transient errors (R26)."""
+    last: dict[str, Any] = {}
+    for attempt in range(retries):
+        if not _budget_ok():
+            return {
+                "_error": "BudgetExceeded",
+                "_msg": f"API_BUDGET={API_BUDGET} calls={_API_CALLS}",
+                "_url": _safe_url_for_log(url),
+            }
+        _count_api(endpoint)
+        last = _fetch_json_once(url)
+        ok, msg = header_ok(last)
+        if ok:
+            return last
+        # Retry only on transport / timeout style failures
+        transient = (
+            "_error" in last
+            or last.get("_http_error") in (408, 429, 500, 502, 503, 504)
+            or "timed out" in msg.lower()
+            or "timeout" in msg.lower()
+            or "urlerror" in msg.lower()
+        )
+        if not transient or attempt + 1 >= retries:
+            return last
+        wait = 1.5 * (attempt + 1)
+        _log(f"  retry {attempt+1}/{retries} ep={endpoint} wait={wait:.1f}s msg={msg}")
+        time.sleep(wait)
+    return last
 
 
 def normalize_items(payload: dict[str, Any]) -> list[dict[str, Any]]:
@@ -265,8 +325,11 @@ def paginate(
     page = 1
     while page <= max_pages:
         params = {**extra, "pageNo": str(page)}
+        if not _budget_ok():
+            metas.append({"page": page, "ok": False, "msg": "budget", "got": 0, "totalCount": 0})
+            break
         url = _build_url(endpoint, service_key, params)
-        payload = fetch_json(url)
+        payload = fetch_json(url, endpoint=endpoint)
         ok, msg = header_ok(payload)
         items = normalize_items(payload) if ok else []
         tc = total_count(payload) if ok else 0
@@ -307,7 +370,7 @@ def event_start_date() -> str:
     return start.strftime("%Y%m%d")
 
 def collect_festivals(service_key: str) -> dict[str, Any]:
-    """ENJOY via searchFestival2; fetch area31 once, partition to cities."""
+    """ENJOY via searchFestival2 nationwide once, then ldong-code partition."""
     esd = event_start_date()
     runs: list[dict[str, Any]] = []
     collected: dict[str, dict[str, Any]] = {}
@@ -315,11 +378,19 @@ def collect_festivals(service_key: str) -> dict[str, Any]:
     items, metas = paginate(
         "searchFestival2",
         service_key,
-        {"eventStartDate": esd, "areaCode": rc.TOUR_API_AREA_CODE, "arrange": "A"},
+        {"eventStartDate": esd, "arrange": "A"},
         max_pages=20,
-        label="festival_area31",
+        label="festival_nationwide",
     )
-    runs.append({"mode": "area31", "eventStartDate": esd, "metas": metas, "count": len(items)})
+    runs.append(
+        {
+            "mode": "nationwide",
+            "eventStartDate": esd,
+            "metas": metas,
+            "count": len(items),
+            "totalCount": metas[0]["totalCount"] if metas else 0,
+        }
+    )
     for it in items:
         cid = str(it.get("contentid") or "")
         if cid:
@@ -327,30 +398,6 @@ def collect_festivals(service_key: str) -> dict[str, Any]:
 
     by_region, dropped = partition_by_region(list(collected.values()))
     assigned = sum(len(v) for v in by_region.values())
-
-    if assigned < 10:
-        items, metas = paginate(
-            "searchFestival2",
-            service_key,
-            {"eventStartDate": esd, "arrange": "A"},
-            max_pages=80,
-            label="festival_nationwide",
-        )
-        runs.append(
-            {
-                "mode": "nationwide",
-                "eventStartDate": esd,
-                "metas": metas,
-                "count": len(items),
-                "totalCount": metas[0]["totalCount"] if metas else 0,
-            }
-        )
-        for it in items:
-            cid = str(it.get("contentid") or "")
-            if cid:
-                collected[cid] = it
-        by_region, dropped = partition_by_region(list(collected.values()))
-        assigned = sum(len(v) for v in by_region.values())
 
     flat: list[dict[str, Any]] = []
     for rows in by_region.values():
@@ -373,38 +420,60 @@ def collect_festivals(service_key: str) -> dict[str, Any]:
     }
 
 
+def _target_ldong_regns() -> list[str]:
+    """Unique lDongRegnCd values needed for our REGIONS catalog."""
+    seen: list[str] = []
+    for r in rc.REGIONS:
+        code = str(r["ldong_regn"])
+        if code not in seen:
+            seen.append(code)
+    return seen
+
+
 def collect_discover(service_key: str) -> dict[str, Any]:
-    """DISCOVER via areaBasedList2; fetch area31 once per type, then partition."""
+    """DISCOVER via areaBasedList2 swept by lDongRegnCd, then partition."""
     by_type: dict[str, Any] = {}
     raw_all: list[dict[str, Any]] = []
     seen: set[str] = set()
+    regns = _target_ldong_regns()
+    _log(f"  discover sweep ldong_regns={regns}")
 
     for ctid in DISCOVER_TYPES:
-        max_pages = 40 if ctid in (38, 39) else 30
-        items, metas = paginate(
-            "areaBasedList2",
-            service_key,
-            {
-                "contentTypeId": str(ctid),
-                "areaCode": rc.TOUR_API_AREA_CODE,
-                "arrange": "A",
-            },
-            max_pages=max_pages,
-            label=f"discover_{ctid}",
-        )
+        max_pages = SIDO_MAX_PAGES.get(str(ctid), 8)
+        type_items: list[dict[str, Any]] = []
+        type_metas: list[dict[str, Any]] = []
+        for regn in regns:
+            if not _budget_ok():
+                _log(f"  budget hit before discover_{ctid} regn={regn}")
+                break
+            items, metas = paginate(
+                "areaBasedList2",
+                service_key,
+                {
+                    "contentTypeId": str(ctid),
+                    "lDongRegnCd": regn,
+                    "arrange": "A",
+                },
+                max_pages=max_pages,
+                label=f"discover_{ctid}_r{regn}",
+            )
+            type_metas.extend(
+                {**m, "lDongRegnCd": regn} for m in metas
+            )
+            for it in items:
+                cid = str(it.get("contentid") or "")
+                if cid and cid not in seen:
+                    seen.add(cid)
+                    type_items.append(it)
+                    raw_all.append(it)
+            time.sleep(0.08)
         by_type[str(ctid)] = {
             "contentTypeId": ctid,
             "category": CONTENT_CAT.get(str(ctid), str(ctid)),
-            "metas": metas,
-            "unique_total": len(items),
-            "sample_titles": [str(it.get("title", "")) for it in items[:5]],
+            "metas": type_metas,
+            "unique_total": len(type_items),
+            "sample_titles": [str(it.get("title", "")) for it in type_items[:5]],
         }
-        for it in items:
-            cid = str(it.get("contentid") or "")
-            if cid and cid not in seen:
-                seen.add(cid)
-                raw_all.append(it)
-        time.sleep(0.1)
 
     by_region, dropped = partition_by_region(raw_all)
 
@@ -432,7 +501,9 @@ def collect_discover(service_key: str) -> dict[str, Any]:
         "assigned": sum(len(v) for v in by_region.values()),
         "dropped": dropped,
         "suwon_count": len(by_region.get("suwon", [])),
+        "api_calls": _API_CALLS,
     }
+
 
 def enrich_homepages(
     service_key: str, items: list[dict[str, Any]], limit: int = 40
@@ -444,7 +515,7 @@ def enrich_homepages(
         if not cid:
             continue
         url = _build_url("detailCommon2", service_key, {"contentId": cid})
-        payload = fetch_json(url)
+        payload = fetch_json(url, endpoint="detailCommon2")
         ok, _ = header_ok(payload)
         if not ok:
             time.sleep(0.08)
@@ -575,23 +646,38 @@ def to_opportunity(
             "sourceUrlSource": url_src,
             "pipelineNotes": (
                 f"multi-city TourAPI KorService2; region={rid}; "
-                f"keyword partition; sourceUrl via {url_src}."
+                f"ldong_code assign; sourceUrl via {url_src}."
             ),
         },
     }
 
-def curate_discover(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Keep sparse types fully; cap dense food/shopping preferring images."""
+def curate_discover(
+    items: list[dict[str, Any]], *, region_id: str = ""
+) -> list[dict[str, Any]]:
+    """Keep sparse types fully; cap dense food/shopping preferring images.
+
+    Large metros (서울) get extra per-type caps via LARGE_CITY_CAPS.
+    """
+    city_caps = dict(DENSE_TYPE_CAPS)
+    city_caps.update(LARGE_CITY_CAPS.get(region_id, {}))
     kept: list[dict[str, Any]] = []
     buckets: dict[str, list[dict[str, Any]]] = {}
     for it in items:
         ctid = str(it.get("contenttypeid") or "")
-        if ctid in DENSE_TYPE_CAPS:
+        if ctid in city_caps:
             buckets.setdefault(ctid, []).append(it)
         else:
             kept.append(it)
-    for ctid, cap in DENSE_TYPE_CAPS.items():
+    # Also bucket types that only appear in LARGE_CITY_CAPS
+    for it in list(kept):
+        ctid = str(it.get("contenttypeid") or "")
+        if ctid in city_caps and ctid not in DENSE_TYPE_CAPS:
+            buckets.setdefault(ctid, []).append(it)
+            kept.remove(it)
+    for ctid, cap in city_caps.items():
         bucket = buckets.get(ctid, [])
+        if not bucket:
+            continue
         bucket_sorted = sorted(
             bucket,
             key=lambda x: (
@@ -642,7 +728,7 @@ def merge_and_publish(
     for region in rc.REGIONS:
         rid = region["id"]
         fest_items = fest_by_region.get(rid, [])
-        disc_items = curate_discover(disc_by_region.get(rid, []))
+        disc_items = curate_discover(disc_by_region.get(rid, []), region_id=rid)
         city_enjoy = [
             to_opportunity(
                 i, typ="ENJOY", region=region, homepages=homepages, now_iso=now_iso
@@ -672,7 +758,7 @@ def merge_and_publish(
     out = {
         "schemaVersion": 1,
         "region": "multi",
-        "regionLabel": "경기 다지역",
+        "regionLabel": "전국 다지역",
         "regions": [r["id"] for r in rc.REGIONS],
         "updatedAt": now_iso,
         "opportunities": merged,
@@ -725,17 +811,21 @@ def main() -> int:
         print("TOUR_API_SERVICE_KEY not set — cannot run daily collect", file=sys.stderr)
         return 1
 
+    global _API_CALLS, _API_BY_EP
+    _API_CALLS = 0
+    _API_BY_EP = {}
     service_key = _prepare_service_key(raw_key)
     _log(
         f"TourAPI daily collect STRATEGY={rc.STRATEGY} multi-city "
-        f"areaCode={rc.TOUR_API_AREA_CODE} cities={[r['id'] for r in rc.REGIONS]} "
-        f"key_len={len(service_key)} key_pct_encoded={('%' in service_key)}"
+        f"cities={len(rc.REGIONS)} ids={[r['id'] for r in rc.REGIONS]} "
+        f"key_len={len(service_key)} key_pct_encoded={('%' in service_key)} "
+        f"budget={API_BUDGET}"
     )
 
     config.RAW_DIR.mkdir(parents=True, exist_ok=True)
     collected_at = _now_iso()
 
-    _log("=== ENJOY searchFestival2 (area31 -> partition) ===")
+    _log("=== ENJOY searchFestival2 (nationwide -> ldong partition) ===")
     fest = collect_festivals(service_key)
     _log(
         f"festivals assigned={fest['assigned']} dropped={fest['dropped']} "
@@ -750,7 +840,7 @@ def main() -> int:
             f"metas0={(run.get('metas') or [None])[0]}"
         )
 
-    _log("=== DISCOVER areaBasedList2 (area31 -> partition) ===")
+    _log("=== DISCOVER areaBasedList2 (ldong_regn sweep -> partition) ===")
     disc = collect_discover(service_key)
     _log(
         f"discover assigned={disc['assigned']} dropped={disc['dropped']} "
@@ -782,7 +872,7 @@ def main() -> int:
         "collectedAt": collected_at,
         "base": rc.TOUR_API_BASE_URL,
         "strategy": rc.STRATEGY,
-        "mode": "multi_city_partition",
+        "mode": "ldong_code_partition",
         "eventStartDate": fest["eventStartDate"],
         "runs": fest["runs"],
         "counts": fest["counts"],
@@ -795,7 +885,7 @@ def main() -> int:
         "collectedAt": collected_at,
         "base": rc.TOUR_API_BASE_URL,
         "strategy": rc.STRATEGY,
-        "mode": "multi_city_partition",
+        "mode": "ldong_code_partition",
         "counts": disc["counts"],
         "dropped": disc["dropped"],
         "by_type_summary": {
@@ -818,7 +908,7 @@ def main() -> int:
         f"collectedAt={collected_at}",
         f"base={rc.TOUR_API_BASE_URL}",
         f"strategy={rc.STRATEGY}",
-        "mode=multi_city_partition",
+        "mode=ldong_code_partition",
         f"festivals_counts={fest['counts']}",
         f"discover_counts={disc['counts']}",
         f"homepages={len(homepages)}",
@@ -839,6 +929,7 @@ def main() -> int:
         f"Wrote {config.PUBLISHED_JSON.relative_to(config.PROJECT_ROOT)} "
         f"+ raw festivals/discover/summary"
     )
+    _log(f"api_calls total={_API_CALLS} by_ep={dict(_API_BY_EP)}")
     return 0
 
 

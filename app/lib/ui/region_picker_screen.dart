@@ -5,7 +5,7 @@ import '../data/region_store.dart';
 import '../models/region.dart';
 import '../theme/app_theme.dart';
 
-/// 첫 실행·지역 변경용 시군 선택 — 검색 + 인기/최근 칩.
+/// 첫 실행·지역 변경용 시군 선택 — 검색 + 시도 그룹 + 인기/최근 칩.
 class RegionPickerScreen extends StatefulWidget {
   const RegionPickerScreen({
     super.key,
@@ -43,13 +43,10 @@ class _RegionPickerScreenState extends State<RegionPickerScreen> {
     setState(() => _recentIds = ids);
   }
 
-  /// Best-effort manifest refresh when the picker opens (P3).
   Future<void> _refreshManifestSoft() async {
     try {
       await OpportunityRepository().refreshManifest();
-    } catch (_) {
-      // ignore — picker listing still uses RegionRegistry
-    }
+    } catch (_) {}
   }
 
   @override
@@ -62,7 +59,13 @@ class _RegionPickerScreenState extends State<RegionPickerScreen> {
     final q = _search.text.trim();
     if (q.isEmpty) return RegionRegistry.all;
     return RegionRegistry.all
-        .where((r) => r.nameKo.contains(q) || r.chipLabel.contains(q))
+        .where(
+          (r) =>
+              r.nameKo.contains(q) ||
+              r.chipLabel.contains(q) ||
+              (r.sidoKo?.contains(q) ?? false) ||
+              (r.displayName?.contains(q) ?? false),
+        )
         .toList();
   }
 
@@ -75,11 +78,91 @@ class _RegionPickerScreenState extends State<RegionPickerScreen> {
     return out;
   }
 
+  String _applyHint(Region region) {
+    switch (region.applyStatus) {
+      case 'provided':
+        return '신청·행사·발견';
+      case 'not_provided':
+        return '행사·발견 (신청 공고 미제공)';
+      default:
+        return '행사·발견 (신청 공고 준비 중)';
+    }
+  }
+
+  Widget _regionTile(Region region, ThemeData theme) {
+    final selected = region.id == widget.selectedRegionId;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Material(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(AppTheme.cardRadius),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(AppTheme.cardRadius),
+          onTap: () => widget.onSelected(region),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppTheme.cardRadius),
+              border: Border.all(
+                color: selected
+                    ? theme.colorScheme.primary
+                    : theme.dividerColor.withValues(alpha: 0.4),
+                width: selected ? 2 : 1,
+              ),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        region.chipLabel,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        region.hasPublishedData
+                            ? _applyHint(region)
+                            : '데이터 준비 중',
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (selected)
+                  Icon(Icons.check_circle, color: theme.colorScheme.primary)
+                else
+                  Icon(
+                    Icons.chevron_right,
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final filtered = _filtered;
     final recent = _recentRegions;
+    final searching = _search.text.trim().isNotEmpty;
+    final grouped = <String, List<Region>>{};
+    if (!searching) {
+      for (final sido in RegionRegistry.sidoOrder) {
+        final rows =
+            filtered.where((r) => r.sidoKo == sido).toList(growable: false);
+        if (rows.isNotEmpty) grouped[sido] = rows;
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -97,8 +180,8 @@ class _RegionPickerScreenState extends State<RegionPickerScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            '선택한 지역의 신청·행사·발견만 표시합니다. '
-            '현재 실제 데이터가 있는 지역은 수원입니다.',
+            '선택한 지역의 신청·행사·발견을 보여 줍니다. '
+            '일부 관광 도시는 신청 공고를 아직 모으지 않아요.',
             style: theme.textTheme.bodyMedium?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),
@@ -108,7 +191,7 @@ class _RegionPickerScreenState extends State<RegionPickerScreen> {
             controller: _search,
             onChanged: (_) => setState(() {}),
             decoration: InputDecoration(
-              hintText: '시군 검색',
+              hintText: '시군·시도 검색',
               prefixIcon: const Icon(Icons.search),
               filled: true,
               fillColor: Colors.white,
@@ -118,7 +201,7 @@ class _RegionPickerScreenState extends State<RegionPickerScreen> {
               ),
             ),
           ),
-          if (recent.isNotEmpty && _search.text.trim().isEmpty) ...[
+          if (recent.isNotEmpty && !searching) ...[
             const SizedBox(height: 16),
             Text(
               '최근',
@@ -139,7 +222,7 @@ class _RegionPickerScreenState extends State<RegionPickerScreen> {
               ],
             ),
           ],
-          if (_search.text.trim().isEmpty) ...[
+          if (!searching) ...[
             const SizedBox(height: 16),
             Text(
               '인기',
@@ -162,90 +245,40 @@ class _RegionPickerScreenState extends State<RegionPickerScreen> {
             ),
           ],
           const SizedBox(height: 20),
-          Text(
-            _search.text.trim().isEmpty ? '전체 시군' : '검색 결과',
-            style: theme.textTheme.titleSmall?.copyWith(
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: 8),
-          if (filtered.isEmpty)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 24),
-              child: Text(
-                '검색 결과가 없어요',
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
+          if (searching) ...[
+            Text(
+              '검색 결과',
+              style: theme.textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w700,
               ),
-            )
-          else
-            ...filtered.map((region) {
-              final selected = region.id == widget.selectedRegionId;
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Material(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(AppTheme.cardRadius),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(AppTheme.cardRadius),
-                    onTap: () => widget.onSelected(region),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 14,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.circular(AppTheme.cardRadius),
-                        border: Border.all(
-                          color: selected
-                              ? theme.colorScheme.primary
-                              : theme.dividerColor.withValues(alpha: 0.4),
-                          width: selected ? 2 : 1,
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  region.chipLabel,
-                                  style: theme.textTheme.titleMedium?.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  region.hasPublishedData
-                                      ? '데이터 이용 가능'
-                                      : '데이터 준비 중',
-                                  style: theme.textTheme.bodySmall?.copyWith(
-                                    color: theme.colorScheme.onSurfaceVariant,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          if (selected)
-                            Icon(
-                              Icons.check_circle,
-                              color: theme.colorScheme.primary,
-                            )
-                          else
-                            Icon(
-                              Icons.chevron_right,
-                              color: theme.colorScheme.onSurfaceVariant,
-                            ),
-                        ],
-                      ),
-                    ),
+            ),
+            const SizedBox(height: 8),
+            if (filtered.isEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 24),
+                child: Text(
+                  '검색 결과가 없어요',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
-              );
-            }),
+              )
+            else
+              ...filtered.map((r) => _regionTile(r, theme)),
+          ] else
+            for (final entry in grouped.entries) ...[
+              Padding(
+                padding: const EdgeInsets.only(top: 8, bottom: 8),
+                child: Text(
+                  entry.key,
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w800,
+                    color: theme.colorScheme.primary,
+                  ),
+                ),
+              ),
+              ...entry.value.map((r) => _regionTile(r, theme)),
+            ],
         ],
       ),
     );

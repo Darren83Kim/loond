@@ -50,7 +50,11 @@ class _DiscoverTabState extends State<DiscoverTab> {
     return '전체';
   }
 
-  DiscoverDistrict get _district => DiscoverDistrict.byId(_districtId);
+  DiscoverDistrict get _district =>
+      DiscoverDistrict.byId(_districtId, regionId: widget.regionId);
+
+  List<DiscoverDistrict> get _districts =>
+      DiscoverDistrict.forRegion(widget.regionId);
 
   @override
   void dispose() {
@@ -61,7 +65,7 @@ class _DiscoverTabState extends State<DiscoverTab> {
   @override
   void didUpdateWidget(covariant DiscoverTab oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.regionId != widget.regionId && widget.regionId != 'suwon') {
+    if (oldWidget.regionId != widget.regionId) {
       _districtId = DiscoverDistrict.all.id;
     }
   }
@@ -214,12 +218,9 @@ class _DiscoverTabState extends State<DiscoverTab> {
         ? <Widget>[EmptyState(message: _emptyMessage)]
         : _buildGridFeed(filtered);
 
-    final showDistrictChips = widget.regionId == 'suwon';
-    final districtChips = showDistrictChips
-        ? [
-            for (final d in DiscoverDistrict.suwonGus) (d.id, d.shortLabel),
-          ]
-        : <(String, String)>[];
+    final districtChips = [
+      for (final d in _districts) (d.id, d.shortLabel),
+    ];
 
     return RefreshIndicator(
       onRefresh: widget.onRefresh,
@@ -262,7 +263,7 @@ class _DiscoverTabState extends State<DiscoverTab> {
             selectedId: _filter,
             onSelect: (id) => setState(() => _filter = id),
           ),
-          if (showDistrictChips)
+          if (districtChips.isNotEmpty)
             _chipRow(
               items: districtChips,
               selectedId: _districtId,

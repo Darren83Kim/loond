@@ -58,8 +58,11 @@ def _counts_by_type(ops: list[dict[str, Any]]) -> dict[str, int]:
 
 def _region_label(region_id: str, bundle: dict[str, Any] | None = None) -> str:
     meta = rc.REGION_BY_ID.get(region_id)
-    if meta and meta.get("name_ko"):
-        return str(meta["name_ko"])
+    if meta:
+        if meta.get("display_name"):
+            return str(meta["display_name"])
+        if meta.get("name_ko"):
+            return str(meta["name_ko"])
     return region_id
 
 
@@ -80,10 +83,14 @@ def build_region_feed(
     updated_at: str,
 ) -> dict[str, Any]:
     """One-city feed document (same opportunity schema as the monolith)."""
+    meta = rc.REGION_BY_ID.get(region_id) or {}
     return {
         "schemaVersion": REGION_FEED_SCHEMA_VERSION,
         "region": region_id,
         "regionLabel": _region_label(region_id),
+        "sido": meta.get("sido_ko"),
+        "tier": meta.get("tier"),
+        "applyStatus": meta.get("apply_status", "preparing"),
         "updatedAt": updated_at,
         "opportunities": opportunities,
         "counts": _counts_by_type(opportunities),
@@ -153,15 +160,23 @@ def publish_region_artifacts(
 
         counts = _counts_by_type(city_ops)
         per_counts[rid] = counts
+        meta = rc.REGION_BY_ID.get(rid) or {}
+        tier = str(meta.get("tier") or "legacy")
+        apply_status = str(meta.get("apply_status") or "preparing")
+        depth = "deep" if tier in ("phase1", "legacy") else "tour"
         entry: dict[str, Any] = {
             "id": rid,
             "label": _region_label(rid),
+            "displayName": str(meta.get("display_name") or _region_label(rid)),
+            "sido": meta.get("sido_ko"),
             "path": json_name,
             "etag": f"sha256:{_sha256_hex(raw)}",
             "bytes": len(raw),
             "bytesGzip": len(gz),
             "counts": counts,
-            "depth": "deep",
+            "depth": depth,
+            "tier": tier,
+            "applyStatus": apply_status,
         }
         manifest_regions.append(entry)
 

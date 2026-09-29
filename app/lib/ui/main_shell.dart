@@ -172,7 +172,11 @@ class _MainShellState extends State<MainShell> {
             builder: (_) => OpportunityListScreen(
               title: '신청할 수 있는 기회',
               items: apply,
-              emptyMessage: '지금 신청 가능한 공고가 없어요',
+              emptyMessage: widget.region.applyStatus == 'not_provided'
+                  ? '이 지역은 아직 신청 공고를 모으지 않아요. 행사·발견을 확인해 보세요.'
+                  : widget.region.applyStatus == 'preparing'
+                      ? '이 지역 신청 공고는 아직 준비 중이에요. 행사·발견을 확인해 보세요.'
+                      : '지금 신청 가능한 공고가 없어요',
               regionDataReady: regionReady,
               onOpen: _openDetail,
               onRefresh: _reload,

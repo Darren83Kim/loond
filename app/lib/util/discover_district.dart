@@ -1,8 +1,9 @@
 import '../models/opportunity.dart';
+import '../models/region.dart';
 
-/// Suwon 구 (district) chip for Discover filters.
+/// 자치구/구 (district) 칩 for Discover filters.
 ///
-/// Codes map TourAPI `meta.lDongSignguCd` (수원: 111/113/115/117).
+/// Codes map TourAPI `meta.lDongSignguCd`.
 class DiscoverDistrict {
   const DiscoverDistrict({
     required this.id,
@@ -11,7 +12,7 @@ class DiscoverDistrict {
     this.signguCd,
   });
 
-  /// `all` or gu id (`jangan`, `gwonsun`, `paldal`, `yeongtong`).
+  /// `all` or district id.
   final String id;
   final String shortLabel;
   final String fullLabel;
@@ -25,46 +26,28 @@ class DiscoverDistrict {
     fullLabel: '전체',
   );
 
-  /// Suwon 4-gu chips (short labels for compact UI).
-  static const suwonGus = <DiscoverDistrict>[
-    all,
-    DiscoverDistrict(
-      id: 'jangan',
-      shortLabel: '장안',
-      fullLabel: '장안구',
-      signguCd: '111',
-    ),
-    DiscoverDistrict(
-      id: 'gwonsun',
-      shortLabel: '권선',
-      fullLabel: '권선구',
-      signguCd: '113',
-    ),
-    DiscoverDistrict(
-      id: 'paldal',
-      shortLabel: '팔달',
-      fullLabel: '팔달구',
-      signguCd: '115',
-    ),
-    DiscoverDistrict(
-      id: 'yeongtong',
-      shortLabel: '영통',
-      fullLabel: '영통구',
-      signguCd: '117',
-    ),
-  ];
+  /// Backward-compat alias — Suwon 4-gu chips.
+  static List<DiscoverDistrict> get suwonGus => forRegion('suwon');
 
-  static const _codeToFull = <String, String>{
-    '111': '장안구',
-    '113': '권선구',
-    '115': '팔달구',
-    '117': '영통구',
-  };
+  /// District chips for a region (「전체」 + districts). Empty list → no chips.
+  static List<DiscoverDistrict> forRegion(String regionId) {
+    final region = RegionRegistry.byId(regionId);
+    if (region == null || region.districts.isEmpty) {
+      return const [];
+    }
+    return [
+      all,
+      for (final d in region.districts)
+        DiscoverDistrict(
+          id: d.id,
+          shortLabel: d.shortLabel,
+          fullLabel: d.fullLabel,
+          signguCd: d.signguCd,
+        ),
+    ];
+  }
 
   /// Whether [item] matches this district filter.
-  ///
-  /// Prefer `meta.lDongSignguCd` when present; otherwise string-contains
-  /// on location / summary / description / title (e.g. `영통구`).
   bool matches(Opportunity item) {
     if (id == 'all') return true;
     final code = item.lDongSignguCd?.trim();
@@ -74,7 +57,6 @@ class DiscoverDistrict {
     return matchesTextFields(item);
   }
 
-  /// String-contains fallback (also used by unit tests).
   bool matchesTextFields(Opportunity item) {
     if (id == 'all') return true;
     final hay = [
@@ -84,42 +66,52 @@ class DiscoverDistrict {
       item.title,
     ].whereType<String>().join(' ');
     if (hay.contains(fullLabel)) return true;
-    // Tolerate short form without 구 when full form absent.
     if (shortLabel.isNotEmpty && hay.contains('$shortLabel구')) return true;
     return false;
   }
 
-  /// Parse a short 구 label for grid cards (meta code → location text).
-  static String? labelFor(Opportunity item) {
+  /// Parse a short 구 label for grid cards.
+  static String? labelFor(Opportunity item, {String? regionId}) {
     final code = item.lDongSignguCd?.trim();
-    if (code != null && _codeToFull.containsKey(code)) {
-      return _codeToFull[code];
+    final region = RegionRegistry.byId(regionId ?? item.region);
+    if (region != null && code != null) {
+      for (final d in region.districts) {
+        if (d.signguCd == code) return d.fullLabel;
+      }
     }
+    // Suwon backward-compat hardcoded map
+    const suwonMap = {
+      '111': '장안구',
+      '113': '권선구',
+      '115': '팔달구',
+      '117': '영통구',
+    };
+    if (code != null && suwonMap.containsKey(code)) return suwonMap[code];
+
     final loc = item.location ?? '';
-    for (final full in _codeToFull.values) {
-      if (loc.contains(full)) return full;
+    if (region != null) {
+      for (final d in region.districts) {
+        if (loc.contains(d.fullLabel)) return d.fullLabel;
+      }
     }
-    final hay = [
-      item.summary,
-      item.description,
-      item.title,
-    ].whereType<String>().join(' ');
-    for (final full in _codeToFull.values) {
-      if (hay.contains(full)) return full;
+    for (final full in suwonMap.values) {
+      if (loc.contains(full)) return full;
     }
     return null;
   }
 
-
-  /// Map/chip shared selection: tap selected gu again or 「전체」 → clear.
   static String toggleSelection(String currentId, String tappedId) {
     if (tappedId == all.id) return all.id;
     if (currentId == tappedId) return all.id;
     return tappedId;
   }
 
-  static DiscoverDistrict byId(String id) {
-    for (final d in suwonGus) {
+  static DiscoverDistrict byId(String id, {String regionId = 'suwon'}) {
+    for (final d in forRegion(regionId)) {
+      if (d.id == id) return d;
+    }
+    // Fallback: search suwon ids for unit tests that omit regionId
+    for (final d in forRegion('suwon')) {
       if (d.id == id) return d;
     }
     return all;

@@ -39,7 +39,12 @@ jobs:
           test -f _site/manifest.json
           test -d _site/regions
           test -f _site/regions/suwon.json
-          ls -la _site _site/regions | head -40
+          test -f _site/regions/seoul.json
+          test -f _site/regions/jeju.json
+          REGION_COUNT=$(ls _site/regions/*.json 2>/dev/null | grep -v '\.gz$' | wc -l)
+          echo "region json count=$REGION_COUNT"
+          test "$REGION_COUNT" -ge 30
+          ls -la _site _site/regions | head -60
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

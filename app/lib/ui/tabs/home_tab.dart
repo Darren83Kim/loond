@@ -199,9 +199,16 @@ class _HomeTabState extends State<HomeTab> {
       ),
     ];
     if (widget.apply.isEmpty) {
-      out.add(
-        const EmptyState(message: '지금 신청 가능한 공고가 없어요'),
-      );
+      if (widget.region.applyNotProvided) {
+        out.add(_ApplyUnavailableHint(
+          preparing: widget.region.applyStatus == 'preparing',
+          onDiscover: () => widget.onQuickCategory(2),
+        ));
+      } else {
+        out.add(
+          const EmptyState(message: '지금 신청 가능한 공고가 없어요'),
+        );
+      }
     } else {
       for (final item in widget.apply.take(5)) {
         out.add(
@@ -645,6 +652,67 @@ class _TravelerReserveHint extends StatelessWidget {
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                   height: 1.35,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+/// APPLY 미제공/준비 중 — 정직한 안내 + 발견 탭 유도.
+class _ApplyUnavailableHint extends StatelessWidget {
+  const _ApplyUnavailableHint({
+    required this.preparing,
+    required this.onDiscover,
+  });
+
+  final bool preparing;
+  final VoidCallback onDiscover;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final title = preparing
+        ? '이 지역 신청 공고는 아직 준비 중이에요'
+        : '이 지역은 아직 신청 공고를 모으지 않아요';
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.55),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: theme.colorScheme.outlineVariant),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: theme.textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                '축제·행사·가볼 만한 곳은 이용할 수 있어요. 발견 탭에서 확인해 보세요.',
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                  height: 1.35,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton.icon(
+                  onPressed: onDiscover,
+                  icon: const Icon(Icons.explore_outlined, size: 18),
+                  label: const Text('발견 보기'),
                 ),
               ),
             ],

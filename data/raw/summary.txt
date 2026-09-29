@@ -1,7 +1,7 @@
-collectedAt=2026-09-29T13:16:24+09:00
+collectedAt=2026-09-29T15:28:23+09:00
 base=http://apis.data.go.kr/B551011/KorService2
-strategy=area_filter
-mode=multi_city_partition
-festivals_counts={'suwon': 17, 'yongin': 3, 'seongnam': 3, 'goyang': 9, 'bucheon': 1, 'hwaseong': 6}
-discover_counts={'suwon': 252, 'yongin': 297, 'seongnam': 161, 'goyang': 272, 'bucheon': 100, 'hwaseong': 172}
-homepages=20
+strategy=ldong_code
+mode=ldong_code_partition
+festivals_counts={'seoul': 158, 'busan': 67, 'daegu': 16, 'incheon': 22, 'gwangju': 50, 'daejeon': 14, 'ulsan': 13, 'sejong': 7, 'suwon': 17, 'seongnam': 1, 'goyang': 9, 'yongin': 3, 'bucheon': 1, 'hwaseong': 6, 'gapyeong': 4, 'paju': 7, 'changwon': 3, 'chuncheon': 9, 'gangneung': 12, 'sokcho': 4, 'chungju': 1, 'danyang': 2, 'gongju': 2, 'buyeo': 4, 'jeonju': 11, 'gunsan': 4, 'yeosu': 6, 'suncheon': 1, 'gyeongju': 7, 'andong': 10, 'tongyeong': 5, 'geoje': 4, 'jeju': 10, 'seogwipo': 10}
+discover_counts={'seoul': 2098, 'busan': 1150, 'daegu': 1081, 'incheon': 1316, 'gwangju': 1880, 'daejeon': 751, 'ulsan': 617, 'sejong': 205, 'suwon': 182, 'seongnam': 107, 'goyang': 140, 'yongin': 216, 'bucheon': 76, 'hwaseong': 131, 'gapyeong': 248, 'paju': 189, 'changwon': 317, 'chuncheon': 273, 'gangneung': 438, 'sokcho': 128, 'chungju': 245, 'danyang': 147, 'gongju': 175, 'buyeo': 180, 'jeonju': 286, 'gunsan': 240, 'yeosu': 254, 'suncheon': 132, 'gyeongju': 398, 'andong': 200, 'tongyeong': 167, 'geoje': 255, 'jeju': 839, 'seogwipo': 554}
+homepages=25
