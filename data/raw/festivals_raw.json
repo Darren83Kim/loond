@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-09-27T12:42:41+09:00",
+  "collectedAt": "2026-09-29T13:16:24+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "area_filter",
   "mode": "multi_city_partition",
@@ -28,60 +28,60 @@
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 745
+          "totalCount": 759
         },
         {
           "page": 2,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 745
+          "totalCount": 759
         },
         {
           "page": 3,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 745
+          "totalCount": 759
         },
         {
           "page": 4,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 745
+          "totalCount": 759
         },
         {
           "page": 5,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 745
+          "totalCount": 759
         },
         {
           "page": 6,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 745
+          "totalCount": 759
         },
         {
           "page": 7,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 745
+          "totalCount": 759
         },
         {
           "page": 8,
           "ok": true,
           "msg": "OK",
-          "got": 45,
-          "totalCount": 745
+          "got": 59,
+          "totalCount": 759
         }
       ],
-      "count": 745,
-      "totalCount": 745
+      "count": 759,
+      "totalCount": 759
     }
   ],
   "counts": {
@@ -92,7 +92,7 @@
     "bucheon": 1,
     "hwaseong": 6
   },
-  "dropped": 706,
+  "dropped": 720,
   "by_region_titles": {
     "suwon": [
       "경기도 문화사계 \"봄\" 경기 상상해 봄 페스타",
