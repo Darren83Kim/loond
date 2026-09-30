@@ -4,8 +4,8 @@
   "regionLabel": "부여군",
   "sido": "충남",
   "tier": "phase2",
-  "applyStatus": "not_provided",
-  "updatedAt": "2026-09-29T15:35:35+09:00",
+  "applyStatus": "national",
+  "updatedAt": "2026-09-30T11:18:32+09:00",
   "opportunities": [
     {
       "id": "buyeo-tour-2756253",
@@ -6116,9 +6116,46 @@
         "sourceUrlSource": "detail2_url",
         "phone": "041-837-2517"
       }
+    },
+    {
+      "id": "buyeo-tour-apply-2908569",
+      "region": "buyeo",
+      "title": "교육가족체험장",
+      "type": "APPLY",
+      "category": "experience_apply",
+      "summary": "교육가족체험장 — 부여군 체험·관광 정보(한국관광공사 TourAPI). 시·군청 공고가 아니라 전국 관광 데이터입니다. 예약·이용 방법은 원문에서 확인하세요. 위치: 충청남도 부여군 인세로 40-3.",
+      "description": null,
+      "startDate": null,
+      "endDate": null,
+      "applicationStart": null,
+      "applicationEnd": null,
+      "target": "방문객·관심 시민",
+      "benefit": null,
+      "location": "충청남도 부여군 인세로 40-3",
+      "organization": "한국관광공사",
+      "thumbnail": "https://tong.visitkorea.or.kr/cms/resource/34/2908534_image2_1.jpg",
+      "sourceName": "한국관광공사 TourAPI (체험·관광)",
+      "sourceUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=2908569",
+      "sourcePublishedAt": null,
+      "status": "published",
+      "opportunityScore": 55,
+      "createdAt": "2026-09-30T11:18:32+09:00",
+      "updatedAt": "2026-09-30T11:18:32+09:00",
+      "meta": {
+        "regionLabel": "부여군",
+        "contentId": "2908569",
+        "contentTypeId": "28",
+        "lDongRegnCd": "44",
+        "lDongSignguCd": "760",
+        "source": "tour_api_apply",
+        "sourceUrlSource": "visitkorea_detail_cotid",
+        "applyKind": "national_experience",
+        "pipelineNotes": "TourAPI searchKeyword2 체험* → ldong assign; honest national experience APPLY (not municipal notice)."
+      }
     }
   ],
   "counts": {
+    "APPLY": 1,
     "ENJOY": 6,
     "DISCOVER": 155
   }

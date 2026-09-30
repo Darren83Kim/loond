@@ -82,6 +82,8 @@ class _RegionPickerScreenState extends State<RegionPickerScreen> {
     switch (region.applyStatus) {
       case 'provided':
         return '신청·행사·발견';
+      case 'national':
+        return '체험·신청(관광 정보)·행사·발견';
       case 'not_provided':
         return '행사·발견 (신청 공고 미제공)';
       default:

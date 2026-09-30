@@ -1,0 +1,44 @@
+{
+  "collectedAt": "2026-09-30T11:18:20+09:00",
+  "items": [
+    {
+      "rcritNttNo": "739",
+      "title": "2026년 제3기 부산광역시인재개발원 열린강좌",
+      "target": "모두",
+      "period_raw": "2026-10-01 09:00\n\t\t\t\t\t\t\t ~ \n\t\t\t\t\t\t\t2026-11-01 18:00",
+      "applicationStart": "2026-10-01",
+      "applicationEnd": "2026-11-01",
+      "phone": "051-366-7531",
+      "dept": "전문교육과",
+      "status": "대기중",
+      "sourceUrl": "https://www.busan.go.kr/minwon/occation/view2?rcritNttNo=739",
+      "applyFormUrl": "https://www.busan.go.kr/minwon/occation/form?rcritNttNo=739"
+    },
+    {
+      "rcritNttNo": "741",
+      "title": "580돌 한글날 경축식 시민 참여자 모집",
+      "target": "모두",
+      "period_raw": "2026-09-22 09:20\n\t\t\t\t\t\t\t ~ \n\t\t\t\t\t\t\t2026-10-01 18:00",
+      "applicationStart": "2026-09-22",
+      "applicationEnd": "2026-10-01",
+      "phone": "051-888-1855",
+      "dept": "총무과",
+      "status": "신청하기",
+      "sourceUrl": "https://www.busan.go.kr/minwon/occation/view2?rcritNttNo=741",
+      "applyFormUrl": "https://www.busan.go.kr/minwon/occation/form?rcritNttNo=741"
+    },
+    {
+      "rcritNttNo": "738",
+      "title": "제11기 부산시민 도시계획 아카데미 수강생 모집",
+      "target": "모두",
+      "period_raw": "2026-09-16 09:00\n\t\t\t\t\t\t\t ~ \n\t\t\t\t\t\t\t2026-10-06 18:00",
+      "applicationStart": "2026-09-16",
+      "applicationEnd": "2026-10-06",
+      "phone": "051-888-2471",
+      "dept": "도시계획과",
+      "status": "신청하기",
+      "sourceUrl": "https://www.busan.go.kr/minwon/occation/view2?rcritNttNo=738",
+      "applyFormUrl": "https://www.busan.go.kr/minwon/occation/form?rcritNttNo=738"
+    }
+  ]
+}

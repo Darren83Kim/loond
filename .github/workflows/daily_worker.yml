@@ -67,6 +67,33 @@ jobs:
           fi
           cd worker && python -m loond_worker.culture_collect
 
+      # National experience APPLY (TourAPI keyword) — soft-fail
+      - name: Run TourAPI experience APPLY collect
+        env:
+          TOUR_API_SERVICE_KEY: ${{ secrets.TOUR_API_SERVICE_KEY }}
+          PYTHONUNBUFFERED: "1"
+        run: |
+          set -euo pipefail
+          if [ -z "${TOUR_API_SERVICE_KEY:-}" ]; then
+            echo "WARN: TOUR_API_SERVICE_KEY missing — skip tour_apply"
+            exit 0
+          fi
+          cd worker && python -m loond_worker.tour_apply_collect || {
+            echo "WARN: tour_apply_collect failed — continuing"
+            exit 0
+          }
+
+      # Busan municipal occation APPLY — soft-fail (overseas IP may block)
+      - name: Run Busan occation APPLY collect
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: |
+          set -euo pipefail
+          cd worker && python -m loond_worker.busan_collect --pages 27 || {
+            echo "WARN: busan_collect failed — continuing"
+            exit 0
+          }
+
       - name: Sync published → app assets + region feeds
         run: |
           python scripts/sync_published_assets.py

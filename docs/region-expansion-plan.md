@@ -1,6 +1,6 @@
 # 지역 확장 계획서 (Phase 1 대도시 13 · Phase 2 관광도시 19)
 
-작성: 2026-09-29 (KST) · 상태: **Phase 2 구현 완료 (2026-09-29)** — Phase 1 APPLY는 미착수  
+작성: 2026-09-29 (KST) · 상태: **Phase 2 완료 + APPLY 보강 (2026-09-30)** — 부산 시 공고 + 전국 TourAPI 체험 APPLY  
 관련: [`구현계획서.md`](구현계획서.md) §11 · [`ops/multi-city.md`](ops/multi-city.md) · [`ops/notice-source-types.md`](ops/notice-source-types.md) · [`ops/remote-region-load.md`](ops/remote-region-load.md)
 
 > 승인된 결정: 테스터 모집 전에 지역을 확장한다.  
@@ -214,3 +214,30 @@ eminwon 공통 경로: `/emwp/gov/mogaha/ntis/web/ofr/action/OfrAction.do?method
 - TourAPI 로컬 수집 api_calls=354. 문화포털 +295 ENJOY.
 - ENJOY 약함: 충주(1)·단양(2) — R31.
 - 다음: Phase 1 APPLY (수원 외 eminwon·광역시 어댑터).
+
+
+## 6. APPLY 보강 (2026-09-30)
+
+사용자 피드백: 관광 도시에서도 신청·체험 가능 정보가 비어 보이면 안 됨. APPLY를 관광 도시에서 빼지 않음.
+
+### 6-1. 부산 시 공고 (metro, 1순위)
+- 소스: 부산민원120 **행사/모집 신청** `https://www.busan.go.kr/minwon/occation`
+- 수집: `worker/loond_worker/busan_collect.py`
+- 필터: 상태 `신청하기`/`대기중`만, 주차·채용·입찰 등 블랙리스트 제외
+- 상세 URL: `.../occation/view2?rcritNttNo={id}` (GET 가능)
+- 마감일: 목록 접수기간 → `applicationEnd` (`board_period`)
+- 2026-09-30 스냅샷: 전체 261건 중 오픈 3건 → **publish 3건**
+
+### 6-2. 전국 체험 APPLY (tourist + 전 도시)
+- 소스: TourAPI `searchKeyword2` 키워드 `체험`·`체험마을`·`농촌체험`·`어촌체험`·`한옥체험`
+- 수집: `worker/loond_worker/tour_apply_collect.py`
+- 배정: 기존 법정동 코드 `assign_region`
+- 라벨: `sourceName=한국관광공사 TourAPI (체험·관광)`, summary에 **시·군청 공고 아님** 명시
+- 도시당 상한 18건. 2026-09-30: unique 483 → 배정 177건
+- `applyStatus=national` (시청 공고 파이프 전); 시청 공고 있는 도시(`suwon`/`seongnam`/`goyang`/`busan`)는 `provided`
+
+### 6-3. 남긴 것
+- 대구 pssrp·서울 공공서비스예약·인천 citynet 등 광역 시 보드 추가 미착수
+- TourAPI 숙박(`searchStay2`)은 호텔 비중이 커 APPLY에 넣지 않음
+- 문화포털 교육/체험은 관광 도시 물량이 적어 1차 보류
+- Actions에 busan/tour_apply 단계 추가(해외 IP 차단 시 soft-fail)

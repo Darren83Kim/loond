@@ -41,7 +41,7 @@ class Region {
   /// phase1 / phase2 / legacy
   final String tier;
 
-  /// provided / preparing / not_provided
+  /// provided / national / preparing / not_provided
   final String applyStatus;
 
   /// 앱에 실데이터가 실려 있는지 (manifest/피드 기준).
@@ -64,9 +64,13 @@ class Region {
     return '$nameKo시';
   }
 
-  bool get applyProvided => applyStatus == 'provided';
+  bool get applyProvided =>
+      applyStatus == 'provided' || applyStatus == 'national';
   bool get applyNotProvided =>
       applyStatus == 'not_provided' || applyStatus == 'preparing';
+
+  /// 전국 관광·문화 체험 APPLY (시청 공고 아님).
+  bool get applyNational => applyStatus == 'national';
 }
 
 class RegionDistrict {
@@ -119,7 +123,7 @@ class RegionRegistry {
       areaCode: '1',
       ldongRegn: '11',
       tier: 'phase1',
-      applyStatus: 'preparing',
+      applyStatus: 'national',
       hasPublishedData: true,
       heroAsset: _heroDefault,
       districts: [
@@ -158,7 +162,7 @@ class RegionRegistry {
       areaCode: '6',
       ldongRegn: '26',
       tier: 'phase1',
-      applyStatus: 'preparing',
+      applyStatus: 'provided',
       hasPublishedData: true,
       heroAsset: _heroDefault,
       districts: [
@@ -188,7 +192,7 @@ class RegionRegistry {
       areaCode: '4',
       ldongRegn: '27',
       tier: 'phase1',
-      applyStatus: 'preparing',
+      applyStatus: 'national',
       hasPublishedData: true,
       heroAsset: _heroDefault,
       districts: [
@@ -211,7 +215,7 @@ class RegionRegistry {
       areaCode: '2',
       ldongRegn: '28',
       tier: 'phase1',
-      applyStatus: 'preparing',
+      applyStatus: 'national',
       hasPublishedData: true,
       heroAsset: _heroDefault,
       districts: [
@@ -237,7 +241,7 @@ class RegionRegistry {
       ldongRegn: '12',
       ldongSigngu: ['210', '240', '270', '300', '330'],
       tier: 'phase1',
-      applyStatus: 'preparing',
+      applyStatus: 'national',
       hasPublishedData: true,
       heroAsset: _heroDefault,
       districts: [
@@ -256,7 +260,7 @@ class RegionRegistry {
       areaCode: '3',
       ldongRegn: '30',
       tier: 'phase1',
-      applyStatus: 'preparing',
+      applyStatus: 'national',
       hasPublishedData: true,
       heroAsset: _heroDefault,
       districts: [
@@ -275,7 +279,7 @@ class RegionRegistry {
       areaCode: '7',
       ldongRegn: '31',
       tier: 'phase1',
-      applyStatus: 'preparing',
+      applyStatus: 'national',
       hasPublishedData: true,
       heroAsset: _heroDefault,
       districts: [
@@ -294,7 +298,7 @@ class RegionRegistry {
       areaCode: '8',
       ldongRegn: '36110',
       tier: 'phase1',
-      applyStatus: 'preparing',
+      applyStatus: 'national',
       hasPublishedData: true,
       heroAsset: _heroDefault,
     ),
@@ -361,7 +365,7 @@ class RegionRegistry {
       areaCode: '31',
       ldongRegn: '41',
       tier: 'phase1',
-      applyStatus: 'preparing',
+      applyStatus: 'national',
       hasPublishedData: true,
       heroAsset: _heroDefault,
       districts: [
@@ -378,7 +382,7 @@ class RegionRegistry {
       areaCode: '31',
       ldongRegn: '41',
       tier: 'legacy',
-      applyStatus: 'preparing',
+      applyStatus: 'national',
       hasPublishedData: true,
       heroAsset: _heroDefault,
       districts: [
@@ -395,7 +399,7 @@ class RegionRegistry {
       areaCode: '31',
       ldongRegn: '41',
       tier: 'phase1',
-      applyStatus: 'preparing',
+      applyStatus: 'national',
       hasPublishedData: true,
       heroAsset: _heroDefault,
       districts: [
@@ -414,7 +418,7 @@ class RegionRegistry {
       ldongRegn: '41',
       ldongSigngu: ['820'],
       tier: 'phase2',
-      applyStatus: 'not_provided',
+      applyStatus: 'national',
       hasPublishedData: true,
       heroAsset: _heroDefault,
     ),
@@ -427,20 +431,20 @@ class RegionRegistry {
       ldongRegn: '41',
       ldongSigngu: ['480'],
       tier: 'phase2',
-      applyStatus: 'not_provided',
+      applyStatus: 'national',
       hasPublishedData: true,
       heroAsset: _heroDefault,
     ),
     // --- 강원 ---
-    Region(id: 'chuncheon', nameKo: '춘천', displayName: '춘천시', sidoKo: '강원', areaCode: '32', ldongRegn: '51', ldongSigngu: ['110'], tier: 'phase2', applyStatus: 'not_provided', hasPublishedData: true, heroAsset: _heroDefault),
-    Region(id: 'gangneung', nameKo: '강릉', displayName: '강릉시', sidoKo: '강원', areaCode: '32', ldongRegn: '51', ldongSigngu: ['150'], tier: 'phase2', applyStatus: 'not_provided', hasPublishedData: true, heroAsset: _heroDefault),
-    Region(id: 'sokcho', nameKo: '속초', displayName: '속초시', sidoKo: '강원', areaCode: '32', ldongRegn: '51', ldongSigngu: ['210'], tier: 'phase2', applyStatus: 'not_provided', hasPublishedData: true, heroAsset: _heroDefault),
+    Region(id: 'chuncheon', nameKo: '춘천', displayName: '춘천시', sidoKo: '강원', areaCode: '32', ldongRegn: '51', ldongSigngu: ['110'], tier: 'phase2', applyStatus: 'national', hasPublishedData: true, heroAsset: _heroDefault),
+    Region(id: 'gangneung', nameKo: '강릉', displayName: '강릉시', sidoKo: '강원', areaCode: '32', ldongRegn: '51', ldongSigngu: ['150'], tier: 'phase2', applyStatus: 'national', hasPublishedData: true, heroAsset: _heroDefault),
+    Region(id: 'sokcho', nameKo: '속초', displayName: '속초시', sidoKo: '강원', areaCode: '32', ldongRegn: '51', ldongSigngu: ['210'], tier: 'phase2', applyStatus: 'national', hasPublishedData: true, heroAsset: _heroDefault),
     // --- 충북 ---
-    Region(id: 'chungju', nameKo: '충주', displayName: '충주시', sidoKo: '충북', areaCode: '33', ldongRegn: '43', ldongSigngu: ['130'], tier: 'phase2', applyStatus: 'not_provided', hasPublishedData: true, heroAsset: _heroDefault),
-    Region(id: 'danyang', nameKo: '단양', displayName: '단양군', sidoKo: '충북', areaCode: '33', ldongRegn: '43', ldongSigngu: ['800'], tier: 'phase2', applyStatus: 'not_provided', hasPublishedData: true, heroAsset: _heroDefault),
+    Region(id: 'chungju', nameKo: '충주', displayName: '충주시', sidoKo: '충북', areaCode: '33', ldongRegn: '43', ldongSigngu: ['130'], tier: 'phase2', applyStatus: 'national', hasPublishedData: true, heroAsset: _heroDefault),
+    Region(id: 'danyang', nameKo: '단양', displayName: '단양군', sidoKo: '충북', areaCode: '33', ldongRegn: '43', ldongSigngu: ['800'], tier: 'phase2', applyStatus: 'national', hasPublishedData: true, heroAsset: _heroDefault),
     // --- 충남 ---
-    Region(id: 'gongju', nameKo: '공주', displayName: '공주시', sidoKo: '충남', areaCode: '34', ldongRegn: '44', ldongSigngu: ['150'], tier: 'phase2', applyStatus: 'not_provided', hasPublishedData: true, heroAsset: _heroDefault),
-    Region(id: 'buyeo', nameKo: '부여', displayName: '부여군', sidoKo: '충남', areaCode: '34', ldongRegn: '44', ldongSigngu: ['760'], tier: 'phase2', applyStatus: 'not_provided', hasPublishedData: true, heroAsset: _heroDefault),
+    Region(id: 'gongju', nameKo: '공주', displayName: '공주시', sidoKo: '충남', areaCode: '34', ldongRegn: '44', ldongSigngu: ['150'], tier: 'phase2', applyStatus: 'national', hasPublishedData: true, heroAsset: _heroDefault),
+    Region(id: 'buyeo', nameKo: '부여', displayName: '부여군', sidoKo: '충남', areaCode: '34', ldongRegn: '44', ldongSigngu: ['760'], tier: 'phase2', applyStatus: 'national', hasPublishedData: true, heroAsset: _heroDefault),
     // --- 전북 ---
     Region(
       id: 'jeonju',
@@ -450,7 +454,7 @@ class RegionRegistry {
       areaCode: '37',
       ldongRegn: '52',
       tier: 'phase2',
-      applyStatus: 'not_provided',
+      applyStatus: 'national',
       hasPublishedData: true,
       heroAsset: _heroDefault,
       districts: [
@@ -458,13 +462,13 @@ class RegionRegistry {
         RegionDistrict(id: 'd113', shortLabel: '덕진', fullLabel: '덕진구', signguCd: '113'),
       ],
     ),
-    Region(id: 'gunsan', nameKo: '군산', displayName: '군산시', sidoKo: '전북', areaCode: '37', ldongRegn: '52', ldongSigngu: ['130'], tier: 'phase2', applyStatus: 'not_provided', hasPublishedData: true, heroAsset: _heroDefault),
+    Region(id: 'gunsan', nameKo: '군산', displayName: '군산시', sidoKo: '전북', areaCode: '37', ldongRegn: '52', ldongSigngu: ['130'], tier: 'phase2', applyStatus: 'national', hasPublishedData: true, heroAsset: _heroDefault),
     // --- 전남광주 ---
-    Region(id: 'yeosu', nameKo: '여수', displayName: '여수시', sidoKo: '전남광주', areaCode: '38', ldongRegn: '12', ldongSigngu: ['130'], tier: 'phase2', applyStatus: 'not_provided', hasPublishedData: true, heroAsset: _heroDefault),
-    Region(id: 'suncheon', nameKo: '순천', displayName: '순천시', sidoKo: '전남광주', areaCode: '38', ldongRegn: '12', ldongSigngu: ['150'], tier: 'phase2', applyStatus: 'not_provided', hasPublishedData: true, heroAsset: _heroDefault),
+    Region(id: 'yeosu', nameKo: '여수', displayName: '여수시', sidoKo: '전남광주', areaCode: '38', ldongRegn: '12', ldongSigngu: ['130'], tier: 'phase2', applyStatus: 'national', hasPublishedData: true, heroAsset: _heroDefault),
+    Region(id: 'suncheon', nameKo: '순천', displayName: '순천시', sidoKo: '전남광주', areaCode: '38', ldongRegn: '12', ldongSigngu: ['150'], tier: 'phase2', applyStatus: 'national', hasPublishedData: true, heroAsset: _heroDefault),
     // --- 경북 ---
-    Region(id: 'gyeongju', nameKo: '경주', displayName: '경주시', sidoKo: '경북', areaCode: '35', ldongRegn: '47', ldongSigngu: ['130'], tier: 'phase2', applyStatus: 'not_provided', hasPublishedData: true, heroAsset: _heroDefault),
-    Region(id: 'andong', nameKo: '안동', displayName: '안동시', sidoKo: '경북', areaCode: '35', ldongRegn: '47', ldongSigngu: ['170'], tier: 'phase2', applyStatus: 'not_provided', hasPublishedData: true, heroAsset: _heroDefault),
+    Region(id: 'gyeongju', nameKo: '경주', displayName: '경주시', sidoKo: '경북', areaCode: '35', ldongRegn: '47', ldongSigngu: ['130'], tier: 'phase2', applyStatus: 'national', hasPublishedData: true, heroAsset: _heroDefault),
+    Region(id: 'andong', nameKo: '안동', displayName: '안동시', sidoKo: '경북', areaCode: '35', ldongRegn: '47', ldongSigngu: ['170'], tier: 'phase2', applyStatus: 'national', hasPublishedData: true, heroAsset: _heroDefault),
     // --- 경남 ---
     Region(
       id: 'changwon',
@@ -474,7 +478,7 @@ class RegionRegistry {
       areaCode: '36',
       ldongRegn: '48',
       tier: 'phase1',
-      applyStatus: 'preparing',
+      applyStatus: 'national',
       hasPublishedData: true,
       heroAsset: _heroDefault,
       districts: [
@@ -485,11 +489,11 @@ class RegionRegistry {
         RegionDistrict(id: 'd129', shortLabel: '진해', fullLabel: '진해구', signguCd: '129'),
       ],
     ),
-    Region(id: 'tongyeong', nameKo: '통영', displayName: '통영시', sidoKo: '경남', areaCode: '36', ldongRegn: '48', ldongSigngu: ['220'], tier: 'phase2', applyStatus: 'not_provided', hasPublishedData: true, heroAsset: _heroDefault),
-    Region(id: 'geoje', nameKo: '거제', displayName: '거제시', sidoKo: '경남', areaCode: '36', ldongRegn: '48', ldongSigngu: ['310'], tier: 'phase2', applyStatus: 'not_provided', hasPublishedData: true, heroAsset: _heroDefault),
+    Region(id: 'tongyeong', nameKo: '통영', displayName: '통영시', sidoKo: '경남', areaCode: '36', ldongRegn: '48', ldongSigngu: ['220'], tier: 'phase2', applyStatus: 'national', hasPublishedData: true, heroAsset: _heroDefault),
+    Region(id: 'geoje', nameKo: '거제', displayName: '거제시', sidoKo: '경남', areaCode: '36', ldongRegn: '48', ldongSigngu: ['310'], tier: 'phase2', applyStatus: 'national', hasPublishedData: true, heroAsset: _heroDefault),
     // --- 제주 ---
-    Region(id: 'jeju', nameKo: '제주', displayName: '제주시', sidoKo: '제주', areaCode: '39', ldongRegn: '50', ldongSigngu: ['110'], tier: 'phase2', applyStatus: 'not_provided', hasPublishedData: true, heroAsset: _heroDefault),
-    Region(id: 'seogwipo', nameKo: '서귀포', displayName: '서귀포시', sidoKo: '제주', areaCode: '39', ldongRegn: '50', ldongSigngu: ['130'], tier: 'phase2', applyStatus: 'not_provided', hasPublishedData: true, heroAsset: _heroDefault),
+    Region(id: 'jeju', nameKo: '제주', displayName: '제주시', sidoKo: '제주', areaCode: '39', ldongRegn: '50', ldongSigngu: ['110'], tier: 'phase2', applyStatus: 'national', hasPublishedData: true, heroAsset: _heroDefault),
+    Region(id: 'seogwipo', nameKo: '서귀포', displayName: '서귀포시', sidoKo: '제주', areaCode: '39', ldongRegn: '50', ldongSigngu: ['130'], tier: 'phase2', applyStatus: 'national', hasPublishedData: true, heroAsset: _heroDefault),
   ];
 
   /// 인기 칩 — 수원 우선, 이어서 Phase 1·legacy.

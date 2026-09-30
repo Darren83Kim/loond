@@ -4,8 +4,8 @@
   "regionLabel": "창원시",
   "sido": "경남",
   "tier": "phase1",
-  "applyStatus": "preparing",
-  "updatedAt": "2026-09-29T15:35:35+09:00",
+  "applyStatus": "national",
+  "updatedAt": "2026-09-30T11:18:32+09:00",
   "opportunities": [
     {
       "id": "changwon-tour-637693",
@@ -7885,9 +7885,82 @@
         "phone": "010-7725-5722",
         "price": "전석 10,000원"
       }
+    },
+    {
+      "id": "changwon-tour-apply-2726700",
+      "region": "changwon",
+      "title": "양촌여울체험캠프",
+      "type": "APPLY",
+      "category": "experience_apply",
+      "summary": "양촌여울체험캠프 — 창원시 체험·관광 정보(한국관광공사 TourAPI). 시·군청 공고가 아니라 전국 관광 데이터입니다. 예약·이용 방법은 원문에서 확인하세요. 위치: 경상남도 창원시 마산합포구 진전면 의산삼일로 60.",
+      "description": null,
+      "startDate": null,
+      "endDate": null,
+      "applicationStart": null,
+      "applicationEnd": null,
+      "target": "방문객·관심 시민",
+      "benefit": null,
+      "location": "경상남도 창원시 마산합포구 진전면 의산삼일로 60",
+      "organization": "한국관광공사",
+      "thumbnail": "https://tong.visitkorea.or.kr/cms/resource/01/2757201_image2_1.jpg",
+      "sourceName": "한국관광공사 TourAPI (체험·관광)",
+      "sourceUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=2726700",
+      "sourcePublishedAt": null,
+      "status": "published",
+      "opportunityScore": 55,
+      "createdAt": "2026-09-30T11:18:32+09:00",
+      "updatedAt": "2026-09-30T11:18:32+09:00",
+      "meta": {
+        "regionLabel": "창원시",
+        "contentId": "2726700",
+        "contentTypeId": "28",
+        "lDongRegnCd": "48",
+        "lDongSignguCd": "125",
+        "source": "tour_api_apply",
+        "sourceUrlSource": "visitkorea_detail_cotid",
+        "applyKind": "national_experience",
+        "pipelineNotes": "TourAPI searchKeyword2 체험* → ldong assign; honest national experience APPLY (not municipal notice)."
+      }
+    },
+    {
+      "id": "changwon-tour-apply-1904774",
+      "region": "changwon",
+      "title": "창원과학체험관",
+      "type": "APPLY",
+      "category": "experience_apply",
+      "summary": "창원과학체험관 — 창원시 체험·관광 정보(한국관광공사 TourAPI). 시·군청 공고가 아니라 전국 관광 데이터입니다. 예약·이용 방법은 원문에서 확인하세요. 위치: 경상남도 창원시 성산구 충혼로72번길 16 (중앙동).",
+      "description": null,
+      "startDate": null,
+      "endDate": null,
+      "applicationStart": null,
+      "applicationEnd": null,
+      "target": "방문객·관심 시민",
+      "benefit": null,
+      "location": "경상남도 창원시 성산구 충혼로72번길 16 (중앙동)",
+      "organization": "한국관광공사",
+      "thumbnail": "https://tong.visitkorea.or.kr/cms/resource/26/3070126_image2_1.JPG",
+      "sourceName": "한국관광공사 TourAPI (체험·관광)",
+      "sourceUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=1904774",
+      "sourcePublishedAt": null,
+      "status": "published",
+      "opportunityScore": 55,
+      "createdAt": "2026-09-30T11:18:32+09:00",
+      "updatedAt": "2026-09-30T11:18:32+09:00",
+      "meta": {
+        "regionLabel": "창원시",
+        "contentId": "1904774",
+        "contentTypeId": "14",
+        "lDongRegnCd": "48",
+        "lDongSignguCd": "123",
+        "source": "tour_api_apply",
+        "sourceUrlSource": "visitkorea_detail_cotid",
+        "applyKind": "national_experience",
+        "pipelineNotes": "TourAPI searchKeyword2 체험* → ldong assign; honest national experience APPLY (not municipal notice)."
+      }
     }
   ],
   "counts": {
+    "APPLY": 2,
     "ENJOY": 11,
     "DISCOVER": 197
   }

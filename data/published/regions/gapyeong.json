@@ -4,8 +4,8 @@
   "regionLabel": "가평군",
   "sido": "경기",
   "tier": "phase2",
-  "applyStatus": "not_provided",
-  "updatedAt": "2026-09-29T15:35:35+09:00",
+  "applyStatus": "national",
+  "updatedAt": "2026-09-30T11:18:32+09:00",
   "opportunities": [
     {
       "id": "gapyeong-tour-3112269",
@@ -5250,9 +5250,82 @@
         "sourceUrlSource": "visitkorea_detail_cotid",
         "pipelineNotes": "multi-city TourAPI KorService2; region=gapyeong; ldong_code assign; sourceUrl via visitkorea_detail_cotid."
       }
+    },
+    {
+      "id": "gapyeong-tour-apply-2789687",
+      "region": "gapyeong",
+      "title": "설곡옻샘체험마을",
+      "type": "APPLY",
+      "category": "experience_apply",
+      "summary": "설곡옻샘체험마을 — 가평군 체험·관광 정보(한국관광공사 TourAPI). 시·군청 공고가 아니라 전국 관광 데이터입니다. 예약·이용 방법은 원문에서 확인하세요. 위치: 경기도 가평군 설악면 묵안로654번길 33-13.",
+      "description": null,
+      "startDate": null,
+      "endDate": null,
+      "applicationStart": null,
+      "applicationEnd": null,
+      "target": "방문객·관심 시민",
+      "benefit": null,
+      "location": "경기도 가평군 설악면 묵안로654번길 33-13",
+      "organization": "한국관광공사",
+      "thumbnail": "https://tong.visitkorea.or.kr/cms/resource/88/3546988_image2_1.jpg",
+      "sourceName": "한국관광공사 TourAPI (체험·관광)",
+      "sourceUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=2789687",
+      "sourcePublishedAt": null,
+      "status": "published",
+      "opportunityScore": 55,
+      "createdAt": "2026-09-30T11:18:32+09:00",
+      "updatedAt": "2026-09-30T11:18:32+09:00",
+      "meta": {
+        "regionLabel": "가평군",
+        "contentId": "2789687",
+        "contentTypeId": "12",
+        "lDongRegnCd": "41",
+        "lDongSignguCd": "820",
+        "source": "tour_api_apply",
+        "sourceUrlSource": "visitkorea_detail_cotid",
+        "applyKind": "national_experience",
+        "pipelineNotes": "TourAPI searchKeyword2 체험* → ldong assign; honest national experience APPLY (not municipal notice)."
+      }
+    },
+    {
+      "id": "gapyeong-tour-apply-2012017",
+      "region": "gapyeong",
+      "title": "가평에서 만나보는 유럽, 이색체험 여행",
+      "type": "APPLY",
+      "category": "experience_apply",
+      "summary": "가평에서 만나보는 유럽, 이색체험 여행 — 가평군 체험·관광 정보(한국관광공사 TourAPI). 시·군청 공고가 아니라 전국 관광 데이터입니다. 예약·이용 방법은 원문에서 확인하세요.",
+      "description": null,
+      "startDate": null,
+      "endDate": null,
+      "applicationStart": null,
+      "applicationEnd": null,
+      "target": "방문객·관심 시민",
+      "benefit": null,
+      "location": null,
+      "organization": "한국관광공사",
+      "thumbnail": "",
+      "sourceName": "한국관광공사 TourAPI (체험·관광)",
+      "sourceUrl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=2012017",
+      "sourcePublishedAt": null,
+      "status": "published",
+      "opportunityScore": 55,
+      "createdAt": "2026-09-30T11:18:32+09:00",
+      "updatedAt": "2026-09-30T11:18:32+09:00",
+      "meta": {
+        "regionLabel": "가평군",
+        "contentId": "2012017",
+        "contentTypeId": "25",
+        "lDongRegnCd": "",
+        "lDongSignguCd": "",
+        "source": "tour_api_apply",
+        "sourceUrlSource": "visitkorea_detail_cotid",
+        "applyKind": "national_experience",
+        "pipelineNotes": "TourAPI searchKeyword2 체험* → ldong assign; honest national experience APPLY (not municipal notice)."
+      }
     }
   ],
   "counts": {
+    "APPLY": 2,
     "ENJOY": 4,
     "DISCOVER": 134
   }
