@@ -175,3 +175,5 @@ flutter build appbundle
 - AAB: `app/build/app/outputs/bundle/release/app-release.aab`
 - 서명: `app/android/key.properties`, `app/android/upload-keystore.jks` (로컬만)
 - 원격 피드: `https://darren83kim.github.io/loond/`
+
+다음 단계: [프로덕션 출시 전 체크리스트](production-launch-checklist.md)
