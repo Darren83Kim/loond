@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-10-03T12:49:23+09:00",
+  "collectedAt": "2026-10-04T13:20:48+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "ldong_code",
   "mode": "ldong_code_partition",
