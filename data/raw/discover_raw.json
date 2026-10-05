@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-10-04T13:20:48+09:00",
+  "collectedAt": "2026-10-05T13:05:23+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "ldong_code",
   "mode": "ldong_code_partition",
@@ -43,10 +43,10 @@
   "by_type_summary": {
     "12": {
       "category": "tour_spot",
-      "assigned": 5072,
-      "unique_total": 11516,
+      "assigned": 5071,
+      "unique_total": 11515,
       "by_region": {
-        "seoul": 773,
+        "seoul": 772,
         "busan": 351,
         "daegu": 321,
         "incheon": 459,
@@ -86,16 +86,16 @@
         "ok": true,
         "msg": "OK",
         "got": 100,
-        "totalCount": 773,
+        "totalCount": 772,
         "lDongRegnCd": "11"
       }
     },
     "14": {
       "category": "culture_facility",
-      "assigned": 1720,
-      "unique_total": 2751,
+      "assigned": 1721,
+      "unique_total": 2752,
       "by_region": {
-        "seoul": 575,
+        "seoul": 576,
         "busan": 123,
         "daegu": 89,
         "incheon": 106,
@@ -135,7 +135,7 @@
         "ok": true,
         "msg": "OK",
         "got": 100,
-        "totalCount": 575,
+        "totalCount": 576,
         "lDongRegnCd": "11"
       }
     },
@@ -8440,33 +8440,6 @@
         "lclsSystm1": "VE",
         "lclsSystm2": "VE04",
         "lclsSystm3": "VE040100"
-      },
-      {
-        "addr1": "서울특별시 종로구 자하문로17길 12-11 (옥인동)",
-        "addr2": "상촌재",
-        "areacode": "1",
-        "cat1": "A02",
-        "cat2": "A0203",
-        "cat3": "A02030200",
-        "contentid": "2993396",
-        "contenttypeid": "12",
-        "createdtime": "20230711164536",
-        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/04/3056504_image2_1.jpg",
-        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/04/3056504_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "mapx": "126.9697547156",
-        "mapy": "37.5819273005",
-        "mlevel": "6",
-        "modifiedtime": "20251106111823",
-        "sigungucode": "23",
-        "tel": "",
-        "title": "상촌재",
-        "zipcode": "03035",
-        "lDongRegnCd": "11",
-        "lDongSignguCd": "110",
-        "lclsSystm1": "EX",
-        "lclsSystm2": "EX01",
-        "lclsSystm3": "EX010100"
       },
       {
         "addr1": "서울특별시 용산구 이촌로 80-8",
@@ -27151,6 +27124,33 @@
         "lclsSystm1": "VE",
         "lclsSystm2": "VE07",
         "lclsSystm3": "VE070600"
+      },
+      {
+        "addr1": "서울특별시 종로구 자하문로17길 12-11 (옥인동)",
+        "addr2": "상촌재",
+        "areacode": "",
+        "cat1": "",
+        "cat2": "",
+        "cat3": "",
+        "contentid": "2993396",
+        "contenttypeid": "14",
+        "createdtime": "20230711164536",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/04/3056504_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/04/3056504_image3_1.jpg",
+        "cpyrhtDivCd": "Type3",
+        "mapx": "126.9697396096",
+        "mapy": "37.5818739876",
+        "mlevel": "6",
+        "modifiedtime": "20261004013001",
+        "sigungucode": "",
+        "tel": "",
+        "title": "상촌재",
+        "zipcode": "03035",
+        "lDongRegnCd": "11",
+        "lDongSignguCd": "110",
+        "lclsSystm1": "VE",
+        "lclsSystm2": "VE12",
+        "lclsSystm3": "VE120300"
       },
       {
         "addr1": "서울특별시 서초구 고무래로8길 4 (반포동)",
