@@ -1,4 +1,4 @@
-collectedAt=2026-10-09T13:36:11+09:00
+collectedAt=2026-10-10T13:22:03+09:00
 base=http://apis.data.go.kr/B551011/KorService2
 strategy=ldong_code
 mode=ldong_code_partition
