@@ -102,10 +102,10 @@ EN: *What changes did you make based on your closed test?* (*Describe any change
 EN: *How did you decide that your app is ready for production?*
 
 **KO 초안**
-> 12명이 14일 이상 사용하는 동안 핵심 흐름(지역 전환, 신청·축제·명소 목록, 원문 보기)을 실기기에서 점검했고, 출시 체크리스트로 UI 다듬기, 실제 AdMob 광고 연동, 남은 광역시 신청 게시판 적용(또는 '미제공' 표시)을 확인했습니다. 스토어 면책 문구·출처가 실제 동작과 일치하고 데이터 보안·콘텐츠 등급 설문을 완료했습니다. [동수님 확인: 체크리스트 완료 여부·Vitals 크래시/ANR 수치]
+> 12명이 14일 이상 사용하는 동안 핵심 흐름(지역 전환, 신청·축제·명소 목록, 원문 보기)을 실기기에서 점검했고, 스토어 면책 문구·출처를 실제 동작에 맞게 수정했습니다. 프로덕션 출시 전 체크리스트에 따라 UI 다듬기, 실제 AdMob 광고 연동, 남은 광역시 신청 게시판 적용(미적용 지역은 '미제공' 표시), 데이터 보안·콘텐츠 등급 설문 최종 확인을 진행 중이며 완료 후 출시합니다. [동수님 확인: 완료 여부]
 
 **EN**
-> Core flows (region switching, apply/festival/place lists, official-source links) were checked on real devices during 14+ days with 12 testers. Launch checklist covers UI polish, live AdMob ads, remaining metro apply boards (or honest "unavailable" state). Store disclaimer/sources match the app; Data safety and content rating done. [TO CONFIRM checklist status & Vitals]
+> Core flows (region switching, apply/festival/place lists, official-source links) were checked on real devices during 14+ days with 12 testers, and the store disclaimer/sources were corrected to match the app. Per our launch checklist, UI polish, live AdMob ads, remaining metro apply boards (honest "unavailable" state otherwise), and final Data safety / content rating review are planned or in progress and will be completed before release. [TO CONFIRM completion status]
 
 ### (조건부) Q10. 이번에는 무엇을 다르게 했나요?
 EN: *What did you do differently this time?* — "테스트 계속" 판정 후 재신청 시에만 표시. 현재 해당 없음.
