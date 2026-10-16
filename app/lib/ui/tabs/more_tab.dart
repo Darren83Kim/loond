@@ -4,6 +4,8 @@ import '../../legal/service_disclaimer.dart';
 import '../../util/open_url.dart';
 import '../service_info_screen.dart';
 import '../settings_screen.dart' show kPrivacyPolicyUrl;
+import '../widgets/app_version_tile.dart';
+import '../widgets/privacy_options_tile.dart';
 
 /// 더보기 — 설정·개인정보·지역 변경 · 서비스 안내/데이터 출처.
 class MoreTab extends StatelessWidget {
@@ -80,6 +82,7 @@ class MoreTab extends StatelessWidget {
           trailing: const Icon(Icons.open_in_new, size: 18),
           onTap: () => _openPrivacy(context),
         ),
+        const PrivacyOptionsTile(),
         const Divider(),
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
@@ -148,10 +151,7 @@ class MoreTab extends StatelessWidget {
             ),
           ),
         ),
-        const ListTile(
-          title: Text('앱 정보'),
-          subtitle: Text('$kAppDisplayName 0.1.7 · 민간 비제휴 안내'),
-        ),
+        const AppVersionTile(),
         const ListTile(
           title: Text('문의'),
           subtitle: Text(kSupportEmail),

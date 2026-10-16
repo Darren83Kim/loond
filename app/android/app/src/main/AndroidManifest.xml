@@ -28,7 +28,7 @@
             android:value="false"/>
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            android:value="${admobAppId}"/>
 
         <!-- Prevent auto WorkManager init crash with R8/AdMob on older devices; Ads init on demand. -->
         <provider

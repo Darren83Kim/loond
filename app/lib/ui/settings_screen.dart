@@ -4,8 +4,10 @@ import 'package:flutter/services.dart';
 import '../legal/service_disclaimer.dart';
 import '../util/open_url.dart';
 import 'service_info_screen.dart';
+import 'widgets/app_version_tile.dart';
+import 'widgets/privacy_options_tile.dart';
 
-/// Privacy policy — raw GitHub until a hosted URL is set for store release.
+/// Privacy policy page linked from the app and Play Console.
 const kPrivacyPolicyUrl =
     'https://github.com/Darren83Kim/loond/blob/main/docs/legal/privacy-policy.md';
 
@@ -55,12 +57,11 @@ class SettingsScreen extends StatelessWidget {
           ),
           ListTile(
             title: const Text('개인정보 처리방침'),
-            subtitle: const Text(
-              '탭하여 보기 · 배포 시 URL 교체 가능',
-            ),
+            subtitle: const Text('광고·지역 정보 안내를 포함합니다'),
             trailing: const Icon(Icons.open_in_new, size: 18),
             onTap: () => _openPrivacy(context),
           ),
+          const PrivacyOptionsTile(),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
             child: Column(
@@ -98,10 +99,7 @@ class SettingsScreen extends StatelessWidget {
             onTap: () => _copyEmail(context),
           ),
           const Divider(),
-          const ListTile(
-            title: Text('앱 정보'),
-            subtitle: Text('$kAppDisplayName 0.1.7 · 민간 비제휴 안내'),
-          ),
+          const AppVersionTile(),
         ],
       ),
     );

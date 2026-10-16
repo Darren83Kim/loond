@@ -27,9 +27,9 @@
       "displayName": "부산",
       "sido": "부산",
       "path": "busan.json",
-      "etag": "sha256:5f2725c0051c4c8a52a0af50218a66ce305ad016e833c4e979cbbeed8883547b",
+      "etag": "sha256:ed53268bead898920bed457d3aded3eb4d688f7f0c28500235bcc768d8d905c8",
       "bytes": 479511,
-      "bytesGzip": 28442,
+      "bytesGzip": 28443,
       "counts": {
         "APPLY": 11,
         "ENJOY": 93,
@@ -37,7 +37,7 @@
       },
       "depth": "deep",
       "tier": "phase1",
-      "applyStatus": "provided"
+      "applyStatus": "national"
     },
     {
       "id": "daegu",

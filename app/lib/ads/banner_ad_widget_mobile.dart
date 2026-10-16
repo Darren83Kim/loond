@@ -4,6 +4,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../analytics/analytics_stub.dart';
 import '../theme/app_theme.dart';
 import 'ad_config.dart';
+import 'ads_consent.dart';
 
 /// Bottom banner with 「광고」 label. Fixed slot height; no-op when ads disabled.
 class BannerAdWidget extends StatefulWidget {
@@ -16,11 +17,33 @@ class BannerAdWidget extends StatefulWidget {
 class _BannerAdWidgetState extends State<BannerAdWidget> {
   BannerAd? _banner;
   bool _loaded = false;
+  bool _started = false;
+
+  bool get _allowed =>
+      AdConfig.adsEnabled && AdsConsent.instance.canRequestAds;
 
   @override
   void initState() {
     super.initState();
-    if (!AdConfig.adsEnabled) return;
+    AdsConsent.instance.addListener(_onConsent);
+    _maybeLoad();
+  }
+
+  void _onConsent() {
+    if (!mounted) return;
+    if (_allowed) {
+      _maybeLoad();
+    } else {
+      _banner?.dispose();
+      _banner = null;
+      _started = false;
+      setState(() => _loaded = false);
+    }
+  }
+
+  void _maybeLoad() {
+    if (!_allowed || _started || _banner != null) return;
+    _started = true;
     _load();
   }
 
@@ -43,8 +66,8 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
         },
         onAdFailedToLoad: (ad, error) {
           ad.dispose();
-          // ignore: avoid_print
-          print('[ads] banner failed: $error');
+          _started = false;
+          debugPrint('[ads] banner failed: $error');
         },
       ),
     );
@@ -53,13 +76,14 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
 
   @override
   void dispose() {
+    AdsConsent.instance.removeListener(_onConsent);
     _banner?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!AdConfig.adsEnabled) {
+    if (!_allowed) {
       return const SizedBox.shrink();
     }
     final h = AdSize.banner.height.toDouble();
