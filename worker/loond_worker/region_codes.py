@@ -74,7 +74,8 @@ REGIONS: Final[tuple[dict[str, Any], ...]] = (
      'display_name': '부산',
      'sido_ko': '부산',
      'tier': 'phase1',
-     'apply_status': 'provided',
+     # City occation rows absent as of 2026-10-16. Do not claim a city board.
+     'apply_status': 'national',
      'ldong_regn': '26',
      'districts': (('110', '중구'),
                    ('140', '서구'),

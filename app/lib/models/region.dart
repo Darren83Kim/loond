@@ -162,7 +162,8 @@ class RegionRegistry {
       areaCode: '6',
       ldongRegn: '26',
       tier: 'phase1',
-      applyStatus: 'provided',
+      // City occation rows are absent; do not claim a municipal apply board.
+      applyStatus: 'national',
       hasPublishedData: true,
       heroAsset: _heroDefault,
       districts: [
