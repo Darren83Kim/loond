@@ -18,7 +18,8 @@ const String kDisclaimerBody =
     '공개된 고시·공고·행사 정보를 모아 요약만 보여 드리고, '
     '신청·자격·일정은 각 항목의 「공식 원문 보기」에서 확인하세요.';
 
-/// Official sources we actually use (verified HTTP 200 where noted).
+/// Official sources listed on the disclaimer screen.
+/// Hosts that loaded for the 2026-10-21 Play reviewer (outside Korea).
 class OfficialSource {
   const OfficialSource({
     required this.label,
@@ -33,28 +34,17 @@ class OfficialSource {
 
 const List<OfficialSource> kOfficialSources = [
   OfficialSource(
-    label: '수원특례시 포털',
-    url: 'https://www.suwon.go.kr',
-    note: '시 고시·공고·예약 등',
-  ),
-  OfficialSource(
-    label: '수원 복지 안내 예시 (청년기본소득)',
-    url:
-        'https://www.suwon.go.kr/sw-www/deptHome/dep_welfare/welfare14/welfare14-04/welfare14-04-03.jsp',
-    note: '.go.kr 복지 페이지',
-  ),
-  OfficialSource(
     label: '한국관광공사 VisitKorea',
-    url: 'https://korean.visitkorea.or.kr',
-    note: '관광·행사 연계 (TourAPI)',
+    url: 'https://english.visitkorea.or.kr',
+    note: '관광·행사 정보',
   ),
   OfficialSource(
-    label: '공공데이터포털',
-    url: 'https://www.data.go.kr',
-    note: 'TourAPI(KorService2) 제공',
+    label: '한국관광공사 TourAPI',
+    url: 'https://api.visitkorea.or.kr',
+    note: '관광 정보 공개 API',
   ),
 ];
 
 const String kPerItemSourceNote =
-    '그 밖의 항목도 각 상세 화면의 「공식 원문 보기」에 표시된 해당 기관 원문 URL을 따릅니다. '
-    '도시명만 나열하지 않으며, 원문 링크가 없는 지역명을 출처로 적지 않습니다.';
+    '지역별 고시·공고·복지 항목은 각 상세 화면의 「공식 원문 보기」에 '
+    '해당 기관(지자체 등)의 원문 페이지 링크가 표시되며, 모든 항목은 그 원문을 따릅니다.';

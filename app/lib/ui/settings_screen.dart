@@ -80,9 +80,8 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '대표 출처: https://www.suwon.go.kr · '
-                  'https://korean.visitkorea.or.kr · '
-                  'https://www.data.go.kr',
+                  '대표 출처: https://english.visitkorea.or.kr · '
+                  'https://api.visitkorea.or.kr',
                   style: TextStyle(
                     fontSize: 12,
                     height: 1.35,

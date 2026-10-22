@@ -7,14 +7,9 @@ import '../../models/opportunity.dart';
 import '../../models/region.dart';
 import '../../theme/app_theme.dart';
 import '../../util/benefit_matching.dart';
-import '../../util/open_url.dart';
 import '../benefit_profile_screen.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/opportunity_card.dart';
-
-/// Official portals — external info only (no scrape / no API).
-final Uri _bokjiroUri = Uri.parse('https://www.bokjiro.go.kr/');
-final Uri _bojomgeum24Uri = Uri.parse('https://www.gov.kr/portal/main');
 
 /// 내 기회 — 저장한 기회 + 맞춤 혜택(프로필) + 관심 키워드(로컬 영속).
 class MyChanceTab extends StatefulWidget {
@@ -136,10 +131,6 @@ class _MyChanceTabState extends State<MyChanceTab> {
       profile: _profile,
       regionId: widget.region.id,
     );
-  }
-
-  Future<void> _openExternal(Uri uri) async {
-    await openOutboundUrl(uri);
   }
 
   @override
@@ -363,8 +354,6 @@ class _MyChanceTabState extends State<MyChanceTab> {
             _BenefitEmptyCard(
               profileConfigured: _profile.isConfigured,
               hintRelatedApply: related.isNotEmpty,
-              onOpenBokjiro: () => _openExternal(_bokjiroUri),
-              onOpenBojomgeum: () => _openExternal(_bojomgeum24Uri),
             )
           else
             ...matched.map(
@@ -440,14 +429,10 @@ class _BenefitEmptyCard extends StatelessWidget {
   const _BenefitEmptyCard({
     required this.profileConfigured,
     required this.hintRelatedApply,
-    required this.onOpenBokjiro,
-    required this.onOpenBojomgeum,
   });
 
   final bool profileConfigured;
   final bool hintRelatedApply;
-  final VoidCallback onOpenBokjiro;
-  final VoidCallback onOpenBojomgeum;
 
   @override
   Widget build(BuildContext context) {
@@ -492,8 +477,8 @@ class _BenefitEmptyCard extends StatelessWidget {
                         Text(
                           profileConfigured
                               ? (hintRelatedApply
-                                  ? '신청 공고는 아래에 「관련 신청」으로 따로 보여 드려요. 복지로·보조금24에서도 더 찾아볼 수 있어요.'
-                                  : '조건은 저장되어 있어요. 복지로·보조금24에서도 더 찾아볼 수 있어요.')
+                                  ? '신청 공고는 아래에 「관련 신청」으로 따로 보여 드려요.'
+                                  : '조건은 저장되어 있어요. 준비되면 이 목록에 보여 드릴게요.')
                               : '관심 키워드를 골라 두면 혜택이 열릴 때 바로 보여줄게요.',
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: theme.colorScheme.onSurfaceVariant,
@@ -504,23 +489,6 @@ class _BenefitEmptyCard extends StatelessWidget {
                   ),
                 ],
               ),
-              if (profileConfigured) ...[
-                const SizedBox(height: 12),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    OutlinedButton(
-                      onPressed: onOpenBokjiro,
-                      child: const Text('복지로 보기'),
-                    ),
-                    OutlinedButton(
-                      onPressed: onOpenBojomgeum,
-                      child: const Text('보조금24 보기'),
-                    ),
-                  ],
-                ),
-              ],
             ],
           ),
         ),
