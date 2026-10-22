@@ -1,8 +1,91 @@
 # Play 정책 재제출 — Misleading Claims (혼동을 야기하는 주장)
 
+## 2026-10-21 거절 — 0.1.10 (versionCode 11) → 0.1.11+12
+
+- 일시: **2026-10-21**
+- 거절 빌드: **0.1.10** (versionCode **11**)
+- 앱: **로온드** (`com.loond.loond`)
+- 정책: Misleading Claims
+- 원인: 리뷰어(한국 밖으로 추정)가 스토어·앱에 적은 정부 출처 링크에 접속하지 못함. 해외 네트워크에서 `.go.kr` 사이트가 모두 타임아웃되고, `korean.visitkorea.or.kr`과 `data.go.kr`도 타임아웃. 열린 주소는 `https://english.visitkorea.or.kr`과 `https://api.visitkorea.or.kr`뿐.
+- 조치:
+  - 인앱 「서비스 안내 / 데이터 출처」(`app/lib/legal/service_disclaimer.dart`)의 나열 URL을 VisitKorea 영문·TourAPI 두 개로 교체
+  - `suwon.go.kr`, 수원 복지 딥링크, `korean.visitkorea.or.kr`, `data.go.kr`을 그 화면과 설정 출처 문구에서 제거
+  - 지역 고시·공고·복지 항목은 각 상세의 「공식 원문 보기」로 발행 기관 원문 페이지에 연결된다고 한 줄 추가
+  - 비제휴·비공식 면책은 그대로 앞에 유지
+  - 아래 스토어 긴 설명(ko-KR·en)을 같은 출처로 교체
+  - 앱 버전 `0.1.11+12` (`app/pubspec.yaml`)
+- 바꾸지 않음: 데이터에서 오는 항목별 원문 링크, 내 기회 빈 상태의 복지로·보조금24 버튼, 서명·R8·minSdk
+
+### 콘솔 붙여넣기 — 짧은 설명 (변경 없음)
+```
+민간 비제휴 안내 앱입니다. 공개 공고를 모아 「공식 원문 보기」로만 안내합니다.
+```
+
+### 콘솔 붙여넣기 — 긴 설명 (ko-KR)
+```
+【중요 · 면책】로온드는 민간이 만든 비제휴·비공식 안내 앱입니다. 정부·지자체·공공기관을 대표하지 않으며, 제휴·위탁·운영 관계가 없습니다. 공공 프로그램 신청·접수를 이 앱에서 대행하지 않습니다.
+
+로온드는 공개된 고시·공고·행사·복지·관광 정보를 모아 요약만 보여 드립니다. 회원가입 없이 훑어보고, 일정·자격·접수 방법은 각 항목 상세 화면의 「공식 원문 보기」로 이동해 해당 기관의 원문 페이지에서 확인·신청하세요.
+
+■ 데이터 출처 (실제로 사용하는 공식 출처)
+• 한국관광공사 VisitKorea (관광·행사 정보): https://english.visitkorea.or.kr
+• 한국관광공사 TourAPI (관광 정보 공개 API): https://api.visitkorea.or.kr
+• 지역별 고시·공고·복지 항목은 각 상세 화면의 「공식 원문 보기」에 해당 기관(지자체 등)의 원문 페이지 링크가 표시되며, 모든 항목은 그 원문을 따릅니다.
+
+■ 이런 분께 맞춰요
+• 신청 마감이 가까운 공고를 빠르게 보고 싶을 때
+• 주말에 즐길 행사·관광 정보를 한 목록에서 보고 싶을 때
+• 회원가입·점수·복잡한 알림 없이 원문만 확인하고 싶을 때
+
+■ 주요 기능
+• NOW: 지금 신청·참여 가능한 기회
+• ANYTIME: 언제든 둘러보는 발견 콘텐츠
+• 상세에서 일정·요약·출처를 확인한 뒤 「공식 원문 보기」로 해당 기관 원문 페이지로 이동
+• 더보기 → 「서비스 안내 / 데이터 출처」에서 면책·출처 확인
+• 신청 마감이 지난 공고는 목록에서 제외 (데이터에는 남을 수 있음)
+
+■ 다시 한 번 면책
+로온드는 정부·지자체 공식 앱이 아니며 공공기관을 대표하지 않습니다. 정보는 공개 자료를 모아 안내할 뿐이며, 일정·자격·접수 방법·수급 여부·법적 효력은 반드시 각 항목에 연결된 해당 기관의 공식 원문에서 확인·신청하세요.
+```
+
+### Console paste — full description (en)
+```
+[IMPORTANT · DISCLAIMER] Loond is a private, unofficial information app. It is NOT affiliated with, endorsed by, or operated on behalf of any government, local government, or public institution, and it does not represent them. Loond does not process or submit applications for any public program.
+
+Loond collects publicly available notices, events, welfare and tourism information in Korea and shows short summaries. Browse without signing up, then confirm schedules, eligibility and how to apply on the original institution page via "View official source" on each item's detail screen.
+
+■ Data sources (official sources the app actually uses)
+• Korea Tourism Organization – VisitKorea (tourism & events): https://english.visitkorea.or.kr
+• Korea Tourism Organization – TourAPI (open tourism data API): https://api.visitkorea.or.kr
+• Local notices, announcements and welfare items: each item's detail screen links to the original page of the issuing institution (e.g. the local government), and every item follows that original source.
+
+■ Good for
+• Quickly checking notices with approaching deadlines
+• Seeing weekend events and tourism info in one list
+• Checking the original source without sign-up, points or complex notifications
+
+■ Features
+• NOW: opportunities you can apply for or join right now
+• ANYTIME: discovery content to browse any time
+• Check schedule, summary and source on the detail screen, then open the original institution page via "View official source"
+• More → "Service info / Data sources" shows the disclaimer and sources
+• Notices past their deadline are hidden from lists (data may remain)
+
+■ Disclaimer (again)
+Loond is not an official government or local government app and does not represent any public institution. It only aggregates public information. Always confirm schedules, eligibility, application methods, benefits and legal effect on the official original page linked from each item, and apply there.
+```
+
+### 이번 제출 체크리스트
+1. [ ] **스토어 등록정보** → 짧은 설명은 유지, 긴 설명은 위 ko-KR(및 en 로케일이 있으면 en) 텍스트로 **교체 후 저장**
+2. [ ] versionName **0.1.11** / versionCode **12** AAB를 업로드 (인앱 출처 화면이 바뀌므로 바이너리 필요)
+3. [ ] 서명·R8·minSdk는 이 수정에서 건드리지 않음
+
+## 이전 기록 — 2026-09-24 (4차)
+
 - 일시: **2026-09-24 (KST)** — 4차 수정 (이전: 2026-09-22 / Alpha #2)
 - 앱: **로온드** (`com.loond.loond`)
 - 트랙: 비공개(클로즈드) 테스트 / Alpha
+- 아래 긴 설명·URL 표는 **당시 제출본**이다. 2026-10-21 이후 콘솔에는 쓰지 않는다.
 
 ## 원인 (이번 리뷰어 지적)
 1. ko-KR **긴 설명**에 「성남·고양 등 다른 지역 고시/공고도 각 항목의 공식 원문 URL을 따릅니다.」 — **도시명을 적었으나 해당 공식 URL이 옆에 없음**
@@ -26,12 +109,12 @@
 - ✅ 실제로 쓰는 출처만, **검증된 공식 URL**과 함께 나열
 - ✅ 다중 지역은 「각 항목 상세의 공식 원문 링크」로만 표현
 
-## 콘솔 붙여넣기 — 짧은 설명
+## 당시 콘솔 붙여넣기 — 짧은 설명
 ```
 민간 비제휴 안내 앱입니다. 공개 공고를 모아 「공식 원문 보기」로만 안내합니다.
 ```
 
-## 콘솔 붙여넣기 — 긴 설명
+## 당시 콘솔 붙여넣기 — 긴 설명 (폐기 · 2026-10-21에 교체)
 ```
 【중요 · 면책】로온드는 민간이 만든 비제휴·비공식 안내 앱입니다. 정부·지자체·공공기관을 대표하지 않으며, 제휴·위탁·운영 관계가 없습니다. 공공 프로그램 신청·접수를 이 앱에서 대행하지 않습니다.
 
@@ -77,13 +160,15 @@
 5. [ ] **정책** / **게시 개요**에서 변경사항 저장 후 **Alpha / 비공개 테스트 재제출**
 6. [ ] 이 박스는 Play Console에 제출하지 않음 — 콘솔·Windows AAB 빌드는 부모/사용자 수행
 
-## 검증된 공식 URL (2026-09-24 curl)
+## 검증된 공식 URL (2026-09-24 curl, 당시 기록)
 | URL | HTTP |
 |-----|------|
 | `https://www.suwon.go.kr` | 200 |
 | `https://www.suwon.go.kr/sw-www/deptHome/dep_welfare/welfare14/welfare14-04/welfare14-04-03.jsp` | 200 |
 | `https://korean.visitkorea.or.kr` | 200 |
 | `https://www.data.go.kr` | 200 |
+
+2026-10-21 Play 리뷰(해외 네트워크)에서는 위 주소와 다른 `.go.kr`이 타임아웃됐다. 그 이후 나열 출처는 `https://english.visitkorea.or.kr`, `https://api.visitkorea.or.kr`만 쓴다.
 
 ## 바이너리 노트
 - 리스팅 문구만: 콘솔 붙여넣기 → APK 재빌드 **불필요**
