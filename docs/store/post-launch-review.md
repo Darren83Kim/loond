@@ -60,8 +60,9 @@ iOS 운영 광고 ID(`app/lib/ads/ad_config.dart`, `Info.plist`의 샘플 ID)는
 - 홈을 포함한 하단 탭에 배너 자리가 없는지. 목록 네이티브와 상세를 닫은 뒤 전면 광고는 이전과 같은지.
 - 상세에서 배너가 버튼 위에 있고 버튼을 가리지 않는지. 디버그 빌드는 테스트 광고, 릴리스·프로파일은 운영 유닛.
 - 동의 거부 또는 `canRequestAds == false`이면 상세 배너 없이 버튼만 보이는지.
+- 발견 그리드를 스크롤할 때 사진이 이전과 같은 크기로 보이는지. 디코드만 표시 크기로 줄였다.
 - Play Console에 `mapping.txt`를 업로드했는지. 내부 트랙 vitals를 본 뒤에 프로덕션으로 올린다.
 
-### 메모리 vitals (0.1.11, 이번 릴리스에서 고치지 않음)
+### 메모리
 
-`RemoteOrPlaceholderImage`는 `Image.network`를 `cacheWidth` / `cacheHeight` 없이 쓴다. 보여주는 크기와 상관없이 원본 비트맵을 디코드한다. 발견 탭은 `ListView(children:)` 안에 `shrinkWrap` 그리드를 넣어 필터 결과 전체를 만들고, `MainShell`의 `IndexedStack`이 홈과 발견을 함께 살려 둔다. TourAPI 원본이 크면 발견 사진이 한꺼번에 풀 해상도로 올라간다. Play 「memory usage」 플래그의 유력한 원인이다.
+`RemoteOrPlaceholderImage`의 네트워크 이미지는 표시 크기 × `devicePixelRatio`로 디코드한다. `ResizeImagePolicy.fit`이라 가로세로 비율은 유지되고, 원본보다 크게 키우지는 않는다. 발견 탭은 `shrinkWrap` 그리드 대신 `CustomScrollView` + `SliverGrid.builder`라 화면에 있는 칸만 만든다. 2열, 간격, `childAspectRatio` 0.72, 네이티브 광고 위치(카드 인덱스 2, 6, 10… 뒤)는 이전과 같다. `IndexedStack`이 홈과 발견의 현재 화면은 같이 유지한다.
