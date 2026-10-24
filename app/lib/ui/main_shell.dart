@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../ads/banner_ad_widget.dart';
 import '../ads/interstitial_ad_manager.dart';
 import '../analytics/analytics_stub.dart';
 import '../data/bookmark_store.dart';
@@ -211,38 +210,29 @@ class _MainShellState extends State<MainShell> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildBody(),
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          NavigationBar(
-            selectedIndex: _tabIndex,
-            onDestinationSelected: (i) => setState(() => _tabIndex = i),
-            destinations: const [
-              NavigationDestination(
-                icon: Icon(Icons.home_outlined),
-                selectedIcon: Icon(Icons.home),
-                label: '홈',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.explore_outlined),
-                selectedIcon: Icon(Icons.explore),
-                label: '발견',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.bookmark_border),
-                selectedIcon: Icon(Icons.bookmark),
-                label: '내 기회',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.menu),
-                selectedIcon: Icon(Icons.menu),
-                label: '더보기',
-              ),
-            ],
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _tabIndex,
+        onDestinationSelected: (i) => setState(() => _tabIndex = i),
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.home_outlined),
+            selectedIcon: Icon(Icons.home),
+            label: '홈',
           ),
-          const SafeArea(
-            top: false,
-            child: BannerAdWidget(),
+          NavigationDestination(
+            icon: Icon(Icons.explore_outlined),
+            selectedIcon: Icon(Icons.explore),
+            label: '발견',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.bookmark_border),
+            selectedIcon: Icon(Icons.bookmark),
+            label: '내 기회',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.menu),
+            selectedIcon: Icon(Icons.menu),
+            label: '더보기',
           ),
         ],
       ),
