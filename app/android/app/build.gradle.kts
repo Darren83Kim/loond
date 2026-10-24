@@ -25,7 +25,9 @@ android {
 
     defaultConfig {
         applicationId = "com.loond.loond"
-        minSdk = 21
+        // Flutter SDK floor (3.47: 24). Hard-coded 21 was already raised to 24
+        // by plugin manifest merger, so the Play device set does not shrink.
+        minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -50,9 +52,12 @@ android {
             manifestPlaceholders["admobAppId"] = "ca-app-pub-3940256099942544~3347511713"
         }
         release {
-            // AdMob pulls WorkManager; R8 was stripping WorkDatabase_Impl and crashing at launch.
-            isMinifyEnabled = false
-            isShrinkResources = false
+            // R8 writes app/build/app/outputs/mapping/release/mapping.txt.
+            // Upload that file to Play (DEX obfuscation warning).
+            // Keep rules: proguard-rules.pro. A past release crashed at launch
+            // because R8 removed WorkDatabase_Impl; that class is kept explicitly.
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",

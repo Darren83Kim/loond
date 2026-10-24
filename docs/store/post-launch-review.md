@@ -1,5 +1,7 @@
 # 출시 후 리뷰 — 0.1.10(11) 프로덕션 제출 이후
 
+> 0.1.12+13 내용과 실기기 확인 항목은 아래 **§3**이다. §1–§2는 0.1.10 제출 직후(2026-10-18) 기록이다.
+
 > 작성 2026-10-18 (KST). 근거: `docs/store/production-launch-checklist.md`, `docs/구현계획서.md` §11, `app/android/app/build.gradle.kts`, `app/android/app/proguard-rules.pro`, `app/lib/ads/*`, `app/ios/Runner/Info.plist`.
 > 참고: 요청에 있던 `docs/store/production-launch-plan.md`는 저장소에 없다. 체크리스트를 기준으로 삼았다.
 
@@ -13,7 +15,7 @@
 6. **리뷰·평점 응답.** 처음 2주는 리뷰에 24–48시간 안에 답한다. 자주 나올 만한 질문은 세 가지다. ① 「우리 시 신청 정보가 없다」: 부산 등은 national(관광 체험) 표시이고 시 게시판은 순차 적용 중이라고 답한다(§11 R28/R35). ② 「광고가 많다」: 전면 광고는 세션당 1회라고 답한다. ③ 데이터가 얇은 도시(충주·단양 등, R31). 템플릿 문구를 미리 만들어 둔다.
 7. **데이터 파이프라인 감시.** 일일 Actions(`.github/workflows/daily_worker.yml`)는 실패하면 이슈를 연다(R16). 공개 사용자가 Pages 피드를 바로 쓰므로 실패 이슈를 당일 처리한다. TourAPI 한도(R26 Partial)도 확인한다. resultCode 22가 나도 이전 피드를 유지하는 처리는 아직 미완이다.
 8. **R20 폰 도그푸딩(여러 날).** 공개 빌드를 실제 휴대폰에서 3일 이상 쓴다. 도시 전환, APPLY/ENJOY/DISCOVER, 원문 CTA, 광고 빈도를 보고 결과를 §11에 기록한다(체크리스트 §2, §6).
-9. **Windows PC의 미커밋 변경 정리.** `app/android/app/build.gradle.kts`의 `minSdk = 21` → `flutter.minSdkVersion` 변경은 커밋하거나 버린다. main은 지금도 `minSdk = 21`이다. 실제 APK minSdk 24는 플러그인 병합 결과로 보인다. 0.1.11에서 명시적으로 정리한다.
+9. **Windows PC의 미커밋 변경 정리.** `minSdk = 21` → `flutter.minSdkVersion`은 **0.1.12**에서 반영했다(§3). 0.1.11 당시 main은 `minSdk = 21`이었고, 실제 APK minSdk 24는 플러그인 병합 결과였다.
 
 ## 2. 첫 업데이트(0.1.11) 후보
 
@@ -27,11 +29,39 @@
 
 iOS 운영 광고 ID(`app/lib/ads/ad_config.dart`, `Info.plist`의 샘플 ID)는 iOS를 출시할 때 처리한다. 0.1.11 범위가 아니다.
 
-**권장 범위:** 0.1.11 앱 빌드는 **A + B**만 한다. B는 내부/클로즈드 트랙에서 1–2일 vitals를 확인한 뒤 프로덕션에 올린다. 문제가 생기면 B를 빼고 A만 출시한다. **C·D·E는 앱 업데이트 없이 워커·Pages 피드로 병행**한다. 0.1.10 vitals와 리뷰가 안정된 뒤(출시 후 약 1주) 착수한다.
+**권장 범위 (당시):** 0.1.11 앱 빌드는 **A + B**만 한다. B는 내부/클로즈드 트랙에서 1–2일 vitals를 확인한 뒤 프로덕션에 올린다. 문제가 생기면 B를 빼고 A만 출시한다. **C·D·E는 앱 업데이트 없이 워커·Pages 피드로 병행**한다. 0.1.10 vitals와 리뷰가 안정된 뒤(출시 후 약 1주) 착수한다.
+
+0.1.11은 출처 URL 수정(Misleading Claims)만 나갔다. **A(minSdk)와 B(R8)는 0.1.12로 넘어갔다.** §3을 본다.
 
 ## 따로 판단할 항목 (출시 후)
 
-1. **0.1.12 전후에, 내 기회 빈 상태의 복지로·보조금24 버튼을 되돌릴지 결정한다.** 버튼은 0.1.11에서 뺐다. 해외 Play 리뷰어가 `.go.kr`을 열지 못했고, 그 때문에 2026-10-21 Misleading Claims 거절이 났다. 대상은 복지로(`bokjiro.go.kr`)와 보조금24(`gov.kr`)다.
+1. **0.1.12 전후에, 내 기회 빈 상태의 복지로·보조금24 버튼을 되돌릴지 결정한다.** 버튼은 0.1.11에서 뺐다. 해외 Play 리뷰어가 `.go.kr`을 열지 못했고, 그 때문에 2026-10-21 Misleading Claims 거절이 났다. 대상은 복지로(`bokjiro.go.kr`)와 보조금24(`gov.kr`)다. **0.1.12에서는 되돌리지 않았다.** 선택지는 그대로다.
    - 업데이트마다 다시 심사받는다.
    - 스토어 설명에 적는 출처는 해외에서 열리는 주소만 쓴다.
    - 선택지: (a) 버튼을 다시 넣는다. (b) 각 항목의 「공식 원문 보기」로만 연결한다.
+
+## 3. 0.1.12+13 (versionCode 13)
+
+앱 버전 `0.1.12+13` (`app/pubspec.yaml`). 머지하지 않고 리뷰 대기. 서명·keystore·`key.properties`는 바꾸지 않았다.
+
+### 포함
+
+1. **광고 위치**
+   - 메인 셸 하단 배너를 제거했다. 그 배너는 홈 탭만이 아니라 하단 내비게이션 아래(홈·발견·내 기회·더보기)에 붙어 자리를 많이 차지했다. 셸에서 통째로 뺐다.
+   - 목록 중간 네이티브는 그대로다. 신청할 수 있는 기회·곧 열리는 행사(`OpportunityTab` / `buildFeedWithAds`)와 발견 그리드(`DiscoverTab`) 모두.
+   - 상세에서 목록으로 돌아온 뒤의 전면 광고(세션당 1회, `InterstitialAdManager.maybeShowAfterDetailPop`)는 그대로다.
+   - 상세 화면 「공식 원문 보기」 바로 위에 **배너**를 넣었다. 유닛은 기존 배너 `ca-app-pub-8022343674155817/1620279320`이다. 디버그는 구글 샘플 ID(`AdConfig.bannerAdUnitId`). 네이티브 카드는 로드 전에는 높이가 0이라 버튼이 아래로 밀린다. 배너는 동의 후 320×50과 「광고」 라벨을 먼저 잡고, 스크롤 열 안에 있어 버튼을 덮지 않는다. `canRequestAds`가 거짓이면 슬롯 자체가 없다(기존 UMP 경로).
+2. **minSdk** = `flutter.minSdkVersion`. Flutter 3.47 기준 값은 **24**다. 하드코드 21을 대체한다. 플러그인 병합으로 실제 APK는 이미 24였으므로, 21로 설치되던 기기가 이번에 빠지지는 않는다.
+3. **R8** 릴리스 `isMinifyEnabled` + `isShrinkResources`. 매핑 파일은 `app/build/app/outputs/mapping/release/mapping.txt`다. Play에 이 파일을 올린다. keep 규칙은 `app/android/app/proguard-rules.pro`(WorkManager `WorkDatabase_Impl`, Room, GMA, UMP, Flutter 플러그인). Flutter Gradle 플러그인도 `flutter_proguard_rules.pro`를 릴리스에 붙인다.
+
+### 폰에서 확인할 것
+
+- 릴리스 빌드 콜드 스타트. 예전 R8은 `WorkDatabase_Impl`을 지워 시작 직후 크래시가 났다.
+- 홈을 포함한 하단 탭에 배너 자리가 없는지. 목록 네이티브와 상세를 닫은 뒤 전면 광고는 이전과 같은지.
+- 상세에서 배너가 버튼 위에 있고 버튼을 가리지 않는지. 디버그 빌드는 테스트 광고, 릴리스·프로파일은 운영 유닛.
+- 동의 거부 또는 `canRequestAds == false`이면 상세 배너 없이 버튼만 보이는지.
+- Play Console에 `mapping.txt`를 업로드했는지. 내부 트랙 vitals를 본 뒤에 프로덕션으로 올린다.
+
+### 메모리 vitals (0.1.11, 이번 릴리스에서 고치지 않음)
+
+`RemoteOrPlaceholderImage`는 `Image.network`를 `cacheWidth` / `cacheHeight` 없이 쓴다. 보여주는 크기와 상관없이 원본 비트맵을 디코드한다. 발견 탭은 `ListView(children:)` 안에 `shrinkWrap` 그리드를 넣어 필터 결과 전체를 만들고, `MainShell`의 `IndexedStack`이 홈과 발견을 함께 살려 둔다. TourAPI 원본이 크면 발견 사진이 한꺼번에 풀 해상도로 올라간다. Play 「memory usage」 플래그의 유력한 원인이다.
