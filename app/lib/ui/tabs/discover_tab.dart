@@ -111,30 +111,33 @@ class _DiscoverTabState extends State<DiscoverTab> {
     return parts.isEmpty ? '' : '${parts.join(' · ')} · ';
   }
 
-  List<Widget> _buildGridFeed(List<Opportunity> items) {
-    final out = <Widget>[];
+  /// Same 2-column metrics as the previous shrink-wrapped grids.
+  static const _gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 2,
+    mainAxisSpacing: 8,
+    crossAxisSpacing: 8,
+    childAspectRatio: 0.72,
+  );
+
+  /// Lazy rows. Ads stay full-width between the same card indexes as before
+  /// (after indexes 2, 6, 10…). Each batch is its own [SliverGrid] so only
+  /// visible cells are built.
+  List<Widget> _gridSlivers(List<Opportunity> items) {
+    final slivers = <Widget>[];
     var start = 0;
     while (start < items.length) {
-      // Batch until (and including) the next in-feed ad index.
       var end = start;
       while (end < items.length) {
         end++;
         if (AdConfig.shouldInsertFeedAdAfterCardIndex(end - 1)) break;
       }
       final batch = items.sublist(start, end);
-      out.add(
-        Padding(
+      slivers.add(
+        SliverPadding(
           padding: const EdgeInsets.fromLTRB(12, 4, 12, 4),
-          child: GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
+          sliver: SliverGrid.builder(
+            gridDelegate: _gridDelegate,
             itemCount: batch.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 8,
-              crossAxisSpacing: 8,
-              childAspectRatio: 0.72,
-            ),
             itemBuilder: (context, i) {
               final o = batch[i];
               return DiscoverGridCard(
@@ -145,13 +148,12 @@ class _DiscoverTabState extends State<DiscoverTab> {
           ),
         ),
       );
-      if (AdConfig.shouldInsertFeedAdAfterCardIndex(end - 1) &&
-          end <= items.length) {
-        out.add(const NativeAdCard());
+      if (AdConfig.shouldInsertFeedAdAfterCardIndex(end - 1)) {
+        slivers.add(const SliverToBoxAdapter(child: NativeAdCard()));
       }
       start = end;
     }
-    return out;
+    return slivers;
   }
 
   Widget _chipRow({
@@ -214,74 +216,84 @@ class _DiscoverTabState extends State<DiscoverTab> {
     }
 
     final filtered = _filtered;
-    final feed = filtered.isEmpty
-        ? <Widget>[EmptyState(message: _emptyMessage)]
-        : _buildGridFeed(filtered);
-
     final districtChips = [
       for (final d in _districts) (d.id, d.shortLabel),
     ];
 
     return RefreshIndicator(
       onRefresh: widget.onRefresh,
-      child: ListView(
+      child: CustomScrollView(
+        key: const Key('discover-feed'),
         physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.only(bottom: 88),
-        children: [
-          SafeArea(
-            bottom: false,
+        slivers: [
+          SliverToBoxAdapter(
+            child: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                child: Text(
+                  '발견하기',
+                  style: theme.textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-              child: Text(
-                '발견하기',
-                style: theme.textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.w800,
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+              child: TextField(
+                controller: _search,
+                onChanged: (_) => setState(() {}),
+                decoration: InputDecoration(
+                  hintText: '관광지·맛집·코스 검색',
+                  prefixIcon: const Icon(Icons.search),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14),
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 0),
                 ),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-            child: TextField(
-              controller: _search,
-              onChanged: (_) => setState(() {}),
-              decoration: InputDecoration(
-                hintText: '관광지·맛집·코스 검색',
-                prefixIcon: const Icon(Icons.search),
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide.none,
-                ),
-                contentPadding: const EdgeInsets.symmetric(vertical: 0),
-              ),
+          SliverToBoxAdapter(
+            child: _chipRow(
+              items: _filters,
+              selectedId: _filter,
+              onSelect: (id) => setState(() => _filter = id),
             ),
-          ),
-          _chipRow(
-            items: _filters,
-            selectedId: _filter,
-            onSelect: (id) => setState(() => _filter = id),
           ),
           if (districtChips.isNotEmpty)
-            _chipRow(
-              items: districtChips,
-              selectedId: _districtId,
-              onSelect: (id) => setState(() => _districtId = id),
+            SliverToBoxAdapter(
+              child: _chipRow(
+                items: districtChips,
+                selectedId: _districtId,
+                onSelect: (id) => setState(() => _districtId = id),
+              ),
             ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
-            child: Text(
-              filtered.isEmpty
-                  ? '결과 0건'
-                  : '$_resultLabel${filtered.length}건',
-              style: theme.textTheme.labelMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-                fontWeight: FontWeight.w600,
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
+              child: Text(
+                filtered.isEmpty
+                    ? '결과 0건'
+                    : '$_resultLabel${filtered.length}건',
+                style: theme.textTheme.labelMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
-          ...feed,
+          if (filtered.isEmpty)
+            SliverToBoxAdapter(child: EmptyState(message: _emptyMessage))
+          else
+            ..._gridSlivers(filtered),
+          const SliverToBoxAdapter(child: SizedBox(height: 88)),
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:loond/ads/banner_ad_widget.dart';
 import 'package:loond/data/bookmark_store.dart';
 import 'package:loond/models/opportunity.dart';
 import 'package:loond/ui/detail_screen.dart';
@@ -31,6 +32,11 @@ void main() {
   });
 
   testWidgets('detail shows hero image widget and CTA', (tester) async {
+    tester.view.physicalSize = const Size(800, 2400);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
     final store = BookmarkStore();
     await tester.pumpWidget(
       MaterialApp(
@@ -47,6 +53,15 @@ void main() {
     expect(find.text('공식 원문 보기'), findsOneWidget);
     expect(find.byIcon(Icons.share_outlined), findsOneWidget);
     expect(find.byIcon(Icons.bookmark_border), findsOneWidget);
+
+    const adKey = Key('detail-source-ad');
+    expect(find.byKey(adKey), findsOneWidget);
+    expect(find.byType(BannerAdWidget), findsOneWidget);
+
+    final adRect = tester.getRect(find.byKey(adKey));
+    final buttonRect = tester.getRect(find.text('공식 원문 보기'));
+    expect(adRect.bottom, lessThanOrEqualTo(buttonRect.top));
+    expect(adRect.overlaps(buttonRect), isFalse);
   });
 
   testWidgets('bookmark toggle updates icon and persists', (tester) async {

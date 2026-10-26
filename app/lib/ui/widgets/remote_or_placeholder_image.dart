@@ -6,6 +6,9 @@ import '../../theme/app_theme.dart';
 ///
 /// Prefer [asset] when set. Otherwise if [url] looks like an `assets/` path,
 /// load via [Image.asset]; http(s) URLs use [Image.network]. Missing/error → placeholder.
+///
+/// Network bytes are decoded at the display size in physical pixels
+/// ([ResizeImagePolicy.fit], so the source aspect ratio stays intact).
 class RemoteOrPlaceholderImage extends StatelessWidget {
   const RemoteOrPlaceholderImage({
     super.key,
@@ -83,23 +86,61 @@ class RemoteOrPlaceholderImage extends StatelessWidget {
 
     return ClipRRect(
       borderRadius: radius,
-      child: Image.network(
-        trimmed,
-        height: height,
-        width: width,
-        fit: fit,
-        errorBuilder: (_, __, ___) => placeholder,
-        loadingBuilder: (context, child, progress) {
-          if (progress == null) return child;
-          return SizedBox(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final dpr = MediaQuery.devicePixelRatioOf(context);
+          final cacheW = _cachePixels(
+            _finiteSize(width) ?? _finiteSize(constraints.maxWidth),
+            dpr,
+          );
+          final cacheH = _cachePixels(
+            _finiteSize(height) ?? _finiteSize(constraints.maxHeight),
+            dpr,
+          );
+          final ImageProvider provider = cacheW == null && cacheH == null
+              ? NetworkImage(trimmed)
+              : ResizeImage(
+                  NetworkImage(trimmed),
+                  width: cacheW,
+                  height: cacheH,
+                  policy: ResizeImagePolicy.fit,
+                  allowUpscaling: false,
+                );
+          return Image(
+            image: provider,
             height: height,
             width: width,
-            child: placeholder,
+            fit: fit,
+            errorBuilder: (_, __, ___) => placeholder,
+            loadingBuilder: (context, child, progress) {
+              if (progress == null) return child;
+              return SizedBox(
+                height: height,
+                width: width,
+                child: placeholder,
+              );
+            },
           );
         },
       ),
     );
   }
+}
+
+/// Logical dp that can be turned into a decode target. Infinite layout
+/// hints (a full-bleed width, an [Expanded] child) are not a real size.
+double? _finiteSize(double? value) {
+  if (value == null || !value.isFinite || value <= 0) return null;
+  return value;
+}
+
+/// Physical pixels for [ResizeImage]. Null when the size is unknown.
+int? _cachePixels(double? logical, double devicePixelRatio) {
+  if (logical == null) return null;
+  if (!devicePixelRatio.isFinite || devicePixelRatio <= 0) return null;
+  final px = (logical * devicePixelRatio).round();
+  if (px <= 0) return null;
+  return px;
 }
 
 class _Placeholder extends StatelessWidget {

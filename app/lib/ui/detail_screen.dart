@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../ads/banner_ad_widget.dart';
 import '../analytics/analytics_stub.dart';
 import '../data/bookmark_store.dart';
 import '../models/opportunity.dart';
@@ -144,7 +145,7 @@ class _DetailScreenState extends State<DetailScreen> {
             seedColor: categoryLabelColor(item),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 14, 16, 32),
+            padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -243,13 +244,25 @@ class _DetailScreenState extends State<DetailScreen> {
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
-                const SizedBox(height: 12),
-                FilledButton.icon(
-                  onPressed: () => _openSource(context),
-                  icon: const Icon(Icons.open_in_new),
-                  label: const Text('공식 원문 보기'),
-                ),
+                const SizedBox(height: 16),
               ],
+            ),
+          ),
+          // Banner (not native): fixed 320×50 slot plus the existing 「광고」
+          // label. Native cards collapse until load and would push this CTA.
+          // The slot sits in the scroll column, full-bleed, so it cannot cover
+          // the button. Unit: AdConfig.bannerAdUnitId (release
+          // ca-app-pub-8022343674155817/1620279320, sample id in debug).
+          const BannerAdWidget(key: Key('detail-source-ad')),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: FilledButton.icon(
+                onPressed: () => _openSource(context),
+                icon: const Icon(Icons.open_in_new),
+                label: const Text('공식 원문 보기'),
+              ),
             ),
           ),
         ],
