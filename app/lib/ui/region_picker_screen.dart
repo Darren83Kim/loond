@@ -13,12 +13,16 @@ class RegionPickerScreen extends StatefulWidget {
     this.allowDismiss = false,
     this.selectedRegionId,
     this.regionStore,
+    this.progressLabel,
   });
 
   final ValueChanged<Region> onSelected;
   final bool allowDismiss;
   final String? selectedRegionId;
   final RegionStore? regionStore;
+
+  /// 첫 실행 온보딩(1 / 2)에서만 넘긴다. 지역 변경 화면은 null.
+  final String? progressLabel;
 
   @override
   State<RegionPickerScreen> createState() => _RegionPickerScreenState();
@@ -174,6 +178,16 @@ class _RegionPickerScreenState extends State<RegionPickerScreen> {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
         children: [
+          if (widget.progressLabel != null) ...[
+            Text(
+              widget.progressLabel!,
+              style: theme.textTheme.labelLarge?.copyWith(
+                color: theme.colorScheme.primary,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const SizedBox(height: 8),
+          ],
           Text(
             '관심 지역을 선택하세요',
             style: theme.textTheme.titleLarge?.copyWith(
@@ -188,6 +202,15 @@ class _RegionPickerScreenState extends State<RegionPickerScreen> {
               color: theme.colorScheme.onSurfaceVariant,
             ),
           ),
+          if (widget.progressLabel != null) ...[
+            const SizedBox(height: 8),
+            Text(
+              '지역을 고르면, 이어서 사는 곳인지 여행·체류인지 고릅니다.',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ],
           const SizedBox(height: 16),
           TextField(
             controller: _search,

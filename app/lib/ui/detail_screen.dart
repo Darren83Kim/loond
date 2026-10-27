@@ -8,6 +8,7 @@ import '../data/bookmark_store.dart';
 import '../models/opportunity.dart';
 import '../theme/app_theme.dart';
 import '../util/open_url.dart';
+import '../util/opportunity_share_text.dart';
 import 'widgets/category_label.dart';
 import 'widgets/remote_or_placeholder_image.dart';
 
@@ -62,18 +63,14 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
+  bool get _showShareAction =>
+      item.type == OpportunityType.enjoy ||
+      item.type == OpportunityType.discover;
+
   Future<void> _share() async {
-    final buf = StringBuffer(item.title);
-    if (item.summary.isNotEmpty) {
-      buf.writeln();
-      buf.write(item.summary);
-    }
-    final url = item.sourceUrl.trim();
-    if (url.isNotEmpty) {
-      buf.writeln();
-      buf.write(url);
-    }
-    await SharePlus.instance.share(ShareParams(text: buf.toString()));
+    await SharePlus.instance.share(
+      ShareParams(text: opportunityShareText(item)),
+    );
   }
 
   String _fmt(DateTime? d) {
@@ -120,7 +117,7 @@ class _DetailScreenState extends State<DetailScreen> {
         title: Text(item.type.labelKo),
         actions: [
           IconButton(
-            tooltip: '공유',
+            tooltip: '공유하기',
             icon: const Icon(Icons.share_outlined),
             onPressed: _share,
           ),
@@ -258,10 +255,22 @@ class _DetailScreenState extends State<DetailScreen> {
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: FilledButton.icon(
-                onPressed: () => _openSource(context),
-                icon: const Icon(Icons.open_in_new),
-                label: const Text('공식 원문 보기'),
+              child: Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  if (_showShareAction)
+                    OutlinedButton(
+                      onPressed: _share,
+                      child: const Text('공유하기'),
+                    ),
+                  FilledButton.icon(
+                    onPressed: () => _openSource(context),
+                    icon: const Icon(Icons.open_in_new),
+                    label: const Text('공식 원문 보기'),
+                  ),
+                ],
               ),
             ),
           ),

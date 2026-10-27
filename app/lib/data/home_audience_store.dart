@@ -44,6 +44,13 @@ class HomeAudienceStore {
     return HomeAudienceModeX.fromWire(prefs.getString(modeKey));
   }
 
+  /// 사용자가 모드를 저장한 적이 있는지. 키가 없으면 거주 기본값일 뿐이며,
+  /// 기존 설치(0.1.12 이하)는 여기가 false여도 온보딩을 다시 보지 않는다.
+  Future<bool> hasSavedMode() async {
+    final prefs = await _ensure();
+    return prefs.containsKey(modeKey);
+  }
+
   Future<void> setMode(HomeAudienceMode mode) async {
     final prefs = await _ensure();
     await prefs.setString(modeKey, mode.wire);

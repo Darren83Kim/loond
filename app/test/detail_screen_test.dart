@@ -51,7 +51,9 @@ void main() {
     expect(find.byType(RemoteOrPlaceholderImage), findsOneWidget);
     expect(find.text('수원화성 야경 투어'), findsOneWidget);
     expect(find.text('공식 원문 보기'), findsOneWidget);
+    expect(find.text('공유하기'), findsOneWidget);
     expect(find.byIcon(Icons.share_outlined), findsOneWidget);
+    expect(find.byTooltip('공유하기'), findsOneWidget);
     expect(find.byIcon(Icons.bookmark_border), findsOneWidget);
 
     const adKey = Key('detail-source-ad');
@@ -89,5 +91,36 @@ void main() {
     expect(find.byIcon(Icons.bookmark_border), findsOneWidget);
     expect(find.text('북마크를 해제했어요'), findsOneWidget);
     expect(await store.isBookmarked('detail-1'), isFalse);
+  });
+
+  testWidgets('apply detail has app-bar share only', (tester) async {
+    tester.view.physicalSize = const Size(800, 2400);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: DetailScreen(
+          item: const Opportunity(
+            id: 'apply-1',
+            region: 'suwon',
+            title: '모집 공고',
+            type: OpportunityType.apply,
+            category: 'notice',
+            summary: '요약',
+            sourceName: 'test',
+            sourceUrl: 'https://example.com/apply-1',
+            status: 'published',
+          ),
+          bookmarkStore: BookmarkStore(),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    expect(find.byTooltip('공유하기'), findsOneWidget);
+    expect(find.widgetWithText(OutlinedButton, '공유하기'), findsNothing);
+    expect(find.text('공식 원문 보기'), findsOneWidget);
   });
 }

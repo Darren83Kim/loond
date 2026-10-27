@@ -64,9 +64,11 @@ void main() {
 
   test('HomeAudienceStore defaults to resident and persists traveler', () async {
     final store = HomeAudienceStore();
+    expect(await store.hasSavedMode(), isFalse);
     expect(await store.getMode(), HomeAudienceMode.resident);
 
     await store.setMode(HomeAudienceMode.traveler);
+    expect(await store.hasSavedMode(), isTrue);
     expect(await store.getMode(), HomeAudienceMode.traveler);
 
     final again = HomeAudienceStore();
