@@ -2,6 +2,7 @@
 
 STRATEGY=ldong_code (Phase 2 expansion):
   - ENJOY: nationwide searchFestival2 once → assign via lDong codes
+    Thin cities (under 8 festivals) get a keyword + lDong backfill (R31).
   - DISCOVER: areaBasedList2 per lDongRegnCd (시도) → assign via lDong codes
   - Preserve municipal APPLY + culture_portal ENJOY + curated BENEFIT;
     replace prior TourAPI *-tour-* ENJOY/DISCOVER
@@ -65,6 +66,11 @@ LARGE_CITY_CAPS = {
 SIDO_MAX_PAGES = {"12": 12, "14": 8, "25": 4, "28": 8, "38": 3, "39": 3}
 # Soft budget for TourAPI calls (개발계정 ~1000/오퍼레이션)
 API_BUDGET = 900
+# Cities whose nationwide festival partition is this thin get a second,
+# still-assigned pass (searchKeyword2 contentTypeId=15, then lDong-scoped
+# searchFestival2). Does not invent rows and does not touch APPLY.
+THIN_FESTIVAL_THRESHOLD = 8
+THIN_FESTIVAL_CAP = 30
 
 DETAIL_URL = "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid={cid}"
 FEST_URL = "https://korean.visitkorea.or.kr/detail/fes_detail.do?cotid={cid}"
@@ -492,6 +498,137 @@ def partition_by_region(
     return by, dropped
 
 
+def select_festival_backfill_items(
+    items: list[dict[str, Any]],
+    *,
+    target_region_id: str,
+    seen_ids: set[str],
+    require_content_type_15: bool,
+    limit: int,
+) -> list[dict[str, Any]]:
+    """Keep festival rows that assign_region resolves to target_region_id.
+
+    Keyword search must be content type 15 so a 체험/음식 hit cannot become
+    ENJOY. searchFestival2 may omit contenttypeid; those rows are accepted.
+    seen_ids is updated with accepted content ids.
+    """
+    out: list[dict[str, Any]] = []
+    if limit <= 0:
+        return out
+    for it in items:
+        if len(out) >= limit:
+            break
+        cid = str(it.get("contentid") or "")
+        if cid and cid in seen_ids:
+            continue
+        ctid = str(it.get("contenttypeid") or it.get("contentTypeId") or "")
+        if require_content_type_15:
+            if ctid != "15":
+                continue
+        elif ctid not in ("", "15"):
+            continue
+        region = rc.assign_region(it)
+        if region is None or region["id"] != target_region_id:
+            continue
+        # Keyword hits can assign on a title token while the street address
+        # names another 시·군. Trust the address when it is present.
+        addr_blob = " ".join(
+            str(it.get(k) or "") for k in ("addr1", "addr2", "addr")
+        )
+        if rc.address_affirms_city(addr_blob, region) is False:
+            continue
+        out.append(it)
+        if cid:
+            seen_ids.add(cid)
+    return out
+
+
+def backfill_thin_festivals(
+    service_key: str,
+    by_region: dict[str, list[dict[str, Any]]],
+    event_start: str,
+) -> dict[str, int]:
+    """Add festivals the nationwide title-sorted sweep can miss.
+
+    Only cities already under THIN_FESTIVAL_THRESHOLD are queried. Each
+    candidate still has to assign to that same city. Other cities, APPLY,
+    and culture rows are untouched.
+    """
+    added: dict[str, int] = {}
+    seen_ids: set[str] = set()
+    for rows in by_region.values():
+        for it in rows:
+            cid = str(it.get("contentid") or "")
+            if cid:
+                seen_ids.add(cid)
+
+    for region in rc.REGIONS:
+        rid = region["id"]
+        have = len(by_region.get(rid, []))
+        if have >= THIN_FESTIVAL_THRESHOLD:
+            continue
+        if not _budget_ok():
+            _log("  festival backfill stopped: budget")
+            break
+        room = THIN_FESTIVAL_CAP - have
+        got: list[dict[str, Any]] = []
+        items, _metas = paginate(
+            "searchKeyword2",
+            service_key,
+            {
+                "keyword": str(region["name_ko"]),
+                "contentTypeId": "15",
+                "arrange": "C",
+            },
+            max_pages=2,
+            label=f"fest_backfill_kw_{rid}",
+        )
+        got.extend(
+            select_festival_backfill_items(
+                items,
+                target_region_id=rid,
+                seen_ids=seen_ids,
+                require_content_type_15=True,
+                limit=room,
+            )
+        )
+        still_thin = have + len(got) < THIN_FESTIVAL_THRESHOLD
+        signgus = [str(c) for c in (region.get("ldong_signgu") or ())]
+        if still_thin and _budget_ok():
+            targets = signgus or [""]
+            for sg in targets:
+                if len(got) >= room or not _budget_ok():
+                    break
+                extra = {
+                    "eventStartDate": event_start,
+                    "arrange": "C",
+                    "lDongRegnCd": str(region["ldong_regn"]),
+                }
+                if sg:
+                    extra["lDongSignguCd"] = sg
+                scoped, _scoped_meta = paginate(
+                    "searchFestival2",
+                    service_key,
+                    extra,
+                    max_pages=2,
+                    label=f"fest_backfill_ldong_{rid}_{sg or 'all'}",
+                )
+                got.extend(
+                    select_festival_backfill_items(
+                        scoped,
+                        target_region_id=rid,
+                        seen_ids=seen_ids,
+                        require_content_type_15=False,
+                        limit=room - len(got),
+                    )
+                )
+        if got:
+            by_region.setdefault(rid, []).extend(got)
+            added[rid] = len(got)
+            _log(f"  festival backfill {rid}: +{len(got)} (was {have})")
+    return added
+
+
 def _log(msg: str) -> None:
     print(msg, flush=True)
 
@@ -609,6 +746,7 @@ def collect_festivals(service_key: str) -> dict[str, Any]:
             collected[cid] = it
 
     by_region, dropped = partition_by_region(list(collected.values()))
+    backfill_added = backfill_thin_festivals(service_key, by_region, esd)
     assigned = sum(len(v) for v in by_region.values())
 
     flat: list[dict[str, Any]] = []
@@ -624,6 +762,7 @@ def collect_festivals(service_key: str) -> dict[str, Any]:
         "counts": {rid: len(rows) for rid, rows in by_region.items()},
         "assigned": assigned,
         "dropped": dropped,
+        "backfill_added": backfill_added,
         "sample_titles": {
             rid: [str(it.get("title", "")) for it in rows[:5]]
             for rid, rows in by_region.items()
@@ -1056,7 +1195,7 @@ def main() -> int:
     fest = collect_festivals(service_key)
     _log(
         f"festivals assigned={fest['assigned']} dropped={fest['dropped']} "
-        f"counts={fest['counts']}"
+        f"backfill={fest.get('backfill_added')} counts={fest['counts']}"
     )
     for rid, titles in fest["sample_titles"].items():
         if titles:

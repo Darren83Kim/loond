@@ -16,7 +16,7 @@ import urllib.parse
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, NamedTuple
 
 from . import region_codes as rc
 
@@ -100,43 +100,77 @@ def _ymd(s: str | None) -> str | None:
 
 
 
-def _keep_city(
-    it: dict[str, str],
-    city_name: str,
-    *,
-    culture_gugun: str | None = None,
-    culture_sigungu: tuple[str, ...] | list[str] | None = None,
-    culture_areas: tuple[str, ...] | list[str] | None = None,
-) -> bool:
-    """Keep only if place/area/sigungu ties the item to the city.
+# List/detail fields that sometimes carry a street address the list `place`
+# line omits (탄금호 … vs 충청북도 충주시 …).
+_ADDRESS_KEYS = ("addr", "address", "placeAddr", "addr1", "addr2", "guname")
 
-    Title-only matches are rejected (e.g. 고양이 / 고양이라서 → 고양).
-    culture_areas filters sido labels (광주 vs 경기 광주시).
+
+def _address_blob(it: dict[str, str]) -> str:
+    parts = [str(it.get(k) or "") for k in _ADDRESS_KEYS]
+    place = str(it.get("place") or "")
+    # A short venue name is not an address. A place that already names a
+    # 시·군 is (청주시 문화회관, 충주시문화회관).
+    if re.search(r"(시|군)", place):
+        parts.append(place)
+    return " ".join(p for p in parts if p).strip()
+
+
+def _keep_city(it: dict[str, str], region: dict[str, Any]) -> bool:
+    """Keep only rows that tie to this city without borrowing another city's name.
+
+    Accept, in order:
+    - sigungu/district that belongs to the city (성남시, 분당구, 충주)
+    - place/area text that contains the city keyword (existing rule)
+    - a portal bracket title `[충주]` when `area` is this city's sido and the
+      place line does not name a different 시·군
+
+    Reject:
+    - a non-empty area outside culture_areas (after alias canonicalization)
+    - a sigungu that is another catalog city or an unknown 시·군·구 (청주시, 분당구 on 수원)
+    - title-only hits with no bracket/시·군 token (단양 수양개…, 통영의 …, 고양이)
     """
+    city = str(region.get("name_ko") or "")
+    areas = region.get("culture_areas") or ()
     area = (it.get("area") or "").strip()
-    sigungu = (it.get("sigungu") or "").strip()
-    if culture_areas:
-        if area and area not in culture_areas:
-            return False
-    allowed_sig = set()
-    if culture_gugun:
-        allowed_sig.add(culture_gugun)
-        allowed_sig.add(city_name)
-    if culture_sigungu:
-        allowed_sig.update(culture_sigungu)
-        allowed_sig.add(city_name)
-    if allowed_sig and sigungu in allowed_sig:
-        return True
-    if allowed_sig and sigungu:
-        # sigungu present but not ours
+    if not rc.culture_area_allowed(area, areas):
         return False
-    place_blob = " ".join(it.get(k, "") for k in ("place", "area", "sigungu"))
-    return rc.city_keyword_in_blob(city_name, place_blob)
+    token = rc.sigungu_token(it.get("sigungu"))
+    allowed = rc.culture_allowed_sigungu(region)
+    if token and token in allowed:
+        # 중구/동구/남구 are shared. Without a matching sido, do not trust them.
+        if not (rc.sigungu_token_ambiguous(token) and not area):
+            return True
+    if token and rc.sigungu_is_foreign(token, region):
+        return False
+    place_blob = " ".join(
+        str(it.get(k) or "")
+        for k in ("place", "area", "sigungu", *_ADDRESS_KEYS)
+    )
+    if rc.city_keyword_in_blob(city, place_blob):
+        # 성남 ⊂ 홍성남. Tour assign already skips this; keep the same guard here.
+        if region.get("id") == "seongnam" and "홍성남" in place_blob and "성남시" not in place_blob:
+            return False
+        return True
+    if (
+        area
+        and rc.culture_area_allowed(area, areas)
+        and rc.culture_title_mentions_city(city, it.get("title"))
+    ):
+        if rc.address_affirms_city(place_blob, region) is False:
+            return False
+        return True
+    return False
+
+
+def _detail_conflicts_city(it: dict[str, str], region: dict[str, Any]) -> bool:
+    """Drop a list-level keep when detail2's address names a different city."""
+    return rc.address_affirms_city(_address_blob(it), region) is False
 
 
 def _build_enjoy_rows(
     by: dict[str, dict[str, str]],
     *,
+    region: dict[str, Any],
     region_id: str,
     region_name: str,
     today,
@@ -156,6 +190,12 @@ def _build_enjoy_rows(
         for k, v in detail.items():
             if v:
                 it[k] = v
+        if _detail_conflicts_city(it, region):
+            print(
+                f"culture detail-address drop region={region_id} seq={seq} "
+                f"title={it.get('title')!r}"
+            )
+            continue
 
         realm = it.get("realmName") or it.get("serviceName") or ""
         start = _ymd(it.get("startDate"))
@@ -242,103 +282,151 @@ def _build_enjoy_rows(
     return out
 
 
+class CultureBatch(NamedTuple):
+    """One city's culture rows plus whether a list call actually succeeded.
+
+    list_ok False means every period2/area2 call failed. Callers must keep the
+    previously published culture rows for that city instead of wiping them.
+    A successful call that returns zero rows is list_ok True (honest empty).
+    """
+
+    region_id: str
+    rows: list[dict[str, Any]]
+    list_ok: bool
+
+
+# Primary sido is paginated; alias labels (충청북도, 전남광주통합특별시, …)
+# are one page so a renamed sido still contributes without a 34×N blow-up.
+_AREA2_PRIMARY_PAGES = 3
+_PERIOD2_MAX_PAGES = 8
+_DETAIL_CAP = 25
+
+
+def _period_keywords(region: dict[str, Any]) -> list[str]:
+    """City stem plus 시·군 name. 충주 and 충주시 are not always the same index token."""
+    out: list[str] = []
+    for key in ("name_ko", "culture_gugun"):
+        value = str(region.get(key) or "").strip()
+        if value and value not in out:
+            out.append(value)
+    return out
+
+
 def collect_enjoy_for_region(
     region: dict[str, Any], days_ahead: int = 120
-) -> list[dict[str, Any]]:
-    """Collect culture ENJOY for one city. Soft-fails to [] on API errors."""
+) -> CultureBatch:
+    """Collect culture ENJOY for one city. Soft-fails per request."""
     rid = region["id"]
     name = region["name_ko"]
     gugun = region.get("culture_gugun")
-    culture_sigungu = region.get("culture_sigungu")
-    culture_areas = tuple(region.get("culture_areas") or ())
     now = datetime.now(KST).replace(microsecond=0)
     today = now.date()
     frm = today.strftime("%Y%m%d")
     to = (today + timedelta(days=days_ahead)).strftime("%Y%m%d")
     now_iso = now.isoformat()
+    ok_calls = 0
+    failed_calls = 0
 
     def _ok(it: dict[str, str]) -> bool:
-        return bool(it.get("seq")) and _keep_city(
-            it,
-            name,
-            culture_gugun=gugun,
-            culture_sigungu=culture_sigungu,
-            culture_areas=culture_areas or None,
-        )
+        return bool(it.get("seq")) and _keep_city(it, region)
 
     by: dict[str, dict[str, str]] = {}
-    try:
-        page = 1
-        while True:
-            total, items = _items(
-                _curl(
-                    "period2",
-                    {
-                        "from": frm,
-                        "to": to,
-                        "PageNo": str(page),
-                        "numOfrows": "100",
-                        "keyword": name,
-                        "sortStdr": "1",
-                    },
-                )
-            )
-            for it in items:
-                if _ok(it):
-                    by[it["seq"]] = it
-            if page * 100 >= total or not items:
-                break
-            page += 1
-            if page > 8:
-                break
-    except Exception as e:  # noqa: BLE001
-        print(f"culture period2 soft-fail region={rid}: {e}")
-
-    # area2: try each culture_areas sido (+ optional gugun)
-    sidos = list(culture_areas) or (["경기"] if gugun else [])
-    for sido in sidos:
+    for keyword in _period_keywords(region):
         try:
-            params: dict[str, str] = {
-                "sido": sido,
-                "PageNo": "1",
-                "numOfrows": "100",
-                "from": frm,
-                "to": to,
-            }
-            if gugun:
-                params["gugun"] = gugun
-            _, area_items = _items(_curl("area2", params))
-            for it in area_items:
-                if _ok(it):
-                    by[it["seq"]] = it
+            page = 1
+            while page <= _PERIOD2_MAX_PAGES:
+                total, items = _items(
+                    _curl(
+                        "period2",
+                        {
+                            "from": frm,
+                            "to": to,
+                            "PageNo": str(page),
+                            "numOfrows": "100",
+                            "keyword": keyword,
+                            "sortStdr": "1",
+                        },
+                    )
+                )
+                ok_calls += 1
+                for it in items:
+                    if _ok(it):
+                        by[it["seq"]] = it
+                if page * 100 >= total or not items:
+                    break
+                page += 1
         except Exception as e:  # noqa: BLE001
+            failed_calls += 1
+            print(f"culture period2 soft-fail region={rid} keyword={keyword}: {e}")
+
+    # area2: primary sido paginated, alias sido labels one page each.
+    sidos = rc.culture_sido_queries(region)
+    for index, sido in enumerate(sidos):
+        max_pages = _AREA2_PRIMARY_PAGES if index == 0 else 1
+        try:
+            page = 1
+            while page <= max_pages:
+                params: dict[str, str] = {
+                    "sido": sido,
+                    "PageNo": str(page),
+                    "numOfrows": "100",
+                    "from": frm,
+                    "to": to,
+                }
+                if gugun:
+                    params["gugun"] = gugun
+                total, area_items = _items(_curl("area2", params))
+                ok_calls += 1
+                for it in area_items:
+                    if _ok(it):
+                        by[it["seq"]] = it
+                if page * 100 >= total or not area_items:
+                    break
+                page += 1
+        except Exception as e:  # noqa: BLE001
+            failed_calls += 1
             print(f"culture area2 soft-fail region={rid} sido={sido}: {e}")
 
-    # Cap before detail2 enrichment (Phase 2: 34 cities × detail calls)
-    if len(by) > 25:
-        keep_ids = list(by.keys())[:25]
+    # Cap before detail2. Insertion order is period2-first so metros that
+    # already fill the cap (서울·부산 …) keep the same leading rows when
+    # alias queries only append.
+    if len(by) > _DETAIL_CAP:
+        keep_ids = list(by.keys())[:_DETAIL_CAP]
         by = {k: by[k] for k in keep_ids}
     rows = _build_enjoy_rows(
-        by, region_id=rid, region_name=name, today=today, now_iso=now_iso
+        by,
+        region=region,
+        region_id=rid,
+        region_name=name,
+        today=today,
+        now_iso=now_iso,
     )
-    print(f"culture region={rid}: collected={len(rows)}")
-    return rows
+    list_ok = ok_calls > 0 or failed_calls == 0
+    print(
+        f"culture region={rid}: collected={len(rows)} "
+        f"list_ok={list_ok} ok_calls={ok_calls} failed_calls={failed_calls}"
+    )
+    return CultureBatch(rid, rows, list_ok)
 
 
 def collect_suwon_enjoy(days_ahead: int = 120) -> list[dict[str, Any]]:
     """Backward-compat wrapper — suwon only."""
-    return collect_enjoy_for_region(rc.REGION_BY_ID["suwon"], days_ahead=days_ahead)
+    return collect_enjoy_for_region(rc.REGION_BY_ID["suwon"], days_ahead=days_ahead).rows
 
 
-def collect_enjoy_for_regions(days_ahead: int = 120) -> list[dict[str, Any]]:
-    """Collect culture ENJOY for all REGIONS; soft-fail per city."""
-    all_rows: list[dict[str, Any]] = []
-    for region in rc.REGIONS:
+def collect_enjoy_for_regions(
+    days_ahead: int = 120,
+    regions: list[dict[str, Any]] | None = None,
+) -> list[CultureBatch]:
+    """Collect culture ENJOY per city; one city aborting does not stop the rest."""
+    batches: list[CultureBatch] = []
+    for region in regions if regions is not None else rc.REGIONS:
         try:
-            all_rows.extend(collect_enjoy_for_region(region, days_ahead=days_ahead))
+            batches.append(collect_enjoy_for_region(region, days_ahead=days_ahead))
         except Exception as e:  # noqa: BLE001 — never abort whole run
             print(f"culture region={region['id']} aborted soft: {e}")
-    return all_rows
+            batches.append(CultureBatch(str(region["id"]), [], False))
+    return batches
 
 
 _BRACKET_RE = re.compile(r"[\[\(（【「『].*?[\]\)）】」』]")
@@ -362,13 +450,37 @@ def _is_culture_row(o: dict[str, Any]) -> bool:
     return (o.get("meta") or {}).get("source") == "culture_portal" or "-culture-" in oid
 
 
-def merge_into_published(pub_path: Path, enjoy: list[dict[str, Any]]) -> dict[str, int]:
+def merge_into_published(
+    pub_path: Path,
+    enjoy: list[dict[str, Any]],
+    *,
+    replace_region_ids: set[str] | None = None,
+    preserve_region_ids: set[str] | None = None,
+) -> dict[str, int]:
     """Replace culture_portal ENJOY; title-dedupe vs non-culture ENJOY within same region.
 
     Prefer TourAPI (and other non-culture) titles; culture duplicates are dropped.
+
+    replace_region_ids: when set (one-shot --regions), only those cities' culture
+    rows are replaced. Other cities' culture ENJOY stay.
+    preserve_region_ids: cities whose list calls all failed. Their previous
+    culture rows stay even if they are in replace_region_ids — an API outage
+    must not wipe Seoul/Busan culture (R11).
     """
     d = json.loads(pub_path.read_text(encoding="utf-8"))
-    ops = [o for o in d["opportunities"] if not _is_culture_row(o)]
+    preserve = preserve_region_ids or set()
+
+    def _drop_culture(o: dict[str, Any]) -> bool:
+        if not _is_culture_row(o):
+            return False
+        rid = str(o.get("region") or "")
+        if rid in preserve:
+            return False
+        if replace_region_ids is not None and rid not in replace_region_ids:
+            return False
+        return True
+
+    ops = [o for o in d["opportunities"] if not _drop_culture(o)]
 
     # Existing non-culture ENJOY titles keyed by region
     existing_by_region: dict[str, set[str]] = {}
@@ -411,21 +523,50 @@ def merge_into_published(pub_path: Path, enjoy: list[dict[str, Any]]) -> dict[st
     }
 
 
-if __name__ == "__main__":
-    rows = collect_enjoy_for_regions()
-    print(f"collected {len(rows)} across regions")
+def main(argv: list[str] | None = None) -> None:
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Culture portal ENJOY collect (R11/R31)")
+    parser.add_argument(
+        "--regions",
+        default="",
+        help="Comma-separated region ids (default: all). Only those cities' culture rows are replaced.",
+    )
+    parser.add_argument("--days", type=int, default=120)
+    args = parser.parse_args(argv)
+    selected: list[dict[str, Any]] | None = None
+    replace_ids: set[str] | None = None
+    if args.regions.strip():
+        want = [part.strip() for part in args.regions.split(",") if part.strip()]
+        missing = [rid for rid in want if rid not in rc.REGION_BY_ID]
+        if missing:
+            raise SystemExit(f"unknown region ids: {missing}")
+        selected = [rc.REGION_BY_ID[rid] for rid in want]
+        replace_ids = set(want)
+    batches = collect_enjoy_for_regions(days_ahead=args.days, regions=selected)
+    rows = [row for batch in batches for row in batch.rows]
+    preserve = {batch.region_id for batch in batches if not batch.list_ok}
+    if preserve:
+        print(f"culture preserve previous rows (list calls failed): {sorted(preserve)}")
+    print(f"collected {len(rows)} across {len(batches)} regions")
     root = Path(__file__).resolve().parents[2]
     pub = root / "data/published/opportunities.json"
-    stats = merge_into_published(pub, rows)
+    stats = merge_into_published(
+        pub, rows, replace_region_ids=replace_ids, preserve_region_ids=preserve
+    )
     print("data/published/opportunities.json", stats)
     # Keep assets + per-region feeds in sync with published (remote load P1).
     try:
         from .publish_regions import sync_published_outputs
 
-        stats = sync_published_outputs(bundle_path=pub)
+        synced = sync_published_outputs(bundle_path=pub)
         print(
-            f"sync_published_outputs: asset={stats.get('app_asset')} "
-            f"regions={stats.get('region_ids')} manifest={stats.get('manifest')}"
+            f"sync_published_outputs: asset={synced.get('app_asset')} "
+            f"regions={synced.get('region_ids')} manifest={synced.get('manifest')}"
         )
     except Exception as e:  # noqa: BLE001
         print(f"sync_published_outputs warn: {e}")
+
+
+if __name__ == "__main__":
+    main()

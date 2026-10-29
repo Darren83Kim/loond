@@ -212,7 +212,7 @@ eminwon 공통 경로: `/emwp/gov/mogaha/ntis/web/ofr/action/OfrAction.do?method
 
 - 34도시 레지스트리·법정동 배정·피커 시도 그룹·구 칩·APPLY 미제공 UI·manifest `tier`/`applyStatus` 적용.
 - TourAPI 로컬 수집 api_calls=354. 문화포털 +295 ENJOY.
-- ENJOY 약함: 충주(1)·단양(2) — R31.
+- ENJOY 약함: 충주(1)·단양(2) — R31. 2026-10-29 Partial: 필터·법정동 5자리·얇은 도시 축제 backfill. 발행 건수는 다음 daily. `docs/ops/culture-portal-spike.md` R31.
 - 다음: Phase 1 APPLY (수원 외 eminwon·광역시 어댑터).
 
 

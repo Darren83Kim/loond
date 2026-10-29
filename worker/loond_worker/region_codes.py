@@ -619,6 +619,243 @@ def city_keyword_in_blob(keyword: str, blob: str) -> bool:
     return keyword in blob
 
 
+# Culture-portal `area` strings observed on the public list after the
+# 강원/전북 특별자치도 rename and the 2026-07 전남·광주 통합.
+# Canonical values stay the short labels already stored on REGIONS.culture_areas.
+_CULTURE_AREA_ALIAS: Final[dict[str, str]] = {
+    "서울특별시": "서울",
+    "부산광역시": "부산",
+    "대구광역시": "대구",
+    "인천광역시": "인천",
+    "광주광역시": "광주",
+    "대전광역시": "대전",
+    "울산광역시": "울산",
+    "세종특별자치시": "세종",
+    "경기도": "경기",
+    "강원도": "강원",
+    "강원특별자치도": "강원",
+    "충청북도": "충북",
+    "충청남도": "충남",
+    "전라북도": "전북",
+    "전북특별자치도": "전북",
+    "전라남도": "전남",
+    "경상북도": "경북",
+    "경상남도": "경남",
+    "제주도": "제주",
+    "제주특별자치도": "제주",
+    "전남광주통합특별시": "광주",
+    "전남광주통합": "광주",
+    "전남광주": "광주",
+}
+
+
+def canonical_culture_area(area: str | None) -> str:
+    """Map a culture-portal sido label to the short catalog form."""
+    text = (area or "").strip()
+    if not text:
+        return ""
+    return _CULTURE_AREA_ALIAS.get(text, text)
+
+
+def culture_area_allowed(
+    area: str | None, culture_areas: tuple[str, ...] | list[str] | None
+) -> bool:
+    """True when area is empty or its canonical form is one of culture_areas.
+
+    Empty area is not a rejection by itself — sigungu/place/title still decide.
+    A non-empty area outside the city's sido list is a hard reject (경기 광주 vs 전남광주).
+    """
+    if not culture_areas:
+        return True
+    text = (area or "").strip()
+    if not text:
+        return True
+    allowed = {canonical_culture_area(a) for a in culture_areas}
+    return canonical_culture_area(text) in allowed
+
+
+def culture_sido_queries(region: dict[str, Any]) -> list[str]:
+    """Sido strings to send to cultureinfo/area2, primary label first.
+
+    Aliases cover full official names (충청북도, 전남광주통합특별시, …) that
+    the short label on REGIONS.culture_areas does not spell.
+    """
+    primary = [str(a) for a in (region.get("culture_areas") or []) if a]
+    inverse: dict[str, list[str]] = {}
+    for raw, canon in _CULTURE_AREA_ALIAS.items():
+        inverse.setdefault(canon, []).append(raw)
+    out: list[str] = []
+    for label in primary:
+        if label not in out:
+            out.append(label)
+        for raw in inverse.get(canonical_culture_area(label), []):
+            if raw not in out:
+                out.append(raw)
+    if not out and region.get("culture_gugun"):
+        out.append("경기")
+    return out
+
+
+def culture_allowed_sigungu(region: dict[str, Any]) -> set[str]:
+    """Sigungu tokens that belong to this city (시·군 name and its 구).
+
+    Stems are added only for the city's own 시/군 (충주시 → 충주). District
+    names stay exact so 동/서/남/북/중구 are not shortened into bare syllables.
+    광주 does not gain a synthetic '광주시' token (that string is 경기 광주시).
+    """
+    names: set[str] = set()
+    gugun = str(region.get("culture_gugun") or "").strip()
+    if gugun:
+        names.add(gugun)
+        if gugun.endswith(("시", "군")) and len(gugun) > 1:
+            names.add(gugun[:-1])
+    for token in region.get("culture_sigungu") or ():
+        if token:
+            names.add(str(token))
+    for _code, full in region.get("districts") or ():
+        if full:
+            names.add(str(full))
+    display = str(region.get("display_name") or "").strip()
+    if display.endswith(("시", "군")):
+        names.add(display)
+    return names
+
+
+_SIGUNGU_OWNERS: dict[str, set[str]] | None = None
+
+
+def sigungu_owners() -> dict[str, set[str]]:
+    """token → region ids that list that token as their own sigungu/district."""
+    global _SIGUNGU_OWNERS
+    if _SIGUNGU_OWNERS is None:
+        idx: dict[str, set[str]] = {}
+        for region in REGIONS:
+            for token in culture_allowed_sigungu(region):
+                idx.setdefault(token, set()).add(str(region["id"]))
+        _SIGUNGU_OWNERS = idx
+    return _SIGUNGU_OWNERS
+
+
+def sigungu_token(sigungu: str | None) -> str:
+    text = (sigungu or "").strip()
+    if not text:
+        return ""
+    return re.split(r"\s+", text)[-1]
+
+
+def sigungu_token_ambiguous(token: str) -> bool:
+    """True when the same 구 name is used by more than one catalog city."""
+    return len(sigungu_owners().get(token, ())) > 1
+
+
+def sigungu_is_foreign(token: str, region: dict[str, Any]) -> bool:
+    """True when sigungu names some other city, or an unknown 시·군·구.
+
+    Unknown venue strings (탄금호, 문화회관) are not foreign — the caller
+    still has to find the city in place or title.
+    """
+    if not token:
+        return False
+    owners = sigungu_owners().get(token)
+    if owners:
+        return str(region["id"]) not in owners
+    if token.endswith(("시", "군", "구")) and token not in culture_allowed_sigungu(region):
+        return True
+    return False
+
+
+def culture_title_mentions_city(city: str, title: str | None) -> bool:
+    """Bracket or 시·군 token in a title. Not a bare substring.
+
+    Portal rows are often `[충주] 호수 위 우주` with a place name that does
+    not repeat the city. Bare substrings are rejected (고양이, 홍성남, 통영의).
+    """
+    if not city or not title:
+        return False
+    bracket = rf"[\[\(（【]\s*{re.escape(city)}(시|군|구|광역시)?\s*[\]\)）】]"
+    if city == "광주":
+        if "전남광주" in title:
+            return False
+        return re.search(bracket, title) is not None
+    if city == "고양":
+        return re.search(r"[\[\(（【]\s*고양(시|특례시)?\s*[\]\)）】]", title) is not None
+    if city == "성남" and re.search(bracket, title) is None and "홍성남" in title:
+        return False
+    if re.search(bracket, title):
+        return True
+    return re.search(
+        rf"(?<![가-힣]){re.escape(city)}(시|군)(?![가-힣])", title
+    ) is not None
+
+
+# Unknown 시·군 (not in the catalog) still counts as "some other city".
+# 시립 is the 시립예술단 pattern, not an admin suffix. 전시 must not match.
+_UNKNOWN_ADMIN = re.compile(
+    r"(?<![가-힣])[가-힣]{2,6}(?:시(?!립)|군)(?![가-힣]|문화|청)"
+)
+_UNKNOWN_ADMIN_CONT = re.compile(
+    r"(?<![가-힣])[가-힣]{2,6}(?:시(?!립)|군)(?=문화|청|민)"
+)
+_UNKNOWN_GU = re.compile(r"(?<![가-힣])[가-힣]{2,6}구(?![가-힣])")
+
+
+def address_affirms_city(blob: str | None, region: dict[str, Any]) -> bool | None:
+    """True/False when an address clearly does/doesn't name this city.
+
+    None when the blob is empty or has no 시·군·구 token to judge
+    (탄금호 국제조정경기장). Callers must not treat None as a rejection.
+    """
+    text = (blob or "").strip()
+    if not text:
+        return None
+    if city_keyword_in_blob(str(region["name_ko"]), text):
+        return True
+    for token in culture_allowed_sigungu(region):
+        if len(token) < 2:
+            continue
+        if re.search(rf"(?<![가-힣]){re.escape(token)}(?![가-힣])", text):
+            return True
+        if token.endswith(("시", "군")) and token in text:
+            return True
+    rid = str(region["id"])
+    for other in REGIONS:
+        if str(other["id"]) == rid:
+            continue
+        for token in culture_allowed_sigungu(other):
+            if len(token) < 2:
+                continue
+            if token.endswith("구") and sigungu_token_ambiguous(token):
+                continue
+            if token.endswith(("시", "군")) and token in text:
+                return False
+            if re.search(rf"(?<![가-힣]){re.escape(token)}(?![가-힣])", text):
+                return False
+    if _UNKNOWN_ADMIN.search(text) or _UNKNOWN_ADMIN_CONT.search(text):
+        return False
+    if _UNKNOWN_GU.search(text):
+        return False
+    return None
+
+
+def normalize_ldong_pair(regn: str | None, signgu: str | None) -> tuple[str, str]:
+    """Accept 3-digit signgu and 5-digit legal codes (43130 → regn 43 / signgu 130).
+
+    TourAPI sometimes returns lDongSignguCd already prefixed by the sido code.
+    Those rows used to miss _SIGNGU_INDEX and were dropped with no keyword
+    fallback. 세종 36110 stays a regn code, not regn 36 + signgu 110.
+    """
+    regn_s = str(regn or "").strip()
+    signgu_s = str(signgu or "").strip()
+    if signgu_s.isdigit() and len(signgu_s) == 5:
+        if regn_s and len(regn_s) == 2 and signgu_s.startswith(regn_s):
+            return regn_s, signgu_s[2:]
+        if not regn_s and signgu_s in _REGN_ONLY:
+            return signgu_s, ""
+        if not regn_s:
+            return signgu_s[:2], signgu_s[2:]
+    return regn_s, signgu_s
+
+
 def assign_region(item: dict[str, Any]) -> dict[str, Any] | None:
     """Exclusive city assignment: ldong codes first, then keyword fallback.
 
@@ -626,8 +863,9 @@ def assign_region(item: dict[str, Any]) -> dict[str, Any] | None:
     under regn 12), return None — do NOT fall through to keyword (avoids
     전남광주통합특별시 → 광주 false friends).
     """
-    regn = str(item.get("lDongRegnCd") or "").strip()
-    signgu = str(item.get("lDongSignguCd") or "").strip()
+    regn, signgu = normalize_ldong_pair(
+        item.get("lDongRegnCd"), item.get("lDongSignguCd")
+    )
     if regn and signgu:
         hit = _SIGNGU_INDEX.get((regn, signgu))
         if hit is not None:
