@@ -76,6 +76,34 @@ def _write_text(path: Path, text: str) -> None:
     path.write_text(text, encoding="utf-8")
 
 
+def has_seoul_municipal_apply(opportunities: list[dict[str, Any]]) -> bool:
+    """True when the feed contains 서울시 공공서비스예약 APPLY rows."""
+    for item in opportunities:
+        if item.get("type") != "APPLY":
+            continue
+        if str(item.get("id") or "").startswith("seoul-yeyak-"):
+            return True
+        if (item.get("meta") or {}).get("source") == "seoul_reservation":
+            return True
+    return False
+
+
+def resolve_apply_status(
+    region_id: str,
+    opportunities: list[dict[str, Any]],
+    catalog_status: str,
+) -> str:
+    """Catalog status, unless this feed actually has a Seoul city board.
+
+    `region_codes` / the app picker stay `national` while no municipal rows
+    are published (same honesty rule as Busan). A feed that contains
+    `seoul-yeyak-*` rows reports `provided`.
+    """
+    if region_id == "seoul" and has_seoul_municipal_apply(opportunities):
+        return "provided"
+    return catalog_status
+
+
 def build_region_feed(
     region_id: str,
     opportunities: list[dict[str, Any]],
@@ -84,13 +112,14 @@ def build_region_feed(
 ) -> dict[str, Any]:
     """One-city feed document (same opportunity schema as the monolith)."""
     meta = rc.REGION_BY_ID.get(region_id) or {}
+    catalog_status = str(meta.get("apply_status") or "preparing")
     return {
         "schemaVersion": REGION_FEED_SCHEMA_VERSION,
         "region": region_id,
         "regionLabel": _region_label(region_id),
         "sido": meta.get("sido_ko"),
         "tier": meta.get("tier"),
-        "applyStatus": meta.get("apply_status", "preparing"),
+        "applyStatus": resolve_apply_status(region_id, opportunities, catalog_status),
         "updatedAt": updated_at,
         "opportunities": opportunities,
         "counts": _counts_by_type(opportunities),
@@ -162,7 +191,8 @@ def publish_region_artifacts(
         per_counts[rid] = counts
         meta = rc.REGION_BY_ID.get(rid) or {}
         tier = str(meta.get("tier") or "legacy")
-        apply_status = str(meta.get("apply_status") or "preparing")
+        catalog_status = str(meta.get("apply_status") or "preparing")
+        apply_status = resolve_apply_status(rid, city_ops, catalog_status)
         depth = "deep" if tier in ("phase1", "legacy") else "tour"
         entry: dict[str, Any] = {
             "id": rid,
