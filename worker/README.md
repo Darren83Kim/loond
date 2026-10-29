@@ -84,6 +84,8 @@ python -m loond_worker.run_tour_daily
 python -m loond_worker.tour_collect
 ```
 
+R26: 목록 수집이 실패하거나 TourAPI `resultCode` 22(호출 한도), 전송 오류, 호출 예산 중단이면 `data/published/opportunities.json`을 쓰지 않고 종료 코드 1로 끝난다. 이전에 공개된 피드가 유지된다. `detailCommon2` 홈페이지 보강 실패는 게시를 막지 않는다. 체험 APPLY(`tour_apply_collect`)도 같은 실패면 기존 `*-tour-apply-*` 행을 지우지 않는다.
+
 ## published → app asset sync (EPIC 4-7)
 
 From repo root:
