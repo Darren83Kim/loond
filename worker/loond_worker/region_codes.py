@@ -39,6 +39,10 @@ REGIONS: Final[tuple[dict[str, Any], ...]] = (
      'display_name': '서울',
      'sido_ko': '서울',
      'tier': 'phase1',
+     # Municipal reservation rows are not in the published feed yet.
+     # Stay national (Busan rule). publish_regions flips the feed to
+     # provided once seoul-yeyak-* rows exist; then match this field
+     # and Region.applyStatus in the app.
      'apply_status': 'national',
      'ldong_regn': '11',
      'districts': (('110', '종로구'),

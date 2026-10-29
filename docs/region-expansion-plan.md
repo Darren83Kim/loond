@@ -234,10 +234,19 @@ eminwon 공통 경로: `/emwp/gov/mogaha/ntis/web/ofr/action/OfrAction.do?method
 - 배정: 기존 법정동 코드 `assign_region`
 - 라벨: `sourceName=한국관광공사 TourAPI (체험·관광)`, summary에 **시·군청 공고 아님** 명시
 - 도시당 상한 18건. 2026-09-30: unique 483 → 배정 177건
-- `applyStatus=national` (시청 공고 파이프 전); 시청 공고 있는 도시(`suwon`/`seongnam`/`goyang`/`busan`)는 `provided`
+- `applyStatus=national` (시청 공고 파이프 전); 시청 공고 있는 도시(`suwon`/`seongnam`/`goyang`)는 `provided`. 부산은 시 공고 행이 없어 `national`.
 
 ### 6-3. 남긴 것
-- 대구 pssrp·서울 공공서비스예약·인천 citynet 등 광역 시 보드 추가 미착수
+- 대구 pssrp·인천 citynet·대전·울산·광주 시 보드 미착수 (서울 예약 API는 §6-4)
 - TourAPI 숙박(`searchStay2`)은 호텔 비중이 커 APPLY에 넣지 않음
 - 문화포털 교육/체험은 관광 도시 물량이 적어 1차 보류
-- Actions에 busan/tour_apply 단계 추가(해외 IP 차단 시 soft-fail)
+- Actions에 busan/tour_apply/seoul 단계 추가(해외 IP 차단 시 soft-fail)
+
+### 6-4. 서울 공공서비스예약 (R35, 2026-10-29)
+- 수집: `worker/loond_worker/seoul_collect.py`. 운영 메모: `docs/ops/seoul-reservation.md`
+- 키: `SEOUL_OPEN_API_KEY`. Actions secret은 아직 없음. 없으면 단계를 건너뛰고 기존 `seoul-yeyak-*` 행을 유지
+- 교육(`ListPublicReservationEducation`)·문화(`ListPublicReservationCulture`)는 `접수중` 전부. 체육·시설대관은 강좌/모집성만. 진료·주차·채용·입찰 제외
+- 마감은 접수 종료 `RCPTENDDT`만 (`applicationEndSource=api_rcpt_period`). 운영 종료일로 마감을 만들지 않음
+- `sourceName=서울시 공공서비스예약`
+- 카탈로그 `apply_status`는 예약 행이 게시되기 전까지 `national` (부산과 같은 정직 규칙). 행이 들어가면 피드/manifest는 `provided`. 앱 피커는 그 다음 `region.dart`를 맞춘다
+- 2026-10-29 샘플키(`sample`) dry-run: INFO-000이지만 인덱스 1~5만 허용이라 **도시 전체 오픈 건수는 아님**. `list_total_count` 교육 413 · 문화 1226 · 체육 700 · 시설대관 623. 그 창에서 수집기가 남긴 접수중은 교육 1 · 문화 4 · 체육 0(코트 슬롯 제외) · 시설대관 1. 진료(22건)는 호출하지 않음. 전체 건수는 실키가 필요

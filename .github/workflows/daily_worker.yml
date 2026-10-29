@@ -1,6 +1,7 @@
 # EPIC 5-1: daily TourAPI + culture-portal worker → published JSON → app assets
 # Requires repo secrets: TOUR_API_SERVICE_KEY and CULTURE_API_SERVICE_KEY
 #   (CULTURE_API_SERVICE_KEY optional at runtime — missing key skips culture with warning)
+#   SEOUL_OPEN_API_KEY is optional — missing key skips Seoul reservation APPLY
 name: daily-loond-worker
 
 on:
@@ -102,6 +103,24 @@ jobs:
           set -euo pipefail
           cd worker && python -m loond_worker.busan_collect --pages 27 || {
             echo "WARN: busan_collect failed — continuing"
+            exit 0
+          }
+
+      # Seoul public-reservation APPLY — soft-fail (missing key or overseas IP)
+      # Failure keeps previous seoul-yeyak rows. Do not fail the job (unlike R26).
+      - name: Run Seoul reservation APPLY collect
+        env:
+          SEOUL_OPEN_API_KEY: ${{ secrets.SEOUL_OPEN_API_KEY }}
+          PYTHONUNBUFFERED: "1"
+        run: |
+          set -euo pipefail
+          if [ -z "${SEOUL_OPEN_API_KEY:-}" ]; then
+            echo "WARN: SEOUL_OPEN_API_KEY secret missing — skip seoul_collect (previous rows kept)."
+            echo "Add the Actions secret to publish 서울시 공공서비스예약. See docs/ops/seoul-reservation.md"
+            exit 0
+          fi
+          cd worker && python -m loond_worker.seoul_collect || {
+            echo "WARN: seoul_collect failed — previous seoul rows kept, continuing"
             exit 0
           }
 

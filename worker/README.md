@@ -86,6 +86,19 @@ python -m loond_worker.tour_collect
 
 R26: 목록 수집이 실패하거나 TourAPI `resultCode` 22(호출 한도), 전송 오류, 호출 예산 중단이면 `data/published/opportunities.json`을 쓰지 않고 종료 코드 1로 끝난다. 이전에 공개된 피드가 유지된다. `detailCommon2` 홈페이지 보강 실패는 게시를 막지 않는다. 체험 APPLY(`tour_apply_collect`)도 같은 실패면 기존 `*-tour-apply-*` 행을 지우지 않는다.
 
+## 서울시 공공서비스예약 APPLY (R35)
+
+```bash
+cd worker
+export SEOUL_OPEN_API_KEY='your-key'   # 커밋 금지. Actions secret 이름과 같음
+python -m loond_worker.seoul_collect --dry-run
+
+# 공개 샘플키는 1~5행만. 게시하지 않음
+python -m loond_worker.seoul_collect --sample --dry-run
+```
+
+키가 없거나 조회가 실패하면 기존 `seoul-yeyak-*` 행을 유지한다. 설정: [`docs/ops/seoul-reservation.md`](../docs/ops/seoul-reservation.md).
+
 ## published → app asset sync (EPIC 4-7)
 
 From repo root:
