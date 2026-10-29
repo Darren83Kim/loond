@@ -35,6 +35,9 @@ jobs:
           if [ -f worker/requirements.txt ]; then pip install -r worker/requirements.txt; fi
           pip install requests
 
+      # R26: run_tour_daily exits non-zero without writing opportunities.json when
+      # the fetch fails or TourAPI returns resultCode 22. Later steps do not run,
+      # so the previous feed stays. The failure() issue step alerts ops.
       - name: Run TourAPI collect (KorService2)
         env:
           TOUR_API_SERVICE_KEY: ${{ secrets.TOUR_API_SERVICE_KEY }}
@@ -67,21 +70,29 @@ jobs:
           fi
           cd worker && python -m loond_worker.culture_collect
 
-      # National experience APPLY (TourAPI keyword) — soft-fail
+      # National experience APPLY (TourAPI keyword).
+      # R26: on quota/fetch failure the script keeps previous apply rows and
+      # exits non-zero. This step still continues so a good TourAPI/culture
+      # publish can commit; the job fails after commit so an issue is opened.
       - name: Run TourAPI experience APPLY collect
+        id: tour_apply
         env:
           TOUR_API_SERVICE_KEY: ${{ secrets.TOUR_API_SERVICE_KEY }}
           PYTHONUNBUFFERED: "1"
         run: |
           set -euo pipefail
           if [ -z "${TOUR_API_SERVICE_KEY:-}" ]; then
-            echo "WARN: TOUR_API_SERVICE_KEY missing — skip tour_apply"
+            echo "WARN: TOUR_API_SERVICE_KEY missing — skip tour_apply (previous rows kept)"
             exit 0
           fi
-          cd worker && python -m loond_worker.tour_apply_collect || {
-            echo "WARN: tour_apply_collect failed — continuing"
-            exit 0
-          }
+          set +e
+          (cd worker && python -m loond_worker.tour_apply_collect)
+          code=$?
+          set -e
+          if [ "$code" -ne 0 ]; then
+            echo "retained=true" >> "$GITHUB_OUTPUT"
+            echo "WARN: tour_apply_collect exit=$code — previous TourAPI apply rows kept (R26). Job fails after commit."
+          fi
 
       # Busan municipal occation APPLY — soft-fail (overseas IP may block)
       - name: Run Busan occation APPLY collect
@@ -110,6 +121,15 @@ jobs:
             git push
           fi
 
+      # R26: apply-collect kept the previous rows. Commit of other feeds already
+      # happened; fail afterwards so the R16 issue step still runs.
+      - name: Surface TourAPI apply retain (R26)
+        if: success() && steps.tour_apply.outputs.retained == 'true'
+        run: |
+          echo "R26: tour_apply_collect kept the previous apply feed after a fetch/quota failure."
+          echo "Other published updates from this run were committed. Failing so ops get an issue."
+          exit 1
+
       # R16: MVP failure notify — open a GitHub Issue (GITHUB_TOKEN only)
       - name: Open issue on failure
         if: failure()
@@ -124,6 +144,9 @@ jobs:
           - Run: ${RUN_URL}
           - Ref: \`${{ github.ref }}\`
           - Actor: ${{ github.actor }}
+
+          R26: TourAPI 조회 실패·한도(resultCode 22)로 멈춘 경우 이전 피드는 git과 Pages에 그대로입니다. 다른 원인일 수 있으니 로그를 확인하세요.
+          If this run died on a TourAPI fetch or quota error (resultCode 22), the previous published feed was left in place. Other failures may be unrelated — check the log.
 
           _Auto-opened by Actions (R16). Close after triage._"
           gh issue create --title "[daily-worker] failed — ${DAY}" --body "${BODY}"

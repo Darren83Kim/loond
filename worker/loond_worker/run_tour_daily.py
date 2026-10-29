@@ -8,6 +8,12 @@ STRATEGY=ldong_code (Phase 2 expansion):
 
 Requires env TOUR_API_SERVICE_KEY. Never prints the key.
 Exit 0 on success. Soft-retry on timeout (R26).
+
+R26 retain: a list-fetch failure (transport, HTTP, TourAPI error, resultCode 22 /
+LIMITED_NUMBER quota, or the call budget stopping the sweep early) does not
+rewrite opportunities.json. The previous published feed stays. Exit is non-zero
+so Actions opens an issue. detailCommon2 homepage misses are optional and do
+not block publish.
 """
 from __future__ import annotations
 
@@ -19,6 +25,7 @@ import subprocess
 import urllib.error
 import urllib.request
 from collections import Counter
+from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from typing import Any
 from urllib.parse import quote
@@ -70,6 +77,43 @@ _API_CALLS = 0
 _API_BY_EP: dict[str, int] = {}
 
 
+@dataclass(frozen=True)
+class FetchProblem:
+    """A list-collect failure that must not replace the published feed."""
+
+    endpoint: str
+    kind: str  # quota | budget | transport | http | api
+    code: str
+    message: str
+
+
+_FETCH_PROBLEMS: list[FetchProblem] = []
+
+
+def reset_collect_state() -> None:
+    """Clear per-run call counters and blocking fetch problems."""
+    global _API_CALLS, _API_BY_EP, _FETCH_PROBLEMS
+    _API_CALLS = 0
+    _API_BY_EP = {}
+    _FETCH_PROBLEMS = []
+
+
+def fetch_problems() -> list[FetchProblem]:
+    return list(_FETCH_PROBLEMS)
+
+
+def has_blocking_fetch_failure() -> bool:
+    return bool(_FETCH_PROBLEMS)
+
+
+def note_fetch_problem(problem: FetchProblem) -> None:
+    _FETCH_PROBLEMS.append(problem)
+    _log(
+        f"  R26 blocking kind={problem.kind} ep={problem.endpoint} "
+        f"code={problem.code} msg={problem.message[:180]}"
+    )
+
+
 def _count_api(endpoint: str) -> None:
     global _API_CALLS
     _API_CALLS += 1
@@ -78,6 +122,130 @@ def _count_api(endpoint: str) -> None:
 
 def _budget_ok() -> bool:
     return _API_CALLS < API_BUDGET
+
+
+def _result_parts(payload: dict[str, Any]) -> tuple[str, str]:
+    """(resultCode, resultMsg) from KorService2 or data.go.kr error shapes."""
+    if "OpenAPI_ServiceResponse" in payload:
+        h = payload["OpenAPI_ServiceResponse"].get("cmmMsgHeader") or {}
+        code = str(h.get("returnReasonCode") or "")
+        msg = str(h.get("returnAuthMsg") or h.get("errMsg") or "")
+        return code, msg
+    if "resultCode" in payload and "response" not in payload:
+        return str(payload.get("resultCode") or ""), str(payload.get("resultMsg") or "")
+    header = ((payload.get("response") or {}).get("header")) or {}
+    return str(header.get("resultCode") or ""), str(header.get("resultMsg") or "")
+
+
+def _normalize_result_code(code: str) -> str:
+    c = (code or "").strip()
+    if c.isdigit():
+        return str(int(c))
+    return c
+
+
+def _is_quota_message(msg: str) -> bool:
+    up = (msg or "").upper()
+    if "LIMITED_NUMBER_OF_SERVICE_REQUESTS" in up:
+        return True
+    if "요청제한" in msg or "요청 제한" in msg:
+        return True
+    if "한도" in msg and "초과" in msg:
+        return True
+    return False
+
+
+def classify_fetch_payload(
+    payload: dict[str, Any], *, endpoint: str = "?"
+) -> FetchProblem | None:
+    """Return a blocking problem, or None for success / legitimate no-data.
+
+    resultCode 03 (NODATA) is not blocking: that query is empty, not a partial
+    wipe. resultCode 22 and LIMITED_NUMBER messages are quota.
+    """
+    if not isinstance(payload, dict):
+        return FetchProblem(endpoint, "transport", "", "non-dict payload")
+    err = str(payload.get("_error") or "")
+    if err == "BudgetExceeded":
+        return FetchProblem(
+            endpoint, "budget", "budget", str(payload.get("_msg") or err)[:300]
+        )
+    if "_error" in payload:
+        return FetchProblem(
+            endpoint, "transport", err or "error", str(payload.get("_msg") or err)[:300]
+        )
+    if "_http_error" in payload:
+        return FetchProblem(
+            endpoint,
+            "http",
+            str(payload.get("_http_error")),
+            str(payload.get("_body") or payload.get("_http_error"))[:300],
+        )
+    if "_parse_error" in payload:
+        return FetchProblem(
+            endpoint, "transport", "parse", str(payload.get("_parse_error"))[:300]
+        )
+
+    code, msg = _result_parts(payload)
+    norm = _normalize_result_code(code)
+    ok, why = header_ok(payload)
+    if norm == "22" or (_is_quota_message(msg) and not ok):
+        return FetchProblem(endpoint, "quota", code or norm, (msg or "quota")[:300])
+    # 03 NODATA_ERROR — empty query, not an incomplete feed.
+    if norm == "3":
+        return None
+    if ok:
+        return None
+    return FetchProblem(endpoint, "api", code or norm, (msg or why)[:300])
+
+
+def blocking_failure_reason(problems: list[FetchProblem]) -> str | None:
+    """Human-readable reason when problems must keep the previous feed."""
+    if not problems:
+        return None
+    quota = [p for p in problems if p.kind == "quota"]
+    lead = quota[0] if quota else problems[0]
+    label = (
+        "TourAPI quota (resultCode 22)"
+        if quota
+        else f"TourAPI fetch failure ({lead.kind})"
+    )
+    return (
+        f"{label} endpoint={lead.endpoint} code={lead.code} "
+        f"msg={lead.message[:180]} count={len(problems)}"
+    )
+
+
+def should_keep_previous_tour_feed(
+    problems: list[FetchProblem],
+    *,
+    enjoy_assigned: int,
+    discover_assigned: int,
+) -> str | None:
+    """Reason to skip publishing, or None when the new TourAPI sweep may replace."""
+    blocked = blocking_failure_reason(problems)
+    if blocked:
+        return blocked
+    if enjoy_assigned == 0 and discover_assigned == 0:
+        return (
+            "TourAPI returned 0 multi-city ENJOY/DISCOVER rows — refusing empty invent"
+        )
+    return None
+
+
+def _log_retain(reason: str) -> None:
+    print(
+        "R26: keeping previously published feed (not writing opportunities.json). "
+        + reason,
+        file=sys.stderr,
+    )
+    for problem in _FETCH_PROBLEMS:
+        print(
+            "R26 detail "
+            f"kind={problem.kind} endpoint={problem.endpoint} "
+            f"code={problem.code} msg={problem.message[:200]}",
+            file=sys.stderr,
+        )
 
 
 
@@ -212,16 +380,27 @@ def _fetch_json_once(url: str) -> dict[str, Any]:
             }
 
 
-def fetch_json(url: str, *, endpoint: str = "?", retries: int = 3) -> dict[str, Any]:
-    """GET JSON with soft retries on timeout / transient errors (R26)."""
+def fetch_json(
+    url: str,
+    *,
+    endpoint: str = "?",
+    retries: int = 3,
+    required: bool = True,
+) -> dict[str, Any]:
+    """GET JSON with soft retries on timeout / transient errors (R26).
+
+    required=True records a blocking problem on the final failure so publishers
+    keep the previous feed. Optional calls (detailCommon2) pass required=False.
+    """
     last: dict[str, Any] = {}
     for attempt in range(retries):
         if not _budget_ok():
-            return {
+            last = {
                 "_error": "BudgetExceeded",
                 "_msg": f"API_BUDGET={API_BUDGET} calls={_API_CALLS}",
                 "_url": _safe_url_for_log(url),
             }
+            break
         _count_api(endpoint)
         last = _fetch_json_once(url)
         ok, msg = header_ok(last)
@@ -236,10 +415,14 @@ def fetch_json(url: str, *, endpoint: str = "?", retries: int = 3) -> dict[str, 
             or "urlerror" in msg.lower()
         )
         if not transient or attempt + 1 >= retries:
-            return last
+            break
         wait = 1.5 * (attempt + 1)
         _log(f"  retry {attempt+1}/{retries} ep={endpoint} wait={wait:.1f}s msg={msg}")
         time.sleep(wait)
+    if required:
+        problem = classify_fetch_payload(last, endpoint=endpoint)
+        if problem is not None:
+            note_fetch_problem(problem)
     return last
 
 
@@ -325,7 +508,26 @@ def paginate(
     page = 1
     while page <= max_pages:
         params = {**extra, "pageNo": str(page)}
+        if has_blocking_fetch_failure():
+            metas.append(
+                {
+                    "page": page,
+                    "ok": False,
+                    "msg": "aborted_prior_failure",
+                    "got": 0,
+                    "totalCount": 0,
+                }
+            )
+            break
         if not _budget_ok():
+            note_fetch_problem(
+                FetchProblem(
+                    endpoint=endpoint,
+                    kind="budget",
+                    code="budget",
+                    message=f"API_BUDGET={API_BUDGET} calls={_API_CALLS}",
+                )
+            )
             metas.append({"page": page, "ok": False, "msg": "budget", "got": 0, "totalCount": 0})
             break
         url = _build_url(endpoint, service_key, params)
@@ -348,6 +550,16 @@ def paginate(
                 if snippet:
                     _log(f"  [{tag}] diag={snippet!r}")
         if not ok:
+            # NODATA on a later page means the page set is incomplete.
+            if classify_fetch_payload(payload, endpoint=endpoint) is None and page > 1:
+                note_fetch_problem(
+                    FetchProblem(
+                        endpoint=endpoint,
+                        kind="api",
+                        code="3",
+                        message=f"incomplete pagination at page {page}: {msg}",
+                    )
+                )
             break
         all_items.extend(items)
         if tc == 0 or len(all_items) >= tc or len(items) == 0:
@@ -439,11 +651,28 @@ def collect_discover(service_key: str) -> dict[str, Any]:
     _log(f"  discover sweep ldong_regns={regns}")
 
     for ctid in DISCOVER_TYPES:
+        if has_blocking_fetch_failure():
+            _log(f"  R26 stop remaining discover types before {ctid}")
+            break
         max_pages = SIDO_MAX_PAGES.get(str(ctid), 8)
         type_items: list[dict[str, Any]] = []
         type_metas: list[dict[str, Any]] = []
         for regn in regns:
+            if has_blocking_fetch_failure():
+                _log(f"  R26 stop discover_{ctid} before regn={regn}")
+                break
             if not _budget_ok():
+                note_fetch_problem(
+                    FetchProblem(
+                        endpoint="areaBasedList2",
+                        kind="budget",
+                        code="budget",
+                        message=(
+                            f"API_BUDGET={API_BUDGET} calls={_API_CALLS} "
+                            f"before discover_{ctid} regn={regn}"
+                        ),
+                    )
+                )
                 _log(f"  budget hit before discover_{ctid} regn={regn}")
                 break
             items, metas = paginate(
@@ -515,7 +744,7 @@ def enrich_homepages(
         if not cid:
             continue
         url = _build_url("detailCommon2", service_key, {"contentId": cid})
-        payload = fetch_json(url, endpoint="detailCommon2")
+        payload = fetch_json(url, endpoint="detailCommon2", required=False)
         ok, _ = header_ok(payload)
         if not ok:
             time.sleep(0.08)
@@ -811,9 +1040,7 @@ def main() -> int:
         print("TOUR_API_SERVICE_KEY not set — cannot run daily collect", file=sys.stderr)
         return 1
 
-    global _API_CALLS, _API_BY_EP
-    _API_CALLS = 0
-    _API_BY_EP = {}
+    reset_collect_state()
     service_key = _prepare_service_key(raw_key)
     _log(
         f"TourAPI daily collect STRATEGY={rc.STRATEGY} multi-city "
@@ -840,6 +1067,12 @@ def main() -> int:
             f"metas0={(run.get('metas') or [None])[0]}"
         )
 
+    blocked = blocking_failure_reason(fetch_problems())
+    if blocked:
+        _log_retain(blocked)
+        _log(f"api_calls total={_API_CALLS} by_ep={dict(_API_BY_EP)}")
+        return 1
+
     _log("=== DISCOVER areaBasedList2 (ldong_regn sweep -> partition) ===")
     disc = collect_discover(service_key)
     _log(
@@ -852,11 +1085,14 @@ def main() -> int:
             f"unique={info['unique_total']} by_region={info.get('by_region')}"
         )
 
-    if fest["assigned"] == 0 and disc["assigned"] == 0:
-        print(
-            "TourAPI returned 0 multi-city ENJOY/DISCOVER rows — refusing empty invent",
-            file=sys.stderr,
-        )
+    keep = should_keep_previous_tour_feed(
+        fetch_problems(),
+        enjoy_assigned=int(fest["assigned"]),
+        discover_assigned=int(disc["assigned"]),
+    )
+    if keep:
+        _log_retain(keep)
+        _log(f"api_calls total={_API_CALLS} by_ep={dict(_API_BY_EP)}")
         return 1
 
     to_enrich: list[dict[str, Any]] = []

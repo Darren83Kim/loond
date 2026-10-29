@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
+import sys
 import time
 from datetime import datetime, timezone, timedelta
 from typing import Any
@@ -39,6 +39,9 @@ def _looks_experience(title: str) -> bool:
 def collect(service_key: str) -> dict[str, list[dict[str, Any]]]:
     collected: dict[str, dict[str, Any]] = {}
     for kw in KEYWORDS:
+        if tour.has_blocking_fetch_failure():
+            print("  R26 abort remaining apply keywords")
+            break
         items, metas = tour.paginate(
             "searchKeyword2",
             service_key,
@@ -172,10 +175,10 @@ def main(argv: list[str] | None = None) -> int:
         print("TOUR_API_SERVICE_KEY missing")
         return 1
     # reset budget counter used by run_tour_daily.fetch_json
-    tour._API_CALLS = 0
-    tour._API_BY_EP = {}
+    tour.reset_collect_state()
     key = tour._prepare_service_key(raw_key)
     by = collect(key)
+    problems = tour.fetch_problems()
     raw = {
         "collectedAt": _now_iso(),
         "keywords": list(KEYWORDS),
@@ -186,10 +189,27 @@ def main(argv: list[str] | None = None) -> int:
             if rows
         },
     }
+    if problems:
+        raw["fetchProblems"] = [
+            {
+                "endpoint": p.endpoint,
+                "kind": p.kind,
+                "code": p.code,
+                "message": p.message,
+            }
+            for p in problems
+        ]
     config.RAW_DIR.mkdir(parents=True, exist_ok=True)
     (config.RAW_DIR / "tour_apply_raw.json").write_text(
         json.dumps(raw, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
+    reason = tour.blocking_failure_reason(problems)
+    if reason:
+        print(
+            "R26: keeping previous TourAPI apply rows (not merging). " + reason,
+            file=sys.stderr,
+        )
+        return 1
     if args.dry_run:
         print("dry-run", raw["counts"])
         return 0
