@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-10-30T13:24:23+09:00",
+  "collectedAt": "2026-11-01T13:26:48+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "ldong_code",
   "mode": "ldong_code_partition",
@@ -14,75 +14,75 @@
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 845
+          "totalCount": 847
         },
         {
           "page": 2,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 845
+          "totalCount": 847
         },
         {
           "page": 3,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 845
+          "totalCount": 847
         },
         {
           "page": 4,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 845
+          "totalCount": 847
         },
         {
           "page": 5,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 845
+          "totalCount": 847
         },
         {
           "page": 6,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 845
+          "totalCount": 847
         },
         {
           "page": 7,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 845
+          "totalCount": 847
         },
         {
           "page": 8,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 845
+          "totalCount": 847
         },
         {
           "page": 9,
           "ok": true,
           "msg": "OK",
-          "got": 45,
-          "totalCount": 845
+          "got": 47,
+          "totalCount": 847
         }
       ],
-      "count": 845,
-      "totalCount": 845
+      "count": 847,
+      "totalCount": 847
     }
   ],
   "counts": {
     "seoul": 178,
-    "busan": 67,
+    "busan": 68,
     "daegu": 18,
     "incheon": 25,
-    "gwangju": 15,
+    "gwangju": 16,
     "daejeon": 17,
     "ulsan": 15,
     "sejong": 7,
@@ -111,9 +111,9 @@
     "tongyeong": 5,
     "geoje": 4,
     "jeju": 16,
-    "seogwipo": 10
+    "seogwipo": 11
   },
-  "dropped": 328,
+  "dropped": 327,
   "by_region_titles": {
     "seoul": [
       "가락 옥토버페스트",
@@ -6490,7 +6490,7 @@
         "mapx": "129.0180494791",
         "mapy": "35.0768199166",
         "mlevel": "6",
-        "modifiedtime": "20261012143652",
+        "modifiedtime": "20261030113326",
         "areacode": "",
         "sigungucode": "",
         "tel": "051-231-4085",
@@ -7368,6 +7368,37 @@
         "lclsSystm1": "EV",
         "lclsSystm2": "EV01",
         "lclsSystm3": "EV010200",
+        "progresstype": "선택안함",
+        "festivaltype": ""
+      },
+      {
+        "addr1": "부산광역시 영도구 해양로195번길 180 (동삼동)",
+        "addr2": "",
+        "zipcode": "49013",
+        "cat1": "",
+        "cat2": "",
+        "cat3": "",
+        "contentid": "2992829",
+        "contenttypeid": "15",
+        "createdtime": "20230706155041",
+        "eventstartdate": "20261031",
+        "eventenddate": "20261101",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/11/4113111_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/11/4113111_image3_1.jpg",
+        "cpyrhtDivCd": "Type3",
+        "mapx": "129.0767259912",
+        "mapy": "35.0863911924",
+        "mlevel": "6",
+        "modifiedtime": "20261030163824",
+        "areacode": "",
+        "sigungucode": "",
+        "tel": "1811-6420",
+        "title": "피아크와 함께하는 2026 키스포츠페스티벌 부산",
+        "lDongRegnCd": "26",
+        "lDongSignguCd": "200",
+        "lclsSystm1": "EV",
+        "lclsSystm2": "EV03",
+        "lclsSystm3": "EV030300",
         "progresstype": "선택안함",
         "festivaltype": ""
       },
@@ -8819,7 +8850,7 @@
         "mapx": "126.6144291728",
         "mapy": "37.4765685240",
         "mlevel": "6",
-        "modifiedtime": "20261026172139",
+        "modifiedtime": "20261030145111",
         "areacode": "",
         "sigungucode": "",
         "tel": "010-2258-9475",
@@ -9452,6 +9483,37 @@
         "lclsSystm2": "EV01",
         "lclsSystm3": "EV010200",
         "progresstype": "선택안함",
+        "festivaltype": ""
+      },
+      {
+        "addr1": "전남광주통합특별시 동구 제봉로110번길 4 (장동)",
+        "addr2": "국립아시아문화전당 부설주차장 및 동명동 카페거리·골목 일원",
+        "zipcode": "61465",
+        "cat1": "",
+        "cat2": "",
+        "cat3": "",
+        "contentid": "3553639",
+        "contenttypeid": "15",
+        "createdtime": "20251022164712",
+        "eventstartdate": "20261031",
+        "eventenddate": "20261101",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/67/4140567_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/67/4140567_image3_1.jpg",
+        "cpyrhtDivCd": "Type3",
+        "mapx": "126.9224510104",
+        "mapy": "35.1482942929",
+        "mlevel": "6",
+        "modifiedtime": "20261030103006",
+        "areacode": "",
+        "sigungucode": "",
+        "tel": "062-434-0718",
+        "title": "동명커피산책",
+        "lDongRegnCd": "12",
+        "lDongSignguCd": "210",
+        "lclsSystm1": "EV",
+        "lclsSystm2": "EV01",
+        "lclsSystm3": "EV010600",
+        "progresstype": "",
         "festivaltype": ""
       },
       {
@@ -13189,7 +13251,7 @@
         "mapx": "128.9473094259",
         "mapy": "37.7726104945",
         "mlevel": "6",
-        "modifiedtime": "20261019100926",
+        "modifiedtime": "20261030100439",
         "areacode": "",
         "sigungucode": "",
         "tel": "033-647-6802",
@@ -16329,6 +16391,37 @@
         "lclsSystm1": "EV",
         "lclsSystm2": "EV03",
         "lclsSystm3": "EV030200",
+        "progresstype": "선택안함",
+        "festivaltype": ""
+      },
+      {
+        "addr1": "제주특별자치도 서귀포시 대정읍 최남단해안로 66",
+        "addr2": "모슬포항 일원",
+        "zipcode": "63513",
+        "cat1": "",
+        "cat2": "",
+        "cat3": "",
+        "contentid": "506627",
+        "contenttypeid": "15",
+        "createdtime": "20080307200121",
+        "eventstartdate": "20261119",
+        "eventenddate": "20261122",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/12/4141112_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/12/4141112_image3_1.jpg",
+        "cpyrhtDivCd": "Type3",
+        "mapx": "126.2520492078",
+        "mapy": "33.2144983016",
+        "mlevel": "6",
+        "modifiedtime": "20261030164737",
+        "areacode": "",
+        "sigungucode": "",
+        "tel": "064-794-8032",
+        "title": "최남단 방어 축제",
+        "lDongRegnCd": "50",
+        "lDongSignguCd": "130",
+        "lclsSystm1": "EV",
+        "lclsSystm2": "EV01",
+        "lclsSystm3": "EV010200",
         "progresstype": "선택안함",
         "festivaltype": ""
       },
