@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-11-05T14:08:56+09:00",
+  "collectedAt": "2026-11-06T14:08:32+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "ldong_code",
   "mode": "ldong_code_partition",
@@ -14,71 +14,71 @@
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 853
+          "totalCount": 854
         },
         {
           "page": 2,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 853
+          "totalCount": 854
         },
         {
           "page": 3,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 853
+          "totalCount": 854
         },
         {
           "page": 4,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 853
+          "totalCount": 854
         },
         {
           "page": 5,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 853
+          "totalCount": 854
         },
         {
           "page": 6,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 853
+          "totalCount": 854
         },
         {
           "page": 7,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 853
+          "totalCount": 854
         },
         {
           "page": 8,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 853
+          "totalCount": 854
         },
         {
           "page": 9,
           "ok": true,
           "msg": "OK",
-          "got": 53,
-          "totalCount": 853
+          "got": 54,
+          "totalCount": 854
         }
       ],
-      "count": 853,
-      "totalCount": 853
+      "count": 854,
+      "totalCount": 854
     }
   ],
   "counts": {
-    "seoul": 180,
+    "seoul": 181,
     "busan": 69,
     "daegu": 18,
     "incheon": 25,
@@ -111,9 +111,9 @@
     "tongyeong": 5,
     "geoje": 4,
     "jeju": 17,
-    "seogwipo": 11
+    "seogwipo": 10
   },
-  "dropped": 328,
+  "dropped": 329,
   "by_region_titles": {
     "seoul": [
       "가락 옥토버페스트",
@@ -2778,6 +2778,37 @@
         "lclsSystm1": "EV",
         "lclsSystm2": "EV03",
         "lclsSystm3": "EV030400",
+        "progresstype": "선택안함",
+        "festivaltype": ""
+      },
+      {
+        "addr1": "서울 중구 태평로1가 1",
+        "addr2": "청계광장",
+        "zipcode": "100101",
+        "cat1": "",
+        "cat2": "",
+        "cat3": "",
+        "contentid": "2613615",
+        "contenttypeid": "15",
+        "createdtime": "20190730223122",
+        "eventstartdate": "20261113",
+        "eventenddate": "20261115",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/79/4139579_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/79/4139579_image3_1.jpg",
+        "cpyrhtDivCd": "Type3",
+        "mapx": "126.9775921210",
+        "mapy": "37.5690746935",
+        "mlevel": "6",
+        "modifiedtime": "20261105171017",
+        "areacode": "",
+        "sigungucode": "",
+        "tel": "054-630-8706",
+        "title": "영주 사과축제",
+        "lDongRegnCd": "11",
+        "lDongSignguCd": "140",
+        "lclsSystm1": "EV",
+        "lclsSystm2": "EV01",
+        "lclsSystm3": "EV010300",
         "progresstype": "선택안함",
         "festivaltype": ""
       },
@@ -8720,13 +8751,13 @@
         "createdtime": "20110428235859",
         "eventstartdate": "20261002",
         "eventenddate": "20261004",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/77/4067377_image2_1.jpg",
-        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/77/4067377_image3_1.jpg",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/50/4145250_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/50/4145250_image3_1.jpg",
         "cpyrhtDivCd": "Type3",
         "mapx": "126.7229954336",
         "mapy": "37.4944181127",
         "mlevel": "6",
-        "modifiedtime": "20261008142528",
+        "modifiedtime": "20261105105131",
         "areacode": "",
         "sigungucode": "",
         "tel": "032-509-7516",
@@ -12929,15 +12960,15 @@
         "contentid": "4113301",
         "contenttypeid": "15",
         "createdtime": "20260918095106",
-        "eventstartdate": "20261113",
-        "eventenddate": "20261114",
+        "eventstartdate": "20261114",
+        "eventenddate": "20261115",
         "firstimage": "https://tong.visitkorea.or.kr/cms/resource/96/4142596_image2_1.jpg",
         "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/96/4142596_image3_1.jpg",
         "cpyrhtDivCd": "Type3",
         "mapx": "128.5809535308",
         "mapy": "35.1782828634",
         "mlevel": "",
-        "modifiedtime": "20261102184653",
+        "modifiedtime": "20261105123249",
         "areacode": "",
         "sigungucode": "",
         "tel": "02-6953-7101",
@@ -16546,37 +16577,6 @@
         "lclsSystm1": "EV",
         "lclsSystm2": "EV03",
         "lclsSystm3": "EV030200",
-        "progresstype": "선택안함",
-        "festivaltype": ""
-      },
-      {
-        "addr1": "제주특별자치도 서귀포시 대정읍 최남단해안로 66",
-        "addr2": "모슬포항 일원",
-        "zipcode": "63513",
-        "cat1": "",
-        "cat2": "",
-        "cat3": "",
-        "contentid": "506627",
-        "contenttypeid": "15",
-        "createdtime": "20080307200121",
-        "eventstartdate": "20261119",
-        "eventenddate": "20261122",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/12/4141112_image2_1.jpg",
-        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/12/4141112_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "mapx": "126.2520492078",
-        "mapy": "33.2144983016",
-        "mlevel": "6",
-        "modifiedtime": "20261102093128",
-        "areacode": "",
-        "sigungucode": "",
-        "tel": "064-794-8032",
-        "title": "최남단방어축제",
-        "lDongRegnCd": "50",
-        "lDongSignguCd": "130",
-        "lclsSystm1": "EV",
-        "lclsSystm2": "EV01",
-        "lclsSystm3": "EV010200",
         "progresstype": "선택안함",
         "festivaltype": ""
       },
