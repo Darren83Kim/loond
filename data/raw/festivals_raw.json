@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-11-06T14:08:32+09:00",
+  "collectedAt": "2026-11-08T13:29:05+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "ldong_code",
   "mode": "ldong_code_partition",
@@ -14,75 +14,75 @@
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 854
+          "totalCount": 856
         },
         {
           "page": 2,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 854
+          "totalCount": 856
         },
         {
           "page": 3,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 854
+          "totalCount": 856
         },
         {
           "page": 4,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 854
+          "totalCount": 856
         },
         {
           "page": 5,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 854
+          "totalCount": 856
         },
         {
           "page": 6,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 854
+          "totalCount": 856
         },
         {
           "page": 7,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 854
+          "totalCount": 856
         },
         {
           "page": 8,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 854
+          "totalCount": 856
         },
         {
           "page": 9,
           "ok": true,
           "msg": "OK",
-          "got": 54,
-          "totalCount": 854
+          "got": 56,
+          "totalCount": 856
         }
       ],
-      "count": 854,
-      "totalCount": 854
+      "count": 856,
+      "totalCount": 856
     }
   ],
   "counts": {
     "seoul": 181,
-    "busan": 69,
+    "busan": 70,
     "daegu": 18,
     "incheon": 25,
-    "gwangju": 17,
+    "gwangju": 18,
     "daejeon": 17,
     "ulsan": 16,
     "sejong": 7,
@@ -105,7 +105,7 @@
     "jeonju": 14,
     "gunsan": 4,
     "yeosu": 8,
-    "suncheon": 2,
+    "suncheon": 3,
     "gyeongju": 7,
     "andong": 9,
     "tongyeong": 5,
@@ -113,7 +113,7 @@
     "jeju": 17,
     "seogwipo": 10
   },
-  "dropped": 329,
+  "dropped": 328,
   "by_region_titles": {
     "seoul": [
       "가락 옥토버페스트",
@@ -286,7 +286,8 @@
     ],
     "suncheon": [
       "르무통 산책회 in 순천",
-      "순천 낙안읍성 민속문화축제"
+      "순천 낙안읍성 민속문화축제",
+      "순천 올랑가 일일마켓"
     ],
     "gyeongju": [
       "경주 국가유산야행",
@@ -1884,7 +1885,7 @@
       },
       {
         "addr1": "서울특별시 중구 태평로1가",
-        "addr2": "1(청계광장~삼일교) ※우이천은 연장 안합니다.",
+        "addr2": "1 청계천(청계광장 ~ 삼일교)",
         "zipcode": "04520",
         "cat1": "",
         "cat2": "",
@@ -1892,15 +1893,15 @@
         "contentid": "1095732",
         "contenttypeid": "15",
         "createdtime": "20100917185413",
-        "eventstartdate": "20251212",
-        "eventenddate": "20260118",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/20/3563320_image2_1.jpg",
-        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/20/3563320_image3_1.jpg",
+        "eventstartdate": "20261211",
+        "eventenddate": "20270131",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/35/4147235_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/35/4147235_image3_1.jpg",
         "cpyrhtDivCd": "Type3",
-        "mapx": "126.977633",
-        "mapy": "37.569204",
+        "mapx": "126.9776330000",
+        "mapy": "37.5692040000",
         "mlevel": "6",
-        "modifiedtime": "20260204180500",
+        "modifiedtime": "20261106130715",
         "areacode": "",
         "sigungucode": "",
         "tel": "02-3788-8168",
@@ -5148,14 +5149,14 @@
         "contenttypeid": "15",
         "createdtime": "20261014163434",
         "eventstartdate": "20261018",
-        "eventenddate": "20261129",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/08/4124908_image2_1.jpg",
-        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/08/4124908_image3_1.jpg",
+        "eventenddate": "20261122",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/63/4147163_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/63/4147163_image3_1.jpg",
         "cpyrhtDivCd": "Type3",
         "mapx": "127.1179813872",
         "mapy": "37.5452481279",
         "mlevel": "",
-        "modifiedtime": "20261019110117",
+        "modifiedtime": "20261106091317",
         "areacode": "",
         "sigungucode": "",
         "tel": "1644-6155",
@@ -6624,6 +6625,37 @@
         "lclsSystm1": "EV",
         "lclsSystm2": "EV01",
         "lclsSystm3": "EV010600",
+        "progresstype": "선택안함",
+        "festivaltype": ""
+      },
+      {
+        "addr1": "부산광역시 서구 송도해변로 100 (암남동)",
+        "addr2": "부산송도해수욕장",
+        "zipcode": "49269",
+        "cat1": "",
+        "cat2": "",
+        "cat3": "",
+        "contentid": "1399532",
+        "contenttypeid": "15",
+        "createdtime": "20111012022519",
+        "eventstartdate": "20261030",
+        "eventenddate": "20261101",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/83/4120983_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/83/4120983_image3_1.jpg",
+        "cpyrhtDivCd": "Type3",
+        "mapx": "129.0180494791",
+        "mapy": "35.0768199166",
+        "mlevel": "6",
+        "modifiedtime": "20261106100409",
+        "areacode": "",
+        "sigungucode": "",
+        "tel": "051-231-4085",
+        "title": "부산고등어축제",
+        "lDongRegnCd": "26",
+        "lDongSignguCd": "140",
+        "lclsSystm1": "EV",
+        "lclsSystm2": "EV01",
+        "lclsSystm3": "EV010300",
         "progresstype": "선택안함",
         "festivaltype": ""
       },
@@ -9920,6 +9952,37 @@
         "festivaltype": ""
       },
       {
+        "addr1": "전남광주통합특별시 서구 상무누리로 30",
+        "addr2": "",
+        "zipcode": "61958",
+        "cat1": "",
+        "cat2": "",
+        "cat3": "",
+        "contentid": "2614198",
+        "contenttypeid": "15",
+        "createdtime": "20190806021720",
+        "eventstartdate": "20270923",
+        "eventenddate": "20270926",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/34/4147834_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/34/4147834_image3_1.jpg",
+        "cpyrhtDivCd": "Type3",
+        "mapx": "126.8405217823",
+        "mapy": "35.1468884464",
+        "mlevel": "6",
+        "modifiedtime": "20261106170940",
+        "areacode": "",
+        "sigungucode": "",
+        "tel": "062-611-2242",
+        "title": "2027 ACE Fair",
+        "lDongRegnCd": "12",
+        "lDongSignguCd": "240",
+        "lclsSystm1": "EV",
+        "lclsSystm2": "EV03",
+        "lclsSystm3": "EV030100",
+        "progresstype": "선택안함",
+        "festivaltype": ""
+      },
+      {
         "addr1": "전남광주통합특별시 북구 하서로 110 (매곡동)",
         "addr2": "",
         "zipcode": "61066",
@@ -10026,13 +10089,13 @@
         "createdtime": "20170330020823",
         "eventstartdate": "20261009",
         "eventenddate": "20261011",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/21/4117021_image2_1.jpg",
-        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/21/4117021_image3_1.jpg",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/35/4147835_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/35/4147835_image3_1.jpg",
         "cpyrhtDivCd": "Type3",
         "mapx": "127.3844077341",
         "mapy": "36.3550147634",
         "mlevel": "6",
-        "modifiedtime": "20261007172346",
+        "modifiedtime": "20261106171311",
         "areacode": "",
         "sigungucode": "",
         "tel": "042-288-2740",
@@ -10530,7 +10593,7 @@
         "mapx": "129.3214690000",
         "mapy": "35.5572230000",
         "mlevel": "6",
-        "modifiedtime": "20261022093919",
+        "modifiedtime": "20261106013002",
         "areacode": "",
         "sigungucode": "",
         "tel": "052-290-3541",
@@ -15046,6 +15109,37 @@
         "lclsSystm1": "EV",
         "lclsSystm2": "EV01",
         "lclsSystm3": "EV010200",
+        "progresstype": "선택안함",
+        "festivaltype": ""
+      },
+      {
+        "addr1": "전남광주통합특별시 순천시 별미길 18 (남내동)",
+        "addr2": "",
+        "zipcode": "57942",
+        "cat1": "",
+        "cat2": "",
+        "cat3": "",
+        "contentid": "4147845",
+        "contenttypeid": "15",
+        "createdtime": "20261106172748",
+        "eventstartdate": "20261114",
+        "eventenddate": "20261114",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/46/4147846_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/46/4147846_image3_1.jpg",
+        "cpyrhtDivCd": "Type3",
+        "mapx": "127.4851328015",
+        "mapy": "34.9536637379",
+        "mlevel": "",
+        "modifiedtime": "20261106173342",
+        "areacode": "",
+        "sigungucode": "",
+        "tel": "070-4902-8266",
+        "title": "순천 올랑가 일일마켓",
+        "lDongRegnCd": "12",
+        "lDongSignguCd": "150",
+        "lclsSystm1": "EV",
+        "lclsSystm2": "EV03",
+        "lclsSystm3": "EV030400",
         "progresstype": "선택안함",
         "festivaltype": ""
       }
