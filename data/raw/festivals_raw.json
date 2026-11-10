@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-11-09T13:41:46+09:00",
+  "collectedAt": "2026-11-10T14:57:24+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "ldong_code",
   "mode": "ldong_code_partition",
@@ -14,67 +14,67 @@
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 856
+          "totalCount": 858
         },
         {
           "page": 2,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 856
+          "totalCount": 858
         },
         {
           "page": 3,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 856
+          "totalCount": 858
         },
         {
           "page": 4,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 856
+          "totalCount": 858
         },
         {
           "page": 5,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 856
+          "totalCount": 858
         },
         {
           "page": 6,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 856
+          "totalCount": 858
         },
         {
           "page": 7,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 856
+          "totalCount": 858
         },
         {
           "page": 8,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 856
+          "totalCount": 858
         },
         {
           "page": 9,
           "ok": true,
           "msg": "OK",
-          "got": 56,
-          "totalCount": 856
+          "got": 58,
+          "totalCount": 858
         }
       ],
-      "count": 856,
-      "totalCount": 856
+      "count": 858,
+      "totalCount": 858
     }
   ],
   "counts": {
@@ -113,7 +113,7 @@
     "jeju": 17,
     "seogwipo": 10
   },
-  "dropped": 328,
+  "dropped": 330,
   "by_region_titles": {
     "seoul": [
       "가락 옥토버페스트",
@@ -4598,7 +4598,7 @@
         "mapx": "127.0095547691",
         "mapy": "37.5660539726",
         "mlevel": "6",
-        "modifiedtime": "20261026101847",
+        "modifiedtime": "20261109130039",
         "areacode": "",
         "sigungucode": "",
         "tel": "010-3489-3637",
@@ -7452,7 +7452,7 @@
         "mapx": "129.1270422473",
         "mapy": "35.1709631305",
         "mlevel": "6",
-        "modifiedtime": "20261020091925",
+        "modifiedtime": "20261109104906",
         "areacode": "",
         "sigungucode": "",
         "tel": "070-4680-1718",
