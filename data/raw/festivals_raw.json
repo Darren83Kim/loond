@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-11-10T14:57:24+09:00",
+  "collectedAt": "2026-11-11T13:44:06+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "ldong_code",
   "mode": "ldong_code_partition",
@@ -14,76 +14,76 @@
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 858
+          "totalCount": 859
         },
         {
           "page": 2,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 858
+          "totalCount": 859
         },
         {
           "page": 3,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 858
+          "totalCount": 859
         },
         {
           "page": 4,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 858
+          "totalCount": 859
         },
         {
           "page": 5,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 858
+          "totalCount": 859
         },
         {
           "page": 6,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 858
+          "totalCount": 859
         },
         {
           "page": 7,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 858
+          "totalCount": 859
         },
         {
           "page": 8,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 858
+          "totalCount": 859
         },
         {
           "page": 9,
           "ok": true,
           "msg": "OK",
-          "got": 58,
-          "totalCount": 858
+          "got": 59,
+          "totalCount": 859
         }
       ],
-      "count": 858,
-      "totalCount": 858
+      "count": 859,
+      "totalCount": 859
     }
   ],
   "counts": {
-    "seoul": 181,
+    "seoul": 182,
     "busan": 70,
     "daegu": 18,
     "incheon": 25,
     "gwangju": 18,
-    "daejeon": 17,
+    "daejeon": 16,
     "ulsan": 16,
     "sejong": 7,
     "suwon": 18,
@@ -102,18 +102,18 @@
     "danyang": 2,
     "gongju": 4,
     "buyeo": 5,
-    "jeonju": 14,
+    "jeonju": 15,
     "gunsan": 4,
     "yeosu": 8,
     "suncheon": 3,
     "gyeongju": 7,
     "andong": 9,
-    "tongyeong": 5,
+    "tongyeong": 4,
     "geoje": 4,
     "jeju": 17,
     "seogwipo": 10
   },
-  "dropped": 330,
+  "dropped": 331,
   "by_region_titles": {
     "seoul": [
       "가락 옥토버페스트",
@@ -151,11 +151,11 @@
       "광주버스킹월드컵"
     ],
     "daejeon": [
-      "누들대전축제",
       "대전 빵 축제",
       "대전 서구 아트페스티벌",
       "대전 서구 책축제",
-      "대전 중구 국가유산야행"
+      "대전 중구 국가유산야행",
+      "대전 중구 북페스티벌"
     ],
     "ulsan": [
       "가든 나이트 마켓",
@@ -268,8 +268,8 @@
       "독립출판 북페어 전주책쾌",
       "동행축제",
       "모이랑께 가보장께",
-      "인생독서X인생서점 북페어",
-      "전라관찰사의 탄생"
+      "역사랑께 배우랑께",
+      "인생독서X인생서점 북페어"
     ],
     "gunsan": [
       "군산 수제맥주&블루스 페스티벌",
@@ -304,7 +304,6 @@
       "제13회 21세기 인문가치포럼"
     ],
     "tongyeong": [
-      "어부장터X포트빌리지 통영",
       "제18회 통영연극예술축제",
       "제3회 추도 섬 영화제",
       "클리퍼 레이스 기항지 행사 포트위크(PORT WEEK)",
@@ -2315,6 +2314,37 @@
         "lclsSystm2": "EV01",
         "lclsSystm3": "EV010200",
         "progresstype": "선택안함",
+        "festivaltype": ""
+      },
+      {
+        "addr1": "서울특별시 성북구 장월로 149 (장위동)",
+        "addr2": "꿈의숲아이파크-래미안장위퍼스트하이 사이길",
+        "zipcode": "02762",
+        "cat1": "",
+        "cat2": "",
+        "cat3": "",
+        "contentid": "3348362",
+        "contenttypeid": "15",
+        "createdtime": "20240814144403",
+        "eventstartdate": "20261031",
+        "eventenddate": "20261031",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/37/4113337_image2_1.JPG",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/37/4113337_image3_1.JPG",
+        "cpyrhtDivCd": "Type3",
+        "mapx": "127.0510932378",
+        "mapy": "37.6182190963",
+        "mlevel": "6",
+        "modifiedtime": "20261111084802",
+        "areacode": "",
+        "sigungucode": "",
+        "tel": "02-6906-9298",
+        "title": "성북거리문화축제 다다페스타",
+        "lDongRegnCd": "11",
+        "lDongSignguCd": "290",
+        "lclsSystm1": "EV",
+        "lclsSystm2": "EV01",
+        "lclsSystm3": "EV010200",
+        "progresstype": "",
         "festivaltype": ""
       },
       {
@@ -9401,19 +9431,19 @@
         "contentid": "3315407",
         "contenttypeid": "15",
         "createdtime": "20240618182121",
-        "eventstartdate": "20261017",
-        "eventenddate": "20261018",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/65/4120465_image2_1.jpg",
-        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/65/4120465_image3_1.jpg",
+        "eventstartdate": "20261121",
+        "eventenddate": "20261122",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/10/4151210_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/10/4151210_image3_1.jpg",
         "cpyrhtDivCd": "Type3",
         "mapx": "126.6146527143",
         "mapy": "37.4760834131",
         "mlevel": "6",
-        "modifiedtime": "20261012144115",
+        "modifiedtime": "20261111084802",
         "areacode": "",
         "sigungucode": "",
         "tel": "010-9265-3796",
-        "title": "2026 제3차 제물포웨이브마켓",
+        "title": "2026 제4차 제물포웨이브마켓",
         "lDongRegnCd": "28",
         "lDongSignguCd": "125",
         "lclsSystm1": "EV",
@@ -9529,13 +9559,13 @@
         "createdtime": "20090214001350",
         "eventstartdate": "20261007",
         "eventenddate": "20261011",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/71/3584471_image2_1.jpg",
-        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/71/3584471_image3_1.jpg",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/15/4151215_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/15/4151215_image3_1.jpg",
         "cpyrhtDivCd": "Type3",
         "mapx": "126.9158700000",
         "mapy": "35.1502410000",
         "mlevel": "6",
-        "modifiedtime": "20260930172414",
+        "modifiedtime": "20261111084803",
         "areacode": "",
         "sigungucode": "",
         "tel": "062-608-4672",
@@ -10015,37 +10045,6 @@
       }
     ],
     "daejeon": [
-      {
-        "addr1": "대전광역시 중구 계룡로904번길 30 (문화동)",
-        "addr2": "대전 한빛탑광장",
-        "zipcode": "34955",
-        "cat1": "",
-        "cat2": "",
-        "cat3": "",
-        "contentid": "2995190",
-        "contenttypeid": "15",
-        "createdtime": "20230721155907",
-        "eventstartdate": "20261113",
-        "eventenddate": "20261115",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/35/4138635_image2_1.jpg",
-        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/35/4138635_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "mapx": "127.4119234684",
-        "mapy": "36.3209285835",
-        "mlevel": "6",
-        "modifiedtime": "20261028145044",
-        "areacode": "",
-        "sigungucode": "",
-        "tel": "042-251-3801",
-        "title": "누들대전축제",
-        "lDongRegnCd": "30",
-        "lDongSignguCd": "140",
-        "lclsSystm1": "EV",
-        "lclsSystm2": "EV01",
-        "lclsSystm3": "EV010600",
-        "progresstype": "선택안함",
-        "festivaltype": ""
-      },
       {
         "addr1": "대전광역시 유성구 대덕대로 480 (도룡동)",
         "addr2": "",
@@ -11682,7 +11681,7 @@
         "mapx": "126.9811749103",
         "mapy": "37.2665289945",
         "mlevel": "6",
-        "modifiedtime": "20260617154816",
+        "modifiedtime": "20261111084802",
         "areacode": "",
         "sigungucode": "",
         "tel": "070-4681-0675",
@@ -14332,6 +14331,37 @@
         "festivaltype": ""
       },
       {
+        "addr1": "전북특별자치도 전주시 완산구 전라감영로 55 (중앙동4가)",
+        "addr2": "",
+        "zipcode": "55038",
+        "cat1": "",
+        "cat2": "",
+        "cat3": "",
+        "contentid": "4151224",
+        "contenttypeid": "15",
+        "createdtime": "20261110175324",
+        "eventstartdate": "20261121",
+        "eventenddate": "20261121",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/25/4151225_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/25/4151225_image3_1.jpg",
+        "cpyrhtDivCd": "Type3",
+        "mapx": "127.1458864053",
+        "mapy": "35.8165952746",
+        "mlevel": "",
+        "modifiedtime": "20261111084803",
+        "areacode": "",
+        "sigungucode": "",
+        "tel": "063-232-9938",
+        "title": "역사랑께 배우랑께",
+        "lDongRegnCd": "52",
+        "lDongSignguCd": "111",
+        "lclsSystm1": "EV",
+        "lclsSystm2": "EV03",
+        "lclsSystm3": "EV030400",
+        "progresstype": "선택안함",
+        "festivaltype": ""
+      },
+      {
         "addr1": "전북특별자치도 전주시 완산구 전주천동로 118 (전동)",
         "addr2": "",
         "zipcode": "55043",
@@ -14748,13 +14778,13 @@
         "createdtime": "20240911101138",
         "eventstartdate": "20261009",
         "eventenddate": "20261011",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/49/4107749_image2_1.jpg",
-        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/49/4107749_image3_1.jpg",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/31/4150731_image2_1.JPG",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/31/4150731_image3_1.JPG",
         "cpyrhtDivCd": "Type3",
         "mapx": "126.7139462000",
         "mapy": "35.9896779000",
         "mlevel": "6",
-        "modifiedtime": "20261020100736",
+        "modifiedtime": "20261111084803",
         "areacode": "",
         "sigungucode": "",
         "tel": "063-454-3912, 3913",
@@ -15645,37 +15675,6 @@
       }
     ],
     "tongyeong": [
-      {
-        "addr1": "경상남도 통영시 도남동",
-        "addr2": "650-3",
-        "zipcode": "53079",
-        "cat1": "",
-        "cat2": "",
-        "cat3": "",
-        "contentid": "3400809",
-        "contenttypeid": "15",
-        "createdtime": "20241029165827",
-        "eventstartdate": "20261106",
-        "eventenddate": "20261108",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/15/4107915_image2_1.JPG",
-        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/15/4107915_image3_1.JPG",
-        "cpyrhtDivCd": "Type3",
-        "mapx": "128.4338030000",
-        "mapy": "34.8255760000",
-        "mlevel": "6",
-        "modifiedtime": "20261027172422",
-        "areacode": "",
-        "sigungucode": "",
-        "tel": "070-4680-1718",
-        "title": "어부장터X포트빌리지 통영",
-        "lDongRegnCd": "48",
-        "lDongSignguCd": "220",
-        "lclsSystm1": "EV",
-        "lclsSystm2": "EV01",
-        "lclsSystm3": "EV010300",
-        "progresstype": "",
-        "festivaltype": ""
-      },
       {
         "addr1": "경상남도 통영시 남망공원길 29 (동호동)",
         "addr2": "",
@@ -16783,8 +16782,8 @@
     "292950": "http://www.gossaum.com",
     "2608888": "http://www.gjnight.com",
     "692682": "http://recollection.kr/index.php",
-    "2995190": "https://noodle-dj.com/",
     "2488086": "https://djseogufestival.com/",
+    "4130910": "https://www.seogu.go.kr/library/wolpyeonglib/contents/learning/board/09/board.09.001.motion?nttId=27324&bmode=detail&bbsId=BBSMSTR_000000000408&mnucd=MENU0600041",
     "4090201": "http://ulsanstorynightmarket.com/",
     "3501104": "https://www.uscoffeefest.com/",
     "3300114": "http://sjfestival.kr/",
