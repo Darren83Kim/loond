@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:loond/ads/ad_config.dart';
+import 'package:loond/ads/ads_consent.dart';
 import 'package:loond/ads/banner_ad_widget.dart';
+import 'package:loond/ads/banner_slot.dart';
 import 'package:loond/ads/native_ad_card.dart';
 import 'package:loond/models/opportunity.dart';
 import 'package:loond/models/region.dart';
@@ -76,6 +79,52 @@ void main() {
     expect(adRect.bottom, lessThanOrEqualTo(buttonRect.top));
     expect(adRect.overlaps(buttonRect), isFalse);
     expect(tester.getTopLeft(ad).dy, lessThan(tester.getTopLeft(button).dy));
+  });
+
+  test('banner slot stays hidden until an ad actually loads', () {
+    expect(
+      showLoadedBannerSlot(allowed: false, loaded: false),
+      isFalse,
+    );
+    expect(showLoadedBannerSlot(allowed: false, loaded: true), isFalse);
+    expect(showLoadedBannerSlot(allowed: true, loaded: false), isFalse);
+    expect(showLoadedBannerSlot(allowed: true, loaded: true), isTrue);
+  });
+
+  testWidgets('detail banner collapses when ads are allowed but not filled',
+      (tester) async {
+    tester.view.physicalSize = const Size(800, 2400);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    final previousPlatform = debugDefaultTargetPlatformOverride;
+    debugDefaultTargetPlatformOverride = TargetPlatform.android;
+    AdsConsent.instance.canRequestAds = true;
+    try {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: DetailScreen(item: _item('detail-ad-empty')),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 20));
+
+      final ad = find.byKey(const Key('detail-source-ad'));
+      final button = find.text('공식 원문 보기');
+      expect(ad, findsOneWidget);
+      expect(button, findsOneWidget);
+
+      final adRect = tester.getRect(ad);
+      final buttonRect = tester.getRect(button);
+      expect(adRect.height, 0);
+      expect(adRect.bottom, lessThanOrEqualTo(buttonRect.top));
+      expect(adRect.overlaps(buttonRect), isFalse);
+      expect(find.text('광고'), findsNothing);
+    } finally {
+      debugDefaultTargetPlatformOverride = previousPlatform;
+      AdsConsent.instance.canRequestAds = false;
+    }
   });
 
   testWidgets('apply/enjoy lists still insert a native ad after the 3rd card',

@@ -5,8 +5,9 @@ import '../analytics/analytics_stub.dart';
 import '../theme/app_theme.dart';
 import 'ad_config.dart';
 import 'ads_consent.dart';
+import 'banner_slot.dart';
 
-/// Bottom banner with 「광고」 label. Fixed slot height; no-op when ads disabled.
+/// Banner with 「광고」 label. Zero height until a fill arrives.
 class BannerAdWidget extends StatefulWidget {
   const BannerAdWidget({super.key});
 
@@ -47,6 +48,15 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
     _load();
   }
 
+  void _collapse() {
+    if (!mounted) return;
+    setState(() {
+      _banner = null;
+      _loaded = false;
+      _started = false;
+    });
+  }
+
   void _load() {
     final banner = BannerAd(
       adUnitId: AdConfig.bannerAdUnitId,
@@ -58,20 +68,30 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
             ad.dispose();
             return;
           }
+          final loaded = ad as BannerAd;
+          if (loaded.size.height <= 0 || loaded.size.width <= 0) {
+            loaded.dispose();
+            _collapse();
+            return;
+          }
           setState(() {
-            _banner = ad as BannerAd;
+            _banner = loaded;
             _loaded = true;
           });
           AnalyticsStub.adImpression('banner', AdConfig.bannerAdUnitId);
         },
         onAdFailedToLoad: (ad, error) {
           ad.dispose();
-          _started = false;
           debugPrint('[ads] banner failed: $error');
+          _collapse();
         },
       ),
     );
-    banner.load();
+    banner.load().catchError((Object error) {
+      debugPrint('[ads] banner load threw: $error');
+      banner.dispose().catchError((Object _) {});
+      _collapse();
+    });
   }
 
   @override
@@ -83,11 +103,17 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_allowed) {
+    final banner = _banner;
+    final loaded = _loaded &&
+        banner != null &&
+        banner.size.height > 0 &&
+        banner.size.width > 0;
+    if (banner == null ||
+        !showLoadedBannerSlot(allowed: _allowed, loaded: loaded)) {
       return const SizedBox.shrink();
     }
-    final h = AdSize.banner.height.toDouble();
-    final w = AdSize.banner.width.toDouble();
+    final h = banner.size.height.toDouble();
+    final w = banner.size.width.toDouble();
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -109,15 +135,13 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
           child: SizedBox(
             width: double.infinity,
             height: h,
-            child: !_loaded || _banner == null
-                ? const SizedBox.shrink()
-                : Center(
-                    child: SizedBox(
-                      width: w,
-                      height: h,
-                      child: ClipRect(child: AdWidget(ad: _banner!)),
-                    ),
-                  ),
+            child: Center(
+              child: SizedBox(
+                width: w,
+                height: h,
+                child: ClipRect(child: AdWidget(ad: banner)),
+              ),
+            ),
           ),
         ),
       ],
