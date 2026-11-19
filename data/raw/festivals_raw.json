@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-11-18T14:55:46+09:00",
+  "collectedAt": "2026-11-19T18:03:02+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "ldong_code",
   "mode": "ldong_code_partition",
@@ -14,71 +14,71 @@
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 862
+          "totalCount": 865
         },
         {
           "page": 2,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 862
+          "totalCount": 865
         },
         {
           "page": 3,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 862
+          "totalCount": 865
         },
         {
           "page": 4,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 862
+          "totalCount": 865
         },
         {
           "page": 5,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 862
+          "totalCount": 865
         },
         {
           "page": 6,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 862
+          "totalCount": 865
         },
         {
           "page": 7,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 862
+          "totalCount": 865
         },
         {
           "page": 8,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 862
+          "totalCount": 865
         },
         {
           "page": 9,
           "ok": true,
           "msg": "OK",
-          "got": 62,
-          "totalCount": 862
+          "got": 65,
+          "totalCount": 865
         }
       ],
-      "count": 862,
-      "totalCount": 862
+      "count": 865,
+      "totalCount": 865
     }
   ],
   "counts": {
-    "seoul": 185,
+    "seoul": 188,
     "busan": 70,
     "daegu": 18,
     "incheon": 25,
@@ -729,6 +729,37 @@
         "title": "경복궁 생과방",
         "lDongRegnCd": "11",
         "lDongSignguCd": "110",
+        "lclsSystm1": "EV",
+        "lclsSystm2": "EV01",
+        "lclsSystm3": "EV010400",
+        "progresstype": "선택안함",
+        "festivaltype": ""
+      },
+      {
+        "addr1": "서울특별시 도봉구 도봉동",
+        "addr2": "1-8",
+        "zipcode": "01349",
+        "cat1": "",
+        "cat2": "",
+        "cat3": "",
+        "contentid": "2725188",
+        "contenttypeid": "15",
+        "createdtime": "20210712191001",
+        "eventstartdate": "20260620",
+        "eventenddate": "20260620",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/75/4060575_image2_1.JPG",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/75/4060575_image3_1.JPG",
+        "cpyrhtDivCd": "Type3",
+        "mapx": "127.0486570000",
+        "mapy": "37.6911730000",
+        "mlevel": "6",
+        "modifiedtime": "20261118163627",
+        "areacode": "",
+        "sigungucode": "",
+        "tel": "02-905-4026",
+        "title": "경흥대로 도봉옛길 문화제",
+        "lDongRegnCd": "11",
+        "lDongSignguCd": "320",
         "lclsSystm1": "EV",
         "lclsSystm2": "EV01",
         "lclsSystm3": "EV010400",
@@ -4425,6 +4456,37 @@
         "festivaltype": ""
       },
       {
+        "addr1": "서울특별시 강남구 테헤란로7길 22 (역삼동)",
+        "addr2": "",
+        "zipcode": "06130",
+        "cat1": "",
+        "cat2": "",
+        "cat3": "",
+        "contentid": "2802077",
+        "contenttypeid": "15",
+        "createdtime": "20211221183728",
+        "eventstartdate": "20261223",
+        "eventenddate": "20261223",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/12/4165112_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/12/4165112_image3_1.jpg",
+        "cpyrhtDivCd": "Type3",
+        "mapx": "127.0307403110",
+        "mapy": "37.5007217702",
+        "mlevel": "6",
+        "modifiedtime": "20261118173353",
+        "areacode": "",
+        "sigungucode": "",
+        "tel": "02-559-3887",
+        "title": "2026 과학영재교육 페스티벌",
+        "lDongRegnCd": "11",
+        "lDongSignguCd": "680",
+        "lclsSystm1": "EV",
+        "lclsSystm2": "EV03",
+        "lclsSystm3": "EV030400",
+        "progresstype": "선택안함",
+        "festivaltype": ""
+      },
+      {
         "addr1": "서울특별시 중구 을지로 지하12 (을지로1가)",
         "addr2": "",
         "zipcode": "04533",
@@ -5382,6 +5444,37 @@
         "lclsSystm1": "EV",
         "lclsSystm2": "EV03",
         "lclsSystm3": "EV030400",
+        "progresstype": "선택안함",
+        "festivaltype": ""
+      },
+      {
+        "addr1": "서울특별시 중구 을지로 281 (을지로7가)",
+        "addr2": "",
+        "zipcode": "04566",
+        "cat1": "",
+        "cat2": "",
+        "cat3": "",
+        "contentid": "2515174",
+        "contenttypeid": "15",
+        "createdtime": "20171115185608",
+        "eventstartdate": "20261211",
+        "eventenddate": "20261213",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/18/4165118_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/18/4165118_image3_1.jpg",
+        "cpyrhtDivCd": "Type3",
+        "mapx": "127.0108903555",
+        "mapy": "37.5680445877",
+        "mlevel": "6",
+        "modifiedtime": "20261118175134",
+        "areacode": "",
+        "sigungucode": "",
+        "tel": "02-336-1876",
+        "title": "2026 전국민 AI 페스티벌",
+        "lDongRegnCd": "11",
+        "lDongSignguCd": "140",
+        "lclsSystm1": "EV",
+        "lclsSystm2": "EV03",
+        "lclsSystm3": "EV030200",
         "progresstype": "선택안함",
         "festivaltype": ""
       },
