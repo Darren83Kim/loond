@@ -1,6 +1,6 @@
 # 출시 후 리뷰 — 0.1.10(11) 프로덕션 제출 이후
 
-> 0.1.12+13 내용과 실기기 확인 항목은 아래 **§3**이다. §1–§2는 0.1.10 제출 직후(2026-10-18) 기록이다.
+> 0.1.14+15 내용과 실기기 확인 항목은 아래 **§4**이다. 0.1.12+13은 **§3**. §1–§2는 0.1.10 제출 직후(2026-10-18) 기록이다.
 
 > 작성 2026-10-18 (KST). 근거: `docs/store/production-launch-checklist.md`, `docs/구현계획서.md` §11, `app/android/app/build.gradle.kts`, `app/android/app/proguard-rules.pro`, `app/lib/ads/*`, `app/ios/Runner/Info.plist`.
 > 참고: 요청에 있던 `docs/store/production-launch-plan.md`는 저장소에 없다. 체크리스트를 기준으로 삼았다.
@@ -66,3 +66,28 @@ iOS 운영 광고 ID(`app/lib/ads/ad_config.dart`, `Info.plist`의 샘플 ID)는
 ### 메모리
 
 `RemoteOrPlaceholderImage`의 네트워크 이미지는 표시 크기 × `devicePixelRatio`로 디코드한다. `ResizeImagePolicy.fit`이라 가로세로 비율은 유지되고, 원본보다 크게 키우지는 않는다. 발견 탭은 `shrinkWrap` 그리드 대신 `CustomScrollView` + `SliverGrid.builder`라 화면에 있는 칸만 만든다. 2열, 간격, `childAspectRatio` 0.72, 네이티브 광고 위치(카드 인덱스 2, 6, 10… 뒤)는 이전과 같다. `IndexedStack`이 홈과 발견의 현재 화면은 같이 유지한다.
+
+## 4. 0.1.14+15 (versionCode 15)
+
+앱 버전 `0.1.14+15` (`app/pubspec.yaml`). 머지하지 않고 리뷰 대기. 서명·keystore·`key.properties`는 바꾸지 않았다. R8(`isMinifyEnabled`, `isShrinkResources`)도 그대로다. 복지로·보조금24 버튼과 `.go.kr` 링크는 넣지 않았다.
+
+### 포함
+
+1. **서울 APPLY 표시**
+   - 피커는 피드의 `applyStatus`가 아니라 `app/lib/models/region.dart`를 본다. 그 값이 `national`이라 서울이 「체험·신청(관광 정보)·행사·발견」으로 나왔다.
+   - 저장소 피드 `data/published/regions/seoul.json`(2026-11-18)는 이미 `applyStatus=provided`이고 `seoul-yeyak-*` 705건이다. 같은 날 워커 로그도 `open rows=705`다. 앱 카탈로그를 `provided`로 맞췄다. 피커 문구는 「신청·행사·발견」이다.
+   - `region_codes.py`의 `apply_status`는 `national`로 둔다. 예약 행이 없는 재게시가 시청 공고를 주장하지 않는 폴백이다. 행이 있으면 `resolve_apply_status`가 피드를 `provided`로 올린다. 부산은 그대로 `national`.
+2. **상세 배너 빈 칸**
+   - 「공식 원문 보기」 위 배너는 로드에 성공했을 때만 높이를 가진다. 동의 전, 요청 중, 실패·노필이면 높이가 0이다. 빈 슬롯이 버튼 위에 남지 않는다.
+   - 배너는 스크롤 열 안의 형제다. 버튼 위에 겹치지 않는다. 광고가 뜨면 버튼은 그 아래로 내려가고, 그대로 누를 수 있다.
+   - 유닛 ID, UMP/`canRequestAds`, 홈 하단 배너 없음, 목록 네이티브, 세션당 1회 전면은 그대로다. 크기는 기존 320×50(`AdSize.banner`)이다.
+
+### 폰에서 확인할 것
+
+- 버전 0.1.14 (versionCode 15). 릴리스 콜드 스타트.
+- 지역 선택에서 서울 보조 문구가 「신청·행사·발견」인지. 부산은 「체험·신청(관광 정보)·행사·발견」인지.
+- 상세에서 광고가 안 나오거나 노필이면 「공식 원문 보기」 위에 빈 높이가 없는지. 버튼이 가려지지 않는지.
+- 광고가 뜨면 버튼 바로 위에 「광고」 라벨과 배너가 있고, 버튼이 완전히 눌리는지.
+- 홈 탭 하단에 배너가 없는지. 목록 네이티브와 상세를 닫은 뒤 전면(한 세션에 한 번)은 이전과 같은지.
+- `canRequestAds`가 거짓이면 상세 배너 없이 버튼만 있는지.
+- 앱이 읽는 공개 피드는 `https://darren83kim.github.io/loond/manifest.json`이다. 2026-11-19 확인 시 이 주소는 2026-10-16 배포분이고 서울 `applyStatus`는 `national`, APPLY 17건이었다. 저장소 피드는 그 이후 705건으로 갱신됐지만 Pages 배포는 2026-10-16이 마지막이다. 폰의 서울 목록에 서울시 공공서비스예약이 안 보이면 피커 문구와 별개로 Pages 재배포가 필요하다. 이 버전은 피드를 다시 배포하지 않는다.

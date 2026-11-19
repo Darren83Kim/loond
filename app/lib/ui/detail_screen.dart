@@ -245,11 +245,12 @@ class _DetailScreenState extends State<DetailScreen> {
               ],
             ),
           ),
-          // Banner (not native): fixed 320×50 slot plus the existing 「광고」
-          // label. Native cards collapse until load and would push this CTA.
-          // The slot sits in the scroll column, full-bleed, so it cannot cover
-          // the button. Unit: AdConfig.bannerAdUnitId (release
+          // Banner above the CTA. Height stays 0 until a fill arrives, so a
+          // no-fill does not leave a blank gap. The slot is a list sibling,
+          // not an overlay, so a successful load moves the button down and
+          // cannot cover it. Unit: AdConfig.bannerAdUnitId (release
           // ca-app-pub-8022343674155817/1620279320, sample id in debug).
+          // Size stays AdSize.banner (320×50).
           const BannerAdWidget(key: Key('detail-source-ad')),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),

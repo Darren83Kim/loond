@@ -43,6 +43,8 @@ python -m loond_worker.seoul_collect --sample --dry-run
 
 ## applyStatus
 
-시청 예약 행이 피드에 없으면 카탈로그는 `national`이다 (부산과 같은 규칙).  
-행이 게시되면 `publish_regions`가 서울 피드와 manifest의 `applyStatus`를 `provided`로 올린다.  
-앱 피커 문구는 `app/lib/models/region.dart`의 `applyStatus`를 본다. 첫 게시 뒤에 그 값과 `region_codes.py`의 `apply_status`를 `provided`로 맞춘다.
+`seoul-yeyak-*` 행이 있으면 `publish_regions`가 서울 피드와 manifest의 `applyStatus`를 `provided`로 올린다. 행이 없으면 `national`이다 (부산과 같은 규칙).
+
+앱 피커는 피드 필드가 아니라 `app/lib/models/region.dart`의 `applyStatus`를 본다. 0.1.14에서 그 값을 `provided`로 맞췄다. 피커 문구는 「신청·행사·발견」이다.
+
+`region_codes.py`의 `apply_status`는 `national`로 둔다. 예약 행이 없는 재게시가 시청 공고를 주장하지 않게 하는 폴백이다. 행이 있으면 피드는 계속 `provided`다.

@@ -248,5 +248,5 @@ eminwon 공통 경로: `/emwp/gov/mogaha/ntis/web/ofr/action/OfrAction.do?method
 - 교육(`ListPublicReservationEducation`)·문화(`ListPublicReservationCulture`)는 `접수중` 전부. 체육·시설대관은 강좌/모집성만. 진료·주차·채용·입찰 제외
 - 마감은 접수 종료 `RCPTENDDT`만 (`applicationEndSource=api_rcpt_period`). 운영 종료일로 마감을 만들지 않음
 - `sourceName=서울시 공공서비스예약`
-- 카탈로그 `apply_status`는 예약 행이 게시되기 전까지 `national` (부산과 같은 정직 규칙). 행이 들어가면 피드/manifest는 `provided`. 앱 피커는 그 다음 `region.dart`를 맞춘다
+- 워커 카탈로그 `apply_status`는 예약 행이 없는 재게시의 폴백으로 `national` (부산과 같은 정직 규칙). 행이 들어가면 피드/manifest는 `provided`. 앱 피커(`region.dart`)는 0.1.14에서 `provided`로 맞췄다
 - 2026-10-29 샘플키(`sample`) dry-run: INFO-000이지만 인덱스 1~5만 허용이라 **도시 전체 오픈 건수는 아님**. `list_total_count` 교육 413 · 문화 1226 · 체육 700 · 시설대관 623. 그 창에서 수집기가 남긴 접수중은 교육 1 · 문화 4 · 체육 0(코트 슬롯 제외) · 시설대관 1. 진료(22건)는 호출하지 않음. 전체 건수는 실키가 필요

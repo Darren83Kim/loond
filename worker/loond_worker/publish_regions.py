@@ -95,9 +95,11 @@ def resolve_apply_status(
 ) -> str:
     """Catalog status, unless this feed actually has a Seoul city board.
 
-    `region_codes` / the app picker stay `national` while no municipal rows
-    are published (same honesty rule as Busan). A feed that contains
-    `seoul-yeyak-*` rows reports `provided`.
+    `region_codes.apply_status` stays `national` so a Seoul feed with no
+    `seoul-yeyak-*` rows does not claim a city board (same honesty rule as
+    Busan). A feed that contains those rows reports `provided`. The app
+    picker reads `Region.applyStatus`, which is `provided` now that the
+    published feed has municipal rows.
     """
     if region_id == "seoul" and has_seoul_municipal_apply(opportunities):
         return "provided"

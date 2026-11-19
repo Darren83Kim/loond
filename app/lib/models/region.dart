@@ -123,10 +123,10 @@ class RegionRegistry {
       areaCode: '1',
       ldongRegn: '11',
       tier: 'phase1',
-      // 시 예약 행이 게시되기 전에는 national (부산과 같은 정직 규칙).
-      // seoul-yeyak 행이 피드에 들어가면 publish_regions가 피드
-      // applyStatus를 provided로 올리고, 그때 이 값도 provided로 맞춘다.
-      applyStatus: 'national',
+      // 게시 피드에 seoul-yeyak 행이 있고 manifest applyStatus는 provided.
+      // 피커는 이 카탈로그를 보므로 시청 예약이 있는 지역으로 표시한다.
+      // region_codes.apply_status는 행이 없을 때의 폴백으로 national을 유지한다.
+      applyStatus: 'provided',
       hasPublishedData: true,
       heroAsset: _heroDefault,
       districts: [
