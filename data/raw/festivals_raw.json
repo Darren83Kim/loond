@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-11-19T18:03:02+09:00",
+  "collectedAt": "2026-11-20T14:44:19+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "ldong_code",
   "mode": "ldong_code_partition",
@@ -14,67 +14,67 @@
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 865
+          "totalCount": 866
         },
         {
           "page": 2,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 865
+          "totalCount": 866
         },
         {
           "page": 3,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 865
+          "totalCount": 866
         },
         {
           "page": 4,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 865
+          "totalCount": 866
         },
         {
           "page": 5,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 865
+          "totalCount": 866
         },
         {
           "page": 6,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 865
+          "totalCount": 866
         },
         {
           "page": 7,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 865
+          "totalCount": 866
         },
         {
           "page": 8,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 865
+          "totalCount": 866
         },
         {
           "page": 9,
           "ok": true,
           "msg": "OK",
-          "got": 65,
-          "totalCount": 865
+          "got": 66,
+          "totalCount": 866
         }
       ],
-      "count": 865,
-      "totalCount": 865
+      "count": 866,
+      "totalCount": 866
     }
   ],
   "counts": {
@@ -84,7 +84,7 @@
     "incheon": 25,
     "gwangju": 18,
     "daejeon": 16,
-    "ulsan": 16,
+    "ulsan": 17,
     "sejong": 7,
     "suwon": 18,
     "seongnam": 1,
@@ -160,9 +160,9 @@
     "ulsan": [
       "가든 나이트 마켓",
       "성남동 커피페스티벌",
+      "울산 크리스마스 마켓",
       "울산119안전문화축제",
-      "울산고래축제",
-      "울산공업축제"
+      "울산고래축제"
     ],
     "sejong": [
       "세종낙화축제",
@@ -1683,7 +1683,7 @@
         "mapx": "127.0806323270",
         "mapy": "37.6554800513",
         "mlevel": "",
-        "modifiedtime": "20260803112724",
+        "modifiedtime": "20261119013004",
         "areacode": "",
         "sigungucode": "",
         "tel": "02-2116-0546",
@@ -2830,7 +2830,7 @@
         "mapx": "126.9787818353",
         "mapy": "37.5654483550",
         "mlevel": "6",
-        "modifiedtime": "20260821095429",
+        "modifiedtime": "20261119013003",
         "areacode": "",
         "sigungucode": "",
         "tel": "054-680-6381",
@@ -5465,7 +5465,7 @@
         "mapx": "127.0108903555",
         "mapy": "37.5680445877",
         "mlevel": "6",
-        "modifiedtime": "20261118175134",
+        "modifiedtime": "20261119112154",
         "areacode": "",
         "sigungucode": "",
         "tel": "02-336-1876",
@@ -6691,7 +6691,7 @@
       },
       {
         "addr1": "부산광역시 중구 광복로 72-1 (광복동2가)",
-        "addr2": "",
+        "addr2": "광복로 일원",
         "zipcode": "48954",
         "cat1": "",
         "cat2": "",
@@ -6699,18 +6699,18 @@
         "contentid": "4088149",
         "contenttypeid": "15",
         "createdtime": "20260715174012",
-        "eventstartdate": "20260725",
-        "eventenddate": "20260725",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/50/4088150_image2_1.jpg",
-        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/50/4088150_image3_1.jpg",
+        "eventstartdate": "20261205",
+        "eventenddate": "20261205",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/37/4166437_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/37/4166437_image3_1.jpg",
         "cpyrhtDivCd": "Type3",
         "mapx": "129.0327114585",
         "mapy": "35.0985979131",
         "mlevel": "",
-        "modifiedtime": "20260715174222",
+        "modifiedtime": "20261119164041",
         "areacode": "",
         "sigungucode": "",
-        "tel": "070-4006-6849",
+        "tel": "051-780-4151",
         "title": "발코니 뮤직쇼 앤 스트릿 페스타",
         "lDongRegnCd": "26",
         "lDongSignguCd": "110",
@@ -10789,6 +10789,37 @@
         "lclsSystm2": "EV01",
         "lclsSystm3": "EV010600",
         "progresstype": "",
+        "festivaltype": ""
+      },
+      {
+        "addr1": "울산광역시 남구 대공원로 94 (옥동)",
+        "addr2": "",
+        "zipcode": "44660",
+        "cat1": "",
+        "cat2": "",
+        "cat3": "",
+        "contentid": "3578130",
+        "contenttypeid": "15",
+        "createdtime": "20251203130821",
+        "eventstartdate": "20261127",
+        "eventenddate": "20261226",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/40/4153340_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/40/4153340_image3_1.jpg",
+        "cpyrhtDivCd": "Type3",
+        "mapx": "129.2935190325",
+        "mapy": "35.5316566254",
+        "mlevel": "6",
+        "modifiedtime": "20261119150653",
+        "areacode": "",
+        "sigungucode": "",
+        "tel": "052-271-8701",
+        "title": "울산 크리스마스 마켓",
+        "lDongRegnCd": "31",
+        "lDongSignguCd": "140",
+        "lclsSystm1": "EV",
+        "lclsSystm2": "EV03",
+        "lclsSystm3": "EV030400",
+        "progresstype": "선택안함",
         "festivaltype": ""
       },
       {
@@ -16972,6 +17003,7 @@
     "4130910": "https://www.seogu.go.kr/library/wolpyeonglib/contents/learning/board/09/board.09.001.motion?nttId=27324&bmode=detail&bbsId=BBSMSTR_000000000408&mnucd=MENU0600041",
     "4090201": "http://ulsanstorynightmarket.com/",
     "3501104": "https://www.uscoffeefest.com/",
+    "3578130": "http://ulsanstorynightmarket.com/",
     "3300114": "http://sjfestival.kr/",
     "3305155": "http://www.sejongcult.or.kr/schedule/scheduleView/SCHE1604061141544130/SCHE2605141617337594",
     "1849007": "https://sjfestival.kr/",
