@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-11-21T14:39:33+09:00",
+  "collectedAt": "2026-11-22T14:06:22+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "ldong_code",
   "mode": "ldong_code_partition",
@@ -8226,7 +8226,7 @@
         "mapx": "129.2127018203",
         "mapy": "35.2045970007",
         "mlevel": "6",
-        "modifiedtime": "20260825112454",
+        "modifiedtime": "20261121013000",
         "areacode": "",
         "sigungucode": "",
         "tel": "1422-23",
