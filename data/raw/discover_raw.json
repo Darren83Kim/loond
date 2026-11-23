@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-11-22T14:06:22+09:00",
+  "collectedAt": "2026-11-23T14:48:09+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "ldong_code",
   "mode": "ldong_code_partition",
@@ -233612,7 +233612,7 @@
         "mapx": "126.7240118307",
         "mapy": "37.8022913195",
         "mlevel": "6",
-        "modifiedtime": "20261112013002",
+        "modifiedtime": "20261122013001",
         "sigungucode": "",
         "tel": "",
         "title": "모산목장",
