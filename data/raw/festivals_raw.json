@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-11-25T16:00:21+09:00",
+  "collectedAt": "2026-11-26T15:53:06+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "ldong_code",
   "mode": "ldong_code_partition",
@@ -14,72 +14,72 @@
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 870
+          "totalCount": 869
         },
         {
           "page": 2,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 870
+          "totalCount": 869
         },
         {
           "page": 3,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 870
+          "totalCount": 869
         },
         {
           "page": 4,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 870
+          "totalCount": 869
         },
         {
           "page": 5,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 870
+          "totalCount": 869
         },
         {
           "page": 6,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 870
+          "totalCount": 869
         },
         {
           "page": 7,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 870
+          "totalCount": 869
         },
         {
           "page": 8,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 870
+          "totalCount": 869
         },
         {
           "page": 9,
           "ok": true,
           "msg": "OK",
-          "got": 70,
-          "totalCount": 870
+          "got": 69,
+          "totalCount": 869
         }
       ],
-      "count": 870,
-      "totalCount": 870
+      "count": 869,
+      "totalCount": 869
     }
   ],
   "counts": {
     "seoul": 188,
-    "busan": 70,
+    "busan": 69,
     "daegu": 18,
     "incheon": 26,
     "gwangju": 18,
@@ -7372,37 +7372,6 @@
         "festivaltype": ""
       },
       {
-        "addr1": "부산광역시 동래구 중앙대로 1324 (온천동)",
-        "addr2": "부산 온천천 (도시철도 동래역 4번출구 하부 ~ 큰나무 쉼터 일원)",
-        "zipcode": "47734",
-        "cat1": "A02",
-        "cat2": "A0207",
-        "cat3": "A02070200",
-        "contentid": "3434800",
-        "contenttypeid": "15",
-        "createdtime": "20241203175228",
-        "eventstartdate": "20251219",
-        "eventenddate": "20260201",
-        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/72/3574272_image2_1.jpg",
-        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/72/3574272_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "mapx": "129.0785081817",
-        "mapy": "35.2056537329",
-        "mlevel": "6",
-        "modifiedtime": "20251126140452",
-        "areacode": "6",
-        "sigungucode": "6",
-        "tel": "051-550-6642",
-        "title": "온천천 빛 축제",
-        "lDongRegnCd": "26",
-        "lDongSignguCd": "260",
-        "lclsSystm1": "EV",
-        "lclsSystm2": "EV01",
-        "lclsSystm3": "EV010200",
-        "progresstype": "",
-        "festivaltype": ""
-      },
-      {
         "addr1": "부산광역시 해운대구 APEC로 55 (우동)",
         "addr2": "",
         "zipcode": "48060",
@@ -9807,13 +9776,13 @@
         "createdtime": "20080805224607",
         "eventstartdate": "20261023",
         "eventenddate": "20261025",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/32/3545732_image2_1.JPG",
-        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/32/3545732_image3_1.JPG",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/83/4173983_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/83/4173983_image3_1.jpg",
         "cpyrhtDivCd": "Type3",
         "mapx": "126.8530264839",
         "mapy": "35.1590033102",
         "mlevel": "6",
-        "modifiedtime": "20261020160415",
+        "modifiedtime": "20261125091536",
         "areacode": "",
         "sigungucode": "",
         "tel": "062-613-3955",
@@ -13854,37 +13823,6 @@
         "festivaltype": ""
       },
       {
-        "addr1": "강원특별자치도 강릉시 경포로 515 (안현동)",
-        "addr2": "경포해변 및 정동진 모래시계공원",
-        "zipcode": "25460",
-        "cat1": "A02",
-        "cat2": "A0207",
-        "cat3": "A02070200",
-        "contentid": "674023",
-        "contenttypeid": "15",
-        "createdtime": "20091231001553",
-        "eventstartdate": "20251231",
-        "eventenddate": "20260101",
-        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/40/3588540_image2_1.jpg",
-        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/40/3588540_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "mapx": "128.9067724937",
-        "mapy": "37.8052793467",
-        "mlevel": "6",
-        "modifiedtime": "20251224132726",
-        "areacode": "32",
-        "sigungucode": "1",
-        "tel": "033-640-5130",
-        "title": "병오년 해맞이 행사",
-        "lDongRegnCd": "51",
-        "lDongSignguCd": "150",
-        "lclsSystm1": "EV",
-        "lclsSystm2": "EV01",
-        "lclsSystm3": "EV010200",
-        "progresstype": "선택안함",
-        "festivaltype": "선택안함"
-      },
-      {
         "addr1": "강원특별자치도 강릉시 임영로131번길 6 (용강동)",
         "addr2": "임영관",
         "zipcode": "25534",
@@ -13913,6 +13851,37 @@
         "lclsSystm2": "EV01",
         "lclsSystm3": "EV010300",
         "progresstype": "",
+        "festivaltype": ""
+      },
+      {
+        "addr1": "강원특별자치도 강릉시 경포로 515 (안현동)",
+        "addr2": "주문진 도깨비 방파제, 경포해변, 정동진 모래시계공원",
+        "zipcode": "25460",
+        "cat1": "",
+        "cat2": "",
+        "cat3": "",
+        "contentid": "674023",
+        "contenttypeid": "15",
+        "createdtime": "20081231001553",
+        "eventstartdate": "20261231",
+        "eventenddate": "20270101",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/77/4175077_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/77/4175077_image3_1.jpg",
+        "cpyrhtDivCd": "Type3",
+        "mapx": "128.9067457491",
+        "mapy": "37.8052239456",
+        "mlevel": "6",
+        "modifiedtime": "20261125144646",
+        "areacode": "",
+        "sigungucode": "",
+        "tel": "033-640-5130",
+        "title": "정미년 해맞이 행사 with 주문진 도깨비 불꽃 축제",
+        "lDongRegnCd": "51",
+        "lDongSignguCd": "150",
+        "lclsSystm1": "EV",
+        "lclsSystm2": "EV01",
+        "lclsSystm3": "EV010200",
+        "progresstype": "선택안함",
         "festivaltype": ""
       },
       {
