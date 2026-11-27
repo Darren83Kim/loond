@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-11-26T15:53:06+09:00",
+  "collectedAt": "2026-11-27T15:45:41+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "ldong_code",
   "mode": "ldong_code_partition",
@@ -14,77 +14,77 @@
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 869
+          "totalCount": 870
         },
         {
           "page": 2,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 869
+          "totalCount": 870
         },
         {
           "page": 3,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 869
+          "totalCount": 870
         },
         {
           "page": 4,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 869
+          "totalCount": 870
         },
         {
           "page": 5,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 869
+          "totalCount": 870
         },
         {
           "page": 6,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 869
+          "totalCount": 870
         },
         {
           "page": 7,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 869
+          "totalCount": 870
         },
         {
           "page": 8,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 869
+          "totalCount": 870
         },
         {
           "page": 9,
           "ok": true,
           "msg": "OK",
-          "got": 69,
-          "totalCount": 869
+          "got": 70,
+          "totalCount": 870
         }
       ],
-      "count": 869,
-      "totalCount": 869
+      "count": 870,
+      "totalCount": 870
     }
   ],
   "counts": {
-    "seoul": 188,
+    "seoul": 189,
     "busan": 69,
     "daegu": 18,
     "incheon": 26,
     "gwangju": 18,
     "daejeon": 17,
-    "ulsan": 18,
+    "ulsan": 17,
     "sejong": 7,
     "suwon": 18,
     "seongnam": 1,
@@ -113,7 +113,7 @@
     "jeju": 17,
     "seogwipo": 10
   },
-  "dropped": 332,
+  "dropped": 333,
   "by_region_titles": {
     "seoul": [
       "가락 옥토버페스트",
@@ -2128,6 +2128,37 @@
         "lclsSystm2": "EV02",
         "lclsSystm3": "EV020200",
         "progresstype": "선택안함",
+        "festivaltype": ""
+      },
+      {
+        "addr1": "서울특별시 중구 퇴계로34길 28 (필동2가)",
+        "addr2": "남산골한옥마을",
+        "zipcode": "04626",
+        "cat1": "",
+        "cat2": "",
+        "cat3": "",
+        "contentid": "4178037",
+        "contenttypeid": "15",
+        "createdtime": "20261126165919",
+        "eventstartdate": "20261207",
+        "eventenddate": "20261208",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/40/4178040_image2_1.JPG",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/40/4178040_image3_1.JPG",
+        "cpyrhtDivCd": "Type3",
+        "mapx": "126.9947387353",
+        "mapy": "37.5595422700",
+        "mlevel": "",
+        "modifiedtime": "20261126170204",
+        "areacode": "",
+        "sigungucode": "",
+        "tel": "1800-4746",
+        "title": "서울한국춤페스티벌",
+        "lDongRegnCd": "11",
+        "lDongSignguCd": "140",
+        "lclsSystm1": "EV",
+        "lclsSystm2": "EV01",
+        "lclsSystm3": "EV010200",
+        "progresstype": "",
         "festivaltype": ""
       },
       {
@@ -4467,13 +4498,13 @@
         "createdtime": "20211221183728",
         "eventstartdate": "20261223",
         "eventenddate": "20261223",
-        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/12/4165112_image2_1.jpg",
-        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/12/4165112_image3_1.jpg",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/16/4176716_image2_1.jpg",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/16/4176716_image3_1.jpg",
         "cpyrhtDivCd": "Type3",
         "mapx": "127.0307403110",
         "mapy": "37.5007217702",
         "mlevel": "6",
-        "modifiedtime": "20261118173353",
+        "modifiedtime": "20261126132127",
         "areacode": "",
         "sigungucode": "",
         "tel": "02-559-3887",
@@ -8600,7 +8631,7 @@
         "mapx": "128.6205782501",
         "mapy": "35.8293753137",
         "mlevel": "6",
-        "modifiedtime": "20261124173810",
+        "modifiedtime": "20261126105335",
         "areacode": "",
         "sigungucode": "",
         "tel": "053-668-1504",
@@ -11100,37 +11131,6 @@
         "lclsSystm3": "EV010100",
         "progresstype": "선택안함",
         "festivaltype": ""
-      },
-      {
-        "addr1": "울산광역시 울주군 서생면 대송리",
-        "addr2": "간절곶",
-        "zipcode": "45015",
-        "cat1": "A02",
-        "cat2": "A0207",
-        "cat3": "A02070200",
-        "contentid": "141375",
-        "contenttypeid": "15",
-        "createdtime": "20061219090000",
-        "eventstartdate": "20251231",
-        "eventenddate": "20260101",
-        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/79/3588879_image2_1.jpg",
-        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/79/3588879_image2_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "mapx": "129.3619181517",
-        "mapy": "35.3591723598",
-        "mlevel": "6",
-        "modifiedtime": "20251229094204",
-        "areacode": "7",
-        "sigungucode": "5",
-        "tel": "052-980-2232",
-        "title": "울주 간절곶 해맞이",
-        "lDongRegnCd": "31",
-        "lDongSignguCd": "710",
-        "lclsSystm1": "EV",
-        "lclsSystm2": "EV01",
-        "lclsSystm3": "EV010200",
-        "progresstype": "선택안함",
-        "festivaltype": "선택안함"
       },
       {
         "addr1": "울산광역시 울주군 삼남읍 수남벚꽃길 58-19",
