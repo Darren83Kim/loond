@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-11-27T15:45:41+09:00",
+  "collectedAt": "2026-11-28T15:19:40+09:00",
   "base": "http://apis.data.go.kr/B551011/KorService2",
   "strategy": "ldong_code",
   "mode": "ldong_code_partition",
@@ -14,72 +14,72 @@
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 870
+          "totalCount": 871
         },
         {
           "page": 2,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 870
+          "totalCount": 871
         },
         {
           "page": 3,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 870
+          "totalCount": 871
         },
         {
           "page": 4,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 870
+          "totalCount": 871
         },
         {
           "page": 5,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 870
+          "totalCount": 871
         },
         {
           "page": 6,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 870
+          "totalCount": 871
         },
         {
           "page": 7,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 870
+          "totalCount": 871
         },
         {
           "page": 8,
           "ok": true,
           "msg": "OK",
           "got": 100,
-          "totalCount": 870
+          "totalCount": 871
         },
         {
           "page": 9,
           "ok": true,
           "msg": "OK",
-          "got": 70,
-          "totalCount": 870
+          "got": 71,
+          "totalCount": 871
         }
       ],
-      "count": 870,
-      "totalCount": 870
+      "count": 871,
+      "totalCount": 871
     }
   ],
   "counts": {
     "seoul": 189,
-    "busan": 69,
+    "busan": 68,
     "daegu": 18,
     "incheon": 26,
     "gwangju": 18,
@@ -109,11 +109,11 @@
     "gyeongju": 7,
     "andong": 9,
     "tongyeong": 4,
-    "geoje": 4,
+    "geoje": 5,
     "jeju": 17,
     "seogwipo": 10
   },
-  "dropped": 333,
+  "dropped": 334,
   "by_region_titles": {
     "seoul": [
       "가락 옥토버페스트",
@@ -125,9 +125,9 @@
     "busan": [
       "강서 낙동강30리 벚꽃축제",
       "게임문화축제",
-      "광복로 겨울빛 트리축제",
       "광안리 M(Marvelous) 드론 × 레이저쇼",
-      "광안리어방축제"
+      "광안리어방축제",
+      "구룡마을 벚꽃축제"
     ],
     "daegu": [
       "남구청년예술제",
@@ -310,6 +310,7 @@
       "통영한산대첩축제"
     ],
     "geoje": [
+      "거제 K-푸드로드 92데이",
       "거제 옥포대첩 축제",
       "거제맥주축제",
       "거제여름해양축제",
@@ -6253,37 +6254,6 @@
         "lclsSystm2": "EV01",
         "lclsSystm3": "EV010600",
         "progresstype": "선택안함",
-        "festivaltype": ""
-      },
-      {
-        "addr1": "부산광역시 중구 광복로 72-1 (광복동2가)",
-        "addr2": "부산 광복로, 광복중앙로 일원",
-        "zipcode": "48954",
-        "cat1": "A02",
-        "cat2": "A0207",
-        "cat3": "A02070200",
-        "contentid": "3576410",
-        "contenttypeid": "15",
-        "createdtime": "20251128171222",
-        "eventstartdate": "20251205",
-        "eventenddate": "20260222",
-        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/05/3576405_image2_1.JPG",
-        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/05/3576405_image3_1.JPG",
-        "cpyrhtDivCd": "Type3",
-        "mapx": "129.0327400915",
-        "mapy": "35.0986398717",
-        "mlevel": "6",
-        "modifiedtime": "20251128171805",
-        "areacode": "6",
-        "sigungucode": "15",
-        "tel": "051-714-4758",
-        "title": "광복로 겨울빛 트리축제",
-        "lDongRegnCd": "26",
-        "lDongSignguCd": "110",
-        "lclsSystm1": "EV",
-        "lclsSystm2": "EV01",
-        "lclsSystm3": "EV010200",
-        "progresstype": "",
         "festivaltype": ""
       },
       {
@@ -16081,6 +16051,37 @@
     ],
     "geoje": [
       {
+        "addr1": "경상남도 거제시 옥포로6길 16 (옥포동)",
+        "addr2": "옥포 삼겹살 거리",
+        "zipcode": "53231",
+        "cat1": "",
+        "cat2": "",
+        "cat3": "",
+        "contentid": "4179229",
+        "contenttypeid": "15",
+        "createdtime": "20261127135303",
+        "eventstartdate": "20261127",
+        "eventenddate": "20261129",
+        "firstimage": "https://tong.visitkorea.or.kr/cms/resource/39/4179239_image2_1.png",
+        "firstimage2": "https://tong.visitkorea.or.kr/cms/resource/39/4179239_image3_1.png",
+        "cpyrhtDivCd": "Type3",
+        "mapx": "128.6953285292",
+        "mapy": "34.8907759762",
+        "mlevel": "",
+        "modifiedtime": "20261127135536",
+        "areacode": "",
+        "sigungucode": "",
+        "tel": "0507-1312-9577",
+        "title": "거제 K-푸드로드 92데이",
+        "lDongRegnCd": "48",
+        "lDongSignguCd": "310",
+        "lclsSystm1": "EV",
+        "lclsSystm2": "EV01",
+        "lclsSystm3": "EV010600",
+        "progresstype": "",
+        "festivaltype": ""
+      },
+      {
         "addr1": "경상남도 거제시 옥포동 1978-1",
         "addr2": "",
         "zipcode": "53231",
@@ -17053,7 +17054,7 @@
     "4097098": "https://www.instagram.com/gamtanroad.popup/",
     "2536122": "http://www.bsgangseo.go.kr/visit/contents.do?mId=0302000000",
     "3360113": "https://kgcf.kr/",
-    "3576410": "https://litt.ly/gwangbok_treefestival",
+    "2786391": "https://www.gwangallimdrone.co.kr/",
     "3301281": "https://www.dsart.or.kr/",
     "3548867": "https://blog.naver.com/dgdonggu/224428311829",
     "2986679": "https://ijcf.or.kr/",
